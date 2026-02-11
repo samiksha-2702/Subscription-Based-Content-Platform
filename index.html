@@ -1,96 +1,242 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>PrepEdge | Interview Preparation Platform</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>PrepEdge | Interview Preparation Platform</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; margin:0; padding:0; }
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: white;
+}
+
+/* ===================== Navbar ===================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background: rgba(15,23,42,0.7);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+
+.navbar .brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #38bdf8;
+    text-decoration: none;
+}
+
+.navbar .nav-links {
+    display: flex;
+    gap: 16px;
+}
+
+.navbar .nav-links a {
+    text-decoration: none;
+    color: white;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-weight: 500;
+    background: linear-gradient(to right, #06b6d4, #3b82f6);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(6,182,212,0.3);
+}
+
+.navbar .nav-links a:hover {
+    background: linear-gradient(to right, #3b82f6, #06b6d4);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(59,130,246,0.5);
+}
+
+/* ===================== Hero Section ===================== */
+.hero {
+    text-align: center;
+    padding: 80px 20px 40px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    background: linear-gradient(to right, #38bdf8, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    color: #cbd5e1;
+    margin-bottom: 30px;
+}
+
+.hero .btn {
+    display: inline-block;
+    background: linear-gradient(to right, #06b6d4, #3b82f6);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.hero .btn:hover {
+    background: linear-gradient(to right, #3b82f6, #06b6d4);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(59,130,246,0.4);
+}
+
+/* ===================== Card Grid ===================== */
+.container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+}
+
+.card-link {
+    text-decoration: none;
+    color: white;
+}
+
+.card {
+    background: linear-gradient(145deg, #111827, #0b1220);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    transition: all 0.35s ease;
+    cursor: pointer;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.35s;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.9),
+        0 0 20px rgba(59,130,246,0.25);
+}
+
+.card:hover::after { opacity: 1; }
+
+.card img {
+    width: 150px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 14px;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+}
+
+.card:hover img {
+    transform: scale(1.12) rotate(3deg);
+}
+
+.card h3 {
+    margin: 10px 0 0;
+    font-size: 18px;
+}
 
 
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background: #020617;
+    opacity: 0.7;
+}
+</style>
 </head>
 
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark py-3">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-info fs-4" href="#">
-            PrepEdge
-        </a>
-
-        <div>
-            <!-- <a href="#" class="me-4 text-decoration-none">Programming</a>
-            <a href="#" class="me-4 text-decoration-none">Company Info</a> -->
-            <a href="#" class="me-4 text-decoration-none">Feedback</a> 
-            <a href="#" class="me-4 text-decoration-none">Contact</a>
-            <a href="signup.html" class="btn btn-info btn-sm">Sign In</a>
-        </div>
+<div class="navbar">
+    <a href="#" class="brand">PrepEdge</a>
+    <div class="nav-links">
+        <a href="signup.html">Signup</a>
     </div>
-</nav>
+</div>
 
 <!-- Hero Section -->
-<section class="hero-section text-center">
-    <div class="container">
-        <h1 class="fw-bold display-5">
-            A Smarter Way to Prepare for Interviews
-        </h1>
-        <p class="text-secondary mt-3 fs-5">
-            Practice curated questions, attempt mock tests, and get AI-powered
-            insights to crack your next interview.
-        </p>
-    </div>
+<section class="hero">
+    <h1>Practice, Learn, and Crack Interviews</h1>
+    <p>Browse curated categories, attempt mock tests, and get AI-powered insights.</p>
+    <a href="signup.html" class="btn">Get Started</a>
 </section>
 
-<!-- Browse by Category -->
-<section class="container my-5">
-    <div class="category-section text-center">
-        <h4 class="fw-bold mb-4">Browse by Category</h4>
+<!-- Category Cards -->
+<div class="container">
+    <div class="grid">
 
-        <div class="row g-4 justify-content-center">
-
-            <div class="col-md-4">
-                <div class="category-card">
-                    💻 Programming Languages
-                </div>
+        <a href="programming.html" class="card-link">
+            <div class="card">
+                <h3>💻 Programming Languages</h3>
             </div>
+        </a>
 
-            <div class="col-md-4">
-                <div class="category-card">
-                    🏢 Company Info & Blogs
-                </div>
+        <a href="company.html" class="card-link">
+            <div class="card">
+                <h3>🏢 Company Info & Blogs</h3>
             </div>
+        </a>
 
-            <div class="col-md-4">
-                <div class="category-card">
-                    🎙 Expert Talks / Podcast
-                </div>
+        <a href="expert.html" class="card-link">
+            <div class="card">
+                <h3>🎙 Expert Talks / Podcast</h3>
             </div>
+        </a>
 
-            <div class="col-md-4">
-                <div class="category-card">
-                    🗣 Communication & Soft Skills
-                </div>
+        <a href="softskills.html" class="card-link">
+            <div class="card">
+                <h3>🗣 Communication & Soft Skills</h3>
             </div>
+        </a>
 
-            <div class="col-md-4">
-                <div class="category-card">
-                    📝 Questions / Aptitude / MCQ Tech
-                </div>
+        <a href="questions.html" class="card-link">
+            <div class="card">
+                <h3>📝 Questions / Aptitude / MCQ Tech</h3>
             </div>
+        </a>
 
-            <div class="col-md-4">
-                <div class="category-card">
-                    🤖 AI Recommendations
-                </div>
+        <a href="ai.html" class="card-link">
+            <div class="card">
+                <h3>🤖 AI Recommendations</h3>
             </div>
+        </a>
 
-        </div>
     </div>
-</section>
+</div>
 
 <!-- Footer -->
-<footer class="text-center p-4">
-    © 2026 PrepEdge | MCA Final Year Project
+<footer>
+    <div style="margin-bottom: 10px;">© 2026 PrepEdge | MCA Final Year Project</div>
+    <div class="footer-links">
+        <a href="contact.html" class="footer-btn">Contact Us</a>
+        <a href="feedback.html" class="footer-btn">Feedback</a>
+    </div>
 </footer>
 
 </body>
