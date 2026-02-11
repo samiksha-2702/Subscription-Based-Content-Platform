@@ -5,22 +5,31 @@
     <title>PrepEdge | Interview Preparation Platform</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+
+
 </head>
-<body class="bg-dark text-light">
+
+<body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
+<nav class="navbar navbar-expand-lg navbar-dark py-3">
     <div class="container">
-        <a class="navbar-brand fw-bold text-info" href="#">PrepEdge</a>
+        <a class="navbar-brand fw-bold text-info fs-4" href="#">
+            PrepEdge
+        </a>
+
         <div>
-            <a href="login.html" class="btn btn-outline-light btn-sm me-2">Login</a>
-            <a href="register.html" class="btn btn-info btn-sm">Register</a>
+            <!-- <a href="#" class="me-4 text-decoration-none">Programming</a>
+            <a href="#" class="me-4 text-decoration-none">Company Info</a> -->
+            <a href="#" class="me-4 text-decoration-none">Feedback</a> 
+            <a href="#" class="me-4 text-decoration-none">Contact</a>
+            <a href="signup.html" class="btn btn-info btn-sm">Sign In</a>
         </div>
     </div>
 </nav>
 
 <!-- Hero Section -->
-<section class="hero-section text-center d-flex align-items-center">
+<section class="hero-section text-center">
     <div class="container">
         <h1 class="fw-bold display-5">
             A Smarter Way to Prepare for Interviews
@@ -29,51 +38,59 @@
             Practice curated questions, attempt mock tests, and get AI-powered
             insights to crack your next interview.
         </p>
-
-        <div class="mt-4">
-            <a href="register.html" class="btn btn-info btn-lg me-3">
-                Continue for Free
-            </a>
-            <a href="plans.html" class="btn btn-outline-info btn-lg">
-                View Premium Plans
-            </a>
-        </div>
     </div>
 </section>
 
-<!-- Features -->
+<!-- Browse by Category -->
 <section class="container my-5">
-    <div class="row text-center g-4">
-        <div class="col-md-4">
-            <div class="card bg-secondary text-light p-4 shadow">
-                <h5>📚 Topic-wise Questions</h5>
-                <p class="text-light-emphasis">
-                    Python, Java, DBMS, OS, HR
-                </p>
+    <div class="category-section text-center">
+        <h4 class="fw-bold mb-4">Browse by Category</h4>
+
+        <div class="row g-4 justify-content-center">
+
+            <div class="col-md-4">
+                <div class="category-card">
+                    💻 Programming Languages
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bg-secondary text-light p-4 shadow">
-                <h5>📝 Mock Tests</h5>
-                <p class="text-light-emphasis">
-                    Timed tests with instant evaluation
-                </p>
+
+            <div class="col-md-4">
+                <div class="category-card">
+                    🏢 Company Info & Blogs
+                </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card bg-secondary text-light p-4 shadow">
-                <h5>🤖 AI Recommendations</h5>
-                <p class="text-light-emphasis">
-                    Weak-area analysis & smart suggestions
-                </p>
+
+            <div class="col-md-4">
+                <div class="category-card">
+                    🎙 Expert Talks / Podcast
+                </div>
             </div>
+
+            <div class="col-md-4">
+                <div class="category-card">
+                    🗣 Communication & Soft Skills
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="category-card">
+                    📝 Questions / Aptitude / MCQ Tech
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="category-card">
+                    🤖 AI Recommendations
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="text-center p-3 bg-black text-secondary">
-    © 2026 PrepEdge | MCA Project
+<footer class="text-center p-4">
+    © 2026 PrepEdge | MCA Final Year Project
 </footer>
 
 </body>

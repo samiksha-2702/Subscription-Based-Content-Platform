@@ -6,3 +6,79 @@
 .card {
     border-radius: 12px;
 }
+
+/* Background Image with Blur */
+body {
+    margin: 0;
+    padding: 0;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Blurred Image */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("../images/Sbcp-index-img.jpg") no-repeat center center/cover;
+    filter: blur(8px);
+    z-index: -2;
+}
+
+/* Dark Overlay */
+body::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: -1;
+}
+
+/* Navbar */
+.navbar {
+    background-color: rgba(17, 24, 39, 0.9);
+}
+
+/* Hero Section */
+.hero-section {
+    padding: 90px 0;
+}
+
+/* Category Section */
+.category-section {
+    background-color: rgba(26, 31, 46, 0.85);
+    padding: 40px;
+    border-radius: 15px;
+}
+
+/* Category Cards */
+.category-card {
+    background: rgba(17, 24, 39, 0.9);
+    border-radius: 12px;
+    padding: 18px;
+    transition: 0.3s;
+    cursor: pointer;
+    border: 1px solid #2d3748;
+    color: #ccc;
+}
+
+.category-card:hover {
+    background-color: #1f2937;
+    transform: translateY(-6px);
+    border-color: #00c3ff;
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: rgba(17, 24, 39, 0.9);
+    color: #aaa;
+}
+
