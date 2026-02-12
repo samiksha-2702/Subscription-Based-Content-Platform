@@ -1,57 +1,90 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register | PrepEdge</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Register | PrepEdge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+body{
+  min-height:100vh;
+  background:linear-gradient(-45deg,#0f172a,#020617,#1e293b,#020617);
+  background-size:400% 400%;
+  animation:bgMove 12s ease infinite;
+  display:flex;align-items:center;justify-content:center;
+  color:white;
+}
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+.glass{
+  width:400px;padding:40px;border-radius:22px;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(18px);
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+.form-control{background:rgba(255,255,255,0.15);border:none;color:white;}
+.form-control:focus{background:rgba(255,255,255,0.2);color:white;}
+.btn-modern{
+  background:linear-gradient(90deg,#3b82f6,#06b6d4);
+  border:none;border-radius:12px;font-weight:bold;
+}
+.brand{color:#3b82f6;font-weight:bold;font-size:26px;text-align:center;}
+.back{display:block;text-align:center;margin-top:15px;color:#93c5fd;}
+</style>
 </head>
 
-<body class="bg-dark text-light">
+<body>
 
-<nav class="navbar navbar-dark">
-  <div class="container">
-    <a class="navbar-brand text-info fw-bold">PrepEdge</a>
-  </div>
-</nav>
+<div class="glass">
+<div class="brand">PrepEdge</div>
+<h5 class="text-center mb-4">Create Account</h5>
 
-<div class="container d-flex justify-content-center align-items-center" style="height:80vh">
-  <div class="card bg-secondary p-4" style="width:400px">
+<form id="registerForm">
 
-    <h4 class="text-center mb-3">Create Account</h4>
-
-    <!-- FORM START -->
-    <form action="dashboard.html">
-
-      <input 
-        type="text" 
-        class="form-control mb-3" 
-        placeholder="Full Name" 
-        required
-      >
-
-      <input 
-        type="email" 
-        class="form-control mb-3" 
-        placeholder="Email" 
-        required
-      >
-
-      <input 
-        type="password" 
-        class="form-control mb-3" 
-        placeholder="Password" 
-        required
-        minlength="6"
-      >
-
-      <button type="submit" class="btn btn-info w-100">
-        Register
-      </button>
-
-    </form>
-    <!-- FORM END -->
-
-  </div>
+<div class="form-floating mb-3">
+<input type="text" class="form-control" placeholder="Name" required>
+<label>Full Name</label>
 </div>
+
+<div class="form-floating mb-3">
+<input type="email" class="form-control" placeholder="Email" required>
+<label>Email</label>
+</div>
+
+<div class="form-floating mb-3">
+<input type="password" class="form-control" placeholder="Password" required minlength="6">
+<label>Password</label>
+</div>
+
+<button class="btn btn-modern w-100">Register</button>
+
+</form>
+
+<div class="text-center mt-3">
+Already registered? <a href="login.html" class="text-info">Login</a>
+</div>
+
+<a href="index.html" class="back">← Back to Home</a>
+</div>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit",function(e){
+e.preventDefault();
+
+const name=document.querySelector('input[type=text]').value;
+const email=document.querySelector('input[type=email]').value;
+const pass=document.querySelector('input[type=password]').value;
+
+localStorage.setItem("prepedge_user",JSON.stringify({name,email,pass}));
+
+alert("Registration Successful ✅");
+window.location.href="plans.html";
+});
+</script>
 
 </body>
 </html>

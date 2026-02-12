@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="en">
-<<<<<<< HEAD
 <head>
   <meta charset="UTF-8" />
   <title>PrepEdge | MCA Project</title>
@@ -184,6 +183,17 @@
       color: #3b82f6;
       font-weight: 500;
     }
+    .nav-links a:first-child {
+  background: linear-gradient(90deg,#22c55e,#06b6d4);
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.nav-links a:first-child:hover {
+  color: white;
+  box-shadow: 0 5px 18px rgba(34,197,94,0.5);
+}
 
     /* Animations */
     @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
@@ -195,9 +205,11 @@
   <div class="navbar" id="navbar">
     <div class="brand">PrepEdge</div>
     <div class="nav-links">
-      <a href="signup.html">Signup</a>
-      <a href="login.html">Login</a>
-    </div>
+  <a href="plans.html">Subscription</a>
+  <a href="register.html">Signup</a>
+  <a href="login.html">Login</a>
+</div>
+
   </div>
 
   <!-- Hero Section -->
@@ -321,233 +333,4 @@
     window.addEventListener("load", revealCards);
   </script>
 </body>
-=======
-  <head>
-    <meta charset="UTF-8" />
-    <title>PrepEdge | MCA Project</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(135deg, #0f172a, #020617);
-        color: white;
-      }
-
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 40px;
-        background: rgba(15, 23, 42, 0.7);
-        backdrop-filter: blur(8px);
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
-      }
-
-      .navbar .brand {
-        font-size: 24px;
-        font-weight: bold;
-      }
-      .nav-links a {
-        margin-left: 20px;
-        color: white;
-        text-decoration: none;
-      }
-
-      .navbar .nav-links {
-        display: flex;
-        gap: 16px;
-      }
-
-      .navbar .nav-links a {
-        text-decoration: none;
-        color: white;
-        padding: 8px 18px;
-        border-radius: 6px;
-        font-weight: 500;
-        background: linear-gradient(to right, #06b6d4, #3b82f6);
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
-      }
-
-      .navbar .nav-links a:hover {
-        background: linear-gradient(to right, #3b82f6, #06b6d4);
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(59, 130, 246, 0.5);
-      }
-
-      .hero {
-        text-align: center;
-        padding: 80px 20px 40px;
-      }
-
-      .hero h1 {
-        font-size: 2.5rem;
-        background: linear-gradient(to right, #38bdf8, #06b6d4);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin-bottom: 20px;
-      }
-
-      .hero p {
-        font-size: 1.2rem;
-        color: #cbd5e1;
-        margin-bottom: 30px;
-      }
-
-      .hero .btn {
-        display: inline-block;
-        background: linear-gradient(to right, #06b6d4, #3b82f6);
-        color: white;
-        padding: 12px 28px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s ease;
-      }
-
-      .hero .btn:hover {
-        background: linear-gradient(to right, #3b82f6, #06b6d4);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
-      }
-
-      .container {
-        padding: 40px 20px;
-        max-width: 1200px;
-        margin: auto;
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 28px;
-      }
-
-      .card-link {
-        text-decoration: none;
-        color: white;
-      }
-
-      .card {
-        background: linear-gradient(145deg, #111827, #0b1220);
-        border-radius: 16px;
-        padding: 30px 20px;
-        text-align: center;
-        position: relative;
-        box-shadow:
-          0 10px 25px rgba(0, 0, 0, 0.6),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-        transition: all 0.35s ease;
-        cursor: pointer;
-      }
-
-      .card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 16px;
-        opacity: 0;
-        transition: opacity 0.35s;
-        box-shadow: 0 0 25px rgba(59, 130, 246, 0.5);
-      }
-
-      .card:hover {
-        transform: translateY(-8px) scale(1.03);
-        box-shadow:
-          0 20px 40px rgba(0, 0, 0, 0.9),
-          0 0 20px rgba(59, 130, 246, 0.25);
-      }
-
-      .card:hover::after {
-        opacity: 1;
-      }
-
-      .card img {
-        width: 150px;
-        height: 90px;
-        object-fit: contain;
-        margin-bottom: 14px;
-        transition: transform 0.4s ease;
-        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.6));
-      }
-
-      .card:hover img {
-        transform: scale(1.12) rotate(3deg);
-      }
-
-      .card h3 {
-        margin: 10px 0 0;
-        font-size: 18px;
-      }
-
-      footer {
-        text-align: center;
-        padding: 20px;
-        margin-top: 40px;
-        background: #020617;
-        opacity: 0.7;
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Navbar -->
-    <div class="navbar">
-      <a href="#" class="brand">PrepEdge</a>
-      <div class="nav-links">
-        <a href="signup.html">Signup</a>
-        <a href="login.html">Login</a>
-      </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section class="hero">
-      <h1>Practice, Learn, and Crack Interviews</h1>
-      <p>
-        Browse curated categories, attempt mock tests, and get AI-powered
-        insights.
-      </p>
-      <a href="signup.html" class="btn">Get Started</a>
-    </section>
-
-    <!-- Category Cards -->
-    <div class="container">
-      <div class="grid">
-        <a href="programming.html" class="card-link">
-          <div class="card"><h3>💻 Programming Languages</h3></div>
-        </a>
-        <a href="company.html" class="card-link">
-          <div class="card"><h3>🏢 Company Info & Blogs</h3></div>
-        </a>
-        <a href="expert.html" class="card-link">
-          <div class="card"><h3>🎙 Expert Talks / Podcast</h3></div>
-        </a>
-        <a href="softskills.html" class="card-link">
-          <div class="card"><h3>🗣 Communication & Soft Skills</h3></div>
-        </a>
-        <a href="questions.html" class="card-link">
-          <div class="card"><h3>📝 Questions / Aptitude / MCQ Tech</h3></div>
-        </a>
-        <a href="ai.html" class="card-link">
-          <div class="card"><h3>🤖 AI Recommendations</h3></div>
-        </a>
-      </div>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-      <div>© 2026 PrepEdge | MCA Final Year Project</div>
-      <div class="footer-links">
-        <a href="contact.html">Contact Us</a>
-        <a href="feedback.html">Feedback</a>
-      </div>
-    </footer>
-  </body>
->>>>>>> e0a86a1829353906749da1ed19e0be4363abc030
 </html>
