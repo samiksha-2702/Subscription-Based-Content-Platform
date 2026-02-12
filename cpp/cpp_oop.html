@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>C++ OOP — Detailed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{background:#0f172a;color:#e5e7eb;font-family:Segoe UI;padding:30px}
+.card{background:#111827;padding:25px;border-radius:14px;margin-bottom:20px}
+pre{background:#020617;padding:15px;border-radius:8px;color:#93c5fd}
+h2{color:#60a5fa}
+button{padding:8px 12px;border-radius:8px;border:none;background:#2563eb;color:white}
+</style>
+</head>
+
+<body>
+
+<button onclick="history.back()">⬅ Back</button>
+
+<div class="card">
+<h2>Class & Object</h2>
+
+<pre>
+class Student{
+public:
+ string name;
+ void show(){
+  cout<<name;
+ }
+};
+
+Student s;
+s.name="Amit";
+s.show();
+</pre>
+</div>
+
+<div class="card">
+<h2>Constructor</h2>
+
+<pre>
+class A{
+public:
+ A(){
+  cout<<"Created";
+ }
+};
+</pre>
+</div>
+
+<div class="card">
+<h2>Inheritance</h2>
+
+<pre>
+class A{};
+class B : public A{};
+</pre>
+</div>
+
+<div class="card">
+<h2>Polymorphism</h2>
+
+Function overriding + virtual functions
+
+<pre>
+class Base{
+public:
+ virtual void show(){
+  cout<<"Base";
+ }
+};
+</pre>
+</div>
+
+<div class="card">
+<h2>Encapsulation</h2>
+
+Private data + public methods
+
+<pre>
+class Bank{
+private:
+ int balance;
+public:
+ void set(int b){balance=b;}
+};
+</pre>
+
+👉 OOP concepts are very common in interviews.
+</div>
+
+</body>
+</html>

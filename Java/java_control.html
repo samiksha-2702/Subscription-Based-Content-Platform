@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Java Control Statements</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+font-family:Segoe UI,Arial;
+margin:0;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+padding:30px;
+}
+.card{
+background:#0b1220;
+padding:25px;
+border-radius:12px;
+max-width:900px;
+margin:auto;
+box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+h1{color:#93c5fd}
+pre{
+background:#020617;
+padding:12px;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>Java Control Flow</h1>
+
+<h2>If Else</h2>
+<pre>
+int age = 18;
+if(age >= 18){
+ System.out.println("Adult");
+}else{
+ System.out.println("Minor");
+}
+</pre>
+
+<h2>Switch</h2>
+<pre>
+int day = 2;
+switch(day){
+ case 1: System.out.println("Mon"); break;
+ case 2: System.out.println("Tue"); break;
+ default: System.out.println("Invalid");
+}
+</pre>
+
+<h2>For Loop</h2>
+<pre>
+for(int i=1;i<=5;i++){
+ System.out.println(i);
+}
+</pre>
+
+<h2>While Loop</h2>
+<pre>
+int i=1;
+while(i<=5){
+ System.out.println(i);
+ i++;
+}
+</pre>
+
+<h2>Break & Continue</h2>
+<pre>
+for(int i=1;i<=10;i++){
+ if(i==5) break;
+ if(i==2) continue;
+}
+</pre>
+
+</div>
+</body>
+</html>

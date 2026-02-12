@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Java Loops Test</title>
+<style>
+body{font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:white;padding:30px}
+.card{max-width:900px;margin:auto;background:rgba(255,255,255,.08);backdrop-filter:blur(12px);padding:30px;border-radius:16px}
+.q{margin:20px 0;padding:18px;background:#020617;border-radius:12px}
+label{display:block;margin:6px 0}
+button{padding:12px 18px;border:none;border-radius:10px;background:#16a34a;color:white}
+</style>
+</head>
+
+<body>
+<div class="card">
+<h2>Java Loops Practice Test</h2>
+
+<form>
+
+<div class="q">Loop with fixed iterations?
+<label><input type="radio" name="q1" value="a">for</label>
+<label><input type="radio" name="q1" value="b">while</label>
+</div>
+
+<div class="q">Runs at least once?
+<label><input type="radio" name="q2" value="a">for</label>
+<label><input type="radio" name="q2" value="b">do-while</label>
+</div>
+
+<div class="q">Skip iteration?
+<label><input type="radio" name="q3" value="a">continue</label>
+<label><input type="radio" name="q3" value="b">skip</label>
+</div>
+
+<div class="q">Exit loop?
+<label><input type="radio" name="q4" value="a">break</label>
+<label><input type="radio" name="q4" value="b">exit</label>
+</div>
+
+<div class="q">Infinite loop possible?
+<label><input type="radio" name="q5" value="a">Yes</label>
+<label><input type="radio" name="q5" value="b">No</label>
+</div>
+
+<button type="button" onclick="check()">Submit</button>
+
+</form>
+
+<div id="result"></div>
+</div>
+
+<script>
+function check(){
+let a={q1:"a",q2:"b",q3:"a",q4:"a",q5:"a"};
+let s=0,r="";
+for(let k in a){
+let v=document.querySelector(`input[name=${k}]:checked`);
+if(v && v.value===a[k]){s++;r+=`Q${k[1]} ✅<br>`}
+else{r+=`Q${k[1]} ❌ Correct: ${a[k].toUpperCase()}<br>`}
+}
+result.innerHTML=`<div class="q"><h3>Score ${s}/5</h3>${r}</div>`;
+}
+</script>
+</body>
+</html>

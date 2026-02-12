@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>C++ Practice Test — Set 2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+font-family:Segoe UI;
+background:#0b1220;
+color:#e5e7eb;
+padding:20px;
+}
+
+.header{
+background:#111827;
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
+box-shadow:0 8px 25px rgba(0,0,0,.5);
+}
+
+.question{
+background:#020617;
+padding:18px;
+margin-bottom:15px;
+border-radius:10px;
+border:1px solid #1f2937;
+}
+
+button{
+padding:12px 18px;
+background:#16a34a;
+border:none;
+border-radius:8px;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.timer{
+font-size:20px;
+color:#fb7185;
+font-weight:bold;
+}
+
+.result{
+background:#111827;
+padding:20px;
+border-radius:12px;
+margin-top:20px;
+display:none;
+}
+
+.correct{color:#4ade80}
+.wrong{color:#f87171}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h2>C++ Quick Practice Test — Set 2</h2>
+<div class="timer">Time Left: <span id="time">15:00</span></div>
+</div>
+
+<form id="quiz">
+
+<div class="question">
+Q1. Which file extension is used for C++ source files?<br>
+<input type="radio" name="q1" value="a"> .java<br>
+<input type="radio" name="q1" value="b"> .cpp<br>
+<input type="radio" name="q1" value="c"> .py
+</div>
+
+<div class="question">
+Q2. Which operator is used for scope resolution?<br>
+<input type="radio" name="q2" value="a"> ::<br>
+<input type="radio" name="q2" value="b"> -><br>
+<input type="radio" name="q2" value="c"> .
+</div>
+
+<div class="question">
+Q3. Which loop checks condition after execution?<br>
+<input type="radio" name="q3" value="a"> for<br>
+<input type="radio" name="q3" value="b"> while<br>
+<input type="radio" name="q3" value="c"> do-while
+</div>
+
+<div class="question">
+Q4. Constructor name must be same as?<br>
+<input type="radio" name="q4" value="a"> Object<br>
+<input type="radio" name="q4" value="b"> Class<br>
+<input type="radio" name="q4" value="c"> File
+</div>
+
+<div class="question">
+Q5. Which keyword creates object dynamically?<br>
+<input type="radio" name="q5" value="a"> create<br>
+<input type="radio" name="q5" value="b"> new<br>
+<input type="radio" name="q5" value="c"> malloc
+</div>
+
+<div class="question">
+Q6. Which concept allows same function name with different parameters?<br>
+<input type="radio" name="q6" value="a"> Overloading<br>
+<input type="radio" name="q6" value="b"> Overriding<br>
+<input type="radio" name="q6" value="c"> Encapsulation
+</div>
+
+<button type="button" onclick="checkTest()">Submit Test</button>
+
+</form>
+
+<div id="result" class="result"></div>
+
+<script>
+
+const ans = {
+q1:"b",
+q2:"a",
+q3:"c",
+q4:"b",
+q5:"b",
+q6:"a"
+};
+
+function checkTest(){
+
+let score = 0;
+let html = "<h3>Answer Review</h3>";
+
+for(let q in ans){
+let marked = document.querySelector(`input[name=${q}]:checked`);
+
+if(marked && marked.value === ans[q]){
+score++;
+html += `<p class="correct">${q.toUpperCase()} ✔ Correct</p>`;
+}else{
+html += `<p class="wrong">${q.toUpperCase()} ✘ Wrong — Correct: ${ans[q]}</p>`;
+}
+}
+
+html += `<h2>Final Score: ${score}/6</h2>`;
+
+let r = document.getElementById("result");
+r.innerHTML = html;
+r.style.display="block";
+}
+
+//// TIMER ////
+
+let time = 15*60;
+
+function tick(){
+let m = Math.floor(time/60);
+let s = time%60;
+document.getElementById("time").innerText =
+m+":"+s.toString().padStart(2,"0");
+
+if(time<=0){
+checkTest();
+alert("Time finished — Auto submitted");
+}
+time--;
+}
+
+setInterval(tick,1000);
+
+</script>
+
+</body>
+</html>

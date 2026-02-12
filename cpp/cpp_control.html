@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>C++ Control & STL — Detailed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{background:#0f172a;color:#e5e7eb;font-family:Segoe UI;padding:30px}
+.card{background:#111827;padding:25px;border-radius:14px;margin-bottom:20px}
+pre{background:#020617;padding:15px;border-radius:8px;color:#93c5fd}
+h2{color:#60a5fa}
+button{padding:8px 12px;border-radius:8px;border:none;background:#2563eb;color:white}
+</style>
+</head>
+
+<body>
+
+<button onclick="history.back()">⬅ Back</button>
+
+<div class="card">
+<h2>Decision Making</h2>
+
+<pre>
+if(x>10){
+ cout<<"Large";
+}else{
+ cout<<"Small";
+}
+</pre>
+
+Switch example:
+
+<pre>
+switch(n){
+case 1: cout<<"One"; break;
+default: cout<<"Other";
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>Loops</h2>
+
+For loop:
+
+<pre>
+for(int i=0;i<5;i++){
+ cout<<i;
+}
+</pre>
+
+While loop:
+
+<pre>
+while(x>0){
+ x--;
+}
+</pre>
+</div>
+
+<div class="card">
+<h2>Arrays</h2>
+
+<pre>
+int a[5] = {1,2,3,4,5};
+cout << a[0];
+</pre>
+</div>
+
+<div class="card">
+<h2>STL — Standard Template Library</h2>
+
+Important STL Containers:
+
+<ul>
+<li>vector — dynamic array</li>
+<li>set — unique sorted</li>
+<li>map — key value</li>
+<li>stack / queue</li>
+</ul>
+
+Vector example:
+
+<pre>
+#include &lt;vector&gt;
+vector<int> v;
+v.push_back(10);
+v.push_back(20);
+</pre>
+
+Sorting:
+
+<pre>
+#include &lt;algorithm&gt;
+sort(v.begin(), v.end());
+</pre>
+
+👉 STL is heavily asked in interviews.
+</div>
+
+</body>
+</html>

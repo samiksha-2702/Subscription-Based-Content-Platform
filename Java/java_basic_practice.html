@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Java Basics Test</title>
+<style>
+body{
+font-family:Segoe UI;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:white;
+padding:30px;
+}
+
+.card{
+max-width:900px;
+margin:auto;
+background:rgba(255,255,255,0.08);
+backdrop-filter:blur(14px);
+padding:30px;
+border-radius:16px;
+box-shadow:0 10px 40px rgba(0,0,0,.7);
+}
+
+.q{
+margin:20px 0;
+padding:18px;
+background:#020617;
+border-radius:12px;
+}
+
+label{display:block;margin:6px 0;cursor:pointer}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.result{
+margin-top:20px;
+padding:18px;
+border-radius:12px;
+background:#111827;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h2>Java Basics Practice Test</h2>
+
+<form id="quiz">
+
+<div class="q">1️⃣ Java is which type of language?
+<label><input type="radio" name="q1" value="a"> Procedural</label>
+<label><input type="radio" name="q1" value="b"> Object Oriented</label>
+<label><input type="radio" name="q1" value="c"> Markup</label>
+</div>
+
+<div class="q">2️⃣ Entry point of Java program?
+<label><input type="radio" name="q2" value="a"> main()</label>
+<label><input type="radio" name="q2" value="b"> start()</label>
+<label><input type="radio" name="q2" value="c"> init()</label>
+</div>
+
+<div class="q">3️⃣ int data type size?
+<label><input type="radio" name="q3" value="a"> 2 bytes</label>
+<label><input type="radio" name="q3" value="b"> 4 bytes</label>
+<label><input type="radio" name="q3" value="c"> 8 bytes</label>
+</div>
+
+<div class="q">4️⃣ Print statement?
+<label><input type="radio" name="q4" value="a"> echo()</label>
+<label><input type="radio" name="q4" value="b"> print()</label>
+<label><input type="radio" name="q4" value="c"> System.out.println()</label>
+</div>
+
+<div class="q">5️⃣ Java file extension?
+<label><input type="radio" name="q5" value="a"> .class</label>
+<label><input type="radio" name="q5" value="b"> .java</label>
+<label><input type="radio" name="q5" value="c"> .js</label>
+</div>
+
+<button type="button" onclick="check()">Submit Test</button>
+</form>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function check(){
+const ans={q1:"b",q2:"a",q3:"b",q4:"c",q5:"b"};
+let score=0,html="";
+
+for(let k in ans){
+let v=document.querySelector(`input[name=${k}]:checked`);
+if(v && v.value===ans[k]){
+score++;
+html+=`Question ${k[1]} ✅ Correct<br>`;
+}else{
+html+=`Question ${k[1]} ❌ Correct Answer: ${ans[k].toUpperCase()}<br>`;
+}
+}
+
+let percent = score*20;
+
+result.innerHTML = `
+<div class="result">
+<h3>Score: ${score}/5 (${percent}%)</h3>
+${html}
+<br>
+<button onclick="location.reload()">Retry</button>
+<a href="javainfo.html"><button>Back</button></a>
+</div>`;
+}
+</script>
+
+</body>
+</html>
