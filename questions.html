@@ -28,7 +28,10 @@ header{
 }
 
 header h1{
-    font-size:32px;
+    font-size:34px;
+    background: linear-gradient(90deg,#38bdf8,#6366f1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 /* Container */
@@ -53,7 +56,13 @@ header h1{
     text-align:center;
     transition:0.4s;
     position:relative;
+    animation: slideUp 0.8s ease forwards;
+    opacity:0;
 }
+
+.card:nth-child(1){ animation-delay:0.2s; }
+.card:nth-child(2){ animation-delay:0.4s; }
+.card:nth-child(3){ animation-delay:0.6s; }
 
 .card:hover{
     transform: translateY(-10px) scale(1.02);
@@ -101,7 +110,12 @@ header h1{
 }
 
 .btn:hover{
-    transform: scale(1.05);
+    transform: scale(1.08);
+    box-shadow: 0 0 15px rgba(99,102,241,0.6);
+}
+
+.btn:active{
+    transform: scale(0.95);
 }
 
 /* PREMIUM SECTION */
@@ -143,16 +157,38 @@ header h1{
     border:none;
     cursor:pointer;
     transition:0.3s;
+    animation: pulse 2s infinite;
 }
 
 .unlock:hover{
     transform: scale(1.1);
 }
 
-/* Animation */
+.unlock:active{
+    transform: scale(0.95);
+}
+
+/* Animations */
+@keyframes slideUp{
+    from{
+        opacity:0;
+        transform:translateY(50px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
 @keyframes fadeIn{
     from{opacity:0; transform:translateY(40px);}
     to{opacity:1; transform:translateY(0);}
+}
+
+@keyframes pulse{
+    0%{ transform: scale(1); }
+    50%{ transform: scale(1.05); }
+    100%{ transform: scale(1); }
 }
 </style>
 </head>
