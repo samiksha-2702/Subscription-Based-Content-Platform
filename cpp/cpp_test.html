@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>C++ Practice Test — Set 2</title>
@@ -7,54 +7,79 @@
 
 <style>
 body{
-font-family:Segoe UI;
-background:#0b1220;
-color:#e5e7eb;
-padding:20px;
+    font-family:Segoe UI;
+    background:#0b1220;
+    color:#e5e7eb;
+    padding:20px;
 }
 
 .header{
-background:#111827;
-padding:20px;
-border-radius:12px;
-margin-bottom:20px;
-box-shadow:0 8px 25px rgba(0,0,0,.5);
+    background:#111827;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.5);
 }
 
 .question{
-background:#020617;
-padding:18px;
-margin-bottom:15px;
-border-radius:10px;
-border:1px solid #1f2937;
+    background:#020617;
+    padding:18px;
+    margin-bottom:15px;
+    border-radius:10px;
+    border:1px solid #1f2937;
 }
 
+label{display:block;margin:6px 0;cursor:pointer}
+
 button{
-padding:12px 18px;
-background:#16a34a;
-border:none;
-border-radius:8px;
-color:white;
-font-weight:600;
-cursor:pointer;
+    padding:12px 18px;
+    background:#16a34a;
+    border:none;
+    border-radius:8px;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:10px;
 }
 
 .timer{
-font-size:20px;
-color:#fb7185;
-font-weight:bold;
+    font-size:20px;
+    color:#fb7185;
+    font-weight:bold;
 }
 
 .result{
-background:#111827;
-padding:20px;
-border-radius:12px;
-margin-top:20px;
-display:none;
+    background:#111827;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+    display:none;
 }
 
 .correct{color:#4ade80}
 .wrong{color:#f87171}
+
+textarea{
+    width:100%;
+    min-height:120px;
+    background:#111827;
+    color:#60a5fa;
+    border:none;
+    border-radius:8px;
+    padding:10px;
+    font-family:monospace;
+    font-size:14px;
+}
+
+pre{
+    background:#0b1220;
+    color:#60a5fa;
+    padding:10px;
+    border-radius:8px;
+    min-height:50px;
+    overflow:auto;
+    margin-top:8px;
+}
 </style>
 </head>
 
@@ -67,6 +92,7 @@ display:none;
 
 <form id="quiz">
 
+<!-- MCQs -->
 <div class="question">
 Q1. Which file extension is used for C++ source files?<br>
 <input type="radio" name="q1" value="a"> .java<br>
@@ -109,6 +135,49 @@ Q6. Which concept allows same function name with different parameters?<br>
 <input type="radio" name="q6" value="c"> Encapsulation
 </div>
 
+<div class="question">
+Q7. Access specifier to allow subclass access?<br>
+<input type="radio" name="q7" value="a"> public<br>
+<input type="radio" name="q7" value="b"> private<br>
+<input type="radio" name="q7" value="c"> protected
+</div>
+
+<div class="question">
+Q8. Which keyword is used to inherit a class?<br>
+<input type="radio" name="q8" value="a"> extends<br>
+<input type="radio" name="q8" value="b"> inherit<br>
+<input type="radio" name="q8" value="c"> :
+</div>
+
+<div class="question">
+Q9. Default value of uninitialized int variable?<br>
+<input type="radio" name="q9" value="a"> 0<br>
+<input type="radio" name="q9" value="b"> Garbage value<br>
+<input type="radio" name="q9" value="c"> NULL
+</div>
+
+<div class="question">
+Q10. Which is used for dynamic memory deallocation?<br>
+<input type="radio" name="q10" value="a"> free()<br>
+<input type="radio" name="q10" value="b"> delete<br>
+<input type="radio" name="q10" value="c"> remove
+</div>
+
+<!-- Coding Questions -->
+<div class="question">
+<h3>Q11. Swap two numbers (C++ code)</h3>
+<textarea id="code1" placeholder="Write C++ code here..."></textarea>
+<button type="button" onclick="runCppCode('code1','output1')">Run Code</button>
+<pre id="output1"></pre>
+</div>
+
+<div class="question">
+<h3>Q12. Print first n Fibonacci numbers</h3>
+<textarea id="code2" placeholder="Write C++ code here..."></textarea>
+<button type="button" onclick="runCppCode('code2','output2')">Run Code</button>
+<pre id="output2"></pre>
+</div>
+
 <button type="button" onclick="checkTest()">Submit Test</button>
 
 </form>
@@ -116,58 +185,55 @@ Q6. Which concept allows same function name with different parameters?<br>
 <div id="result" class="result"></div>
 
 <script>
-
+///// ANSWERS /////
 const ans = {
-q1:"b",
-q2:"a",
-q3:"c",
-q4:"b",
-q5:"b",
-q6:"a"
+q1:"b", q2:"a", q3:"c", q4:"b", q5:"b",
+q6:"a", q7:"c", q8:"c", q9:"b", q10:"b"
 };
 
 function checkTest(){
-
-let score = 0;
-let html = "<h3>Answer Review</h3>";
+let score=0;
+let html="<h3>Answer Review</h3>";
 
 for(let q in ans){
-let marked = document.querySelector(`input[name=${q}]:checked`);
-
-if(marked && marked.value === ans[q]){
-score++;
-html += `<p class="correct">${q.toUpperCase()} ✔ Correct</p>`;
-}else{
-html += `<p class="wrong">${q.toUpperCase()} ✘ Wrong — Correct: ${ans[q]}</p>`;
+    let marked = document.querySelector(`input[name=${q}]:checked`);
+    if(marked && marked.value===ans[q]){
+        score++;
+        html += `<p class="correct">${q.toUpperCase()} ✔ Correct</p>`;
+    }else{
+        html += `<p class="wrong">${q.toUpperCase()} ✘ Wrong — Correct: ${ans[q]}</p>`;
+    }
 }
-}
 
-html += `<h2>Final Score: ${score}/6</h2>`;
+html += `<h2>Final Score: ${score}/10</h2>`;
+html += `<button onclick="location.reload()">Retry Test</button>`;
 
 let r = document.getElementById("result");
 r.innerHTML = html;
 r.style.display="block";
 }
 
-//// TIMER ////
-
+///// TIMER /////
 let time = 15*60;
-
 function tick(){
-let m = Math.floor(time/60);
-let s = time%60;
-document.getElementById("time").innerText =
-m+":"+s.toString().padStart(2,"0");
+    let m = Math.floor(time/60);
+    let s = time%60;
+    document.getElementById("time").innerText = m+":"+s.toString().padStart(2,"0");
 
-if(time<=0){
-checkTest();
-alert("Time finished — Auto submitted");
+    if(time<=0){
+        checkTest();
+        alert("Time finished — Auto submitted");
+    }
+    time--;
 }
-time--;
-}
-
 setInterval(tick,1000);
 
+///// C++ CODE SIMULATION /////
+function runCppCode(codeId, outputId){
+    const code = document.getElementById(codeId).value;
+    const output = document.getElementById(outputId);
+    output.innerText = "⚠️ Simulation: C++ code cannot run in-browser.\nYour code:\n" + code;
+}
 </script>
 
 </body>

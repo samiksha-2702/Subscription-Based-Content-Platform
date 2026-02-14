@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>DSA Learning Module</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+margin:0;
+font-family:Segoe UI, Arial;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+}
+
+header{
+text-align:center;
+padding:30px;
+background:rgba(2,6,23,.8);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+padding:30px;
+max-width:1100px;
+margin:auto;
+}
+
+.card{
+background:#111827;
+padding:20px;
+border-radius:14px;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 0 20px rgba(34,197,94,.3);
+}
+
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 14px;
+background:#225bc5;
+color:white;
+text-decoration:none;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>DSA Learning Module</h1>
+<p>Arrays • Linked List • Stack • Queue • Sorting • Practice • Test</p>
+</header>
+
+<div class="grid">
+
+<div class="card">
+<h3>DSA Basics</h3>
+<p>Concepts & Complexity</p>
+<a href="dsa_basics.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Linear Structures</h3>
+<p>Array, Linked List, Stack, Queue</p>
+<a href="dsa_linear.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Sorting & Searching</h3>
+<p>Algorithms & logic</p>
+<a href="dsa_sort.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Practice Set</h3>
+<p>MCQ + Descriptive + Coding</p>
+<a href="dsa_practice.html" class="btn">Solve</a>
+</div>
+
+<div class="card">
+<h3>15 Min Test</h3>
+<p>Timed MCQ Test</p>
+<a href="dsa_test.html" class="btn">Start</a>
+</div>
+
+</div>
+</body>
+</html>

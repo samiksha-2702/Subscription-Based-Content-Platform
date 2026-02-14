@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SQL Basics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{margin:0;font-family:Segoe UI,Arial;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb;}
+header{text-align:center;padding:28px;background:rgba(2,6,23,.8);}
+.container{max-width:1000px;margin:auto;padding:25px;}
+.card{background:#111827;padding:20px;border-radius:14px;margin-bottom:18px;}
+h2{border-left:4px solid #22c55e;padding-left:10px;}
+code{background:#022c22;padding:3px 6px;border-radius:6px;}
+.btn{display:inline-block;padding:10px 14px;background:#16a34a;color:white;text-decoration:none;border-radius:8px;}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>SQL Basics</h1>
+<p>Core database fundamentals</p>
+<a href="sql.html" class="btn">⬅ Back</a>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>What is SQL?</h2>
+SQL (Structured Query Language) is used to store, manage and retrieve data from relational databases.
+</div>
+
+<div class="card">
+<h2>Database Terms</h2>
+• Database — collection of tables <br> 
+• Table — rows + columns  <br>
+• Row — record  <br>
+• Column — field  <br>
+</div>
+
+<div class="card">
+<h2>SQL Command Types</h2>
+DDL → CREATE, DROP, ALTER <br> 
+DML → INSERT, UPDATE, DELETE  <br>
+DQL → SELECT  <br>
+DCL → GRANT, REVOKE<br>  
+TCL → COMMIT, ROLLBACK <br> 
+</div>
+
+<div class="card">
+<h2>Create Table</h2>
+<code>
+CREATE TABLE students(
+id INT PRIMARY KEY,
+name VARCHAR(50),
+marks INT
+);
+</code>
+</div>
+
+</div>
+</body>
+</html>

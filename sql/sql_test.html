@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SQL 15 Min Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb;}
+.container{max-width:1000px;margin:auto;padding:25px;}
+h1{text-align:center;}
+.timer{text-align:center;font-size:22px;background:#ef4444;padding:12px;border-radius:8px;margin-bottom:20px;}
+.card{background:#111827;padding:20px;border-radius:14px;margin-bottom:16px;}
+button{padding:12px 18px;border:none;border-radius:8px;background:#16a34a;color:white;font-weight:600;cursor:pointer;}
+.result{background:#14532d;padding:16px;border-radius:8px;margin-top:20px;text-align:center;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>SQL 15-Minute Test</h1>
+<div class="timer" id="timer">15:00</div>
+
+<form id="form"></form>
+<button type="button" onclick="submitTest()">Submit Test</button>
+<div id="result"></div>
+</div>
+
+<script>
+const Q = [
+["Which clause filters rows?",["GROUP","WHERE","ORDER","JOIN"],1],
+["COUNT is",["Aggregate","Key","DDL","Join"],0],
+["Primary key is",["Unique","Duplicate","Null","Text"],0],
+["DELETE removes",["Table","Rows","DB","Index"],1],
+["JOIN combines",["Tables","Columns","DB","Keys"],0],
+["HAVING works with",["Groups","Rows","Keys","Index"],0],
+["ORDER BY is for",["Sort","Delete","Join","Count"],0],
+["INSERT is",["DDL","DML","DCL","TCL"],1],
+["Foreign key references",["Parent","Child","Index","View"],0],
+["Subquery is",["Nested query","Join","DDL","Loop"],0],
+["UNIQUE allows null?",["Yes","No","Never","Only once"],0],
+["GROUP BY used with",["Aggregate","Delete","Key","Join"],0]
+];
+
+Q.forEach((q,i)=>{
+let h=`<div class=card><b>${i+1}. ${q[0]}</b><br>`;
+q[1].forEach((o,j)=>h+=`<input type=radio name=q${i} value=${j}> ${o}<br>`);
+h+="</div>";
+form.innerHTML+=h;
+});
+
+function submitTest(){
+clearInterval(t);
+let s=0;
+Q.forEach((q,i)=>{
+let a=document.querySelector(`input[name=q${i}]:checked`);
+if(a && a.value==q[2]) s++;
+});
+result.innerHTML=`<div class=result>Score ${s}/${Q.length}</div>`;
+}
+
+let time=900;
+let t=setInterval(()=>{
+let m=Math.floor(time/60);
+let s=time%60;
+timer.innerHTML=`${m}:${s<10?"0":""}${s}`;
+time--;
+if(time<0){submitTest();}
+},1000);
+</script>
+
+</body>
+</html>

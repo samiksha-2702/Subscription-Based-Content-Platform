@@ -1,58 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Java 15 Minute Quick Test</title>
+<title>Java 15-Minute Quick Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
-font-family:Segoe UI;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:white;
-padding:30px;
+    font-family:Segoe UI;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+    padding:20px;
 }
 
 .card{
-max-width:1000px;
-margin:auto;
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(14px);
-padding:30px;
-border-radius:18px;
-box-shadow:0 10px 40px rgba(0,0,0,.7);
+    max-width:1000px;
+    margin:auto;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(14px);
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 40px rgba(0,0,0,.7);
 }
 
 .q{
-margin:18px 0;
-padding:16px;
-background:#020617;
-border-radius:12px;
+    margin:18px 0;
+    padding:16px;
+    background:#020617;
+    border-radius:12px;
 }
 
 label{display:block;margin:6px 0;cursor:pointer}
 
 button{
-padding:14px 20px;
-border:none;
-border-radius:12px;
-background:#2563eb;
-color:white;
-font-weight:600;
-cursor:pointer;
+    padding:14px 20px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    margin-top:10px;
 }
 
 .timer{
-font-size:22px;
-font-weight:bold;
-color:#22c55e;
-margin-bottom:10px;
+    font-size:22px;
+    font-weight:bold;
+    color:#22c55e;
+    margin-bottom:10px;
 }
 
 .result{
-margin-top:20px;
-padding:18px;
-background:#111827;
-border-radius:12px;
+    margin-top:20px;
+    padding:18px;
+    background:#111827;
+    border-radius:12px;
+}
+
+textarea{
+    width:100%;
+    min-height:120px;
+    background:#111827;
+    color:#93c5fd;
+    border:none;
+    border-radius:10px;
+    padding:10px;
+    font-family:monospace;
+    font-size:14px;
+}
+
+pre{
+    background:#0b1220;
+    color:#60a5fa;
+    padding:10px;
+    border-radius:8px;
+    min-height:50px;
+    overflow:auto;
 }
 </style>
 </head>
@@ -60,14 +83,12 @@ border-radius:12px;
 <body>
 
 <div class="card">
-
 <h2>Java 15-Minute Quick Test</h2>
 <div class="timer">Time Left: <span id="time">15:00</span></div>
 
 <form id="quiz">
 
-<!-- QUESTIONS -->
-
+<!-- MCQs -->
 <div class="q">1️⃣ Java is platform ___ ?
 <label><input type="radio" name="q1" value="a"> Dependent</label>
 <label><input type="radio" name="q1" value="b"> Independent</label>
@@ -118,6 +139,21 @@ border-radius:12px;
 <label><input type="radio" name="q10" value="b"> Games</label>
 </div>
 
+<!-- Coding Questions -->
+<div class="q">
+<h3>11️⃣ Swap two numbers (Java code)</h3>
+<textarea id="code1" placeholder="Write Java code here..."></textarea>
+<button type="button" onclick="runJavaCode('code1','output1')">Run Code</button>
+<pre id="output1"></pre>
+</div>
+
+<div class="q">
+<h3>12️⃣ Print first n Fibonacci numbers</h3>
+<textarea id="code2" placeholder="Write Java code here..."></textarea>
+<button type="button" onclick="runJavaCode('code2','output2')">Run Code</button>
+<pre id="output2"></pre>
+</div>
+
 <button type="button" onclick="submitTest()">Submit Test</button>
 
 </form>
@@ -127,75 +163,57 @@ border-radius:12px;
 </div>
 
 <script>
-
 /* ===== TIMER ===== */
-
 let time = 900; // 15 min in seconds
-
 let timer = setInterval(()=>{
-time--;
-
-let m = Math.floor(time/60);
-let s = time%60;
-
-document.getElementById("time").innerText =
-m + ":" + (s<10?"0":"") + s;
-
-if(time<=0){
-clearInterval(timer);
-submitTest();
-alert("Time Up — Test Submitted");
-}
-
+    time--;
+    let m=Math.floor(time/60);
+    let s=time%60;
+    document.getElementById("time").innerText = m + ":" + (s<10?"0":"")+s;
+    if(time<=0){
+        clearInterval(timer);
+        submitTest();
+        alert("Time Up — Test Submitted");
+    }
 },1000);
 
-
 /* ===== ANSWERS ===== */
-
 function submitTest(){
-
-clearInterval(timer);
-
-const ans={
-q1:"b",
-q2:"a",
-q3:"b",
-q4:"b",
-q5:"a",
-q6:"a",
-q7:"a",
-q8:"b",
-q9:"a",
-q10:"a"
-};
-
-let score=0;
-let html="";
-
-for(let k in ans){
-let v=document.querySelector(`input[name=${k}]:checked`);
-if(v && v.value===ans[k]){
-score++;
-html+=`${k.toUpperCase()} ✅ Correct<br>`;
-}else{
-html+=`${k.toUpperCase()} ❌ Correct Answer: ${ans[k].toUpperCase()}<br>`;
-}
-}
-
-let percent = score*10;
-
-result.innerHTML=`
-<div class="result">
-<h3>Final Score: ${score}/10 (${percent}%)</h3>
-${html}
-<br>
-<button onclick="location.reload()">Retry Test</button>
-<a href="javainfo.html"><button>Back</button></a>
-</div>
-`;
-
+    clearInterval(timer);
+    const ans={
+        q1:"b", q2:"a", q3:"b", q4:"b", q5:"a",
+        q6:"a", q7:"a", q8:"b", q9:"a", q10:"a"
+    };
+    let score=0;
+    let html="";
+    for(let k in ans){
+        let v=document.querySelector(`input[name=${k}]:checked`);
+        if(v && v.value===ans[k]){
+            score++;
+            html+=`${k.toUpperCase()} ✅ Correct<br>`;
+        }else{
+            html+=`${k.toUpperCase()} ❌ Correct Answer: ${ans[k].toUpperCase()}<br>`;
+        }
+    }
+    let percent = score*10;
+    document.getElementById("result").innerHTML=`
+    <div class="result">
+    <h3>Final Score: ${score}/10 (${percent}%)</h3>
+    ${html}
+    <br>
+    <button onclick="location.reload()">Retry Test</button>
+    <a href="javainfo.html"><button>Back</button></a>
+    </div>
+    `;
 }
 
+/* ===== JAVA CODE SIMULATION ===== */
+function runJavaCode(codeId, outputId){
+    const code = document.getElementById(codeId).value;
+    const output = document.getElementById(outputId);
+    // Simulation message
+    output.innerText = "⚠️ This is a simulation.\nTo run Java code, connect to JDoodle or server-side compiler.\n\nYour Code:\n" + code;
+}
 </script>
 
 </body>

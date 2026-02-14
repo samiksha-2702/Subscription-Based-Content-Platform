@@ -16,13 +16,14 @@ header p { opacity:.7; }
 .card h3 { margin-top:0; color:#93c5fd; }
 label { display:block; margin:6px 0; cursor:pointer; }
 input[type="radio"] { margin-right:8px; }
-textarea { width:100%; height:100px; background:#1f2937; color:#e5e7eb; border-radius:8px; border:none; padding:10px; font-family:monospace; font-size:14px; }
+textarea { width:100%; height:120px; background:#1f2937; color:#e5e7eb; border-radius:8px; border:none; padding:10px; font-family:monospace; font-size:14px; }
 .btn { display:inline-block; margin-top:10px; padding:10px 16px; border-radius:8px; background:linear-gradient(135deg,#2563eb,#1d4ed8); color:white; text-decoration:none; font-weight:600; transition:.3s; border:none; cursor:pointer; }
 .btn:hover { transform:scale(1.05); box-shadow:0 8px 20px rgba(37,99,235,.5); }
 .result { background: rgba(59,130,246,0.2); padding:15px; border-radius:10px; margin-top:20px; color:#fff; }
 #timer { font-size:20px; font-weight:600; color:#60a5fa; margin-bottom:20px; text-align:center; }
 footer { text-align:center; padding:25px; opacity:.6; }
 code { background: rgba(59,130,246,0.2); padding:2px 6px; border-radius:4px; font-family:monospace; }
+#output { background:#111827; color:#93c5fd; padding:10px; border-radius:8px; margin-top:10px; font-family:monospace; min-height:60px; }
 </style>
 </head>
 <body>
@@ -59,18 +60,29 @@ code { background: rgba(59,130,246,0.2); padding:2px 6px; border-radius:4px; fon
 <label><input type="radio" name="q3" value="c"> def</label>
 </div>
 
+<div class="card">
+<h3>4. Output of <code>print(type([]) is list)</code>?</h3>
+<label><input type="radio" name="q4" value="a"> True</label>
+<label><input type="radio" name="q4" value="b"> False</label>
+<label><input type="radio" name="q4" value="c"> Error</label>
+</div>
+
 <!-- Coding Questions -->
 <div class="card">
-<h3>4. Swap two numbers without using a third variable</h3>
-<textarea name="q4" placeholder="Write Python code here..."></textarea>
+<h3>5. Swap two numbers without using a third variable</h3>
+<textarea id="code1" placeholder="Write Python code here..."></textarea>
+<button type="button" class="btn" onclick="runCode('code1', 'output1')">Run Code</button>
+<div id="output1"></div>
 </div>
 
 <div class="card">
-<h3>5. Print first n Fibonacci numbers</h3>
-<textarea name="q5" placeholder="Write Python code here..."></textarea>
+<h3>6. Print first n Fibonacci numbers</h3>
+<textarea id="code2" placeholder="Write Python code here..."></textarea>
+<button type="button" class="btn" onclick="runCode('code2', 'output2')">Run Code</button>
+<div id="output2"></div>
 </div>
 
-<button type="button" class="btn" onclick="submitQuiz()">Submit</button>
+<button type="button" class="btn" onclick="submitQuiz()">Submit Test</button>
 </form>
 
 <div id="result" class="result" style="display:none;"></div>
@@ -80,9 +92,13 @@ code { background: rgba(59,130,246,0.2); padding:2px 6px; border-radius:4px; fon
 
 <footer>© Interview Prep Platform — Python Module</footer>
 
+<!-- Skulpt for in-browser Python -->
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/skulpt@1.2.0/dist/skulpt-stdlib.js"></script>
+
 <script>
 // Timer countdown
-let time = 15 * 60; // 15 minutes in seconds
+let time = 15 * 60;
 const timerDisplay = document.getElementById('timer');
 const countdown = setInterval(() => {
     let minutes = Math.floor(time/60);
@@ -96,9 +112,26 @@ const countdown = setInterval(() => {
     time--;
 }, 1000);
 
+// Skulpt runner
+function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+        throw "File not found: '" + x + "'";
+    return Sk.builtinFiles["files"][x];
+}
+
+function runCode(codeId, outputId){
+    const prog = document.getElementById(codeId).value;
+    const mypre = document.getElementById(outputId);
+    mypre.innerHTML = '';
+    Sk.pre = outputId;
+    Sk.configure({output:function(text){mypre.innerHTML += text + '\n';}, read:builtinRead});
+    Sk.misceval.asyncToPromise(function(){return Sk.importMainWithBody("<stdin>",false,prog,true);})
+    .catch(function(err){mypre.innerHTML = err.toString();});
+}
+
 // Quiz submission
 function submitQuiz() {
-    const answers = { q1:'b', q2:'b', q3:'c' }; // MCQ answers
+    const answers = { q1:'b', q2:'b', q3:'c', q4:'a' };
     let score = 0;
     let total = Object.keys(answers).length;
     let correctAnswersHTML = "<h3>Correct Answers:</h3><ul>";
@@ -110,15 +143,14 @@ function submitQuiz() {
     }
 
     // Coding solutions hints
-    let codingHints = "<h3>Coding Solutions (Check manually):</h3><ul>";
-    codingHints += "<li>Q4 Swap: a,b = b,a</li>";
-    codingHints += "<li>Q5 Fibonacci: Use loop or recursion to print series</li>";
+    let codingHints = "<h3>Coding Solutions (Check output manually):</h3><ul>";
+    codingHints += "<li>Swap: a,b = b,a</li>";
+    codingHints += "<li>Fibonacci: Use loop or recursion to print series</li>";
     codingHints += "</ul>";
 
     document.getElementById("result").style.display = "block";
     document.getElementById("result").innerHTML = `<h3>Your Score: ${score} / ${total}</h3>` + correctAnswersHTML + codingHints;
 
-    // Disable the form to prevent multiple submissions
     const inputs = document.querySelectorAll('input, textarea, button');
     inputs.forEach(i => i.disabled = true);
     clearInterval(countdown);
