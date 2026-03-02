@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>C++ Basics — Detailed</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{background:#0f172a;color:#e5e7eb;font-family:Segoe UI;padding:30px;line-height:1.6}
+.card{background:#111827;padding:25px;border-radius:14px;margin-bottom:20px}
+pre{background:#020617;padding:15px;border-radius:8px;color:#93c5fd}
+h2{color:#60a5fa}
+button{padding:8px 12px;border-radius:8px;border:none;background:#2563eb;color:white}
+</style>
+</head>
+
+<body>
+
+<button onclick="history.back()">⬅ Back</button>
+
+
+<div class="card">
+<h2>What is C++?</h2>
+C++ is a compiled, object-oriented programming language developed by Bjarne Stroustrup.
+It supports procedural + object-oriented + generic programming.
+Used in system software, games, compilers, embedded systems.
+</div>
+
+<div class="card">
+<h2>Basic Structure of C++ Program</h2>
+
+<pre>
+#include &lt;iostream&gt;
+using namespace std;
+
+int main() {
+    cout << "Hello World";
+    return 0;
+}
+</pre>
+
+<b>Explanation:</b>
+<ul>
+<li>#include — library include</li>
+<li>namespace std — avoid std:: prefix</li>
+<li>main() — entry point</li>
+<li>return 0 — success exit</li>
+</ul>
+</div>
+
+<div class="card">
+<h2>Variables & Data Types</h2>
+
+Common types:
+
+<ul>
+<li>int — integers</li>
+<li>float — decimal</li>
+<li>double — large decimal</li>
+<li>char — single character</li>
+<li>bool — true/false</li>
+<li>string — text</li>
+</ul>
+
+<pre>
+int age = 20;
+float marks = 88.5;
+string name = "Ravi";
+</pre>
+</div>
+
+<div class="card">
+<h2>Input and Output</h2>
+
+<pre>
+int x;
+cin >> x;
+cout << x;
+</pre>
+
+Multiple input:
+
+<pre>
+cin >> a >> b;
+</pre>
+</div>
+
+<div class="card">
+<h2>Operators</h2>
+
+<ul>
+<li>Arithmetic → + − * / %</li>
+<li>Relational → == != > <</li>
+<li>Logical → && || !</li>
+<li>Assignment → = += -=</li>
+</ul>
+</div>
+
+</body>
+</html>

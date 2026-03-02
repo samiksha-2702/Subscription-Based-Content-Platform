@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SQL Practice</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb;}
+.container{max-width:1000px;margin:auto;padding:25px;}
+h1{text-align:center;}
+.section{font-size:22px;margin:30px 0 15px;border-left:4px solid #22c55e;padding-left:10px;}
+.card{background:#111827;padding:20px;border-radius:14px;margin-bottom:18px;}
+button{padding:10px 16px;border:none;border-radius:8px;background:#16a34a;color:white;font-weight:600;cursor:pointer;}
+button:hover{background:#15803d;}
+textarea{width:100%;height:140px;border-radius:8px;border:none;padding:12px;margin-top:10px;font-family:monospace;}
+.output{background:black;padding:12px;border-radius:8px;margin-top:10px;color:#22c55e;}
+.result{background:#14532d;padding:15px;border-radius:8px;margin-top:15px;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h1>SQL Practice Zone</h1>
+
+<div class="section">MCQ Practice</div>
+<form id="mcqForm"></form>
+<button onclick="checkMCQ()">Check Answers</button>
+<div id="mcqResult"></div>
+
+<div class="section">Descriptive Practice</div>
+
+<div class="card">
+<b>1. Explain difference between WHERE and HAVING.</b>
+<textarea id="d1"></textarea>
+</div>
+
+<div class="card">
+<b>2. Explain normalization.</b>
+<textarea id="d2"></textarea>
+</div>
+
+<div class="card">
+<b>3. What are joins? Explain types.</b>
+<textarea id="d3"></textarea>
+</div>
+
+<div class="card">
+<b>4. Primary key vs Foreign key.</b>
+<textarea id="d4"></textarea>
+</div>
+
+<div class="card">
+<b>5. What is an index?</b>
+<textarea id="d5"></textarea>
+</div>
+
+<button onclick="saveDesc()">Save Answers</button>
+
+<div class="section">Query Practice Area</div>
+
+<div class="card">
+<p>Sample table: students(id, name, marks, city)</p>
+<textarea id="sqlArea">SELECT * FROM students;</textarea>
+<button onclick="runSQL()">Run Query</button>
+<div class="output" id="out"></div>
+</div>
+
+</div>
+
+<script>
+const mcqs = [
+["SELECT is used to",["Delete","Fetch","Update","Drop"],1],
+["Primary key allows NULL?",["Yes","No","Sometimes","Unknown"],1],
+["GROUP BY is used with",["Aggregate","Join","Delete","Key"],0],
+["COUNT() is",["Aggregate","Constraint","DDL","Join"],0],
+["UNIQUE allows duplicate?",["Yes","No","Only text","Only int"],1]
+];
+
+const form = document.getElementById("mcqForm");
+mcqs.forEach((q,i)=>{
+let h=`<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
+q[1].forEach((o,j)=>h+=`<input type=radio name=q${i} value=${j}> ${o}<br>`);
+h+="</div>";
+form.innerHTML+=h;
+});
+
+function checkMCQ(){
+let s=0;
+mcqs.forEach((q,i)=>{
+let a=document.querySelector(`input[name=q${i}]:checked`);
+if(a && a.value==q[2]) s++;
+});
+mcqResult.innerHTML=`<div class=result>Score ${s}/${mcqs.length}</div>`;
+}
+
+function saveDesc(){
+for(let i=1;i<=5;i++)
+localStorage.setItem("sql"+i,document.getElementById("d"+i).value);
+alert("Saved ✅");
+}
+
+window.onload=()=>{
+for(let i=1;i<=5;i++)
+document.getElementById("d"+i).value=localStorage.getItem("sql"+i)||"";
+}
+
+function runSQL(){
+let q=sqlArea.value.toLowerCase();
+if(q.includes("select"))
+out.innerHTML="Simulated result:<br>1 Amit 78 Pune<br>2 Neha 85 Mumbai";
+else if(q.includes("where"))
+out.innerHTML="Filter applied (simulation)";
+else if(q.includes("join"))
+out.innerHTML="Join executed (simulation)";
+else
+out.innerHTML="Query executed (simulation mode)";
+}
+</script>
+
+</body>
+</html>

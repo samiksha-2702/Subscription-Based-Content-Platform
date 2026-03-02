@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Programming Languages</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: white;
+}
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(15,23,42,0.7);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+
+.container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 28px;
+}
+
+.card-link {
+    text-decoration: none;
+    color: white;
+}
+
+.card {
+    background: linear-gradient(145deg, #111827, #0b1220);
+    border-radius: 16px;
+    padding: 30px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    transition: all 0.35s ease;
+    cursor: pointer;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.35s;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.9),
+        0 0 20px rgba(59,130,246,0.25);
+}
+
+.card:hover::after { opacity: 1; }
+
+.card img {
+    width: 250px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 14px;
+    transition: transform 0.4s ease;
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
+}
+
+.card:hover img {
+    transform: scale(1.12) rotate(3deg);
+}
+
+.card h3 {
+    margin: 10px 0 0;
+    font-size: 18px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background: #020617;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Programming Languages</h1>
+    <p>Select a language to continue</p>
+</header>
+
+<div class="container">
+<div class="grid">
+
+<a href="pythoninfo.html" class="card-link">
+<div class="card">
+    <img src="image/python.jpg">
+    <h3>Python</h3>
+</div>
+</a>
+
+<a href="java/javainfo.html" class="card-link">
+<div class="card">
+    <img src="image/java.png">
+    <h3>Java</h3>
+</div>
+</a>
+
+<a href="cpp/cppinfo.html" class="card-link">
+<div class="card">
+    <img src="image/cpp.png">
+    <h3>C++</h3>
+</div>
+</a>
+
+<a href="js/javasinfo.html" class="card-link">
+<div class="card">
+    <img src="image/javascript.png">
+    <h3>JavaScript</h3>
+</div>
+</a>
+
+<a href="sql/sql.html" class="card-link">
+<div class="card">
+    <img src="image/sql.jpg">
+    <h3>SQL</h3>
+</div>
+</a>
+
+<a href="ds/dsa.html" class="card-link">
+<div class="card">
+    <img src="image/dsa.png">
+    <h3>Data Structures</h3>
+</div>
+</a>
+
+</div>
+</div>
+
+<footer>
+© Interview Prep Platform
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python MCQ Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: linear-gradient(135deg,#020617,#0f172a); color: #e5e7eb; }
+header { padding: 25px 20px; text-align: center; background: rgba(2,6,23,0.8); backdrop-filter: blur(10px); box-shadow: 0 4px 30px rgba(0,0,0,0.6); }
+header h1 { margin: 0; font-size: 28px; }
+header p { opacity: .7; }
+.container { max-width: 900px; margin: auto; padding: 30px 20px; }
+.card { background: linear-gradient(145deg,#111827,#0b1220); border-radius: 14px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05); margin-bottom: 20px; }
+.card h3 { margin-top: 0; color: #93c5fd; }
+label { display: block; margin: 6px 0; cursor: pointer; }
+input[type="radio"] { margin-right: 8px; }
+.btn { display: inline-block; margin-top: 10px; padding: 10px 16px; border-radius: 8px; background: linear-gradient(135deg,#2563eb,#1d4ed8); color: white; text-decoration: none; font-weight: 600; transition: .3s; border: none; cursor: pointer; }
+.btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(37,99,235,.5); }
+.result { background: rgba(59,130,246,0.2); padding: 15px; border-radius: 10px; margin-top: 20px; color: #fff; }
+footer { text-align: center; padding: 25px; opacity: .6; }
+code { background: rgba(59,130,246,0.2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+</style>
+</head>
+<body>
+<header>
+<h1>Python MCQ Test</h1>
+<p>Answer the MCQs and submit to see your score</p>
+</header>
+
+<div class="container">
+<form id="mcqForm">
+
+<div class="card">
+<h3>1. Which of these is a mutable data type in Python?</h3>
+<label><input type="radio" name="q1" value="a"> Tuple</label>
+<label><input type="radio" name="q1" value="b"> List</label>
+<label><input type="radio" name="q1" value="c"> String</label>
+<label><input type="radio" name="q1" value="d"> int</label>
+</div>
+
+<div class="card">
+<h3>2. What is the output of <code>2**3</code>?</h3>
+<label><input type="radio" name="q2" value="a"> 6</label>
+<label><input type="radio" name="q2" value="b"> 8</label>
+<label><input type="radio" name="q2" value="c"> 9</label>
+<label><input type="radio" name="q2" value="d"> 5</label>
+</div>
+
+<div class="card">
+<h3>3. Which keyword is used to create a function?</h3>
+<label><input type="radio" name="q3" value="a"> func</label>
+<label><input type="radio" name="q3" value="b"> define</label>
+<label><input type="radio" name="q3" value="c"> def</label>
+<label><input type="radio" name="q3" value="d"> function</label>
+</div>
+
+<div class="card">
+<h3>4. What does <code>len([1,2,3])</code> return?</h3>
+<label><input type="radio" name="q4" value="a"> 2</label>
+<label><input type="radio" name="q4" value="b"> 3</label>
+<label><input type="radio" name="q4" value="c"> 4</label>
+<label><input type="radio" name="q4" value="d"> None</label>
+</div>
+
+<div class="card">
+<h3>5. How to inherit a class in Python?</h3>
+<label><input type="radio" name="q5" value="a"> class B(A):</label>
+<label><input type="radio" name="q5" value="b"> class B - A:</label>
+<label><input type="radio" name="q5" value="c"> class B extends A:</label>
+<label><input type="radio" name="q5" value="d"> class B inherits A:</label>
+</div>
+
+<button type="button" class="btn" onclick="submitMCQ()">Submit</button>
+</form>
+
+<div id="result" class="result" style="display:none;"></div>
+<a href="index.html" class="btn" style="margin-top:20px;">Back to Main Page</a>
+</div>
+
+<footer>
+© Interview Prep Platform — Python Module
+</footer>
+
+<script>
+function submitMCQ() {
+    const answers = { q1:'b', q2:'b', q3:'c', q4:'b', q5:'a' };
+    let score = 0;
+    let total = Object.keys(answers).length;
+    let correctAnswersHTML = "<h3>Correct Answers:</h3><ul>";
+
+    for (let q in answers) {
+        const selected = document.querySelector(`input[name=${q}]:checked`);
+        if (selected && selected.value === answers[q]) score++;
+        correctAnswersHTML += `<li>${q.toUpperCase()}: ${answers[q]}</li>`;
+    }
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML = `<h3>Your Score: ${score} / ${total}</h3>` + correctAnswersHTML;
+}
+</script>
+</body>
+</html>

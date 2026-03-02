@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DSA Sorting & Searching</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Segoe UI, Arial, sans-serif;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+}
+
+header{
+padding:25px;
+text-align:center;
+background:#020617;
+border-bottom:1px solid #1f2937;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+padding:30px 20px;
+}
+
+.card{
+background:#111827;
+padding:22px;
+border-radius:14px;
+margin-bottom:22px;
+border:1px solid #1f2937;
+box-shadow:0 10px 25px rgba(0,0,0,.5);
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-4px);
+box-shadow:0 0 20px rgba(59,130,246,.25);
+}
+
+.card h2{
+margin-top:0;
+color:#38bdf8;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:12px;
+}
+
+th,td{
+border:1px solid #1f2937;
+padding:10px;
+}
+
+th{
+background:#020617;
+}
+
+code{
+display:block;
+background:#020617;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+white-space:pre-wrap;
+font-family:monospace;
+}
+
+.btn{
+padding:10px 16px;
+background:#38bdf8;
+border:none;
+border-radius:8px;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+footer{
+text-align:center;
+padding:25px;
+opacity:.6;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>DSA — Sorting & Searching</h1>
+<p>Sorting Algorithms • Searching Techniques • Complexity</p>
+</header>
+
+<div class="container">
+
+<button class="btn" onclick="history.back()">⬅ Back</button>
+
+<!-- SORTING INTRO -->
+
+<div class="card">
+<h2>What is Sorting?</h2>
+<p>Sorting arranges data in a specific order (ascending or descending) to make searching and processing faster.</p>
+<ul>
+<li>Improves search efficiency</li>
+<li>Required in databases</li>
+<li>Used in analytics & reporting</li>
+</ul>
+</div>
+
+<!-- SORTING TABLE -->
+
+<div class="card">
+<h2>Sorting Algorithms Complexity</h2>
+
+<table>
+<tr>
+<th>Algorithm</th>
+<th>Best</th>
+<th>Average</th>
+<th>Worst</th>
+</tr>
+
+<tr><td>Bubble Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td></tr>
+<tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td></tr>
+<tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td></tr>
+<tr><td>Merge Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td></tr>
+<tr><td>Quick Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td></tr>
+</table>
+</div>
+
+<!-- BUBBLE -->
+
+<div class="card">
+<h2>Bubble Sort</h2>
+<p>Repeatedly swaps adjacent elements if they are in wrong order.</p>
+
+<h3>Steps</h3>
+<ul>
+<li>Compare neighbors</li>
+<li>Swap if needed</li>
+<li>Repeat passes</li>
+</ul>
+
+<code>
+for i in range(n):
+  for j in range(n-i-1):
+    if a[j] > a[j+1]:
+       swap
+</code>
+</div>
+
+<!-- MERGE -->
+
+<div class="card">
+<h2>Merge Sort</h2>
+<p>Divide and conquer algorithm.</p>
+
+<ul>
+<li>Divide array into halves</li>
+<li>Sort recursively</li>
+<li>Merge sorted halves</li>
+</ul>
+
+<code>
+mergeSort(arr):
+ split
+ merge(left,right)
+</code>
+</div>
+
+<!-- QUICK -->
+
+<div class="card">
+<h2>Quick Sort</h2>
+<p>Uses pivot element and partitions array.</p>
+
+<ul>
+<li>Select pivot</li>
+<li>Partition</li>
+<li>Recursive sort</li>
+</ul>
+
+<code>
+pivot = arr[high]
+partition()
+quickSort(left)
+quickSort(right)
+</code>
+</div>
+
+<!-- SEARCHING INTRO -->
+
+<div class="card">
+<h2>What is Searching?</h2>
+<p>Searching finds the location of an element in data.</p>
+<ul>
+<li>Linear Search</li>
+<li>Binary Search</li>
+<li>Hash Search</li>
+</ul>
+</div>
+
+<!-- SEARCH TABLE -->
+
+<div class="card">
+<h2>Searching Complexity</h2>
+
+<table>
+<tr><th>Method</th><th>Requirement</th><th>Time</th></tr>
+<tr><td>Linear Search</td><td>Unsorted OK</td><td>O(n)</td></tr>
+<tr><td>Binary Search</td><td>Sorted only</td><td>O(log n)</td></tr>
+</table>
+</div>
+
+<!-- LINEAR SEARCH -->
+
+<div class="card">
+<h2>Linear Search</h2>
+<p>Checks each element one by one.</p>
+
+<code>
+for i in arr:
+  if i == key:
+     found
+</code>
+
+<h3>Use When</h3>
+<ul>
+<li>Small dataset</li>
+<li>Unsorted data</li>
+</ul>
+</div>
+
+<!-- BINARY SEARCH -->
+
+<div class="card">
+<h2>Binary Search</h2>
+<p>Works only on sorted arrays.</p>
+
+<ul>
+<li>Check middle</li>
+<li>Discard half</li>
+<li>Repeat</li>
+</ul>
+
+<code>
+low=0 high=n-1
+mid=(low+high)/2
+if key < mid → left
+else → right
+</code>
+
+<h3>Advantages</h3>
+<ul>
+<li>Very fast</li>
+<li>Logarithmic time</li>
+</ul>
+</div>
+
+<!-- APPLICATIONS -->
+
+<div class="card">
+<h2>Real World Applications</h2>
+<ul>
+<li>Database indexing</li>
+<li>Search engines</li>
+<li>Leaderboards</li>
+<li>Analytics sorting</li>
+<li>Auto-complete systems</li>
+</ul>
+</div>
+
+</div>
+
+<footer>
+DSA Learning Module — Sorting & Searching
+</footer>
+
+</body>
+</html>

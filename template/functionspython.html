@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Functions & OOP Cheat Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg,#020617,#0f172a);
+    color: #e5e7eb;
+}
+
+header {
+    padding: 25px 20px;
+    text-align: center;
+    background: rgba(2,6,23,0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+header h1 { margin: 0; font-size: 28px; }
+header p { opacity: .7; }
+
+.container { max-width: 1000px; margin: auto; padding: 30px 20px; }
+.card { background: linear-gradient(145deg,#111827,#0b1220); border-radius: 14px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05); margin-bottom: 20px; }
+.card h3 { margin-top: 0; color: #93c5fd; }
+.card ul { padding-left: 18px; line-height: 1.6; }
+.card code { background: rgba(59,130,246,0.2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: linear-gradient(135deg,#2563eb,#1d4ed8);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+.btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(37,99,235,.5); }
+
+footer { text-align: center; padding: 25px; opacity: .6; }
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Python Functions & OOP Cheat Sheet</h1>
+    <p>Quick reference for functions, lambda, classes, inheritance</p>
+</header>
+
+<div class="container">
+
+<!-- FUNCTIONS -->
+<div class="card">
+<h3>Functions</h3>
+<ul>
+<li>Define: <code>def greet(name): return f"Hello {name}"</code></li>
+<li>Call: <code>greet("Alice")</code></li>
+<li>Default arguments: <code>def add(a, b=5)</code></li>
+<li>Variable arguments: <code>def sum(*args)</code></li>
+<li>Keyword arguments: <code>def person(**kwargs)</code></li>
+</ul>
+</div>
+
+<!-- LAMBDA -->
+<div class="card">
+<h3>Lambda Functions</h3>
+<ul>
+<li>Syntax: <code>lambda x, y: x + y</code></li>
+<li>Example: <code>add = lambda a,b: a+b</code></li>
+<li>Used with <code>map, filter, reduce</code></li>
+</ul>
+</div>
+
+<!-- CLASSES -->
+<div class="card">
+<h3>Classes</h3>
+<ul>
+<li>Define: <code>class Person:</code></li>
+<li>Constructor: <code>def __init__(self, name): self.name=name</code></li>
+<li>Methods: <code>def greet(self): print(f"Hello {self.name}")</code></li>
+<li>Create object: <code>p = Person("Alice")</code></li>
+<li>Call method: <code>p.greet()</code></li>
+</ul>
+</div>
+
+<!-- INHERITANCE -->
+<div class="card">
+<h3>Inheritance</h3>
+<ul>
+<li>Single inheritance:</li>
+<pre><code>class Student(Person):
+    def __init__(self, name, roll):
+        super().__init__(name)
+        self.roll = roll</code></pre>
+<li>Multiple inheritance:</li>
+<pre><code>class C(A, B): pass</code></pre>
+</ul>
+</div>
+
+<a href="../index.html" class="btn">Back to Main Page</a>
+
+</div>
+
+<footer>
+© Interview Prep Platform — Python Module
+</footer>
+
+</body>
+</html>

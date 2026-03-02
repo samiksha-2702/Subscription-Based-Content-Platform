@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AI Recommendations - PrepEdge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg, #0f172a, #020617);
+    color: white;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 40px 20px;
+    background: rgba(15,23,42,0.7);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+
+.container {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Grid Layout */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 28px;
+}
+
+/* Card Styling */
+.card {
+    background: linear-gradient(145deg, #111827, #0b1220);
+    border-radius: 16px;
+    padding: 25px;
+    position: relative;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    transition: all 0.35s ease;
+}
+
+.card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.35s;
+    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+}
+
+.card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow:
+        0 20px 40px rgba(0,0,0,0.9),
+        0 0 20px rgba(59,130,246,0.25);
+}
+
+.card:hover::after { opacity: 1; }
+
+.card h3 {
+    margin-top: 0;
+    font-size: 18px;
+}
+
+.card p {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Table Section */
+.table-container {
+    margin-top: 50px;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #111827;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 14px;
+    text-align: center;
+}
+
+th {
+    background: #0b1220;
+}
+
+tr:nth-child(even) {
+    background: #0f172a;
+}
+
+.weak { color: #f87171; }
+.good { color: #34d399; }
+.strong { color: #60a5fa; }
+
+/* Recommendation Section */
+.recommendation {
+    margin-top: 50px;
+}
+
+.recommendation .card {
+    cursor: pointer;
+}
+
+/* Insight Box */
+.insight {
+    margin-top: 50px;
+    padding: 25px;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #111827, #0b1220);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+    background: #020617;
+    opacity: 0.7;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🧠 AI Recommendation Dashboard</h1>
+    <p>Personalized insights based on your performance</p>
+</header>
+
+<div class="container">
+
+<!-- Performance Summary -->
+<h2>📊 Performance Summary</h2>
+<div class="grid">
+    <div class="card">
+        <h3>Overall Accuracy</h3>
+        <p>72%</p>
+    </div>
+    <div class="card">
+        <h3>Tests Attempted</h3>
+        <p>12</p>
+    </div>
+    <div class="card">
+        <h3>Strongest Topic</h3>
+        <p>DBMS</p>
+    </div>
+    <div class="card">
+        <h3>Weakest Topic</h3>
+        <p>Recursion</p>
+    </div>
+</div>
+
+<!-- Weak Area Analysis -->
+<div class="table-container">
+<h2>⚠ Weak Area Analysis</h2>
+<table>
+    <tr>
+        <th>Topic</th>
+        <th>Accuracy</th>
+        <th>Status</th>
+    </tr>
+    <tr>
+        <td>Recursion</td>
+        <td>40%</td>
+        <td class="weak">Weak</td>
+    </tr>
+    <tr>
+        <td>Dynamic Programming</td>
+        <td>35%</td>
+        <td class="weak">Weak</td>
+    </tr>
+    <tr>
+        <td>OOPS</td>
+        <td>78%</td>
+        <td class="good">Good</td>
+    </tr>
+    <tr>
+        <td>DBMS</td>
+        <td>85%</td>
+        <td class="strong">Strong</td>
+    </tr>
+</table>
+</div>
+
+<!-- Personalized Recommendations -->
+<div class="recommendation">
+<h2>🎯 Recommended For You</h2>
+<div class="grid">
+    <div class="card">
+        <h3>Practice Recursion Basics</h3>
+        <p>10 Beginner Questions</p>
+    </div>
+    <div class="card">
+        <h3>Dynamic Programming - Level 1</h3>
+        <p>8 Practice Problems</p>
+    </div>
+    <div class="card">
+        <h3>Take DSA Mock Test</h3>
+        <p>Medium Difficulty</p>
+    </div>
+</div>
+</div>
+
+<!-- Smart Insights -->
+<div class="insight">
+    <h2>💡 Smart Insights</h2>
+    <p>• Your accuracy drops in time-bound coding problems.</p>
+    <p>• You perform better in theory subjects than coding.</p>
+    <p>• Improving recursion can increase your overall score by 15%.</p>
+</div>
+
+</div>
+
+<footer>
+© PrepEdge - AI Powered Interview Preparation
+</footer>
+
+</body>
+</html>

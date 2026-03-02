@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Advanced SQL</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb;}
+header{text-align:center;padding:28px;background:rgba(2,6,23,.8);}
+.container{max-width:1000px;margin:auto;padding:25px;}
+.card{background:#111827;padding:20px;border-radius:14px;margin-bottom:18px;}
+h2{border-left:4px solid #22c55e;padding-left:10px;}
+code{background:#022c22;padding:3px 6px;border-radius:6px;}
+.btn{background:#16a34a;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Advanced SQL</h1>
+<a href="sql.html" class="btn">⬅ Back</a>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h2>GROUP BY</h2>
+Group rows  
+<code>
+SELECT city, COUNT(*)
+FROM students
+GROUP BY city;
+</code>
+</div>
+
+<div class="card">
+<h2>HAVING</h2>
+Filter groups  
+<code>
+HAVING COUNT(*) > 2
+</code>
+</div>
+
+<div class="card">
+<h2>Subquery</h2>
+Query inside query  
+<code>
+SELECT * FROM students
+WHERE marks > (
+SELECT AVG(marks) FROM students
+);
+</code>
+</div>
+
+<div class="card">
+<h2>Indexes</h2>
+Speed up search performance.
+</div>
+
+<div class="card">
+<h2>Views</h2>
+Virtual table from query.
+</div>
+
+</div>
+</body>
+</html>
