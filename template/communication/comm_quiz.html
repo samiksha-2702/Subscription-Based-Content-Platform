@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Communication Quiz | PrepEdge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+    margin:0;
+    font-family:Segoe UI, Arial, sans-serif;
+    background:linear-gradient(135deg,#0f172a,#020617);
+    color:white;
+}
+
+header{
+    text-align:center;
+    padding:30px;
+    background:#020617;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:25px;
+}
+
+.question{
+    background:#111827;
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:18px;
+}
+
+button{
+    padding:12px 25px;
+    background:#3b82f6;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.result{
+    margin-top:25px;
+    font-size:20px;
+    color:#22c55e;
+}
+.correct{ color:#22c55e; }
+.wrong{ color:#ef4444; }
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>Communication Skills Quiz</h1>
+<p>Test your knowledge</p>
+</header>
+
+<div class="container">
+
+<form id="quizForm">
+
+<!-- Questions -->
+<script>
+const questions = [
+["Effective communication requires:",["Only speaking","Only listening","Both speaking and listening","None"],2],
+["Eye contact shows:",["Confidence","Fear","Anger","Confusion"],0],
+["Active listening means:",["Ignoring speaker","Full attention","Interrupting","Multitasking"],1],
+["Body language is part of:",["Verbal","Non-verbal","Written","Formal"],1],
+["Filler words should be:",["Used more","Avoided","Encouraged","Required"],1],
+["Good communication improves:",["Misunderstanding","Conflicts","Relationships","Confusion"],2],
+["Tone of voice shows:",["Emotion","Height","Weight","Dress"],0],
+["Interrupting speaker is:",["Good habit","Bad habit","Required","Professional"],1],
+["Posture reflects:",["Confidence","Weakness","Nothing","Noise"],0],
+["Listening carefully helps:",["Understanding","Confusion","Delay","Noise"],0],
+["Gestures are part of:",["Non-verbal","Written","Formal","Email"],0],
+["Clear speech means:",["Mumbling","Confidence","Clarity","Silence"],2],
+["Communication in interview must be:",["Rude","Clear","Loud","Fast"],1],
+["Personal space is called:",["Proxemics","Kinesics","Chronemics","Semantics"],0],
+["Smiling during talk shows:",["Confidence","Anger","Fear","Confusion"],0],
+["Good listener should:",["Interrupt","Focus","Ignore","Sleep"],1],
+["Verbal communication uses:",["Words","Gestures","Silence","Space"],0],
+["Crossed arms show:",["Openness","Defensiveness","Confidence","Joy"],1],
+["Professional communication should be:",["Clear","Rude","Confusing","Harsh"],0],
+["Feedback in communication is:",["Response","Silence","Noise","Barrier"],0]
+];
+
+window.onload=function(){
+    let form=document.getElementById("quizForm");
+    questions.forEach((q,i)=>{
+        let div=document.createElement("div");
+        div.className="question";
+        let html="<b>Q"+(i+1)+". "+q[0]+"</b><br>";
+        q[1].forEach((opt,j)=>{
+            html+=`<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+        });
+        html+=`<div id="ans${i}"></div>`;
+        div.innerHTML=html;
+        form.appendChild(div);
+    });
+}
+</script>
+
+<button type="button" onclick="submitQuiz()">Submit Quiz</button>
+<div id="result" class="result"></div>
+
+</form>
+</div>
+
+<script>
+function submitQuiz(){
+    let score=0;
+    questions.forEach((q,i)=>{
+        let selected=document.querySelector(`input[name="q${i}"]:checked`);
+        let ansDiv=document.getElementById("ans"+i);
+
+        if(selected){
+            if(parseInt(selected.value)===q[2]){
+                score++;
+                ansDiv.innerHTML="<span class='correct'>Correct</span>";
+            }else{
+                ansDiv.innerHTML="<span class='wrong'>Wrong | Correct answer: "+q[1][q[2]]+"</span>";
+            }
+        }else{
+            ansDiv.innerHTML="<span class='wrong'>Not attempted | Correct answer: "+q[1][q[2]]+"</span>";
+        }
+    });
+
+    document.getElementById("result").innerHTML=
+        "Your Score: "+score+" / "+questions.length;
+}
+</script>
+
+</body>
+</html>
