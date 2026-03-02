@@ -28,4 +28,12 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
     path('plans/', views.plans, name='plans'),
+    path('', views.programming_home, name='programming_home'),
+
+    path('python/', views.python_info, name='python_info'),
+    path('java/', views.java_info, name='java_info'),
+    path('cpp/', views.cpp_info, name='cpp_info'),
+    path('javascript/', views.js_info, name='js_info'),
+    path('sql/', views.sql_info, name='sql_info'),
+    path('dsa/', views.dsa_info, name='dsa_info'),
 ]

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,7 +21,6 @@ header {
     padding: 40px 20px;
     background: rgba(15,23,42,0.7);
     backdrop-filter: blur(8px);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
 }
 
 .container {
@@ -45,49 +45,18 @@ header {
     border-radius: 16px;
     padding: 30px 20px;
     text-align: center;
-    position: relative;
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.6),
-        inset 0 0 0 1px rgba(255,255,255,0.05);
-    transition: all 0.35s ease;
-    cursor: pointer;
-}
-
-.card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    opacity: 0;
-    transition: opacity 0.35s;
-    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+    transition: 0.35s ease;
 }
 
 .card:hover {
     transform: translateY(-8px) scale(1.03);
-    box-shadow:
-        0 20px 40px rgba(0,0,0,0.9),
-        0 0 20px rgba(59,130,246,0.25);
 }
-
-.card:hover::after { opacity: 1; }
 
 .card img {
     width: 250px;
     height: 90px;
     object-fit: contain;
     margin-bottom: 14px;
-    transition: transform 0.4s ease;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.6));
-}
-
-.card:hover img {
-    transform: scale(1.12) rotate(3deg);
-}
-
-.card h3 {
-    margin: 10px 0 0;
-    font-size: 18px;
 }
 
 footer {
@@ -110,44 +79,50 @@ footer {
 <div class="container">
 <div class="grid">
 
-<a href="pythoninfo.html" class="card-link">
+<!-- Python -->
+<a href="{% url 'python_info' %}" class="card-link">
 <div class="card">
-    <img src="image/python.jpg">
+    <img src="{% static 'images/python.jpg' %}" alt="Python">
     <h3>Python</h3>
 </div>
 </a>
 
-<a href="java/javainfo.html" class="card-link">
+<!-- Java -->
+<a href="{% url 'java_info' %}" class="card-link">
 <div class="card">
-    <img src="image/java.png">
+    <img src="{% static 'images/java.png' %}" alt="Java">
     <h3>Java</h3>
 </div>
 </a>
 
-<a href="cpp/cppinfo.html" class="card-link">
+<!-- C++ -->
+<a href="{% url 'cpp_info' %}" class="card-link">
 <div class="card">
-    <img src="image/cpp.png">
+    <img src="{% static 'images/cpp.png' %}" alt="C++">
     <h3>C++</h3>
 </div>
 </a>
 
-<a href="js/javasinfo.html" class="card-link">
+<!-- JavaScript -->
+<a href="{% url 'js_info' %}" class="card-link">
 <div class="card">
-    <img src="image/javascript.png">
+    <img src="{% static 'images/javascript.png' %}" alt="JS">
     <h3>JavaScript</h3>
 </div>
 </a>
 
-<a href="sql/sql.html" class="card-link">
+<!-- SQL -->
+<a href="{% url 'sql_info' %}" class="card-link">
 <div class="card">
-    <img src="image/sql.jpg">
+    <img src="{% static 'images/sql.jpg' %}" alt="SQL">
     <h3>SQL</h3>
 </div>
 </a>
 
-<a href="ds/dsa.html" class="card-link">
+<!-- DSA -->
+<a href="{% url 'dsa_info' %}" class="card-link">
 <div class="card">
-    <img src="image/dsa.png">
+    <img src="{% static 'images/dsa.png' %}" alt="DSA">
     <h3>Data Structures</h3>
 </div>
 </a>

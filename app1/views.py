@@ -63,3 +63,24 @@ def register_view(request):
 
 def plans(request):
     return render(request, 'plans.html')
+
+def programming_home(request):
+    return render(request, 'programming.html')
+
+def python_info(request):
+    return render(request, 'pythoninfo.html')
+
+def java_info(request):
+    return render(request, 'javainfo.html')
+
+def cpp_info(request):
+    return render(request, 'cppinfo.html')
+
+def js_info(request):
+    return render(request, 'jsinfo.html')
+
+def sql_info(request):
+    return render(request, 'sql.html')
+
+def dsa_info(request):
+    return render(request, 'dsa.html')
