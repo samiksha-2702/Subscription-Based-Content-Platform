@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Java Basics Cheat Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+font-family:Segoe UI,Arial;
+margin:0;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+padding:30px;
+}
+.card{
+background:#0b1220;
+padding:25px;
+border-radius:12px;
+box-shadow:0 10px 30px rgba(0,0,0,.6);
+max-width:900px;
+margin:auto;
+}
+h1{color:#93c5fd}
+pre{
+background:#020617;
+padding:12px;
+border-radius:8px;
+overflow:auto;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>Java Basics Cheat Sheet</h1>
+
+<h2>JDK vs JRE vs JVM</h2>
+<ul>
+<li><b>JVM</b> — Runs Java bytecode</li>
+<li><b>JRE</b> — JVM + libraries</li>
+<li><b>JDK</b> — JRE + development tools</li>
+</ul>
+
+<h2>Hello World</h2>
+<pre>
+class Main {
+ public static void main(String[] args){
+  System.out.println("Hello Java");
+ }
+}
+</pre>
+
+<h2>Variables</h2>
+<pre>
+int a = 10;
+double price = 99.5;
+char grade = 'A';
+boolean flag = true;
+String name = "Java";
+</pre>
+
+<h2>Type Casting</h2>
+<pre>
+int x = (int) 9.8;   // explicit
+double y = x;        // implicit
+</pre>
+
+<h2>User Input</h2>
+<pre>
+import java.util.Scanner;
+Scanner sc = new Scanner(System.in);
+int n = sc.nextInt();
+</pre>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JavaScript Learning Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+margin:0;
+font-family:Segoe UI, Arial;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+}
+
+header{
+text-align:center;
+padding:30px;
+background:rgba(2,6,23,.8);
+backdrop-filter:blur(10px);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:20px;
+padding:30px;
+max-width:1100px;
+margin:auto;
+}
+
+.card{
+background:#111827;
+padding:20px;
+border-radius:14px;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 0 20px rgba(59,130,246,.3);
+}
+
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 14px;
+background:#2563eb;
+color:white;
+text-decoration:none;
+border-radius:8px;
+}
+
+.top{
+text-align:center;
+margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>JavaScript Learning Module</h1>
+<p>Basics • DOM • ES6 • Practice • Test</p>
+<div class="top">
+<button onclick="history.back()">⬅ Back</button>
+</div>
+</header>
+
+<div class="grid">
+
+<div class="card">
+<h3>JavaScript Basics</h3>
+<p>Syntax, variables, data types, operators</p>
+<a href="js_basics.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Control Flow</h3>
+<p>Conditions, loops, functions</p>
+<a href="js_control.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>DOM & Events</h3>
+<p>DOM manipulation, events, forms</p>
+<a href="js_dom.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>ES6+ Features</h3>
+<p>Arrow functions, promises, modules</p>
+<a href="js_es6.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Practice Sets</h3>
+<p>Programs & logic building</p>
+<a href="js_practice.html" class="btn">Solve</a>
+</div>
+
+<div class="card">
+<h3>15-Min Test</h3>
+<p>MCQ with instant score</p>
+<a href="js_test.html" class="btn">Start</a>
+</div>
+
+</div>
+
+</body>
+</html>

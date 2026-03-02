@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>C++ 15 Minute Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+font-family:Segoe UI;
+padding:20px;
+}
+
+.card{
+background:#111827;
+padding:25px;
+border-radius:14px;
+margin-bottom:20px;
+box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+
+h2{color:#60a5fa}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:10px;
+background:#2563eb;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+.timer{
+font-size:22px;
+color:#f87171;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.correct{color:#4ade80}
+.wrong{color:#f87171}
+</style>
+</head>
+
+<body>
+
+<button onclick="history.back()">⬅ Back</button>
+<a href="cpp.html"><button>🏠 Module Home</button></a>
+
+<h2>C++ 15-Minute Quick Test</h2>
+<div class="timer">Time Left: <span id="time">15:00</span></div>
+
+<form id="quizForm">
+
+<div class="card">
+Q1. Who developed C++?<br>
+<label><input type="radio" name="q1" value="a"> Dennis Ritchie</label><br>
+<label><input type="radio" name="q1" value="b"> Bjarne Stroustrup</label><br>
+<label><input type="radio" name="q1" value="c"> James Gosling</label>
+</div>
+
+<div class="card">
+Q2. Which symbol is used for input in C++?<br>
+<label><input type="radio" name="q2" value="a"> >></label><br>
+<label><input type="radio" name="q2" value="b"> <<</label><br>
+<label><input type="radio" name="q2" value="c"> ::</label>
+</div>
+
+<div class="card">
+Q3. Which is dynamic array container?<br>
+<label><input type="radio" name="q3" value="a"> vector</label><br>
+<label><input type="radio" name="q3" value="b"> array</label><br>
+<label><input type="radio" name="q3" value="c"> pointer</label>
+</div>
+
+<div class="card">
+Q4. OOP stands for?<br>
+<label><input type="radio" name="q4" value="a"> Object Oriented Programming</label><br>
+<label><input type="radio" name="q4" value="b"> Object Only Program</label><br>
+<label><input type="radio" name="q4" value="c"> Order Of Program</label>
+</div>
+
+<div class="card">
+Q5. Which keyword is used for inheritance?<br>
+<label><input type="radio" name="q5" value="a"> extends</label><br>
+<label><input type="radio" name="q5" value="b"> inherits</label><br>
+<label><input type="radio" name="q5" value="c"> :</label>
+</div>
+
+<button type="button" onclick="submitQuiz()">Submit Test</button>
+
+</form>
+
+<div id="result" class="card" style="display:none"></div>
+
+<script>
+
+const answers = {
+q1:"b",
+q2:"a",
+q3:"a",
+q4:"a",
+q5:"c"
+};
+
+function submitQuiz(){
+
+let score = 0;
+let output = "<h3>Results</h3>";
+
+for(let q in answers){
+let user = document.querySelector(`input[name="${q}"]:checked`);
+if(user && user.value === answers[q]){
+score++;
+output += `<p class='correct'>${q.toUpperCase()} Correct</p>`;
+}else{
+output += `<p class='wrong'>${q.toUpperCase()} Wrong — Correct: ${answers[q]}</p>`;
+}
+}
+
+output += `<h2>Score: ${score}/5</h2>`;
+
+document.getElementById("result").innerHTML = output;
+document.getElementById("result").style.display="block";
+}
+
+//// TIMER
+
+let total = 15 * 60;
+
+function updateTimer(){
+let min = Math.floor(total/60);
+let sec = total%60;
+document.getElementById("time").innerText =
+`${min}:${sec.toString().padStart(2,"0")}`;
+
+if(total<=0){
+submitQuiz();
+alert("Time Up!");
+}
+total--;
+}
+
+setInterval(updateTimer,1000);
+
+</script>
+
+</body>
+</html>

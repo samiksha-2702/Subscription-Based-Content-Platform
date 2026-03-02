@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Java Learning Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg,#020617,#0f172a);
+    color: #e5e7eb;
+}
+
+/* HEADER */
+
+header {
+    padding: 30px 20px;
+    text-align: center;
+    background: rgba(2,6,23,0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    opacity: .7;
+}
+
+/* BACK BUTTONS */
+
+.top-nav{
+margin-top:15px;
+}
+
+.back-btn{
+padding:8px 14px;
+border:none;
+border-radius:8px;
+background:#1f2937;
+color:white;
+cursor:pointer;
+font-weight:600;
+margin:5px;
+transition:.3s;
+}
+
+.back-btn:hover{
+background:#374151;
+transform:scale(1.05);
+}
+
+/* LAYOUT */
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* SECTION */
+
+.section-title {
+    margin: 40px 0 20px;
+    font-size: 22px;
+    border-left: 4px solid #3b82f6;
+    padding-left: 12px;
+}
+
+/* GRID */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
+    gap: 22px;
+}
+
+/* CARD */
+
+.card {
+    background: linear-gradient(145deg,#111827,#0b1220);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+    transition: .35s;
+}
+
+.card:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow:
+        0 18px 40px rgba(0,0,0,0.9),
+        0 0 20px rgba(59,130,246,0.25);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #93c5fd;
+}
+
+.card ul {
+    padding-left: 18px;
+    line-height: 1.6;
+}
+
+/* BUTTON */
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: linear-gradient(135deg,#2563eb,#1d4ed8);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(37,99,235,.5);
+}
+
+/* FLOATING BACK */
+
+.floating-home{
+position:fixed;
+bottom:20px;
+left:20px;
+background:#2563eb;
+padding:12px 14px;
+border-radius:50%;
+text-decoration:none;
+color:white;
+font-size:18px;
+box-shadow:0 8px 20px rgba(0,0,0,.5);
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    opacity: .6;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Java Learning Module</h1>
+    <p>Cheat Sheets • Articles • Practice • Quick Test</p>
+
+    <div class="top-nav">
+        <button onclick="history.back()" class="back-btn">⬅ Previous Page</button>
+        <a href="index.html"><button class="back-btn">🏠 Home</button></a>
+    </div>
+</header>
+
+<div class="container">
+
+<!-- CHEAT SHEETS -->
+
+<h2 class="section-title">Java Cheat Sheets</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Java Basics</h3>
+<ul>
+<li>JVM, JDK, JRE</li>
+<li>Variables & Data Types</li>
+<li>Operators</li>
+<li>Input / Output</li>
+</ul>
+<a href="java_basics.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>Control Statements</h3>
+<ul>
+<li>if / switch</li>
+<li>loops</li>
+<li>break / continue</li>
+<li>nested loops</li>
+</ul>
+<a href="java_control.html" class="btn">Open</a>
+</div>
+
+<div class="card">
+<h3>OOP in Java</h3>
+<ul>
+<li>Classes & Objects</li>
+<li>Inheritance</li>
+<li>Polymorphism</li>
+<li>Interfaces</li>
+</ul>
+<a href="java_oop.html" class="btn">Open</a>
+</div>
+
+</div>
+
+<!-- ARTICLES -->
+
+<h2 class="section-title">Java Articles</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Java for Interviews</h3>
+<p>Important Java concepts frequently asked in interviews.</p>
+<a href="java_interview.html" class="btn">Read</a>
+</div>
+
+<div class="card">
+<h3>Java vs Python</h3>
+<p>Performance, syntax, and real-world use comparison.</p>
+<a href="java_vs_python.html" class="btn">Read</a>
+</div>
+
+<div class="card">
+<h3>Spring Boot Overview</h3>
+<p>Modern Java backend development introduction.</p>
+<a href="springboot.html" class="btn">Read</a>
+</div>
+
+</div>
+
+<!-- PRACTICE -->
+
+<h2 class="section-title">Practice Questions</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Basics Practice</h3>
+<ul>
+<li>Number programs</li>
+<li>Type conversion</li>
+<li>Operator problems</li>
+</ul>
+<a href="java_basic_practice.html" class="btn">Solve</a>
+</div>
+
+<div class="card">
+<h3>Loops Practice</h3>
+<ul>
+<li>Pattern printing</li>
+<li>Factorial</li>
+<li>Prime check</li>
+</ul>
+<a href="java_loop_practice.html" class="btn">Solve</a>
+</div>
+
+<div class="card">
+<h3>OOP Practice</h3>
+<ul>
+<li>Create classes</li>
+<li>Constructor tasks</li>
+<li>Inheritance examples</li>
+</ul>
+<a href="java_oop_practice.html" class="btn">Solve</a>
+</div>
+
+</div>
+
+<!-- TEST -->
+
+<h2 class="section-title">Quick Test</h2>
+
+<div class="card">
+<h3>Java 15-Minute Quick Test</h3>
+<p>MCQ + code output questions with instant score.</p>
+<a href="java_test.html" class="btn">Start Test</a>
+</div>
+
+</div>
+
+<!-- Floating Home Button -->
+<a href="index.html" class="floating-home">🏠</a>
+
+<footer>
+© Interview Prep Platform — Java Module
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Spring Boot Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+margin:0;
+font-family:Segoe UI,Arial;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+padding:30px;
+}
+
+.card{
+max-width:950px;
+margin:auto;
+background:#0b1220;
+padding:32px;
+border-radius:16px;
+box-shadow:0 15px 40px rgba(0,0,0,.6);
+}
+
+h1{
+color:#86efac;
+margin-top:0;
+}
+
+h2{
+color:#4ade80;
+margin-top:28px;
+}
+
+.code{
+background:#111827;
+padding:14px;
+border-radius:10px;
+font-family:monospace;
+margin-top:10px;
+white-space:pre-wrap;
+}
+
+ul{
+line-height:1.7;
+}
+
+.highlight{
+background:#052e16;
+padding:15px;
+border-radius:10px;
+margin-top:15px;
+border-left:4px solid #22c55e;
+}
+
+.back{
+display:inline-block;
+margin-top:25px;
+color:#86efac;
+text-decoration:none;
+font-weight:600;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>Spring Boot — Quick Developer Guide</h1>
+
+<p>
+Spring Boot is a powerful Java framework used to build production-ready
+backend applications quickly with minimal configuration. It is built on top
+of the Spring Framework and is widely used for REST APIs and microservices.
+</p>
+
+<h2>Why Spring Boot is Popular</h2>
+
+<ul>
+<li>Auto configuration (less manual setup)</li>
+<li>Embedded servers (Tomcat, Jetty)</li>
+<li>Production-ready features</li>
+<li>Fast REST API development</li>
+<li>Microservices friendly</li>
+</ul>
+
+<h2>Key Features</h2>
+
+<ul>
+<li>Starter dependencies</li>
+<li>Auto configuration</li>
+<li>Embedded web server</li>
+<li>Actuator for monitoring</li>
+<li>Spring Boot CLI</li>
+</ul>
+
+<h2>Project Structure</h2>
+
+<div class="code">
+src
+ ├── main
+ │   ├── java
+ │   │   └── controller
+ │   ├── resources
+ │       ├── application.properties
+</div>
+
+<h2>Basic Spring Boot Application</h2>
+
+<div class="code">
+@SpringBootApplication
+public class DemoApp {
+
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApp.class, args);
+    }
+
+}
+</div>
+
+<h2>Simple REST Controller</h2>
+
+<div class="code">
+@RestController
+public class HelloController {
+
+    @GetMapping("/hello")
+    public String sayHello(){
+        return "Hello from Spring Boot";
+    }
+
+}
+</div>
+
+<h2>application.properties Example</h2>
+
+<div class="code">
+server.port=8081
+spring.datasource.url=jdbc:mysql://localhost/test
+spring.datasource.username=root
+spring.datasource.password=*****
+</div>
+
+<h2>Where Spring Boot is Used</h2>
+
+<ul>
+<li>REST API development</li>
+<li>Enterprise backend systems</li>
+<li>Microservices architecture</li>
+<li>Cloud applications</li>
+<li>Banking & fintech platforms</li>
+</ul>
+
+<h2>Spring Boot vs Spring Framework</h2>
+
+<div class="highlight">
+Spring Boot = Faster + Auto Config + Ready to Run  
+Spring Framework = More manual setup + Flexible + Core base
+</div>
+
+<h2>Interview Questions Topics</h2>
+
+<ul>
+<li>What is Spring Boot starter?</li>
+<li>What is auto configuration?</li>
+<li>Difference between @Controller and @RestController</li>
+<li>What is Actuator?</li>
+<li>What is dependency injection?</li>
+</ul>
+
+<a href="javainfo.html" class="back">← Back to Java Module</a>
+
+</div>
+
+</body>
+</html>

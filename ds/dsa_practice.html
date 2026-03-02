@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DSA Practice Sets</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{margin:0;font-family:Segoe UI, Arial, sans-serif;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb}
+header{padding:25px;text-align:center;background:#020617;border-bottom:1px solid #1f2937}
+.container{max-width:1100px;margin:auto;padding:30px 20px}
+.card{background:#111827;padding:22px;border-radius:14px;margin-bottom:22px;border:1px solid #1f2937;box-shadow:0 10px 25px rgba(0,0,0,.5);transition:.3s;}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 20px rgba(34,197,94,.25);}
+.card h2{margin-top:0;color:#22c55e;}
+code{display:block;background:#020617;padding:10px;border-radius:8px;margin-top:10px;white-space:pre-wrap;font-family:monospace;}
+.btn{padding:10px 16px;background:#22c55e;border:none;border-radius:8px;color:white;font-weight:600;cursor:pointer;margin-bottom:20px;}
+input[type="text"], textarea{width:100%;padding:10px;margin:8px 0;border-radius:6px;background:#0f172a;border:1px solid #1f2937;color:white;}
+label{display:block;margin-top:10px;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>DSA Practice Sets</h1>
+<p>MCQs • Descriptive Questions • Code Practice</p>
+</header>
+
+<div class="container">
+
+<button class="btn" onclick="history.back()">⬅ Back</button>
+
+<!-- MCQs -->
+<div class="card">
+<h2>Multiple Choice Questions</h2>
+<form id="mcqForm">
+
+<p>1. Which data structure is FIFO?</p>
+<label><input type="radio" name="q1" value="0"> Stack</label>
+<label><input type="radio" name="q1" value="1"> Queue</label>
+<label><input type="radio" name="q1" value="0"> Linked List</label>
+
+<p>2. Best case complexity of Bubble Sort?</p>
+<label><input type="radio" name="q2" value="1"> O(n)</label>
+<label><input type="radio" name="q2" value="0"> O(n²)</label>
+<label><input type="radio" name="q2" value="0"> O(log n)</label>
+
+<p>3. Binary search requires?</p>
+<label><input type="radio" name="q3" value="0"> Unsorted array</label>
+<label><input type="radio" name="q3" value="1"> Sorted array</label>
+<label><input type="radio" name="q3" value="0"> Stack</label>
+
+<p>4. Which structure uses nodes and pointers?</p>
+<label><input type="radio" name="q4" value="0"> Array</label>
+<label><input type="radio" name="q4" value="1"> Linked List</label>
+<label><input type="radio" name="q4" value="0"> Queue</label>
+
+<button type="button" class="btn" onclick="calculateMCQ()">Submit MCQs</button>
+<p id="mcqScore"></p>
+
+</form>
+</div>
+
+<!-- DESCRIPTIVE -->
+<div class="card">
+<h2>Descriptive Questions</h2>
+<p>Write your answer in the box below:</p>
+
+<label>1. Explain the difference between stack and queue:</label>
+<textarea rows="4" placeholder="Your answer here..."></textarea>
+
+<label>2. Explain Merge Sort algorithm with steps:</label>
+<textarea rows="4" placeholder="Your answer here..."></textarea>
+
+<label>3. When is a linked list preferred over an array?</label>
+<textarea rows="4" placeholder="Your answer here..."></textarea>
+</div>
+
+<!-- CODE PRACTICE -->
+<div class="card">
+<h2>Code Practice</h2>
+<p>Write pseudo-code or notes for these tasks:</p>
+<ul>
+<li>Reverse an array</li>
+<li>Implement stack using array</li>
+<li>Find maximum element in a linked list</li>
+<li>Check if string is palindrome</li>
+</ul>
+<textarea rows="6" placeholder="Write your code or notes here..."></textarea>
+</div>
+
+</div>
+
+<script>
+function calculateMCQ(){
+    const f = document.getElementById('mcqForm');
+    let score=0;
+    for(let i=1;i<=4;i++){
+        const q = f['q'+i];
+        for(let j=0;j<q.length;j++){
+            if(q[j].checked && q[j].value=='1') score++;
+        }
+    }
+    document.getElementById('mcqScore').innerText = "Your MCQ Score: "+score+"/4";
+}
+</script>
+
+</body>
+</html>

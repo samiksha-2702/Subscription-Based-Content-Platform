@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Java OOP Cheat Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+font-family:Segoe UI,Arial;
+margin:0;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+padding:30px;
+}
+.card{
+background:#0b1220;
+padding:25px;
+border-radius:12px;
+max-width:900px;
+margin:auto;
+box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+h1{color:#93c5fd}
+pre{
+background:#020617;
+padding:12px;
+border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+<h1>Java OOP Concepts</h1>
+
+<h2>Class & Object</h2>
+<pre>
+class Student{
+ String name;
+ int marks;
+}
+Student s = new Student();
+</pre>
+
+<h2>Constructor</h2>
+<pre>
+class A{
+ A(){
+  System.out.println("Constructor");
+ }
+}
+</pre>
+
+<h2>Inheritance</h2>
+<pre>
+class A{ void show(){} }
+class B extends A{}
+</pre>
+
+<h2>Method Overloading</h2>
+<pre>
+int add(int a,int b){}
+double add(double a,double b){}
+</pre>
+
+<h2>Method Overriding</h2>
+<pre>
+class A{ void show(){} }
+class B extends A{
+ void show(){}
+}
+</pre>
+
+<h2>Interface</h2>
+<pre>
+interface Shape{
+ void draw();
+}
+</pre>
+
+<h2>Encapsulation</h2>
+<pre>
+private int data;
+public int getData(){ return data; }
+</pre>
+
+</div>
+</body>
+</html>

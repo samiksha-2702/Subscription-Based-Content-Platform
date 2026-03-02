@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Control Flow Cheat Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg,#020617,#0f172a);
+    color: #e5e7eb;
+}
+
+/* HEADER */
+
+header {
+    padding: 25px 20px;
+    text-align: center;
+    background: rgba(2,6,23,0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+
+header h1 { margin: 0; font-size: 28px; }
+header p { opacity: .7; }
+
+/* LAYOUT */
+
+.container { max-width: 1000px; margin: auto; padding: 30px 20px; }
+.section-title { margin: 30px 0 15px; font-size: 22px; border-left: 4px solid #3b82f6; padding-left: 12px; }
+
+/* CARD */
+
+.card {
+    background: linear-gradient(145deg,#111827,#0b1220);
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
+    margin-bottom: 20px;
+}
+
+.card h3 { margin-top: 0; color: #93c5fd; }
+.card ul { padding-left: 18px; line-height: 1.6; }
+.card code { background: rgba(59,130,246,0.2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+
+/* BUTTON */
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: linear-gradient(135deg,#2563eb,#1d4ed8);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(37,99,235,.5);
+}
+
+/* FOOTER */
+
+footer { text-align: center; padding: 25px; opacity: .6; }
+
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Python Control Flow Cheat Sheet</h1>
+    <p>Quick reference for loops and conditions</p>
+</header>
+
+<div class="container">
+
+<!-- IF / ELSE -->
+<div class="card">
+<h3>Conditional Statements</h3>
+<ul>
+<li>Simple if: <code>if x &gt; 0: print("Positive")</code></li>
+<li>If-else: <code>if x&gt;0: ... else: ...</code></li>
+<li>If-elif-else:</li>
+<pre><code>if x&gt;0:
+    print("Positive")
+elif x&lt;0:
+    print("Negative")
+else:
+    print("Zero")</code></pre>
+</ul>
+</div>
+
+<!-- LOOPS -->
+<div class="card">
+<h3>Loops</h3>
+<ul>
+<li>For loop: <code>for i in range(5): print(i)</code></li>
+<li>While loop: <code>while x &lt; 10: x +=1</code></li>
+<li>Loop else:</li>
+<pre><code>for i in range(3):
+    print(i)
+else:
+    print("Done")</code></pre>
+</ul>
+</div>
+
+<!-- BREAK / CONTINUE -->
+<div class="card">
+<h3>Break & Continue</h3>
+<ul>
+<li>Break: exits loop immediately</li>
+<li>Continue: skips current iteration</li>
+<pre><code>for i in range(5):
+    if i==3:
+        break
+    print(i)</code></pre>
+</ul>
+</div>
+
+<!-- MATCH CASE -->
+<div class="card">
+<h3>Match Case (Python 3.10+)</h3>
+<ul>
+<li>Basic example:</li>
+<pre><code>match day:
+    case "Mon":
+        print("Monday")
+    case "Tue":
+        print("Tuesday")
+    case _:
+        print("Other day")</code></pre>
+</ul>
+</div>
+
+<a href="../index.html" class="btn">Back to Main Page</a>
+
+</div>
+
+<footer>
+© Interview Prep Platform — Python Module
+</footer>
+
+</body>
+</html>

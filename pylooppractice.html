@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Python Coding Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: linear-gradient(135deg,#020617,#0f172a); color: #e5e7eb; }
+header { padding: 25px 20px; text-align: center; background: rgba(2,6,23,0.8); backdrop-filter: blur(10px); box-shadow: 0 4px 30px rgba(0,0,0,0.6); }
+header h1 { margin: 0; font-size: 28px; }
+header p { opacity: .7; }
+.container { max-width: 900px; margin: auto; padding: 30px 20px; }
+.card { background: linear-gradient(145deg,#111827,#0b1220); border-radius: 14px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05); margin-bottom: 20px; }
+textarea { width: 100%; height: 100px; background:#1f2937; color:#e5e7eb; border-radius:8px; border:none; padding:10px; font-family: monospace; font-size: 14px; }
+.btn { display: inline-block; margin-top: 10px; padding: 10px 16px; border-radius: 8px; background: linear-gradient(135deg,#2563eb,#1d4ed8); color: white; text-decoration: none; font-weight: 600; transition: .3s; border: none; cursor: pointer; }
+.btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(37,99,235,.5); }
+.result { background: rgba(59,130,246,0.2); padding: 15px; border-radius: 10px; margin-top: 20px; color: #fff; }
+footer { text-align: center; padding: 25px; opacity: .6; }
+</style>
+</head>
+<body>
+<header>
+<h1>Python Coding Test</h1>
+<p>Write solutions for the exercises below</p>
+</header>
+
+<div class="container">
+<form id="codingForm">
+
+<div class="card">
+<h3>1. Swap two numbers without using a third variable</h3>
+<textarea name="q1" placeholder="Write Python code here..."></textarea>
+</div>
+
+<div class="card">
+<h3>2. Check if a number is prime</h3>
+<textarea name="q2" placeholder="Write Python code here..."></textarea>
+</div>
+
+<div class="card">
+<h3>3. Print Fibonacci series up to n terms</h3>
+<textarea name="q3" placeholder="Write Python code here..."></textarea>
+</div>
+
+<button type="button" class="btn" onclick="submitCoding()">Submit</button>
+</form>
+
+<div id="result" class="result" style="display:none;"></div>
+<a href="index.html" class="btn" style="margin-top:20px;">Back to Main Page</a>
+</div>
+
+<footer>
+© Interview Prep Platform — Python Module
+</footer>
+
+<script>
+function submitCoding() {
+    const codeAnswers = {
+        q1: 'a,b = b,a',
+        q2: 'prime',
+        q3: 'fibonacci'
+    };
+
+    let resultHTML = "<h3>Check your code manually against the expected solutions:</h3><ul>";
+    resultHTML += "<li>Q1 Swap: " + codeAnswers.q1 + "</li>";
+    resultHTML += "<li>Q2 Prime check logic: " + codeAnswers.q2 + "</li>";
+    resultHTML += "<li>Q3 Fibonacci logic: " + codeAnswers.q3 + "</li>";
+    resultHTML += "</ul>";
+
+    document.getElementById("result").style.display = "block";
+    document.getElementById("result").innerHTML = resultHTML;
+}
+</script>
+</body>
+</html>

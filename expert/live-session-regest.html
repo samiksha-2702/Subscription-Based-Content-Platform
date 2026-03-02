@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PrepEdge - Live Session Registration</title>
+<style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { background-color: #0f172a; color: #e2e8f0; line-height: 1.6; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+
+    .form-container {
+        background-color: #1e293b;
+        padding: 40px;
+        border-radius: 15px;
+        max-width: 500px;
+        width: 100%;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+        animation: fadeIn 1s ease;
+    }
+
+    h2 {
+        color: #38bdf8;
+        text-align: center;
+        margin-bottom: 30px;
+        font-size: 2rem;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        border: 1px solid #38bdf8;
+        background-color: #273449;
+        color: #e2e8f0;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 10px #0ea5e9;
+        outline: none;
+    }
+
+    button {
+        width: 100%;
+        background-color: #38bdf8;
+        color: #0f172a;
+        padding: 15px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0ea5e9;
+        color: #fff;
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+    p.success {
+        text-align: center;
+        color: #22c55e;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Register for Live Session</h2>
+    <form id="registrationForm">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" placeholder="Enter your email" required>
+
+        <label for="session">Select Session</label>
+        <select id="session" required>
+            <option value="">-- Select a Session --</option>
+            <option value="cloud">Cloud Computing Essentials - 20 Feb 2026</option>
+            <option value="datascience">Data Science Interview Tips - 25 Feb 2026</option>
+        </select>
+
+        <label for="message">Message (Optional)</label>
+        <textarea id="message" rows="4" placeholder="Any questions or comments..."></textarea>
+
+        <button type="submit">Register Now</button>
+        <p class="success" id="successMessage"></p>
+    </form>
+</div>
+
+<script>
+    const form = document.getElementById('registrationForm');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function(e){
+        e.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const session = document.getElementById('session').value;
+
+        if(name && email && session){
+            // Simulate form submission success
+            successMessage.textContent = `Thank you, ${name}! You have registered for "${document.getElementById('session').selectedOptions[0].text}".`;
+            
+            // Clear form
+            form.reset();
+        } else {
+            successMessage.textContent = "Please fill all required fields.";
+            successMessage.style.color = "#f87171"; // red color for error
+        }
+    });
+</script>
+
+</body>
+</html>

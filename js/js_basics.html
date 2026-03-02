@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JavaScript Basics Cheat Sheet</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: linear-gradient(135deg,#020617,#0f172a);
+    color: #e5e7eb;
+}
+
+/* HEADER */
+
+header {
+    padding: 25px 20px;
+    text-align: center;
+    background: rgba(2,6,23,0.8);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    opacity: .7;
+}
+
+/* LAYOUT */
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 30px 20px;
+}
+
+/* CARD */
+
+.card {
+    background: linear-gradient(145deg,#111827,#0b1220);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow:
+        0 10px 25px rgba(0,0,0,0.6),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #93c5fd;
+}
+
+.card ul {
+    padding-left: 18px;
+    line-height: 1.7;
+}
+
+.card code {
+    background: rgba(59,130,246,0.2);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* BUTTON */
+
+.btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: linear-gradient(135deg,#2563eb,#1d4ed8);
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(37,99,235,.5);
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    opacity: .6;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>JavaScript Basics Cheat Sheet</h1>
+    <p>Quick reference for JavaScript fundamentals</p>
+</header>
+
+<div class="container">
+
+<!-- VARIABLES -->
+<div class="card">
+<h3>Variables</h3>
+<ul>
+<li>Declare variable: <code>let x = 10</code></li>
+<li>Constant: <code>const pi = 3.14</code></li>
+<li>Old style: <code>var name = "Sam"</code></li>
+<li>Block scope → <code>let</code>, <code>const</code></li>
+<li>Function scope → <code>var</code></li>
+</ul>
+</div>
+
+<!-- DATA TYPES -->
+<div class="card">
+<h3>Data Types</h3>
+<ul>
+<li>Number → <code>10, 3.5</code></li>
+<li>String → <code>"Hello"</code></li>
+<li>Boolean → <code>true / false</code></li>
+<li>Array → <code>[1,2,3]</code></li>
+<li>Object → <code>{name:"A"}</code></li>
+<li>Undefined → variable declared but not assigned</li>
+<li>Null → intentional empty value</li>
+<li>Check type → <code>typeof x</code></li>
+</ul>
+</div>
+
+<!-- INPUT OUTPUT -->
+<div class="card">
+<h3>Input / Output</h3>
+<ul>
+<li>Console output → <code>console.log(x)</code></li>
+<li>Alert popup → <code>alert("Hello")</code></li>
+<li>User input → <code>prompt("Enter value")</code></li>
+<li>Template string → <code>`Hello ${name}`</code></li>
+</ul>
+</div>
+
+<!-- OPERATORS -->
+<div class="card">
+<h3>Operators</h3>
+<ul>
+<li>Arithmetic → <code>+ - * / % **</code></li>
+<li>Comparison → <code>== === != !== > <</code></li>
+<li>Logical → <code>&& || !</code></li>
+<li>Assignment → <code>= += -= *=</code></li>
+<li>Type check strict → <code>===</code></li>
+</ul>
+</div>
+
+<!-- ARRAYS -->
+<div class="card">
+<h3>Arrays</h3>
+<ul>
+<li>Create → <code>let a = [1,2,3]</code></li>
+<li>Access → <code>a[0]</code></li>
+<li>Add → <code>a.push(4)</code></li>
+<li>Remove → <code>a.pop()</code></li>
+<li>Length → <code>a.length</code></li>
+</ul>
+</div>
+
+<!-- FUNCTIONS -->
+<div class="card">
+<h3>Functions</h3>
+<ul>
+<li>Normal function:</li>
+<code>function add(a,b){ return a+b }</code>
+<li>Arrow function:</li>
+<code>const add = (a,b) => a+b</code>
+<li>Default parameter → <code>function f(x=0)</code></li>
+</ul>
+</div>
+
+<a href="javasinfo.html" class="btn">Back to JavaScript Module</a>
+
+</div>
+
+<footer>
+© Learning Platform — JavaScript Module
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>JavaScript DOM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb}
+header{text-align:center;padding:25px;background:rgba(2,6,23,.8)}
+.container{max-width:1000px;margin:auto;padding:30px}
+.card{background:#111827;padding:20px;border-radius:14px;margin-bottom:20px}
+h3{color:#93c5fd}
+code{background:#1e293b;padding:3px 6px;border-radius:4px}
+.btn{padding:10px 16px;background:#2563eb;color:white;border-radius:8px;text-decoration:none}
+</style>
+</head>
+<body>
+
+<header>
+<h1>DOM & Events</h1>
+<p>Document Object Model Handling</p>
+</header>
+
+<div class="container">
+
+<div class="card">
+<h3>DOM Selectors</h3>
+<ul>
+<li><code>getElementById()</code></li>
+<li><code>querySelector()</code></li>
+<li><code>getElementsByClassName()</code></li>
+</ul>
+</div>
+
+<div class="card">
+<h3>DOM Manipulation</h3>
+<code>
+element.innerHTML = "Text"
+element.style.color = "red"
+</code>
+<ul>
+<li>Change text</li>
+<li>Change styles</li>
+<li>Add/remove elements</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Events</h3>
+<ul>
+<li>onclick</li>
+<li>onchange</li>
+<li>onkeyup</li>
+<li>onsubmit</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Example</h3>
+<p id="demo">Hello</p>
+<button onclick="document.getElementById('demo').innerHTML='Updated'">Click</button>
+</div>
+
+<a href="javasinfo.html" class="btn">Back</a>
+</div>
+</body>
+</html>
