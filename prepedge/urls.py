@@ -32,7 +32,7 @@ urlpatterns = [
 
     path('python/', views.python_info, name='python_info'),
     path('java/', views.java_info, name='javainfo'),
-    path('cpp/', views.cpp_info, name='cpp_info'),
+    path('cpp/', views.cpp_info, name='cppinfo'),
     path('javascript/', views.js_info, name='js_info'),
     path('sql/', views.sql_info, name='sql_info'),
     path('dsa/', views.dsa_info, name='dsa_info'),
@@ -64,4 +64,10 @@ urlpatterns = [
     path('java-loop-practice/', views.java_loop_practice, name='java_loop_practice'),
     path('java-oop-practice/', views.java_oop_practice, name='java_oop_practice'),
     path('java-test/', views.java_test, name='java_test'),
+    #CPP
+    path('cpp-basics/', views.cpp_basics, name='cpp_basics'),
+    path('cpp-control/', views.cpp_control, name='cpp_control'),
+    path('cpp-oop/', views.cpp_oop, name='cpp_oop'),
+    path('cpp-practice/', views.cpp_practice, name='cpp_practice'),
+    path('cpp-test/', views.cpp_test, name='cpp_test'),
 ]

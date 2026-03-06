@@ -74,7 +74,7 @@ def java_info(request):
     return render(request, 'java/javainfo.html')
 
 def cpp_info(request):
-    return render(request, 'cppinfo.html')
+    return render(request, 'cpp/cppinfo.html')
 
 def js_info(request):
     return render(request, 'jsinfo.html')
@@ -164,3 +164,20 @@ def java_oop_practice(request):
 # Test Page
 def java_test(request):
     return render(request, "java/java_test.html")
+ 
+ 
+ #CPP
+def cpp_basics(request):
+    return render(request, "cpp/cpp_basics.html")
+
+def cpp_control(request):
+    return render(request, "cpp/cpp_control.html")
+
+def cpp_oop(request):
+    return render(request, "cpp/cpp_oop.html")
+
+def cpp_practice(request):
+    return render(request, "cpp/cpp_practice.html")
+
+def cpp_test(request):
+    return render(request, "cpp/cpp_test.html")

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,6 +90,9 @@ pre{
 <h2>C++ Quick Practice Test — Set 2</h2>
 <div class="timer">Time Left: <span id="time">15:00</span></div>
 </div>
+
+<a href="{% url 'index' %}"><button>🏠 Module Home</button></a>
+<button onclick="history.back()">⬅ Back</button>
 
 <form id="quiz">
 
@@ -192,25 +196,25 @@ q6:"a", q7:"c", q8:"c", q9:"b", q10:"b"
 };
 
 function checkTest(){
-let score=0;
-let html="<h3>Answer Review</h3>";
+    let score=0;
+    let html="<h3>Answer Review</h3>";
 
-for(let q in ans){
-    let marked = document.querySelector(`input[name=${q}]:checked`);
-    if(marked && marked.value===ans[q]){
-        score++;
-        html += `<p class="correct">${q.toUpperCase()} ✔ Correct</p>`;
-    }else{
-        html += `<p class="wrong">${q.toUpperCase()} ✘ Wrong — Correct: ${ans[q]}</p>`;
+    for(let q in ans){
+        let marked = document.querySelector(`input[name=${q}]:checked`);
+        if(marked && marked.value===ans[q]){
+            score++;
+            html += `<p class="correct">${q.toUpperCase()} ✔ Correct</p>`;
+        }else{
+            html += `<p class="wrong">${q.toUpperCase()} ✘ Wrong — Correct: ${ans[q]}</p>`;
+        }
     }
-}
 
-html += `<h2>Final Score: ${score}/10</h2>`;
-html += `<button onclick="location.reload()">Retry Test</button>`;
+    html += `<h2>Final Score: ${score}/10</h2>`;
+    html += `<button onclick="location.reload()">Retry Test</button>`;
 
-let r = document.getElementById("result");
-r.innerHTML = html;
-r.style.display="block";
+    let r = document.getElementById("result");
+    r.innerHTML = html;
+    r.style.display="block";
 }
 
 ///// TIMER /////

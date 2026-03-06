@@ -1,15 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-<title>C++ Control & STL — Detailed</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body{background:#0f172a;color:#e5e7eb;font-family:Segoe UI;padding:30px}
-.card{background:#111827;padding:25px;border-radius:14px;margin-bottom:20px}
-pre{background:#020617;padding:15px;border-radius:8px;color:#93c5fd}
-h2{color:#60a5fa}
-button{padding:8px 12px;border-radius:8px;border:none;background:#2563eb;color:white}
-</style>
+    <title>C++ Control & STL — Detailed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {background:#0f172a; color:#e5e7eb; font-family:Segoe UI; padding:30px;}
+        .card {background:#111827; padding:25px; border-radius:14px; margin-bottom:20px;}
+        pre {background:#020617; padding:15px; border-radius:8px; color:#93c5fd;}
+        h2 {color:#60a5fa;}
+        button {padding:8px 12px; border-radius:8px; border:none; background:#2563eb; color:white;}
+    </style>
 </head>
 
 <body>
@@ -17,84 +18,79 @@ button{padding:8px 12px;border-radius:8px;border:none;background:#2563eb;color:w
 <button onclick="history.back()">⬅ Back</button>
 
 <div class="card">
-<h2>Decision Making</h2>
+    <h2>Decision Making</h2>
 
-<pre>
+    <pre>
 if(x>10){
- cout<<"Large";
+    cout<<"Large";
 }else{
- cout<<"Small";
+    cout<<"Small";
 }
-</pre>
+    </pre>
 
-Switch example:
+    <p>Switch example:</p>
 
-<pre>
+    <pre>
 switch(n){
-case 1: cout<<"One"; break;
-default: cout<<"Other";
+    case 1: cout<<"One"; break;
+    default: cout<<"Other";
 }
-</pre>
+    </pre>
 </div>
 
 <div class="card">
-<h2>Loops</h2>
+    <h2>Loops</h2>
 
-For loop:
-
-<pre>
-for(int i=0;i<5;i++){
- cout<<i;
+    <p>For loop:</p>
+    <pre>
+for(int i=0; i&lt;5; i++){
+    cout&lt;&lt;i;
 }
-</pre>
+    </pre>
 
-While loop:
-
-<pre>
-while(x>0){
- x--;
+    <p>While loop:</p>
+    <pre>
+while(x&gt;0){
+    x--;
 }
-</pre>
+    </pre>
 </div>
 
 <div class="card">
-<h2>Arrays</h2>
+    <h2>Arrays</h2>
 
-<pre>
+    <pre>
 int a[5] = {1,2,3,4,5};
-cout << a[0];
-</pre>
+cout &lt;&lt; a[0];
+    </pre>
 </div>
 
 <div class="card">
-<h2>STL — Standard Template Library</h2>
+    <h2>STL — Standard Template Library</h2>
 
-Important STL Containers:
+    <p>Important STL Containers:</p>
+    <ul>
+        <li>vector — dynamic array</li>
+        <li>set — unique & sorted</li>
+        <li>map — key value</li>
+        <li>stack / queue</li>
+    </ul>
 
-<ul>
-<li>vector — dynamic array</li>
-<li>set — unique sorted</li>
-<li>map — key value</li>
-<li>stack / queue</li>
-</ul>
-
-Vector example:
-
-<pre>
+    <p>Vector example:</p>
+    <pre>
 #include &lt;vector&gt;
-vector<int> v;
+vector&lt;int&gt; v;
 v.push_back(10);
 v.push_back(20);
-</pre>
+    </pre>
 
-Sorting:
-
-<pre>
+    <p>Sorting:</p>
+    <pre>
 #include &lt;algorithm&gt;
 sort(v.begin(), v.end());
-</pre>
+    </pre>
 
-👉 STL is heavily asked in interviews.
+    <p>👉 STL is heavily asked in interviews.</p>
 </div>
 
 </body>

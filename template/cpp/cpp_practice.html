@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,37 +8,37 @@
 
 <style>
 body{
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb;
-font-family:Segoe UI;
-padding:20px;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:#e5e7eb;
+    font-family:Segoe UI;
+    padding:20px;
 }
 
 .card{
-background:#111827;
-padding:25px;
-border-radius:14px;
-margin-bottom:20px;
-box-shadow:0 10px 30px rgba(0,0,0,.6);
+    background:#111827;
+    padding:25px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.6);
 }
 
 h2{color:#60a5fa}
 
 button{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-weight:600;
-cursor:pointer;
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
 }
 
 .timer{
-font-size:22px;
-color:#f87171;
-font-weight:bold;
-margin-bottom:20px;
+    font-size:22px;
+    color:#f87171;
+    font-weight:bold;
+    margin-bottom:20px;
 }
 
 .correct{color:#4ade80}
@@ -48,10 +49,7 @@ margin-bottom:20px;
 <body>
 
 <button onclick="history.back()">⬅ Back</button>
-<a href="cpp.html"><button>🏠 Module Home</button></a>
-
-<h2>C++ 15-Minute Quick Test</h2>
-<div class="timer">Time Left: <span id="time">15:00</span></div>
+<a href="{% url 'index' %}"><button>🏠 Module Home</button></a>
 
 <form id="quizForm">
 
@@ -99,32 +97,31 @@ Q5. Which keyword is used for inheritance?<br>
 <script>
 
 const answers = {
-q1:"b",
-q2:"a",
-q3:"a",
-q4:"a",
-q5:"c"
+    q1:"b",
+    q2:"a",
+    q3:"a",
+    q4:"a",
+    q5:"c"
 };
 
 function submitQuiz(){
+    let score = 0;
+    let output = "<h3>Results</h3>";
 
-let score = 0;
-let output = "<h3>Results</h3>";
+    for(let q in answers){
+        let user = document.querySelector(`input[name="${q}"]:checked`);
+        if(user && user.value === answers[q]){
+            score++;
+            output += `<p class='correct'>${q.toUpperCase()} Correct</p>`;
+        }else{
+            output += `<p class='wrong'>${q.toUpperCase()} Wrong — Correct: ${answers[q]}</p>`;
+        }
+    }
 
-for(let q in answers){
-let user = document.querySelector(`input[name="${q}"]:checked`);
-if(user && user.value === answers[q]){
-score++;
-output += `<p class='correct'>${q.toUpperCase()} Correct</p>`;
-}else{
-output += `<p class='wrong'>${q.toUpperCase()} Wrong — Correct: ${answers[q]}</p>`;
-}
-}
+    output += `<h2>Score: ${score}/5</h2>`;
 
-output += `<h2>Score: ${score}/5</h2>`;
-
-document.getElementById("result").innerHTML = output;
-document.getElementById("result").style.display="block";
+    document.getElementById("result").innerHTML = output;
+    document.getElementById("result").style.display="block";
 }
 
 //// TIMER
@@ -132,16 +129,16 @@ document.getElementById("result").style.display="block";
 let total = 15 * 60;
 
 function updateTimer(){
-let min = Math.floor(total/60);
-let sec = total%60;
-document.getElementById("time").innerText =
-`${min}:${sec.toString().padStart(2,"0")}`;
+    let min = Math.floor(total/60);
+    let sec = total%60;
+    document.getElementById("time").innerText =
+        `${min}:${sec.toString().padStart(2,"0")}`;
 
-if(total<=0){
-submitQuiz();
-alert("Time Up!");
-}
-total--;
+    if(total<=0){
+        submitQuiz();
+        alert("Time Up!");
+    }
+    total--;
 }
 
 setInterval(updateTimer,1000);
