@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -202,7 +203,7 @@ function submitTest(){
     ${html}
     <br>
     <button onclick="location.reload()">Retry Test</button>
-    <a href="javainfo.html"><button>Back</button></a>
+    <a href="{% url 'javainfo' %}"><button>Back</button></a>
     </div>
     `;
 }
@@ -211,7 +212,6 @@ function submitTest(){
 function runJavaCode(codeId, outputId){
     const code = document.getElementById(codeId).value;
     const output = document.getElementById(outputId);
-    // Simulation message
     output.innerText = "⚠️ This is a simulation.\nTo run Java code, connect to JDoodle or server-side compiler.\n\nYour Code:\n" + code;
 }
 </script>

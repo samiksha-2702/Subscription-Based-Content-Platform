@@ -31,7 +31,7 @@ urlpatterns = [
     path('', views.programming_home, name='programming_home'),
 
     path('python/', views.python_info, name='python_info'),
-    path('java/', views.java_info, name='java_info'),
+    path('java/', views.java_info, name='javainfo'),
     path('cpp/', views.cpp_info, name='cpp_info'),
     path('javascript/', views.js_info, name='js_info'),
     path('sql/', views.sql_info, name='sql_info'),
@@ -53,4 +53,15 @@ urlpatterns = [
 
     # TEST
     path('python/test/', views.python_test, name='python_test'),
+    #JAVA
+    path('java-basics/', views.java_basics, name='java_basics'),
+    path('java-control/', views.java_control, name='java_control'),
+    path('java-oop/', views.java_oop, name='java_oop'),
+    path('java-interview/', views.java_interview, name='java_interview'),
+    path('java-vs-python/', views.java_vs_python, name='java_vs_languages'),
+    path('springboot/', views.springboot, name='springboot'),
+    path('java-basic-practice/', views.java_basic_practice, name='java_basic_practice'),
+    path('java-loop-practice/', views.java_loop_practice, name='java_loop_practice'),
+    path('java-oop-practice/', views.java_oop_practice, name='java_oop_practice'),
+    path('java-test/', views.java_test, name='java_test'),
 ]

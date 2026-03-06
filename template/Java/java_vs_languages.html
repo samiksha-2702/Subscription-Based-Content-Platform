@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,8 +74,8 @@ font-weight:600;
 
 <p>
 Java and Python are two of the most popular programming languages used in
-software development today. Both are powerful, but they are designed with
-different goals and strengths.
+software development today. Both are powerful but designed with different
+goals and strengths.
 </p>
 
 <h2>Core Difference</h2>
@@ -129,8 +130,8 @@ print("Hello")
 
 <h2>Performance</h2>
 <p>
-Java is generally faster because it is compiled to bytecode and optimized by
-the JVM. Python is slower but highly productive for rapid development.
+Java is generally faster because it runs on the JVM with optimization.
+Python is slower but extremely productive for rapid development.
 </p>
 
 <h2>Best Use Cases</h2>
@@ -153,7 +154,7 @@ the JVM. Python is slower but highly productive for rapid development.
 
 <h2>Learning Curve</h2>
 <p>
-Python is easier for beginners due to simple syntax.
+Python is easier for beginners because of its simple syntax.  
 Java requires more setup but builds strong programming fundamentals.
 </p>
 
@@ -164,7 +165,7 @@ Choose <b>Java</b> if you want strong OOP, enterprise, or Android career path.<b
 Choose <b>Python</b> if you want AI, data science, or fast development.
 </div>
 
-<a href="javainfo.html" class="back">← Back to Java Module</a>
+<a href="{% url 'javainfo' %}" class="back">⬅ Back to Java Module</a>
 
 </div>
 

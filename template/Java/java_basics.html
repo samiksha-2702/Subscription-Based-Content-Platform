@@ -1,8 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Java Basics Cheat Sheet</title>
+<title>Java Basics | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -13,6 +14,7 @@ background:linear-gradient(135deg,#020617,#0f172a);
 color:#e5e7eb;
 padding:30px;
 }
+
 .card{
 background:#0b1220;
 padding:25px;
@@ -21,12 +23,28 @@ box-shadow:0 10px 30px rgba(0,0,0,.6);
 max-width:900px;
 margin:auto;
 }
+
 h1{color:#93c5fd}
+
 pre{
 background:#020617;
 padding:12px;
 border-radius:8px;
 overflow:auto;
+}
+
+.back-btn{
+display:inline-block;
+margin-top:20px;
+padding:10px 18px;
+background:#2563eb;
+color:white;
+text-decoration:none;
+border-radius:6px;
+}
+
+.back-btn:hover{
+background:#1d4ed8;
 }
 </style>
 </head>
@@ -34,6 +52,7 @@ overflow:auto;
 <body>
 
 <div class="card">
+
 <h1>Java Basics Cheat Sheet</h1>
 
 <h2>JDK vs JRE vs JVM</h2>
@@ -74,6 +93,9 @@ Scanner sc = new Scanner(System.in);
 int n = sc.nextInt();
 </pre>
 
+<a href="{% url 'programming' %}" class="back-btn">⬅ Back to Programming</a>
+
 </div>
+
 </body>
 </html>

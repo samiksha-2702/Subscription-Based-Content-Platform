@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Java Basics Test</title>
+
 <style>
 body{
 font-family:Segoe UI;
@@ -87,6 +89,7 @@ background:#111827;
 </div>
 
 <button type="button" onclick="check()">Submit Test</button>
+
 </form>
 
 <div id="result"></div>
@@ -95,29 +98,36 @@ background:#111827;
 
 <script>
 function check(){
+
 const ans={q1:"b",q2:"a",q3:"b",q4:"c",q5:"b"};
 let score=0,html="";
 
 for(let k in ans){
+
 let v=document.querySelector(`input[name=${k}]:checked`);
+
 if(v && v.value===ans[k]){
 score++;
 html+=`Question ${k[1]} ✅ Correct<br>`;
 }else{
 html+=`Question ${k[1]} ❌ Correct Answer: ${ans[k].toUpperCase()}<br>`;
 }
+
 }
 
 let percent = score*20;
 
-result.innerHTML = `
+document.getElementById("result").innerHTML = `
 <div class="result">
 <h3>Score: ${score}/5 (${percent}%)</h3>
 ${html}
 <br>
 <button onclick="location.reload()">Retry</button>
-<a href="javainfo.html"><button>Back</button></a>
+<a href="{% url 'javainfo' %}">
+<button type="button">Back</button>
+</a>
 </div>`;
+
 }
 </script>
 

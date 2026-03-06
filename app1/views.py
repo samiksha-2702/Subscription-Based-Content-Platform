@@ -71,7 +71,7 @@ def python_info(request):
     return render(request, 'pythoninfo.html')
 
 def java_info(request):
-    return render(request, 'javainfo.html')
+    return render(request, 'java/javainfo.html')
 
 def cpp_info(request):
     return render(request, 'cppinfo.html')
@@ -120,3 +120,47 @@ def py_function_practice(request):
 # TEST
 def python_test(request):
     return render(request, 'python_test.html')
+
+#java
+# Cheat Sheet Pages
+def java_basics(request):
+    return render(request, "java/java_basics.html")
+
+
+def java_control(request):
+    return render(request, "java/java_control.html")
+
+
+def java_oop(request):
+    return render(request, "java/java_oop.html")
+
+
+# Articles
+def java_interview(request):
+    return render(request, "java/java_interview.html")
+
+
+def java_vs_python(request):
+    return render(request, "java/java_vs_languages.html")
+
+
+def springboot(request):
+    return render(request, "java/springboot.html")
+
+
+# Practice Pages
+def java_basic_practice(request):
+    return render(request, "java/java_basic_practice.html")
+
+
+def java_loop_practice(request):
+    return render(request, "java/java_loop_practice.html")
+
+
+def java_oop_practice(request):
+    return render(request, "java/java_oop_practice.html")
+
+
+# Test Page
+def java_test(request):
+    return render(request, "java/java_test.html")
