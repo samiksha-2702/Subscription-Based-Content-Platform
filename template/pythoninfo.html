@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,30 +9,30 @@
 <style>
 * { box-sizing: border-box; }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg,#020617,#0f172a);
-    color: #e5e7eb;
+body{
+margin:0;
+font-family:"Segoe UI",Arial,sans-serif;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
 }
 
 /* HEADER */
 
-header {
-    padding: 30px 20px;
-    text-align: center;
-    background: rgba(2,6,23,0.8);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+header{
+padding:30px 20px;
+text-align:center;
+background:rgba(2,6,23,0.8);
+backdrop-filter:blur(10px);
+box-shadow:0 4px 30px rgba(0,0,0,0.6);
 }
 
-header h1 {
-    margin: 0;
-    font-size: 30px;
+header h1{
+margin:0;
+font-size:30px;
 }
 
-header p {
-    opacity: .7;
+header p{
+opacity:.7;
 }
 
 /* NAV BUTTONS */
@@ -59,75 +60,75 @@ transform:scale(1.05);
 
 /* LAYOUT */
 
-.container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 30px 20px;
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px 20px;
 }
 
 /* SECTION */
 
-.section-title {
-    margin: 40px 0 20px;
-    font-size: 22px;
-    border-left: 4px solid #3b82f6;
-    padding-left: 12px;
+.section-title{
+margin:40px 0 20px;
+font-size:22px;
+border-left:4px solid #3b82f6;
+padding-left:12px;
 }
 
 /* GRID */
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(260px,1fr));
-    gap: 22px;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:22px;
 }
 
 /* CARD */
 
-.card {
-    background: linear-gradient(145deg,#111827,#0b1220);
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.6),
-        inset 0 0 0 1px rgba(255,255,255,0.05);
-    transition: .35s;
+.card{
+background:linear-gradient(145deg,#111827,#0b1220);
+border-radius:14px;
+padding:20px;
+box-shadow:
+0 10px 25px rgba(0,0,0,0.6),
+inset 0 0 0 1px rgba(255,255,255,0.05);
+transition:.35s;
 }
 
-.card:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow:
-        0 18px 40px rgba(0,0,0,0.9),
-        0 0 20px rgba(59,130,246,0.25);
+.card:hover{
+transform:translateY(-6px) scale(1.02);
+box-shadow:
+0 18px 40px rgba(0,0,0,0.9),
+0 0 20px rgba(59,130,246,0.25);
 }
 
-.card h3 {
-    margin-top: 0;
-    color: #93c5fd;
+.card h3{
+margin-top:0;
+color:#93c5fd;
 }
 
-.card ul {
-    padding-left: 18px;
-    line-height: 1.6;
+.card ul{
+padding-left:18px;
+line-height:1.6;
 }
 
 /* BUTTON */
 
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: linear-gradient(135deg,#2563eb,#1d4ed8);
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
-    transition: .3s;
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 16px;
+border-radius:8px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
 }
 
-.btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(37,99,235,.5);
+.btn:hover{
+transform:scale(1.05);
+box-shadow:0 8px 20px rgba(37,99,235,.5);
 }
 
 /* FLOATING HOME */
@@ -147,25 +148,33 @@ box-shadow:0 8px 20px rgba(0,0,0,.5);
 
 /* FOOTER */
 
-footer {
-    text-align: center;
-    padding: 25px;
-    opacity: .6;
+footer{
+text-align:center;
+padding:25px;
+opacity:.6;
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>Python Learning Module</h1>
-    <p>Cheat Sheets • Articles • Practice • Quick Test</p>
 
-    <div class="top-nav">
-        <button onclick="history.back()" class="back-btn">⬅ Previous Page</button>
-        <a href="index.html"><button class="back-btn">🏠 Home</button></a>
-    </div>
+<h1>Python Learning Module</h1>
+<p>Cheat Sheets • Articles • Practice • Quick Test</p>
+
+<div class="top-nav">
+
+<button onclick="history.back()" class="back-btn">
+⬅ Previous Page
+</button>
+
+<a href="{% url 'index' %}">
+<button class="back-btn">🏠 Home</button>
+</a>
+
+</div>
+
 </header>
 
 <div class="container">
@@ -184,7 +193,7 @@ footer {
 <li>Operators</li>
 <li>Type Conversion</li>
 </ul>
-<a href="pythonBasics.html" class="btn">Open</a>
+<a href="{% url 'pythonbasics' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
@@ -195,7 +204,7 @@ footer {
 <li>break / continue</li>
 <li>match case</li>
 </ul>
-<a href="control_flow.html" class="btn">Open</a>
+<a href="{% url 'control_flow' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
@@ -206,7 +215,7 @@ footer {
 <li>Classes</li>
 <li>Inheritance</li>
 </ul>
-<a href="functionspython.html" class="btn">Open</a>
+<a href="{% url 'functionspython' %}" class="btn">Open</a>
 </div>
 
 </div>
@@ -220,19 +229,19 @@ footer {
 <div class="card">
 <h3>Python for Interviews</h3>
 <p>Important Python concepts asked in technical interviews.</p>
-<a href="pythoninterview.html" class="btn">Read</a>
+<a href="{% url 'pythoninterview' %}" class="btn">Read</a>
 </div>
 
 <div class="card">
 <h3>Python vs Other Languages</h3>
 <p>Comparison with Java, C++, JavaScript.</p>
-<a href="pythoncomparision.html" class="btn">Read</a>
+<a href="{% url 'pythoncomparision' %}" class="btn">Read</a>
 </div>
 
 <div class="card">
 <h3>Best Python Libraries</h3>
 <p>Top libraries for AI, Web, Automation.</p>
-<a href="pythonlibraries.html" class="btn">Read</a>
+<a href="{% url 'pythonlibraries' %}" class="btn">Read</a>
 </div>
 
 </div>
@@ -250,7 +259,7 @@ footer {
 <li>Check prime number</li>
 <li>Type casting tasks</li>
 </ul>
-<a href="pybasicspractice.html" class="btn">Solve</a>
+<a href="{% url 'pybasicspractice' %}" class="btn">Solve</a>
 </div>
 
 <div class="card">
@@ -260,7 +269,7 @@ footer {
 <li>Factorial</li>
 <li>Fibonacci</li>
 </ul>
-<a href="pylooppractice.html" class="btn">Solve</a>
+<a href="{% url 'pylooppractice' %}" class="btn">Solve</a>
 </div>
 
 <div class="card">
@@ -270,7 +279,7 @@ footer {
 <li>Lambda problems</li>
 <li>Decorator basics</li>
 </ul>
-<a href="pyfunctionpractice.html" class="btn">Solve</a>
+<a href="{% url 'pyfunctionpractice' %}" class="btn">Solve</a>
 </div>
 
 </div>
@@ -282,16 +291,17 @@ footer {
 <div class="card">
 <h3>Python 15-Minute Quick Test</h3>
 <p>Timed MCQ + coding questions with instant score.</p>
-<a href="python_test.html" class="btn">Start Test</a>
+<a href="{% url 'python_test' %}" class="btn">Start Test</a>
 </div>
 
 </div>
 
 <!-- Floating Home -->
-<a href="index.html" class="floating-home">🏠</a>
+
+<a href="{% url 'index' %}" class="floating-home">🏠</a>
 
 <footer>
-© Interview Prep Platform — Python Module
+© PrepEdge — Python Module
 </footer>
 
 </body>

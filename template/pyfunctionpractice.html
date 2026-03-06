@@ -4,33 +4,117 @@
 <meta charset="UTF-8">
 <title>Python Mixed Test</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 * { box-sizing: border-box; }
-body { margin:0; font-family:"Segoe UI",Arial,sans-serif; background:linear-gradient(135deg,#020617,#0f172a); color:#e5e7eb; }
-header { padding:25px 20px; text-align:center; background:rgba(2,6,23,0.8); backdrop-filter:blur(10px); box-shadow:0 4px 30px rgba(0,0,0,0.6); }
-header h1 { margin:0; font-size:28px; }
-header p { opacity:.7; }
-.container { max-width:900px; margin:auto; padding:30px 20px; }
-.card { background:linear-gradient(145deg,#111827,#0b1220); border-radius:14px; padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05); margin-bottom:20px; }
-label { display:block; margin:6px 0; cursor:pointer; }
-input[type="radio"] { margin-right:8px; }
-textarea { width:100%; height:100px; background:#1f2937; color:#e5e7eb; border-radius:8px; border:none; padding:10px; font-family:monospace; font-size:14px; }
-.btn { display:inline-block; margin-top:10px; padding:10px 16px; border-radius:8px; background:linear-gradient(135deg,#2563eb,#1d4ed8); color:white; text-decoration:none; font-weight:600; transition:.3s; border:none; cursor:pointer; }
-.btn:hover { transform:scale(1.05); box-shadow:0 8px 20px rgba(37,99,235,.5); }
-.result { background: rgba(59,130,246,0.2); padding:15px; border-radius:10px; margin-top:20px; color:#fff; }
-footer { text-align:center; padding:25px; opacity:.6; }
+
+body {
+margin:0;
+font-family:"Segoe UI",Arial,sans-serif;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:#e5e7eb;
+}
+
+header{
+padding:25px 20px;
+text-align:center;
+background:rgba(2,6,23,0.8);
+backdrop-filter:blur(10px);
+box-shadow:0 4px 30px rgba(0,0,0,0.6);
+}
+
+header h1{ margin:0; font-size:28px; }
+header p{ opacity:.7; }
+
+.container{
+max-width:900px;
+margin:auto;
+padding:30px 20px;
+}
+
+.card{
+background:linear-gradient(145deg,#111827,#0b1220);
+border-radius:14px;
+padding:20px;
+box-shadow:0 10px 25px rgba(0,0,0,0.6),
+inset 0 0 0 1px rgba(255,255,255,0.05);
+margin-bottom:20px;
+}
+
+.card h3{
+color:#93c5fd;
+}
+
+label{
+display:block;
+margin:6px 0;
+cursor:pointer;
+}
+
+input[type="radio"]{
+margin-right:8px;
+}
+
+textarea{
+width:100%;
+height:120px;
+background:#1f2937;
+color:#e5e7eb;
+border-radius:8px;
+border:none;
+padding:10px;
+font-family:monospace;
+font-size:14px;
+}
+
+.btn{
+display:inline-block;
+margin-top:10px;
+padding:10px 16px;
+border-radius:8px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+border:none;
+cursor:pointer;
+}
+
+.btn:hover{
+transform:scale(1.05);
+box-shadow:0 8px 20px rgba(37,99,235,.5);
+}
+
+.result{
+background:rgba(59,130,246,0.2);
+padding:15px;
+border-radius:10px;
+margin-top:20px;
+color:#fff;
+}
+
+footer{
+text-align:center;
+padding:25px;
+opacity:.6;
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>Python Mixed Test</h1>
 <p>Answer MCQs and solve coding exercises</p>
 </header>
 
 <div class="container">
+
 <form id="mixedForm">
 
 <!-- MCQ Section -->
+
 <div class="card">
 <h3>1. Which of these is mutable?</h3>
 <label><input type="radio" name="q1" value="a"> Tuple</label>
@@ -45,47 +129,103 @@ footer { text-align:center; padding:25px; opacity:.6; }
 <label><input type="radio" name="q2" value="c"> 9</label>
 </div>
 
-<!-- Coding Section -->
+<!-- Coding Questions -->
+
 <div class="card">
-<h3>3. Swap two numbers without temp variable</h3>
-<textarea name="q3" placeholder="Write Python code here..."></textarea>
+<h3>3. Swap two numbers without using a temporary variable</h3>
+
+<textarea name="q3" placeholder="Example:
+a = 5
+b = 10
+a, b = b, a
+print(a,b)"></textarea>
+
 </div>
 
 <div class="card">
 <h3>4. Print first n Fibonacci numbers</h3>
-<textarea name="q4" placeholder="Write Python code here..."></textarea>
+
+<textarea name="q4" placeholder="Example:
+n = 10
+a, b = 0, 1
+for i in range(n):
+    print(a)
+    a, b = b, a+b"></textarea>
+
 </div>
 
-<button type="button" class="btn" onclick="submitMixed()">Submit</button>
+<button type="button" class="btn" onclick="submitMixed()">Submit Test</button>
+
 </form>
 
 <div id="result" class="result" style="display:none;"></div>
-<a href="index.html" class="btn" style="margin-top:20px;">Back to Main Page</a>
+
+<!-- Django URL -->
+<a href="{% url 'index' %}" class="btn" style="margin-top:20px;">Back to Main Page</a>
+
 </div>
 
-<footer>© Interview Prep Platform — Python Module</footer>
+<footer>
+© Interview Prep Platform — Python Module
+</footer>
 
 <script>
-function submitMixed() {
-    const mcqAnswers = { q1:'b', q2:'b' };
-    let score = 0;
-    let total = Object.keys(mcqAnswers).length;
-    let resultHTML = "<h3>MCQ Score:</h3>";
 
-    for (let q in mcqAnswers) {
-        const sel = document.querySelector(`input[name=${q}]:checked`);
-        if (sel && sel.value === mcqAnswers[q]) score++;
-    }
+function submitMixed(){
 
-    resultHTML += `<p>${score} / ${total}</p>`;
-    resultHTML += "<h3>Coding Solutions (Check manually):</h3><ul>";
-    resultHTML += "<li>Swap: a,b = b,a</li>";
-    resultHTML += "<li>Fibonacci logic: Use loop or recursion to print series</li>";
-    resultHTML += "</ul>";
+const mcqAnswers = {
+q1:'b',
+q2:'b'
+};
 
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").innerHTML = resultHTML;
+const answerText = {
+q1:'List',
+q2:'8'
+};
+
+let score = 0;
+let total = Object.keys(mcqAnswers).length;
+
+let resultHTML = "<h2>Test Result</h2>";
+
+for(let q in mcqAnswers){
+
+const selected = document.querySelector(`input[name=${q}]:checked`);
+
+if(selected && selected.value === mcqAnswers[q]){
+score++;
 }
+
+}
+
+resultHTML += `<h3>MCQ Score: ${score} / ${total}</h3>`;
+
+resultHTML += "<h3>Correct Answers</h3>";
+resultHTML += "<ul>";
+resultHTML += `<li>Q1: ${answerText.q1}</li>`;
+resultHTML += `<li>Q2: ${answerText.q2}</li>`;
+resultHTML += "</ul>";
+
+resultHTML += "<h3>Coding Solutions (Reference)</h3>";
+
+resultHTML += `
+<ul>
+<li><b>Swap Two Numbers:</b><br>
+<code>a, b = b, a</code>
+</li>
+
+<li><b>Fibonacci Logic:</b><br>
+Use loop or recursion to generate the series.
+</li>
+</ul>
+`;
+
+document.getElementById("result").style.display="block";
+document.getElementById("result").innerHTML=resultHTML;
+
+}
+
 </script>
+
 </body>
 </html>

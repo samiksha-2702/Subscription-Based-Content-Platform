@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+/* Your same CSS */
 * { box-sizing: border-box; }
 
 body {
@@ -16,33 +18,21 @@ body {
 }
 
 /* HEADER */
-
 header {
     padding: 25px 20px;
     text-align: center;
     background: rgba(2,6,23,0.8);
     backdrop-filter: blur(10px);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
 }
 
-header h1 {
-    margin: 0;
-    font-size: 28px;
-}
-
-header p {
-    opacity: .7;
-}
-
-/* LAYOUT */
+header h1 { margin: 0; font-size: 28px; }
+header p { opacity: .7; }
 
 .container {
     max-width: 1000px;
     margin: auto;
     padding: 30px 20px;
 }
-
-/* SECTION */
 
 .section-title {
     margin: 30px 0 15px;
@@ -51,15 +41,10 @@ header p {
     padding-left: 12px;
 }
 
-/* CARD */
-
 .card {
     background: linear-gradient(145deg,#111827,#0b1220);
     border-radius: 14px;
     padding: 20px;
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.6),
-        inset 0 0 0 1px rgba(255,255,255,0.05);
     margin-bottom: 20px;
 }
 
@@ -77,10 +62,7 @@ header p {
     background: rgba(59,130,246,0.2);
     padding: 2px 6px;
     border-radius: 4px;
-    font-family: monospace;
 }
-
-/* BUTTON */
 
 .btn {
     display: inline-block;
@@ -91,35 +73,25 @@ header p {
     color: white;
     text-decoration: none;
     font-weight: 600;
-    transition: .3s;
 }
-
-.btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(37,99,235,.5);
-}
-
-/* FOOTER */
 
 footer {
     text-align: center;
     padding: 25px;
     opacity: .6;
 }
-
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>Python Basics Cheat Sheet</h1>
-    <p>Quick reference for Python fundamentals</p>
+<h1>Python Basics Cheat Sheet</h1>
+<p>Quick reference for Python fundamentals</p>
 </header>
 
 <div class="container">
 
-<!-- VARIABLES & DATA TYPES -->
 <div class="card">
 <h3>Variables & Data Types</h3>
 <ul>
@@ -130,7 +102,6 @@ footer {
 </ul>
 </div>
 
-<!-- INPUT / OUTPUT -->
 <div class="card">
 <h3>Input / Output</h3>
 <ul>
@@ -140,7 +111,6 @@ footer {
 </ul>
 </div>
 
-<!-- OPERATORS -->
 <div class="card">
 <h3>Operators</h3>
 <ul>
@@ -153,7 +123,6 @@ footer {
 </ul>
 </div>
 
-<!-- TYPE CONVERSION -->
 <div class="card">
 <h3>Type Conversion</h3>
 <ul>
@@ -161,12 +130,11 @@ footer {
 <li>Float: <code>float("10.5") → 10.5</code></li>
 <li>String: <code>str(10) → "10"</code></li>
 <li>Boolean: <code>bool(0) → False</code></li>
-<li>List / Tuple / Set conversion: <code>list((1,2)) → [1,2]</code></li>
+<li>List conversion: <code>list((1,2)) → [1,2]</code></li>
 </ul>
 </div>
 
-<!-- BACK BUTTON -->
-<a href="../index.html" class="btn">Back to Main Page</a>
+<a href="{% url 'index' %}" class="btn">Back to Main Page</a>
 
 </div>
 

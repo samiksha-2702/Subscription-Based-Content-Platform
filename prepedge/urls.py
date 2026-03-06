@@ -36,4 +36,21 @@ urlpatterns = [
     path('javascript/', views.js_info, name='js_info'),
     path('sql/', views.sql_info, name='sql_info'),
     path('dsa/', views.dsa_info, name='dsa_info'),
+     # CHEAT SHEETS
+    path('python/basics/', views.python_basics, name='pythonbasics'),
+    path('python/control-flow/', views.control_flow, name='control_flow'),
+    path('python/functions/', views.python_functions, name='functionspython'),
+
+    # ARTICLES
+    path('python/interview/', views.python_interview, name='pythoninterview'),
+    path('python/comparison/', views.python_comparison, name='pythoncomparision'),
+    path('python/libraries/', views.python_libraries, name='pythonlibraries'),
+
+    # PRACTICE
+    path('python/practice-basics/', views.py_basics_practice, name='pybasicspractice'),
+    path('python/practice-loops/', views.py_loop_practice, name='pylooppractice'),
+    path('python/practice-functions/', views.py_function_practice, name='pyfunctionpractice'),
+
+    # TEST
+    path('python/test/', views.python_test, name='python_test'),
 ]

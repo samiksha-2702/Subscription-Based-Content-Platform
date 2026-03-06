@@ -84,3 +84,39 @@ def sql_info(request):
 
 def dsa_info(request):
     return render(request, 'dsa.html')
+# CHEAT SHEETS
+def python_basics(request):
+    return render(request, 'pythonbasics.html')
+
+def control_flow(request):
+    return render(request, 'control_flow.html')
+
+def python_functions(request):
+    return render(request, 'functionspython.html')
+
+
+# ARTICLES
+def python_interview(request):
+    return render(request, 'pythoninterview.html')
+
+def python_comparison(request):
+    return render(request, 'pythoncomparision.html')
+
+def python_libraries(request):
+    return render(request, 'pythonlibraries.html')
+
+
+# PRACTICE
+def py_basics_practice(request):
+    return render(request, 'pybasicspractice.html')
+
+def py_loop_practice(request):
+    return render(request, 'pylooppractice.html')
+
+def py_function_practice(request):
+    return render(request, 'pyfunctionpractice.html')
+
+
+# TEST
+def python_test(request):
+    return render(request, 'python_test.html')

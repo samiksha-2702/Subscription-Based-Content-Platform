@@ -7,29 +7,106 @@
 
 <style>
 * { box-sizing: border-box; }
-body { margin: 0; font-family: "Segoe UI", Arial, sans-serif; background: linear-gradient(135deg,#020617,#0f172a); color: #e5e7eb; }
-header { padding: 25px 20px; text-align: center; background: rgba(2,6,23,0.8); backdrop-filter: blur(10px); box-shadow: 0 4px 30px rgba(0,0,0,0.6); }
+
+body {
+margin: 0;
+font-family: "Segoe UI", Arial, sans-serif;
+background: linear-gradient(135deg,#020617,#0f172a);
+color: #e5e7eb;
+}
+
+header {
+padding: 25px 20px;
+text-align: center;
+background: rgba(2,6,23,0.8);
+backdrop-filter: blur(10px);
+box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+}
+
 header h1 { margin: 0; font-size: 28px; }
 header p { opacity: .7; }
-.container { max-width: 900px; margin: auto; padding: 30px 20px; }
-.card { background: linear-gradient(145deg,#111827,#0b1220); border-radius: 14px; padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(255,255,255,0.05); margin-bottom: 20px; }
-.card h3 { margin-top: 0; color: #93c5fd; }
-label { display: block; margin: 6px 0; cursor: pointer; }
-input[type="radio"] { margin-right: 8px; }
-.btn { display: inline-block; margin-top: 10px; padding: 10px 16px; border-radius: 8px; background: linear-gradient(135deg,#2563eb,#1d4ed8); color: white; text-decoration: none; font-weight: 600; transition: .3s; border: none; cursor: pointer; }
-.btn:hover { transform: scale(1.05); box-shadow: 0 8px 20px rgba(37,99,235,.5); }
-.result { background: rgba(59,130,246,0.2); padding: 15px; border-radius: 10px; margin-top: 20px; color: #fff; }
-footer { text-align: center; padding: 25px; opacity: .6; }
-code { background: rgba(59,130,246,0.2); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+
+.container {
+max-width: 900px;
+margin: auto;
+padding: 30px 20px;
+}
+
+.card {
+background: linear-gradient(145deg,#111827,#0b1220);
+border-radius: 14px;
+padding: 20px;
+box-shadow: 0 10px 25px rgba(0,0,0,0.6),
+inset 0 0 0 1px rgba(255,255,255,0.05);
+margin-bottom: 20px;
+}
+
+.card h3 {
+margin-top: 0;
+color: #93c5fd;
+}
+
+label {
+display: block;
+margin: 6px 0;
+cursor: pointer;
+}
+
+input[type="radio"] {
+margin-right: 8px;
+}
+
+.btn {
+display: inline-block;
+margin-top: 10px;
+padding: 10px 16px;
+border-radius: 8px;
+background: linear-gradient(135deg,#2563eb,#1d4ed8);
+color: white;
+text-decoration: none;
+font-weight: 600;
+transition: .3s;
+border: none;
+cursor: pointer;
+}
+
+.btn:hover {
+transform: scale(1.05);
+box-shadow: 0 8px 20px rgba(37,99,235,.5);
+}
+
+.result {
+background: rgba(59,130,246,0.2);
+padding: 15px;
+border-radius: 10px;
+margin-top: 20px;
+color: #fff;
+}
+
+footer {
+text-align: center;
+padding: 25px;
+opacity: .6;
+}
+
+code {
+background: rgba(59,130,246,0.2);
+padding: 2px 6px;
+border-radius: 4px;
+font-family: monospace;
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <h1>Python MCQ Test</h1>
 <p>Answer the MCQs and submit to see your score</p>
 </header>
 
 <div class="container">
+
 <form id="mcqForm">
 
 <div class="card">
@@ -73,10 +150,13 @@ code { background: rgba(59,130,246,0.2); padding: 2px 6px; border-radius: 4px; f
 </div>
 
 <button type="button" class="btn" onclick="submitMCQ()">Submit</button>
+
 </form>
 
 <div id="result" class="result" style="display:none;"></div>
-<a href="index.html" class="btn" style="margin-top:20px;">Back to Main Page</a>
+
+<a href="{% url 'index' %}" class="btn" style="margin-top:20px;">Back to Main Page</a>
+
 </div>
 
 <footer>
@@ -84,21 +164,51 @@ code { background: rgba(59,130,246,0.2); padding: 2px 6px; border-radius: 4px; f
 </footer>
 
 <script>
+
 function submitMCQ() {
-    const answers = { q1:'b', q2:'b', q3:'c', q4:'b', q5:'a' };
-    let score = 0;
-    let total = Object.keys(answers).length;
-    let correctAnswersHTML = "<h3>Correct Answers:</h3><ul>";
 
-    for (let q in answers) {
-        const selected = document.querySelector(`input[name=${q}]:checked`);
-        if (selected && selected.value === answers[q]) score++;
-        correctAnswersHTML += `<li>${q.toUpperCase()}: ${answers[q]}</li>`;
-    }
+const answers = {
+q1:'b',
+q2:'b',
+q3:'c',
+q4:'b',
+q5:'a'
+};
 
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").innerHTML = `<h3>Your Score: ${score} / ${total}</h3>` + correctAnswersHTML;
+const answerText = {
+q1:'List',
+q2:'8',
+q3:'def',
+q4:'3',
+q5:'class B(A):'
+};
+
+let score = 0;
+let total = Object.keys(answers).length;
+let correctAnswersHTML = "<h3>Correct Answers:</h3><ul>";
+
+for (let q in answers) {
+
+const selected = document.querySelector(`input[name=${q}]:checked`);
+
+if (selected && selected.value === answers[q]) {
+score++;
 }
+
+correctAnswersHTML += `<li>${q.toUpperCase()}: ${answerText[q]}</li>`;
+
+}
+
+correctAnswersHTML += "</ul>";
+
+document.getElementById("result").style.display = "block";
+
+document.getElementById("result").innerHTML =
+`<h3>Your Score: ${score} / ${total}</h3>` + correctAnswersHTML;
+
+}
+
 </script>
+
 </body>
 </html>
