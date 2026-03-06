@@ -33,7 +33,7 @@ urlpatterns = [
     path('python/', views.python_info, name='python_info'),
     path('java/', views.java_info, name='javainfo'),
     path('cpp/', views.cpp_info, name='cppinfo'),
-    path('javascript/', views.js_info, name='js_info'),
+    path('js/', views.js_info, name='javasinfo'),
     path('sql/', views.sql_info, name='sql_info'),
     path('dsa/', views.dsa_info, name='dsa_info'),
      # CHEAT SHEETS
@@ -70,4 +70,11 @@ urlpatterns = [
     path('cpp-oop/', views.cpp_oop, name='cpp_oop'),
     path('cpp-practice/', views.cpp_practice, name='cpp_practice'),
     path('cpp-test/', views.cpp_test, name='cpp_test'),
+    #JS
+    path('js/basics/', views.js_basics, name='js_basics'),
+    path('js/control/', views.js_control, name='js_control'),
+    path('js/dom/', views.js_dom, name='js_dom'),
+    path('js/es6/', views.js_es6, name='js_es6'),
+    path('js/practice/', views.js_practice, name='js_practice'),
+    path('js/test/', views.js_test, name='js_test'),
 ]

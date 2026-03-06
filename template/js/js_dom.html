@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,7 +37,7 @@ code{background:#1e293b;padding:3px 6px;border-radius:4px}
 <div class="card">
 <h3>DOM Manipulation</h3>
 <code>
-element.innerHTML = "Text"
+element.innerHTML = "Text"<br>
 element.style.color = "red"
 </code>
 <ul>
@@ -62,7 +63,9 @@ element.style.color = "red"
 <button onclick="document.getElementById('demo').innerHTML='Updated'">Click</button>
 </div>
 
-<a href="javasinfo.html" class="btn">Back</a>
+<!-- Back button using Django URL -->
+<a href="{% url 'javasinfo' %}" class="btn">Back</a>
+
 </div>
 </body>
 </html>

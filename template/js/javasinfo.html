@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,37 +74,37 @@ margin-top:10px;
 <div class="card">
 <h3>JavaScript Basics</h3>
 <p>Syntax, variables, data types, operators</p>
-<a href="js_basics.html" class="btn">Open</a>
+<a href="{% url 'js_basics' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Control Flow</h3>
 <p>Conditions, loops, functions</p>
-<a href="js_control.html" class="btn">Open</a>
+<a href="{% url 'js_control' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>DOM & Events</h3>
 <p>DOM manipulation, events, forms</p>
-<a href="js_dom.html" class="btn">Open</a>
+<a href="{% url 'js_dom' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>ES6+ Features</h3>
 <p>Arrow functions, promises, modules</p>
-<a href="js_es6.html" class="btn">Open</a>
+<a href="{% url 'js_es6' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Practice Sets</h3>
 <p>Programs & logic building</p>
-<a href="js_practice.html" class="btn">Solve</a>
+<a href="{% url 'js_practice' %}" class="btn">Solve</a>
 </div>
 
 <div class="card">
 <h3>15-Min Test</h3>
 <p>MCQ with instant score</p>
-<a href="js_test.html" class="btn">Start</a>
+<a href="{% url 'js_test' %}" class="btn">Start</a>
 </div>
 
 </div>

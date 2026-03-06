@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,7 +24,7 @@ code{background:#1e293b;padding:3px 6px;border-radius:4px}
 
 <div class="card">
 <h3>Arrow Functions</h3>
-<code>const sq = x => x*x</code>
+<code>const sq = x =&gt; x*x</code>
 </div>
 
 <div class="card">
@@ -46,7 +47,9 @@ code{background:#1e293b;padding:3px 6px;border-radius:4px}
 <code>fetch(url).then()</code>
 </div>
 
-<a href="javasinfo.html" class="btn">Back</a>
+<!-- Back button using Django URL -->
+<a href="{% url 'javasinfo' %}" class="btn">Back</a>
+
 </div>
 </body>
 </html>

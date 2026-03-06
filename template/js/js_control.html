@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,7 +74,9 @@ function sum(a,b){ return a+b }
 </ul>
 </div>
 
-<a href="javasinfo.html" class="btn">Back</a>
+<!-- Updated back button for Django -->
+<a href="{% url 'javasinfo' %}" class="btn">Back</a>
+
 </div>
 </body>
 </html>

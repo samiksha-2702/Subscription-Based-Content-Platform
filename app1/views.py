@@ -77,7 +77,7 @@ def cpp_info(request):
     return render(request, 'cpp/cppinfo.html')
 
 def js_info(request):
-    return render(request, 'jsinfo.html')
+    return render(request, 'js/javasinfo.html')
 
 def sql_info(request):
     return render(request, 'sql.html')
@@ -181,3 +181,21 @@ def cpp_practice(request):
 
 def cpp_test(request):
     return render(request, "cpp/cpp_test.html")
+#JS
+def js_basics(request):
+    return render(request, 'js/js_basics.html')
+
+def js_control(request):
+    return render(request, 'js/js_control.html')
+
+def js_dom(request):
+    return render(request, 'js/js_dom.html')
+
+def js_es6(request):
+    return render(request, 'js/js_es6.html')
+
+def js_practice(request):
+    return render(request, 'js/js_practice.html')
+
+def js_test(request):
+    return render(request, 'js/js_test.html')

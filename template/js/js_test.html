@@ -1,157 +1,155 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-<title>15 Minute Python Test</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>15 Minute JavaScript Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#1e293b,#020617);
-    color: #e5e7eb;
-}
-
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 25px;
-}
-
-h1 {
-    text-align: center;
-}
-
-.timer {
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    background: #ef4444;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 25px;
-}
-
-.card {
-    background: #0f172a;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 18px;
-    box-shadow: 0 6px 18px rgba(0,0,0,.5);
-}
-
-button {
-    padding: 12px 18px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    background: #2563eb;
-    color: white;
-    font-weight: bold;
-}
-
-button:hover {
-    background: #1d4ed8;
-}
-
-.result {
-    background: #16a34a;
-    padding: 18px;
-    border-radius: 8px;
-    margin-top: 20px;
-    font-size: 18px;
-    text-align: center;
-}
-
-</style>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg,#1e293b,#020617);
+            color: #e5e7eb;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 25px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .timer {
+            text-align: center;
+            font-size: 22px;
+            font-weight: bold;
+            background: #ef4444;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .card {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 18px rgba(0,0,0,.5);
+        }
+        button {
+            padding: 12px 18px;
+            font-size: 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .result {
+            background: #16a34a;
+            padding: 18px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+        .back-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+        }
+        .back-btn:hover {
+            background: #1d4ed8;
+        }
+    </style>
 </head>
-
 <body>
-
 <div class="container">
 
-<h1>Python 15-Minute Test</h1>
+    <h1>JavaScript 15-Minute Test</h1>
 
-<div class="timer" id="timer">Time Left: 15:00</div>
+    <div class="timer" id="timer">Time Left: 15:00</div>
 
-<form id="testForm"></form>
+    <form id="testForm">
+        {% comment %}
+            Questions will be injected via JS
+        {% endcomment %}
+    </form>
 
-<div style="text-align:center">
-<button onclick="submitTest()" type="button">Submit Test</button>
-</div>
+    <div style="text-align:center">
+        <button onclick="submitTest()" type="button">Submit Test</button>
+    </div>
 
-<div id="resultBox"></div>
+    <div id="resultBox"></div>
+
+    <a href="{% url 'javasinfo' %}" class="back-btn">⬅ Back to JS Module</a>
 
 </div>
 
 <script>
-
 const questions = [
-["Python is ______ language",["Compiled","Interpreted","Markup","Binary"],1],
-["Which is immutable?",["List","Tuple","Dict","Set"],1],
-["len([1,2,3]) = ?",["2","3","4","Error"],1],
-["Symbol for comment?",["#","//","--","**"],0],
-["Add item to list",["append()","add()","push()","put()"],0],
-["range(4)",["0-3","1-4","0-4","Error"],0],
-["input() returns",["int","str","bool","float"],1],
-["Dictionary uses",["keys","index","loop","array"],0],
-["Set allows duplicates?",["Yes","No","Sometimes","Error"],1],
-["Tuple uses",["[]","{}","()","<>"],2],
-["Which is loop?",["for","if","def","class"],0],
-["Function keyword",["fun","define","def","function"],2],
-["Inheritance is OOP concept?",["Yes","No","Only C++","Only Java"],0],
-["True or False datatype?",["bool","bit","logic","flag"],0],
-["Index starts from",["0","1","-1","random"],0]
+    ["Which of the following is a JS data type?",["String","Integer","Character","Decimal"],0],
+    ["What is the output of `typeof []`?",["object","array","list","undefined"],0],
+    ["Which keyword declares a block scoped variable?",["var","let","dim","constit"],1],
+    ["What is the output of `2+3+'5'`?",["55","235","5","Error"],1],
+    ["Which method adds an element at the end of an array?",["push()","pop()","shift()","unshift()"],0],
+    ["Which operator is used for strict equality?",["==","===","!=","<>"],1],
+    ["Which symbol is used for comments?",["#","//","/* */","<!-- -->"],1],
+    ["What is the output of `console.log(0 == false)`?",["true","false","error","undefined"],0],
+    ["Which method converts JSON string to object?",["JSON.parse()","JSON.stringify()","JSON.toObject()","parseJSON()"],0],
+    ["Which is correct way to define an arrow function?",["function a(){}","let a = () => {}","let a = function(){}","def a(){}"],1],
+    ["Which keyword is used for inheritance in JS classes?",["extends","inherits","superclass","parent"],0],
+    ["Which method removes the first element of an array?",["shift()","pop()","slice()","unshift()"],0],
+    ["What is `NaN` in JS?",["Not a Number","Null and None","Never a Number","New Array Number"],0],
+    ["Which event triggers when a form is submitted?",["onchange","onsubmit","onclick","onfocus"],1],
+    ["Which of these is NOT a JS loop?",["for","while","repeat","do...while"],2]
 ];
 
 const form = document.getElementById("testForm");
 
 questions.forEach((q,i)=>{
-let html = `<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
-q[1].forEach((opt,j)=>{
-html += `<input type="radio" name="q${i}" value="${j}"> ${opt}<br>`;
-});
-html += "</div>";
-form.innerHTML += html;
+    let html = `<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
+    q[1].forEach((opt,j)=>{
+        html += `<input type="radio" name="q${i}" value="${j}"> ${opt}<br>`;
+    });
+    html += "</div>";
+    form.innerHTML += html;
 });
 
 // ===== TIMER =====
-
 let time = 900;
-
 const timer = setInterval(()=>{
-let m = Math.floor(time/60);
-let s = time%60;
-document.getElementById("timer").innerText =
-`Time Left: ${m}:${s<10?"0":""}${s}`;
-
-time--;
-
-if(time < 0){
-clearInterval(timer);
-submitTest();
-}
+    let m = Math.floor(time/60);
+    let s = time%60;
+    document.getElementById("timer").innerText =
+        `Time Left: ${m}:${s<10?"0":""}${s}`;
+    time--;
+    if(time < 0){
+        clearInterval(timer);
+        submitTest();
+    }
 },1000);
 
 // ===== SUBMIT =====
-
 function submitTest(){
-clearInterval(timer);
-let score = 0;
-
-questions.forEach((q,i)=>{
-let ans = document.querySelector(`input[name=q${i}]:checked`);
-if(ans && Number(ans.value) === q[2]) score++;
-});
-
-document.getElementById("resultBox").innerHTML =
-`<div class="result">Final Score: ${score} / ${questions.length}</div>`;
-
-window.scrollTo(0,document.body.scrollHeight);
+    clearInterval(timer);
+    let score = 0;
+    questions.forEach((q,i)=>{
+        let ans = document.querySelector(`input[name=q${i}]:checked`);
+        if(ans && Number(ans.value) === q[2]) score++;
+    });
+    document.getElementById("resultBox").innerHTML =
+        `<div class="result">Final Score: ${score} / ${questions.length}</div>`;
+    window.scrollTo(0,document.body.scrollHeight);
 }
-
 </script>
 
 </body>

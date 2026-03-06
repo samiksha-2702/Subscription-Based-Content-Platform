@@ -1,7 +1,8 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-<title>Python Practice Page</title>
+<title>JavaScript Practice Page</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -87,14 +88,14 @@ textarea {
 
 <div class="container">
 
-<h1>Python Practice Zone</h1>
+<h1>JavaScript Practice Zone</h1>
 
 <!-- ================= MCQ ================= -->
 
 <div class="section-title">MCQ Practice</div>
 
 <form id="mcqForm"></form>
-<button onclick="checkMCQ()">Check Answers</button>
+<button type="button" onclick="checkMCQ()">Check Answers</button>
 <div id="mcqResult"></div>
 
 
@@ -103,31 +104,31 @@ textarea {
 <div class="section-title">Descriptive Practice</div>
 
 <div class="card">
-<b>1. Explain difference between List and Tuple.</b>
+<b>1. Difference between var, let, and const.</b>
 <textarea id="d1" placeholder="Write your answer here..."></textarea>
 </div>
 
 <div class="card">
-<b>2. What is a Dictionary in Python?</b>
+<b>2. Explain JavaScript data types.</b>
 <textarea id="d2" placeholder="Write your answer here..."></textarea>
 </div>
 
 <div class="card">
-<b>3. Explain for loop with example.</b>
+<b>3. Explain a for loop with example in JS.</b>
 <textarea id="d3" placeholder="Write your answer here..."></textarea>
 </div>
 
 <div class="card">
-<b>4. What is a Function and why is it used?</b>
+<b>4. What is a function in JavaScript and why is it used?</b>
 <textarea id="d4" placeholder="Write your answer here..."></textarea>
 </div>
 
 <div class="card">
-<b>5. Explain OOP concept in Python.</b>
+<b>5. Explain Object-Oriented Programming (OOP) in JS.</b>
 <textarea id="d5" placeholder="Write your answer here..."></textarea>
 </div>
 
-<button onclick="saveDescriptive()">Save Descriptive Answers</button>
+<button type="button" onclick="saveDescriptive()">Save Descriptive Answers</button>
 
 
 <!-- ================= CODE PRACTICE ================= -->
@@ -137,16 +138,18 @@ textarea {
 <div class="card">
 
 <textarea id="codeArea">
-// Test small logic here (JavaScript syntax)
+// Test small logic here
 let x = 5;
 let y = 7;
 console.log(x*y);
 </textarea>
 
-<button onclick="runCode()">Run Code</button>
+<button type="button" onclick="runCode()">Run Code</button>
 <div class="output" id="output"></div>
 
 </div>
+
+<a href="{% url 'javasinfo' %}" style="display:inline-block;margin-top:20px;padding:10px 16px;background:#2563eb;color:white;border-radius:8px;text-decoration:none;">Back to Module</a>
 
 </div>
 
@@ -155,11 +158,11 @@ console.log(x*y);
 // ===== MCQ =====
 
 const mcqs = [
-["Python is ______ language",["Compiled","Interpreted","Markup","Binary"],1],
-["Which is immutable?",["List","Tuple","Set","Dict"],1],
-["len('abc') = ?",["2","3","4","Error"],1],
-["Symbol for comment",["#","//","--","**"],0],
-["Function keyword",["fun","def","function","define"],1]
+["Which of these is a JS data type?",["String","Integer","Character","Decimal"],0],
+["What is the output of typeof []?",["object","array","list","undefined"],0],
+["Which keyword declares a block scoped variable?",["var","let","const","dim"],1],
+["What does '===' operator do?",["Assign","Strict equality","Compare types","None"],1],
+["Which method adds element to the end of an array?",["push()","pop()","shift()","unshift()"],0]
 ];
 
 const form = document.getElementById("mcqForm");
@@ -183,7 +186,6 @@ document.getElementById("mcqResult").innerHTML =
 `<div class="result">Score: ${score} / ${mcqs.length}</div>`;
 }
 
-
 // ===== SAVE DESCRIPTIVE =====
 
 function saveDescriptive(){
@@ -200,7 +202,6 @@ document.getElementById("d"+i).value =
 localStorage.getItem("desc"+i) || "";
 }
 }
-
 
 // ===== CODE RUNNER =====
 
