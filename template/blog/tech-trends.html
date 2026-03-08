@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -71,80 +72,73 @@ footer {
 <body>
 
 <header>
-    <h1>Tech Industry Trends</h1>
-    <p>Stay updated with emerging technologies, in-demand skills, and job opportunities</p>
+    <h1>{{ title }}</h1>
+    <p>Stay updated with emerging technologies and in-demand skills</p>
 </header>
 
 <div class="container">
 
-    <!-- Introduction -->
-    <section>
-        <h2>Introduction</h2>
-        <p>The tech industry evolves rapidly, and staying informed about trends is key to career growth. This guide highlights emerging technologies, in-demand skills, and resources to help you stay competitive in the job market.</p>
-    </section>
+<section>
+<h2>Introduction</h2>
+<p>The tech industry evolves rapidly. Staying informed about trends helps you grow your career and stay competitive.</p>
+</section>
 
-    <!-- Emerging Technologies -->
-    <section>
-        <h2>Emerging Technologies</h2>
-        <ul>
-            <li><strong>Artificial Intelligence & Machine Learning:</strong> AI-powered tools, deep learning, NLP, and computer vision.</li>
-            <li><strong>Cloud Computing:</strong> AWS, Azure, Google Cloud; scalable solutions and serverless architecture.</li>
-            <li><strong>Cybersecurity:</strong> Network security, ethical hacking, data privacy, and cloud security solutions.</li>
-            <li><strong>Blockchain & Web3:</strong> Decentralized apps (dApps), NFTs, cryptocurrency solutions, and smart contracts.</li>
-            <li><strong>Data Science & Analytics:</strong> Big data platforms, data pipelines, visualization, and predictive analytics.</li>
-            <li><strong>DevOps & Automation:</strong> CI/CD, containerization (Docker, Kubernetes), monitoring, and cloud automation.</li>
-            <li><strong>AR/VR & Metaverse:</strong> Virtual reality platforms, immersive experiences, and 3D development.</li>
-        </ul>
-    </section>
+<section>
+<h2>Emerging Technologies</h2>
+<ul>
+<li><strong>Artificial Intelligence & Machine Learning</strong></li>
+<li><strong>Cloud Computing</strong></li>
+<li><strong>Cybersecurity</strong></li>
+<li><strong>Blockchain & Web3</strong></li>
+<li><strong>Data Science & Analytics</strong></li>
+<li><strong>DevOps & Automation</strong></li>
+<li><strong>AR/VR & Metaverse</strong></li>
+</ul>
+</section>
 
-    <!-- In-Demand Skills -->
-    <section>
-        <h2>In-Demand Skills</h2>
-        <ul>
-            <li>Programming languages: Python, JavaScript, Java, C++, Go, Rust</li>
-            <li>Web Development: React, Node.js, Django, Flask</li>
-            <li>Cloud & DevOps: AWS, Azure, GCP, Docker, Kubernetes</li>
-            <li>Data & AI Tools: TensorFlow, PyTorch, SQL, Pandas, Tableau</li>
-            <li>Soft Skills: Problem-solving, communication, teamwork, adaptability</li>
-        </ul>
-    </section>
+<section>
+<h2>In-Demand Skills</h2>
+<ul>
+<li>Programming: Python, JavaScript, Java, C++</li>
+<li>Web: React, Node.js, Django</li>
+<li>Cloud: AWS, Azure, GCP</li>
+<li>Data Tools: SQL, Tableau, Pandas</li>
+<li>Soft Skills: Communication, teamwork, problem-solving</li>
+</ul>
+</section>
 
-    <!-- Career Opportunities -->
-    <section>
-        <h2>Career Opportunities</h2>
-        <ul>
-            <li>Software Engineer / Full Stack Developer</li>
-            <li>Data Scientist / AI Engineer / ML Engineer</li>
-            <li>Cloud Engineer / DevOps Engineer</li>
-            <li>Cybersecurity Analyst / Ethical Hacker</li>
-            <li>Product Manager / UX Designer / System Architect</li>
-            <li>Blockchain Developer / AR/VR Developer</li>
-        </ul>
-        <p>Companies like Google, Amazon, Microsoft, Meta, and startups are constantly hiring for these roles.</p>
-    </section>
+<section>
+<h2>Career Opportunities</h2>
+<ul>
+<li>Software Engineer</li>
+<li>Data Scientist</li>
+<li>Cloud Engineer</li>
+<li>Cybersecurity Analyst</li>
+<li>DevOps Engineer</li>
+<li>Product Manager</li>
+</ul>
+<p>Top companies like Google, Amazon, Microsoft and startups hire for these roles.</p>
+</section>
 
-    <!-- Resources & Learning Platforms -->
-    <section>
-        <h2>Resources & Learning Platforms</h2>
-        <ul>
-            <li><a href="https://www.coursera.org/" target="_blank">Coursera</a> – AI, ML, Cloud, and Web Development courses</li>
-            <li><a href="https://www.udemy.com/" target="_blank">Udemy</a> – Affordable online courses across technologies</li>
-            <li><a href="https://www.edx.org/" target="_blank">edX</a> – Certification programs from top universities</li>
-            <li><a href="https://www.geeksforgeeks.org/" target="_blank">GeeksforGeeks</a> – Coding practice and technical tutorials</li>
-            <li><a href="https://leetcode.com/" target="_blank">LeetCode</a> – Coding challenges and interview prep</li>
-            <li>Follow tech blogs, YouTube channels, and newsletters to stay updated</li>
-        </ul>
-    </section>
+<section>
+<h2>Resources</h2>
+<ul>
+<li><a href="https://www.coursera.org/" target="_blank">Coursera</a></li>
+<li><a href="https://www.udemy.com/" target="_blank">Udemy</a></li>
+<li><a href="https://www.edx.org/" target="_blank">edX</a></li>
+<li><a href="https://www.geeksforgeeks.org/" target="_blank">GeeksforGeeks</a></li>
+<li><a href="https://leetcode.com/" target="_blank">LeetCode</a></li>
+</ul>
+</section>
 
-    <!-- Related Blogs -->
-    <section>
-        <h2>Related Blogs</h2>
-        <ul>
-            <li><a href="interview-tips.html">Top Interview Tips</a></li>
-            <li><a href="resume-guide.html">Resume Writing Guide</a></li>
-            <li><a href="experience-stories.html">Candidate Experiences</a></li>
-        </ul>
-    </section>
+<section>
+<h2>Related Blogs</h2>
+<ul>
+<li><a href="{% url 'interview-tips' %}">Top Interview Tips</a></li>
+<li><a href="{% url 'resume-guide' %}">Resume Writing Guide</a></li>
+<li><a href="{% url 'experience-stories' %}">Candidate Experiences</a></li>
+</ul>
+</section>
 
 </div>
 

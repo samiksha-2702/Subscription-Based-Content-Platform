@@ -92,4 +92,20 @@ urlpatterns = [
     path('dsa-practice/',views.dsa_practice,name='dsa_practice'),
     path('dsa-test/',views.dsa_test,name='dsa_test'),
     
+    #company
+      path("company/", views.companies_blogs, name="company"),
+
+    # Companies
+    path("google/", views.google, name="google"),
+    path("amazon/", views.amazon, name="amazon"),
+    path("microsoft/", views.microsoft, name="microsoft"),
+    path("meta/", views.meta, name="meta"),
+
+    # Blogs
+    path("interview-tips/", views.interview_tips, name="interview-tips"),
+    path("resume-guide/", views.resume_guide, name="resume-guide"),
+    path("tech-trends/", views.tech_trends, name="tech-trends"),
+    path("experience-stories/", views.experience_stories, name="experience-stories"),
+
+    
 ]

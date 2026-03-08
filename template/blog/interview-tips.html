@@ -1,3 +1,5 @@
+```html id="1p8cxy"
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,167 +8,194 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-* { box-sizing: border-box; }
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
-}
-header {
-    text-align: center;
-    padding: 30px 20px;
-    background: rgba(15,23,42,0.8);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-}
-header h1 { margin-bottom: 5px; }
-header p { color: #a0a0a0; }
+*{box-sizing:border-box;}
 
-.container {
-    padding: 30px 20px;
-    max-width: 1000px;
-    margin: auto;
+body{
+margin:0;
+font-family:"Segoe UI",Arial,sans-serif;
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
 }
 
-h2 {
-    margin-top: 40px;
-    margin-bottom: 15px;
-    color: #3b82f6;
+header{
+text-align:center;
+padding:30px 20px;
+background:rgba(15,23,42,0.8);
+backdrop-filter:blur(8px);
+box-shadow:0 4px 20px rgba(0,0,0,0.6);
 }
 
-section {
-    margin-bottom: 30px;
-    background: rgba(15,23,42,0.7);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+header h1{margin-bottom:5px;}
+header p{color:#a0a0a0;}
+
+.container{
+padding:30px 20px;
+max-width:1000px;
+margin:auto;
 }
 
-section ul {
-    padding-left: 20px;
+h2{
+margin-top:40px;
+margin-bottom:15px;
+color:#3b82f6;
 }
 
-section ul li {
-    margin-bottom: 10px;
+section{
+margin-bottom:30px;
+background:rgba(15,23,42,0.7);
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.6);
 }
 
-a {
-    color: #3b82f6;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
+section ul{
+padding-left:20px;
 }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: #020617;
-    opacity: 0.8;
+section ul li{
+margin-bottom:10px;
+}
+
+a{
+color:#3b82f6;
+text-decoration:none;
+}
+
+a:hover{
+text-decoration:underline;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+padding:8px 14px;
+background:#3b82f6;
+border-radius:8px;
+color:white;
+}
+
+footer{
+text-align:center;
+padding:20px;
+margin-top:40px;
+background:#020617;
+opacity:.8;
 }
 </style>
 </head>
+
 <body>
 
 <header>
-    <h1>Top Interview Tips</h1>
-    <p>Prepare effectively for coding, technical, and HR interviews</p>
+<h1>Top Interview Tips</h1>
+<p>Prepare effectively for coding, technical, and HR interviews</p>
 </header>
 
 <div class="container">
 
-    <!-- Introduction -->
-    <section>
-        <h2>Introduction</h2>
-        <p>Cracking interviews at top tech companies requires technical skills, problem-solving abilities, and strong communication. This guide provides a step-by-step approach for coding, system design, and behavioral rounds, along with practical strategies and resources to maximize your chances of success.</p>
-    </section>
+<a href="{% url 'company' %}" class="back">⬅ Back</a>
 
-    <!-- Coding Interview Tips -->
-    <section>
-        <h2>Coding Interview Tips</h2>
-        <ul>
-            <li>Practice problems regularly on platforms like <a href="https://leetcode.com" target="_blank">LeetCode</a>, <a href="https://www.hackerrank.com/" target="_blank">HackerRank</a>, and <a href="https://www.codeforces.com/" target="_blank">Codeforces</a>.</li>
-            <li>Focus on Data Structures: Arrays, Strings, Linked Lists, Stacks, Queues, Trees, Graphs, Hash Tables.</li>
-            <li>Master Algorithms: Sorting, Searching, Recursion, Dynamic Programming, Backtracking, BFS/DFS, Greedy, Divide & Conquer.</li>
-            <li>Learn problem patterns: Sliding Window, Two Pointers, Hashing, Fast & Slow pointers.</li>
-            <li>Always clarify the problem before coding: Ask about edge cases and constraints.</li>
-            <li>Write clean, readable code with meaningful variable names.</li>
-            <li>Optimize solutions for time and space complexity; mention trade-offs during interviews.</li>
-            <li>Practice explaining your thought process aloud to simulate real interviews.</li>
-        </ul>
-    </section>
+<!-- Introduction -->
+<section>
+<h2>Introduction</h2>
+<p>
+Cracking interviews at top tech companies requires strong technical skills,
+problem-solving ability, and effective communication.
+</p>
+</section>
 
-    <!-- System Design Tips -->
-    <section>
-        <h2>System Design Interview Tips</h2>
-        <ul>
-            <li>Understand basics: Scalability, Load Balancing, Caching, Databases (SQL/NoSQL), API design.</li>
-            <li>Prepare common systems: URL shortener, social media feed, chat system, e-commerce backend.</li>
-            <li>Draw diagrams: Use boxes and arrows to explain components clearly.</li>
-            <li>Think about trade-offs: Performance, reliability, cost, maintainability.</li>
-            <li>Discuss alternatives and explain reasoning for choosing a design.</li>
-        </ul>
-    </section>
+<!-- Coding -->
+<section>
+<h2>Coding Interview Tips</h2>
 
-    <!-- Behavioral / HR Interview Tips -->
-    <section>
-        <h2>Behavioral / HR Interview Tips</h2>
-        <ul>
-            <li>Use the STAR method (Situation, Task, Action, Result) to answer behavioral questions.</li>
-            <li>Be prepared for questions like: “Tell me about yourself”, “Why this company?”, “Describe a challenge you overcame”.</li>
-            <li>Demonstrate teamwork, leadership, and problem-solving through examples.</li>
-            <li>Show adaptability and a growth mindset – companies value learning agility.</li>
-            <li>Maintain confident body language, clear speech, and professional demeanor.</li>
-        </ul>
-    </section>
+<ul>
+<li>Practice problems on <a href="https://leetcode.com" target="_blank">LeetCode</a>, <a href="https://www.hackerrank.com" target="_blank">HackerRank</a>, and <a href="https://www.codeforces.com" target="_blank">Codeforces</a>.</li>
+<li>Focus on data structures like arrays, linked lists, trees, graphs, and hash tables.</li>
+<li>Master algorithms such as recursion, dynamic programming, BFS/DFS, greedy, and divide & conquer.</li>
+<li>Clarify the problem before coding and consider edge cases.</li>
+<li>Write clean code with clear variable names.</li>
+<li>Explain your thought process during interviews.</li>
+</ul>
 
-    <!-- Mock Interviews / Practice Resources -->
-    <section>
-        <h2>Mock Interviews & Practice</h2>
-        <ul>
-            <li>Schedule mock interviews with peers or mentors to simulate real interview conditions.</li>
-            <li>Use platforms like <a href="https://interviewing.io" target="_blank">interviewing.io</a> for realistic interview practice.</li>
-            <li>Review previous interview experiences on <a href="https://www.glassdoor.com" target="_blank">Glassdoor</a> and <a href="https://www.teamblind.com" target="_blank">Blind</a>.</li>
-            <li>Track your progress and revisit weak areas regularly for continuous improvement.</li>
-        </ul>
-    </section>
+</section>
 
-    <!-- Daily Preparation Plan -->
-    <section>
-        <h2>Suggested Daily Preparation Plan</h2>
-        <ul>
-            <li>1–2 hours: Solve coding problems and practice algorithms.</li>
-            <li>30 minutes: Revise system design concepts and past questions.</li>
-            <li>30 minutes: Behavioral/HR practice (mock interviews, STAR method answers).</li>
-            <li>Optional: 15–30 minutes reading tech blogs or company updates to stay informed.</li>
-            <li>Weekly: Take a full mock interview covering coding, system design, and behavioral rounds.</li>
-        </ul>
-    </section>
+<!-- System Design -->
+<section>
+<h2>System Design Interview Tips</h2>
 
-    <!-- Common Mistakes -->
-    <section>
-        <h2>Common Mistakes to Avoid</h2>
-        <ul>
-            <li>Not practicing coding problems consistently.</li>
-            <li>Ignoring time and space complexity in solutions.</li>
-            <li>Rushing into code without clarifying requirements.</li>
-            <li>Providing vague or generic answers in behavioral interviews.</li>
-            <li>Neglecting research about the company and its culture.</li>
-            <li>Failing to review previous mistakes and learn from them.</li>
-        </ul>
-    </section>
+<ul>
+<li>Learn scalability, load balancing, caching, and database concepts.</li>
+<li>Practice designing systems like URL shorteners, chat apps, and social media feeds.</li>
+<li>Use diagrams to explain architecture clearly.</li>
+<li>Discuss trade-offs between performance and reliability.</li>
+</ul>
 
-    <!-- Related Blogs -->
-    <section>
-        <h2>Related Blogs</h2>
-        <ul>
-            <li><a href="resume-guide.html">Resume Writing Guide</a></li>
-            <li><a href="tech-trends.html">Tech Industry Trends</a></li>
-            <li><a href="experience-stories.html">Candidate Experiences</a></li>
-        </ul>
-    </section>
+</section>
+
+<!-- HR -->
+<section>
+<h2>Behavioral / HR Interview Tips</h2>
+
+<ul>
+<li>Use the STAR method (Situation, Task, Action, Result).</li>
+<li>Prepare answers for questions like "Tell me about yourself".</li>
+<li>Show teamwork and leadership experiences.</li>
+<li>Maintain confident body language and clear communication.</li>
+</ul>
+
+</section>
+
+<!-- Practice -->
+<section>
+<h2>Mock Interviews & Practice</h2>
+
+<ul>
+<li>Take mock interviews with peers or mentors.</li>
+<li>Use <a href="https://interviewing.io" target="_blank">interviewing.io</a> for practice.</li>
+<li>Review experiences on <a href="https://www.glassdoor.com" target="_blank">Glassdoor</a>.</li>
+<li>Track progress and revisit weak areas.</li>
+</ul>
+
+</section>
+
+<!-- Daily Plan -->
+<section>
+<h2>Suggested Daily Preparation Plan</h2>
+
+<ul>
+<li>1–2 hours solving coding problems.</li>
+<li>30 minutes revising system design concepts.</li>
+<li>30 minutes behavioral practice.</li>
+<li>Weekly mock interview.</li>
+</ul>
+
+</section>
+
+<!-- Mistakes -->
+<section>
+<h2>Common Mistakes to Avoid</h2>
+
+<ul>
+<li>Not practicing consistently.</li>
+<li>Ignoring time complexity.</li>
+<li>Rushing into coding without planning.</li>
+<li>Giving vague HR answers.</li>
+<li>Not researching the company.</li>
+</ul>
+
+</section>
+
+<!-- Related Blogs -->
+<section>
+<h2>Related Blogs</h2>
+
+<ul>
+<li><a href="{% url 'resume-guide' %}">Resume Writing Guide</a></li>
+<li><a href="{% url 'tech-trends' %}">Tech Industry Trends</a></li>
+<li><a href="{% url 'experience-stories' %}">Candidate Experiences</a></li>
+</ul>
+
+</section>
 
 </div>
 
@@ -176,3 +205,4 @@ footer {
 
 </body>
 </html>
+```

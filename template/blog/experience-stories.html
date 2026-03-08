@@ -1,3 +1,5 @@
+```html id="m6xq4v"
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,140 +8,200 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-* { box-sizing: border-box; }
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
-}
-header {
-    text-align: center;
-    padding: 30px 20px;
-    background: rgba(15,23,42,0.8);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-}
-header h1 { margin-bottom: 5px; }
-header p { color: #a0a0a0; }
 
-.container {
-    padding: 30px 20px;
-    max-width: 1000px;
-    margin: auto;
+*{box-sizing:border-box;}
+
+body{
+margin:0;
+font-family:"Segoe UI",Arial,sans-serif;
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
 }
 
-h2 {
-    margin-top: 40px;
-    margin-bottom: 15px;
-    color: #3b82f6;
+header{
+text-align:center;
+padding:30px 20px;
+background:rgba(15,23,42,0.8);
+backdrop-filter:blur(8px);
+box-shadow:0 4px 20px rgba(0,0,0,0.6);
 }
 
-section {
-    margin-bottom: 30px;
-    background: rgba(15,23,42,0.7);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+header h1{margin-bottom:5px;}
+header p{color:#a0a0a0;}
+
+.container{
+padding:30px 20px;
+max-width:1000px;
+margin:auto;
 }
 
-section ul {
-    padding-left: 20px;
+h2{
+margin-top:40px;
+margin-bottom:15px;
+color:#3b82f6;
 }
 
-section ul li {
-    margin-bottom: 10px;
+section{
+margin-bottom:30px;
+background:rgba(15,23,42,0.7);
+padding:20px;
+border-radius:12px;
+box-shadow:0 10px 20px rgba(0,0,0,0.6);
 }
 
-a {
-    color: #3b82f6;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
+section ul{
+padding-left:20px;
 }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: #020617;
-    opacity: 0.8;
+section ul li{
+margin-bottom:10px;
 }
+
+a{
+color:#3b82f6;
+text-decoration:none;
+}
+
+a:hover{
+text-decoration:underline;
+}
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+padding:8px 14px;
+background:#3b82f6;
+border-radius:8px;
+color:white;
+}
+
+footer{
+text-align:center;
+padding:20px;
+margin-top:40px;
+background:#020617;
+opacity:.8;
+}
+
 </style>
 </head>
+
 <body>
 
 <header>
-    <h1>Candidate Experiences</h1>
-    <p>Learn from real-life experiences of professionals and students</p>
+<h1>Candidate Experiences</h1>
+<p>Learn from real-life experiences of professionals and students</p>
 </header>
 
 <div class="container">
 
-    <!-- Introduction -->
-    <section>
-        <h2>Introduction</h2>
-        <p>Understanding real candidate experiences helps you prepare better and avoid common pitfalls. In this blog, we share stories from students and professionals who have successfully cracked interviews at top companies, along with the lessons they learned.</p>
-    </section>
+<a href="{% url 'company' %}" class="back">⬅ Back</a>
 
-    <!-- Success Stories -->
-    <section>
-        <h2>Success Stories</h2>
-        <ul>
-            <li><strong>Google Intern:</strong> A student practiced LeetCode problems daily for 3 months, focused on data structures, and participated in mock interviews with peers. This preparation helped them clear both coding and behavioral rounds.</li>
-            <li><strong>Amazon SDE:</strong> Candidate emphasized system design preparation and learned cloud concepts. Detailed resume showcasing projects impressed the recruiter.</li>
-            <li><strong>Microsoft Full-Time:</strong> Combined coding practice with behavioral storytelling. Used the STAR method to answer HR questions, sharing challenges and results.</li>
-        </ul>
-    </section>
+<!-- Introduction -->
+<section>
 
-    <!-- Challenges & Lessons -->
-    <section>
-        <h2>Challenges & Lessons</h2>
-        <ul>
-            <li>Many candidates struggled initially with time management during coding rounds; structured daily practice helped overcome this.</li>
-            <li>Some overlooked behavioral questions; practicing STAR-based answers improved confidence and clarity.</li>
-            <li>System design questions were challenging for freshers; creating diagrams and understanding trade-offs made a big difference.</li>
-            <li>Networking and learning from others’ experiences helped candidates understand company culture and expectations.</li>
-        </ul>
-    </section>
+<h2>Introduction</h2>
 
-    <!-- Tips from Candidates -->
-    <section>
-        <h2>Tips from Candidates</h2>
-        <ul>
-            <li>Start preparation early and maintain a consistent practice schedule.</li>
-            <li>Focus on problem-solving skills rather than memorizing solutions.</li>
-            <li>Take mock interviews seriously to simulate real scenarios.</li>
-            <li>Review past experiences and failures to identify weak areas.</li>
-            <li>Research the company’s culture, values, and recent news before interviews.</li>
-        </ul>
-    </section>
+<p>
+Understanding real candidate experiences helps you prepare better
+and avoid common pitfalls during interviews.
+</p>
 
-    <!-- Resources -->
-    <section>
-        <h2>Resources & References</h2>
-        <ul>
-            <li><a href="https://leetcode.com/" target="_blank">LeetCode</a> – Coding practice platform</li>
-            <li><a href="https://www.hackerrank.com/" target="_blank">HackerRank</a> – Practice coding and technical skills</li>
-            <li><a href="https://interviewing.io" target="_blank">interviewing.io</a> – Mock interview platform</li>
-            <li><a href="https://www.glassdoor.com/index.htm" target="_blank">Glassdoor</a> – Review company interviews and candidate feedback</li>
-        </ul>
-    </section>
+</section>
 
-    <!-- Related Blogs -->
-    <section>
-        <h2>Related Blogs</h2>
-        <ul>
-            <li><a href="interview-tips.html">Top Interview Tips</a></li>
-            <li><a href="resume-guide.html">Resume Writing Guide</a></li>
-            <li><a href="tech-trends.html">Tech Industry Trends</a></li>
-        </ul>
-    </section>
+<!-- Success Stories -->
+<section>
+
+<h2>Success Stories</h2>
+
+<ul>
+<li><strong>Google Intern:</strong> Practiced LeetCode problems daily for 3 months and participated in mock interviews.</li>
+
+<li><strong>Amazon SDE:</strong> Focused on system design preparation and strong project-based resume.</li>
+
+<li><strong>Microsoft Full-Time:</strong> Used STAR method to answer behavioral questions effectively.</li>
+</ul>
+
+</section>
+
+<!-- Challenges -->
+<section>
+
+<h2>Challenges & Lessons</h2>
+
+<ul>
+<li>Time management during coding rounds</li>
+<li>Behavioral interview preparation</li>
+<li>System design understanding</li>
+<li>Learning from peer experiences</li>
+</ul>
+
+</section>
+
+<!-- Tips -->
+<section>
+
+<h2>Tips from Candidates</h2>
+
+<ul>
+<li>Start preparation early</li>
+<li>Focus on problem-solving</li>
+<li>Take mock interviews seriously</li>
+<li>Analyze mistakes regularly</li>
+<li>Research company culture</li>
+</ul>
+
+</section>
+
+<!-- Resources -->
+<section>
+
+<h2>Resources & References</h2>
+
+<ul>
+
+<li>
+<a href="https://leetcode.com/" target="_blank">
+LeetCode
+</a> – Coding practice platform
+</li>
+
+<li>
+<a href="https://www.hackerrank.com/" target="_blank">
+HackerRank
+</a>
+</li>
+
+<li>
+<a href="https://interviewing.io" target="_blank">
+interviewing.io
+</a>
+</li>
+
+<li>
+<a href="https://www.glassdoor.com/" target="_blank">
+Glassdoor
+</a>
+</li>
+
+</ul>
+
+</section>
+
+<!-- Related Blogs -->
+<section>
+
+<h2>Related Blogs</h2>
+
+<ul>
+<li><a href="{% url 'interview-tips' %}">Top Interview Tips</a></li>
+<li><a href="{% url 'resume-guide' %}">Resume Writing Guide</a></li>
+<li><a href="{% url 'tech-trends' %}">Tech Industry Trends</a></li>
+</ul>
+
+</section>
 
 </div>
-
-
 
 <footer>
 © PrepEdge - Interview Preparation Platform
@@ -147,3 +209,4 @@ footer {
 
 </body>
 </html>
+```

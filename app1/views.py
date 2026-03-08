@@ -232,3 +232,37 @@ def dsa_practice(request):
 
 def dsa_test(request):
     return render(request,'ds/dsa_test.html')
+
+#company
+def companies_blogs(request):
+    return render(request, "company.html")
+
+
+# Company Pages
+
+def google(request):
+    return render(request, "company/google.html")
+
+def amazon(request):
+    return render(request, "company/amazon.html")
+
+def microsoft(request):
+    return render(request, "company/microsoft.html")
+
+def meta(request):
+    return render(request, "company/meta.html")
+
+
+# Blog Pages
+
+def interview_tips(request):
+    return render(request, "blog/interview-tips.html")
+
+def resume_guide(request):
+    return render(request, "blog/resume-guide.html")
+
+def tech_trends(request):
+    return render(request, "blog/tech-trends.html")
+
+def experience_stories(request):
+    return render(request, "blog/experience-stories.html")
