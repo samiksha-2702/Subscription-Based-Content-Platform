@@ -83,7 +83,7 @@ def sql_info(request):
     return render(request, 'sql/sql_info.html')
 
 def dsa_info(request):
-    return render(request, 'dsa.html')
+    return render(request, 'ds/dsa_info.html')
 # CHEAT SHEETS
 def python_basics(request):
     return render(request, 'pythonbasics.html')
@@ -217,3 +217,18 @@ def sql_practice(request):
 
 def sql_test(request):
     return render(request,'sql/sql_test.html')
+#DSA
+def dsa_basics(request):
+    return render(request,'ds/dsa_basics.html')
+
+def dsa_linear(request):
+    return render(request,'ds/dsa_linear.html')
+
+def dsa_sort(request):
+    return render(request,'ds/dsa_sort.html')
+
+def dsa_practice(request):
+    return render(request,'ds/dsa_practice.html')
+
+def dsa_test(request):
+    return render(request,'ds/dsa_test.html')
