@@ -80,7 +80,7 @@ def js_info(request):
     return render(request, 'js/javasinfo.html')
 
 def sql_info(request):
-    return render(request, 'sql.html')
+    return render(request, 'sql/sql_info.html')
 
 def dsa_info(request):
     return render(request, 'dsa.html')
@@ -199,3 +199,21 @@ def js_practice(request):
 
 def js_test(request):
     return render(request, 'js/js_test.html')
+#sql
+def sql_basics(request):
+    return render(request,'sql/sql_basics.html')
+
+def sql_queries(request):
+    return render(request,'sql/sql_queries.html')
+
+def sql_joins(request):
+    return render(request,'sql/sql_joins.html')
+
+def sql_advanced(request):
+    return render(request,'sql/sql_advanced.html')
+
+def sql_practice(request):
+    return render(request,'sql/sql_practice.html')
+
+def sql_test(request):
+    return render(request,'sql/sql_test.html')

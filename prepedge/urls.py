@@ -77,4 +77,12 @@ urlpatterns = [
     path('js/es6/', views.js_es6, name='js_es6'),
     path('js/practice/', views.js_practice, name='js_practice'),
     path('js/test/', views.js_test, name='js_test'),
+    #sql
+    path('sql-basics/',views.sql_basics,name='sql_basics'),
+    path('sql-queries/',views.sql_queries,name='sql_queries'),
+    path('sql-joins/',views.sql_joins,name='sql_joins'),
+    path('sql-advanced/',views.sql_advanced,name='sql_advanced'),
+    path('sql-practice/',views.sql_practice,name='sql_practice'),
+    path('sql-test/',views.sql_test,name='sql_test'),
+    
 ]

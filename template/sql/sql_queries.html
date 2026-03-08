@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <title>SQL Queries</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb;}
 header{text-align:center;padding:28px;background:rgba(2,6,23,.8);}
@@ -18,7 +20,9 @@ code{background:#022c22;padding:3px 6px;border-radius:6px;}
 
 <header>
 <h1>SQL Queries</h1>
-<a href="sql.html" class="btn">⬅ Back</a>
+
+<a href="{% url 'sql_info' %}" class="btn">⬅ Back</a>
+
 </header>
 
 <div class="container">
@@ -31,36 +35,45 @@ code{background:#022c22;padding:3px 6px;border-radius:6px;}
 <div class="card">
 <h2>WHERE</h2>
 Filter rows  
+<br>
 <code>SELECT * FROM students WHERE marks > 70;</code>
 </div>
 
 <div class="card">
 <h2>ORDER BY</h2>
 Sort results  
+<br>
 <code>SELECT * FROM students ORDER BY marks DESC;</code>
 </div>
 
 <div class="card">
 <h2>INSERT</h2>
+
 <code>
 INSERT INTO students VALUES (1,'Amit',80);
 </code>
+
 </div>
 
 <div class="card">
 <h2>UPDATE</h2>
+
 <code>
 UPDATE students SET marks=90 WHERE id=1;
 </code>
+
 </div>
 
 <div class="card">
 <h2>DELETE</h2>
+
 <code>
 DELETE FROM students WHERE id=1;
 </code>
+
 </div>
 
 </div>
+
 </body>
 </html>

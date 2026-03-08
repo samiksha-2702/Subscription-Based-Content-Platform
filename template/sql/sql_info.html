@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -83,37 +84,37 @@ font-weight:600;
 <div class="card">
 <h3>SQL Basics</h3>
 <p>DBMS, tables, keys, commands</p>
-<a href="sql_basics.html" class="btn">Open</a>
+<a href="{% url 'sql_basics' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>SQL Queries</h3>
 <p>SELECT, WHERE, ORDER BY</p>
-<a href="sql_queries.html" class="btn">Open</a>
+<a href="{% url 'sql_queries' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Joins & Constraints</h3>
 <p>JOIN types, keys, constraints</p>
-<a href="sql_joins.html" class="btn">Open</a>
+<a href="{% url 'sql_joins' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Advanced SQL</h3>
 <p>Group By, Having, Subqueries</p>
-<a href="sql_advanced.html" class="btn">Open</a>
+<a href="{% url 'sql_advanced' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Practice Sets</h3>
 <p>Query writing & MCQs</p>
-<a href="sql_practice.html" class="btn">Solve</a>
+<a href="{% url 'sql_practice' %}" class="btn">Solve</a>
 </div>
 
 <div class="card">
 <h3>15-Min Test</h3>
 <p>MCQ with instant score</p>
-<a href="sql_test.html" class="btn">Start</a>
+<a href="{% url 'sql_test' %}" class="btn">Start</a>
 </div>
 
 </div>

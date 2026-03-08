@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
 <title>SQL Joins</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb;}
 header{text-align:center;padding:28px;background:rgba(2,6,23,.8);}
@@ -18,7 +20,9 @@ code{background:#022c22;padding:3px 6px;border-radius:6px;}
 
 <header>
 <h1>SQL Joins & Constraints</h1>
-<a href="sql.html" class="btn">⬅ Back</a>
+
+<a href="{% url 'sql_info' %}" class="btn">⬅ Back</a>
+
 </header>
 
 <div class="container">
@@ -31,10 +35,12 @@ Join combines rows from multiple tables using related columns.
 <div class="card">
 <h2>INNER JOIN</h2>
 Matching rows only  
+
 <code>
 SELECT * FROM A
-INNER JOIN B ON A.id=B.id;
+INNER JOIN B ON A.id = B.id;
 </code>
+
 </div>
 
 <div class="card">
@@ -49,12 +55,15 @@ All right + matched left
 
 <div class="card">
 <h2>Constraints</h2>
+
 PRIMARY KEY — unique + not null  <br>
 FOREIGN KEY — reference key  <br>
 UNIQUE — no duplicates  <br>
 NOT NULL — must have value  <br>
+
 </div>
 
 </div>
+
 </body>
 </html>

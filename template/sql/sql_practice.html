@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,17 +16,27 @@ button:hover{background:#15803d;}
 textarea{width:100%;height:140px;border-radius:8px;border:none;padding:12px;margin-top:10px;font-family:monospace;}
 .output{background:black;padding:12px;border-radius:8px;margin-top:10px;color:#22c55e;}
 .result{background:#14532d;padding:15px;border-radius:8px;margin-top:15px;}
+.btn{background:#16a34a;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;}
+.top{text-align:center;margin-bottom:20px;}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+
 <h1>SQL Practice Zone</h1>
 
+<div class="top">
+<a href="{% url 'sql_info' %}" class="btn">⬅ Back</a>
+</div>
+
 <div class="section">MCQ Practice</div>
+
 <form id="mcqForm"></form>
+
 <button onclick="checkMCQ()">Check Answers</button>
+
 <div id="mcqResult"></div>
 
 <div class="section">Descriptive Practice</div>
@@ -60,15 +71,21 @@ textarea{width:100%;height:140px;border-radius:8px;border:none;padding:12px;marg
 <div class="section">Query Practice Area</div>
 
 <div class="card">
+
 <p>Sample table: students(id, name, marks, city)</p>
+
 <textarea id="sqlArea">SELECT * FROM students;</textarea>
+
 <button onclick="runSQL()">Run Query</button>
+
 <div class="output" id="out"></div>
+
 </div>
 
 </div>
 
 <script>
+
 const mcqs = [
 ["SELECT is used to",["Delete","Fetch","Update","Drop"],1],
 ["Primary key allows NULL?",["Yes","No","Sometimes","Unknown"],1],
@@ -78,6 +95,7 @@ const mcqs = [
 ];
 
 const form = document.getElementById("mcqForm");
+
 mcqs.forEach((q,i)=>{
 let h=`<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
 q[1].forEach((o,j)=>h+=`<input type=radio name=q${i} value=${j}> ${o}<br>`);
@@ -106,16 +124,23 @@ document.getElementById("d"+i).value=localStorage.getItem("sql"+i)||"";
 }
 
 function runSQL(){
+
 let q=sqlArea.value.toLowerCase();
+
 if(q.includes("select"))
 out.innerHTML="Simulated result:<br>1 Amit 78 Pune<br>2 Neha 85 Mumbai";
+
 else if(q.includes("where"))
 out.innerHTML="Filter applied (simulation)";
+
 else if(q.includes("join"))
 out.innerHTML="Join executed (simulation)";
+
 else
 out.innerHTML="Query executed (simulation mode)";
+
 }
+
 </script>
 
 </body>

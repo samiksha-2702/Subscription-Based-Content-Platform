@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,21 +13,33 @@ h1{text-align:center;}
 .card{background:#111827;padding:20px;border-radius:14px;margin-bottom:16px;}
 button{padding:12px 18px;border:none;border-radius:8px;background:#16a34a;color:white;font-weight:600;cursor:pointer;}
 .result{background:#14532d;padding:16px;border-radius:8px;margin-top:20px;text-align:center;}
+.btn{background:#16a34a;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;}
+.top{text-align:center;margin-bottom:15px;}
 </style>
 </head>
 
 <body>
 
 <div class="container">
+
 <h1>SQL 15-Minute Test</h1>
+
+<div class="top">
+<a href="{% url 'sql_info' %}" class="btn">⬅ Back</a>
+</div>
+
 <div class="timer" id="timer">15:00</div>
 
 <form id="form"></form>
+
 <button type="button" onclick="submitTest()">Submit Test</button>
+
 <div id="result"></div>
+
 </div>
 
 <script>
+
 const Q = [
 ["Which clause filters rows?",["GROUP","WHERE","ORDER","JOIN"],1],
 ["COUNT is",["Aggregate","Key","DDL","Join"],0],
@@ -42,31 +55,45 @@ const Q = [
 ["GROUP BY used with",["Aggregate","Delete","Key","Join"],0]
 ];
 
+const form = document.getElementById("form");
+
 Q.forEach((q,i)=>{
-let h=`<div class=card><b>${i+1}. ${q[0]}</b><br>`;
+let h=`<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
 q[1].forEach((o,j)=>h+=`<input type=radio name=q${i} value=${j}> ${o}<br>`);
 h+="</div>";
 form.innerHTML+=h;
 });
 
 function submitTest(){
+
 clearInterval(t);
+
 let s=0;
+
 Q.forEach((q,i)=>{
 let a=document.querySelector(`input[name=q${i}]:checked`);
 if(a && a.value==q[2]) s++;
 });
+
 result.innerHTML=`<div class=result>Score ${s}/${Q.length}</div>`;
+
 }
 
 let time=900;
+
 let t=setInterval(()=>{
+
 let m=Math.floor(time/60);
 let s=time%60;
+
 timer.innerHTML=`${m}:${s<10?"0":""}${s}`;
+
 time--;
+
 if(time<0){submitTest();}
+
 },1000);
+
 </script>
 
 </body>

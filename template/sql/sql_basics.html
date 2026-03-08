@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +21,9 @@ code{background:#022c22;padding:3px 6px;border-radius:6px;}
 <header>
 <h1>SQL Basics</h1>
 <p>Core database fundamentals</p>
-<a href="sql.html" class="btn">⬅ Back</a>
+
+<a href="{% url 'sql_info' %}" class="btn">⬅ Back</a>
+
 </header>
 
 <div class="container">
@@ -49,6 +52,7 @@ TCL → COMMIT, ROLLBACK <br>
 
 <div class="card">
 <h2>Create Table</h2>
+
 <code>
 CREATE TABLE students(
 id INT PRIMARY KEY,
@@ -56,8 +60,10 @@ name VARCHAR(50),
 marks INT
 );
 </code>
+
 </div>
 
 </div>
+
 </body>
 </html>
