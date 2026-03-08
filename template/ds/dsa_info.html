@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,33 +65,34 @@ border-radius:8px;
 <div class="card">
 <h3>DSA Basics</h3>
 <p>Concepts & Complexity</p>
-<a href="dsa_basics.html" class="btn">Open</a>
+<a href="{% url 'dsa_basics' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Linear Structures</h3>
 <p>Array, Linked List, Stack, Queue</p>
-<a href="dsa_linear.html" class="btn">Open</a>
+<a href="{% url 'dsa_linear' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Sorting & Searching</h3>
 <p>Algorithms & logic</p>
-<a href="dsa_sort.html" class="btn">Open</a>
+<a href="{% url 'dsa_sort' %}" class="btn">Open</a>
 </div>
 
 <div class="card">
 <h3>Practice Set</h3>
 <p>MCQ + Descriptive + Coding</p>
-<a href="dsa_practice.html" class="btn">Solve</a>
+<a href="{% url 'dsa_practice' %}" class="btn">Solve</a>
 </div>
 
 <div class="card">
 <h3>15 Min Test</h3>
 <p>Timed MCQ Test</p>
-<a href="dsa_test.html" class="btn">Start</a>
+<a href="{% url 'dsa_test' %}" class="btn">Start</a>
 </div>
 
 </div>
+
 </body>
 </html>

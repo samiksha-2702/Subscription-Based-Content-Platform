@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,14 +40,17 @@ transition:.3s;
 }
 
 .card:hover{
-transform:translateY(-4px);
-box-shadow:0 0 20px rgba(59,130,246,.25);
+transform:translateY(-6px);
+box-shadow:0 0 25px rgba(56,189,248,.25);
+border-color:#38bdf8;
 }
 
 .card h2{
 margin-top:0;
 color:#38bdf8;
 }
+
+/* TABLE */
 
 table{
 width:100%;
@@ -57,21 +61,28 @@ margin-top:12px;
 th,td{
 border:1px solid #1f2937;
 padding:10px;
+text-align:left;
 }
 
 th{
 background:#020617;
 }
 
+/* CODE */
+
 code{
 display:block;
 background:#020617;
-padding:10px;
+border:1px solid #1f2937;
+padding:12px;
 border-radius:8px;
 margin-top:10px;
 white-space:pre-wrap;
 font-family:monospace;
+color:#38bdf8;
 }
+
+/* BUTTON */
 
 .btn{
 padding:10px 16px;
@@ -81,13 +92,23 @@ border-radius:8px;
 color:white;
 font-weight:600;
 cursor:pointer;
+margin-bottom:20px;
+transition:.2s;
 }
+
+.btn:hover{
+background:#0284c7;
+transform:scale(1.05);
+}
+
+/* FOOTER */
 
 footer{
 text-align:center;
 padding:25px;
 opacity:.6;
 }
+
 </style>
 </head>
 
@@ -105,21 +126,25 @@ opacity:.6;
 <!-- SORTING INTRO -->
 
 <div class="card">
-<h2>What is Sorting?</h2>
+<h2>🔀 What is Sorting?</h2>
 <p>Sorting arranges data in a specific order (ascending or descending) to make searching and processing faster.</p>
+
 <ul>
 <li>Improves search efficiency</li>
 <li>Required in databases</li>
 <li>Used in analytics & reporting</li>
 </ul>
+
 </div>
 
 <!-- SORTING TABLE -->
 
 <div class="card">
-<h2>Sorting Algorithms Complexity</h2>
+
+<h2>📊 Sorting Algorithms Complexity</h2>
 
 <table>
+
 <tr>
 <th>Algorithm</th>
 <th>Best</th>
@@ -127,21 +152,55 @@ opacity:.6;
 <th>Worst</th>
 </tr>
 
-<tr><td>Bubble Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td></tr>
-<tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td></tr>
-<tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td></tr>
-<tr><td>Merge Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td></tr>
-<tr><td>Quick Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td></tr>
+<tr>
+<td>Bubble Sort</td>
+<td>O(n)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+
+<tr>
+<td>Selection Sort</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+
+<tr>
+<td>Insertion Sort</td>
+<td>O(n)</td>
+<td>O(n²)</td>
+<td>O(n²)</td>
+</tr>
+
+<tr>
+<td>Merge Sort</td>
+<td>O(n log n)</td>
+<td>O(n log n)</td>
+<td>O(n log n)</td>
+</tr>
+
+<tr>
+<td>Quick Sort</td>
+<td>O(n log n)</td>
+<td>O(n log n)</td>
+<td>O(n²)</td>
+</tr>
+
 </table>
+
 </div>
 
 <!-- BUBBLE -->
 
 <div class="card">
-<h2>Bubble Sort</h2>
-<p>Repeatedly swaps adjacent elements if they are in wrong order.</p>
+
+<h2>🫧 Bubble Sort</h2>
+
+<p>Repeatedly swaps adjacent elements if they are in the wrong order.</p>
 
 <h3>Steps</h3>
+
 <ul>
 <li>Compare neighbors</li>
 <li>Swap if needed</li>
@@ -152,14 +211,17 @@ opacity:.6;
 for i in range(n):
   for j in range(n-i-1):
     if a[j] > a[j+1]:
-       swap
+       swap(a[j],a[j+1])
 </code>
+
 </div>
 
 <!-- MERGE -->
 
 <div class="card">
-<h2>Merge Sort</h2>
+
+<h2>🧩 Merge Sort</h2>
+
 <p>Divide and conquer algorithm.</p>
 
 <ul>
@@ -170,20 +232,23 @@ for i in range(n):
 
 <code>
 mergeSort(arr):
- split
- merge(left,right)
+   split array
+   merge(left,right)
 </code>
+
 </div>
 
 <!-- QUICK -->
 
 <div class="card">
-<h2>Quick Sort</h2>
+
+<h2>⚡ Quick Sort</h2>
+
 <p>Uses pivot element and partitions array.</p>
 
 <ul>
 <li>Select pivot</li>
-<li>Partition</li>
+<li>Partition array</li>
 <li>Recursive sort</li>
 </ul>
 
@@ -193,81 +258,119 @@ partition()
 quickSort(left)
 quickSort(right)
 </code>
+
 </div>
 
 <!-- SEARCHING INTRO -->
 
 <div class="card">
-<h2>What is Searching?</h2>
+
+<h2>🔎 What is Searching?</h2>
+
 <p>Searching finds the location of an element in data.</p>
+
 <ul>
 <li>Linear Search</li>
 <li>Binary Search</li>
 <li>Hash Search</li>
 </ul>
+
 </div>
 
 <!-- SEARCH TABLE -->
 
 <div class="card">
-<h2>Searching Complexity</h2>
+
+<h2>📊 Searching Complexity</h2>
 
 <table>
-<tr><th>Method</th><th>Requirement</th><th>Time</th></tr>
-<tr><td>Linear Search</td><td>Unsorted OK</td><td>O(n)</td></tr>
-<tr><td>Binary Search</td><td>Sorted only</td><td>O(log n)</td></tr>
+
+<tr>
+<th>Method</th>
+<th>Requirement</th>
+<th>Time</th>
+</tr>
+
+<tr>
+<td>Linear Search</td>
+<td>Unsorted OK</td>
+<td>O(n)</td>
+</tr>
+
+<tr>
+<td>Binary Search</td>
+<td>Sorted only</td>
+<td>O(log n)</td>
+</tr>
+
 </table>
+
 </div>
 
 <!-- LINEAR SEARCH -->
 
 <div class="card">
-<h2>Linear Search</h2>
+
+<h2>📍 Linear Search</h2>
+
 <p>Checks each element one by one.</p>
 
 <code>
 for i in arr:
-  if i == key:
-     found
+   if i == key:
+      found
 </code>
 
 <h3>Use When</h3>
+
 <ul>
 <li>Small dataset</li>
 <li>Unsorted data</li>
 </ul>
+
 </div>
 
 <!-- BINARY SEARCH -->
 
 <div class="card">
-<h2>Binary Search</h2>
+
+<h2>⚡ Binary Search</h2>
+
 <p>Works only on sorted arrays.</p>
 
 <ul>
-<li>Check middle</li>
+<li>Check middle element</li>
 <li>Discard half</li>
 <li>Repeat</li>
 </ul>
 
 <code>
-low=0 high=n-1
-mid=(low+high)/2
-if key < mid → left
-else → right
+low = 0
+high = n-1
+
+mid = (low+high)/2
+
+if key < arr[mid]:
+   search left
+else:
+   search right
 </code>
 
 <h3>Advantages</h3>
+
 <ul>
 <li>Very fast</li>
-<li>Logarithmic time</li>
+<li>Logarithmic time complexity</li>
 </ul>
+
 </div>
 
 <!-- APPLICATIONS -->
 
 <div class="card">
-<h2>Real World Applications</h2>
+
+<h2>🌍 Real World Applications</h2>
+
 <ul>
 <li>Database indexing</li>
 <li>Search engines</li>
@@ -275,6 +378,7 @@ else → right
 <li>Analytics sorting</li>
 <li>Auto-complete systems</li>
 </ul>
+
 </div>
 
 </div>
@@ -285,3 +389,4 @@ DSA Learning Module — Sorting & Searching
 
 </body>
 </html>
+```

@@ -35,7 +35,7 @@ urlpatterns = [
     path('cpp/', views.cpp_info, name='cppinfo'),
     path('js/', views.js_info, name='javasinfo'),
     path('sql/', views.sql_info, name='sql_info'),
-    path('dsa/', views.dsa_info, name='dsa_info'),
+    path('ds/', views.dsa_info, name='dsa_info'),
      # CHEAT SHEETS
     path('python/basics/', views.python_basics, name='pythonbasics'),
     path('python/control-flow/', views.control_flow, name='control_flow'),
@@ -88,5 +88,12 @@ urlpatterns = [
     #Experts
      path('live-session-register/', views.live_session_register, name='live_session_register'),
      path('expert-profile/', views.expert_profile, name='expert_profile'),
+    
+    #DSA
+    path('dsa-basics/',views.dsa_basics,name='dsa_basics'),
+    path('dsa-linear/',views.dsa_linear,name='dsa_linear'),
+    path('dsa-sort/',views.dsa_sort,name='dsa_sort'),
+    path('dsa-practice/',views.dsa_practice,name='dsa_practice'),
+    path('dsa-test/',views.dsa_test,name='dsa_test'),
     
 ]
