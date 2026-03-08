@@ -84,5 +84,9 @@ urlpatterns = [
     path('sql-advanced/',views.sql_advanced,name='sql_advanced'),
     path('sql-practice/',views.sql_practice,name='sql_practice'),
     path('sql-test/',views.sql_test,name='sql_test'),
+
+    #Experts
+     path('live-session-register/', views.live_session_register, name='live_session_register'),
+     path('expert-profile/', views.expert_profile, name='expert_profile'),
     
 ]

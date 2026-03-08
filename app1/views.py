@@ -217,3 +217,10 @@ def sql_practice(request):
 
 def sql_test(request):
     return render(request,'sql/sql_test.html')
+
+
+# Experts
+def live_session_register(request):
+    return render(request, "expert/live_session_register.html")
+def expert_profile(request):
+    return render(request, "expert/expert_profile.html")
