@@ -44,7 +44,7 @@ def company(request):
     return render(request, 'company.html')
 
 def expert_talks(request):
-    return render(request, 'expert_talks.html')
+    return render(request, 'expert/expert.html')
 
 def communication(request):
     return render(request, 'communication/comm.html')
@@ -266,3 +266,12 @@ def tech_trends(request):
 
 def experience_stories(request):
     return render(request, "blog/experience-stories.html")
+
+#expert
+# Live session registration page
+def live_session_register(request):
+    return render(request, 'expert/live-session-regest.html')
+
+# View expert talks
+def view_talks(request):
+    return render(request, 'expert/view-talks.html')

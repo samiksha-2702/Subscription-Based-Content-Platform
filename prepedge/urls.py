@@ -21,7 +21,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('programming/', views.programming, name='programming'),
     path('company/', views.company, name='company'),
-    path('expert-talks/', views.expert_talks, name='expert_talks'),
+    path('expert/', views.expert_talks, name='expert'),
     path('communication/', views.communication, name='communication'),
     path('aptitude/', views.aptitude, name='aptitude'),
     path('ai/', views.ai_recommendation, name='ai'),
@@ -86,7 +86,8 @@ urlpatterns = [
     path('sql-test/',views.sql_test,name='sql_test'),
 
     #Experts
-    
+    path('live-session-register/', views.live_session_register, name='live-session-regest'),
+    path('view-talks/', views.view_talks, name='view_talks'),
     #DSA
     path('dsa-basics/',views.dsa_basics,name='dsa_basics'),
     path('dsa-linear/',views.dsa_linear,name='dsa_linear'),
