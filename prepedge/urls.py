@@ -86,8 +86,6 @@ urlpatterns = [
     path('sql-test/',views.sql_test,name='sql_test'),
 
     #Experts
-     path('live-session-register/', views.live_session_register, name='live_session_register'),
-     path('expert-profile/', views.expert_profile, name='expert_profile'),
     
     #DSA
     path('dsa-basics/',views.dsa_basics,name='dsa_basics'),
