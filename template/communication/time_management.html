@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -33,6 +34,19 @@ a{color:#60a5fa;text-decoration:none;}
     border-left:4px solid #3b82f6;
     margin:15px 0;
     border-radius:8px;
+}
+
+/* Button */
+.back-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 20px;
+    background:#3b82f6;
+    border-radius:8px;
+    color:white;
+}
+.back-btn:hover{
+    background:#2563eb;
 }
 </style>
 </head>
@@ -90,7 +104,7 @@ Time blocking involves assigning fixed time slots to tasks in advance. This redu
 </ul>
 
 <div class="tip">
-Plan your next day before sleeping to improve morning productivity.
+💡 Plan your next day before sleeping to improve morning productivity.
 </div>
 
 <h2>Benefits for Students</h2>
@@ -101,7 +115,10 @@ Plan your next day before sleeping to improve morning productivity.
 <li>Improved academic performance</li>
 </ul>
 
-<p><a href="comm.html">Back to Module</a></p>
+<!-- Back Button -->
+<a href="{% url 'comm' %}" class="back-btn">
+← Back to Module
+</a>
 
 </div>
 </div>

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +43,7 @@ ul{
     padding-left:20px;
 }
 
+/* Button */
 .btn{
     display:inline-block;
     padding:10px 18px;
@@ -50,6 +52,10 @@ ul{
     text-decoration:none;
     border-radius:8px;
     margin-top:15px;
+}
+
+.btn:hover{
+    background:#2563eb;
 }
 </style>
 </head>
@@ -117,7 +123,10 @@ ul{
             <li>Better leadership potential</li>
         </ul>
 
-        <a href="comm.html" class="btn">Back to Module</a>
+        <!-- Back Button -->
+        <a href="{% url 'comm' %}" class="btn">
+            ← Back to Module
+        </a>
     </div>
 
 </div>

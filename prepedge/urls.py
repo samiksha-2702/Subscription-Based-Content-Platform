@@ -22,7 +22,7 @@ urlpatterns = [
     path('programming/', views.programming, name='programming'),
     path('company/', views.company, name='company'),
     path('expert/', views.expert_talks, name='expert'),
-    path('communication/', views.communication, name='communication'),
+    path('communication/', views.communication, name='comm'),
     path('aptitude/', views.aptitude, name='aptitude'),
     path('ai/', views.ai_recommendation, name='ai'),
     path('login/', views.login_view, name='login'),
@@ -109,6 +109,16 @@ urlpatterns = [
     path("resume-guide/", views.resume_guide, name="resume-guide"),
     path("tech-trends/", views.tech_trends, name="tech-trends"),
     path("experience-stories/", views.experience_stories, name="experience-stories"),
+    #comm
+    path('time-management/', views.time_management, name='time_management'),
+    path('teamwork/', views.teamwork, name='teamwork'),
+    path('interview-skills/', views.interviewskills, name='interviewskills'),
+    path('personality/', views.personality, name='personality'),
 
+    # Communication
+    path('verbal/', views.verbal, name='verbal'),
+    path('non-verbal/', views.non_verbal, name='non_verbal'),
+    path('listening/', views.listening, name='listening'),
+    path('communication-quiz/', views.comm_quiz, name='comm_quiz'),
     
 ]

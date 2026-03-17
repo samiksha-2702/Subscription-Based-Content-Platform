@@ -21,7 +21,7 @@ def company(request):
 
 
 def communication(request):
-    return render(request, 'communication_softskills.html')
+    return render(request, 'communication/comm.html')
 
 
 def aptitude(request):
@@ -275,3 +275,29 @@ def live_session_register(request):
 # View expert talks
 def view_talks(request):
     return render(request, 'expert/view-talks.html')
+#commu
+def time_management(request):
+    return render(request, 'communication/time_management.html')
+
+def teamwork(request):
+    return render(request, 'communication/teamwork.html')
+
+def interviewskills(request):
+    return render(request, 'communication/interviewskills.html')
+
+def personality(request):
+    return render(request, 'communication/personality.html')
+
+
+# Communication Pages
+def verbal(request):
+    return render(request, 'communication/verbal.html')
+
+def non_verbal(request):
+    return render(request, 'communication/non_verbal.html')
+
+def listening(request):
+    return render(request, 'communication/listening.html')
+
+def comm_quiz(request):
+    return render(request, 'communication/comm_quiz.html')
