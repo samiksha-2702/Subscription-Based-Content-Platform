@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,11 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+*{ margin:0; padding:0; box-sizing:border-box; }
 
 body{
     font-family: "Segoe UI", sans-serif;
@@ -18,79 +15,51 @@ body{
     color:white;
 }
 
-/* Header */
+/* HEADER */
 header{
     padding:20px;
     text-align:center;
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     border-bottom:1px solid rgba(255,255,255,0.1);
 }
 
 header h1{
     font-size:34px;
     background: linear-gradient(90deg,#38bdf8,#6366f1);
-    background-clip: text;
     -webkit-background-clip: text;
-    color: transparent;
     -webkit-text-fill-color: transparent;
 }
 
-/* Container */
+/* CONTAINER */
 .container{
     max-width:1200px;
     margin:auto;
     padding:40px 20px;
 }
 
-/* Grid */
+/* GRID */
 .grid{
     display:grid;
     grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
     gap:30px;
 }
 
-/* Cards */
+/* CARD */
 .card{
     background: rgba(255,255,255,0.05);
     padding:30px;
     border-radius:15px;
     text-align:center;
     transition:0.4s;
-    position:relative;
-    animation: slideUp 0.8s ease forwards;
-    opacity:0;
 }
-
-.card:nth-child(1){ animation-delay:0.2s; }
-.card:nth-child(2){ animation-delay:0.4s; }
-.card:nth-child(3){ animation-delay:0.6s; }
 
 .card:hover{
     transform: translateY(-10px) scale(1.02);
-    background: rgba(255,255,255,0.08);
 }
 
-.card::before{
-    content:"";
-    position:absolute;
-    width:100%;
-    height:5px;
-    background: linear-gradient(90deg,#38bdf8,#6366f1);
-    top:0;
-    left:0;
-}
-
-.card h2{
-    margin-bottom:15px;
-}
-
-.card p{
-    opacity:0.8;
-    margin-bottom:20px;
-}
-
-/* Buttons */
+/* BUTTONS */
 .btn{
     padding:12px 20px;
     border:none;
@@ -98,99 +67,28 @@ header h1{
     cursor:pointer;
     margin:5px;
     font-weight:bold;
-    transition:0.3s;
+    outline:none;
 }
 
-.practice{
-    background:#22c55e;
-    color:white;
-}
+.practice{ background:#22c55e; color:white; }
+.test{ background:#6366f1; color:white; }
 
-.test{
-    background:#6366f1;
-    color:white;
-}
-
-.btn:hover{
-    transform: scale(1.08);
-    box-shadow: 0 0 15px rgba(99,102,241,0.6);
-}
-
-.btn:active{
-    transform: scale(0.95);
-}
-
-/* PREMIUM SECTION */
+/* PREMIUM */
 .premium{
     margin-top:70px;
     background: linear-gradient(135deg,#4f46e5,#9333ea);
     padding:40px;
     border-radius:20px;
     text-align:center;
-    animation: fadeIn 1.5s ease;
-}
-
-.premium h2{
-    font-size:28px;
-    margin-bottom:15px;
-}
-
-.premium p{
-    opacity:0.9;
-    margin-bottom:25px;
-}
-
-.premium ul{
-    list-style:none;
-    margin-bottom:25px;
-}
-
-.premium li{
-    margin:10px 0;
-    font-size:16px;
 }
 
 .unlock{
     background:white;
     color:#4f46e5;
     padding:14px 30px;
-    font-weight:bold;
     border-radius:30px;
     border:none;
     cursor:pointer;
-    transition:0.3s;
-    animation: pulse 2s infinite;
-}
-
-.unlock:hover{
-    transform: scale(1.1);
-}
-
-.unlock:active{
-    transform: scale(0.95);
-}
-
-/* Animations */
-@keyframes slideUp{
-    from{
-        opacity:0;
-        transform:translateY(50px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-@keyframes fadeIn{
-    from{opacity:0; transform:translateY(40px);}
-    to{opacity:1; transform:translateY(0);}
-}
-
-@keyframes pulse{
-    0%{ transform: scale(1); }
-    50%{ transform: scale(1.05); }
-    100%{ transform: scale(1); }
 }
 </style>
 </head>
@@ -204,47 +102,98 @@ header h1{
 
 <div class="container">
 
-    <!-- PRACTICE CARDS -->
-    <div class="grid">
+<div class="grid">
 
-        <div class="card">
-            <h2>🧠 Aptitude Practice</h2>
-            <p>Master quantitative, reasoning, and verbal ability questions.</p>
-            <button class="btn practice" onclick="location.href='aptitude_practice.html'">Start Practice</button>
-            <button class="btn test" onclick="location.href='aptitude_test.html'">Take Test</button>
-        </div>
+<!-- Aptitude (FREE) -->
+<div class="card">
+    <h2>🧠 Aptitude Practice</h2>
+    <p>Master quantitative, reasoning, and verbal ability questions.</p>
 
-        <div class="card">
-            <h2>💻 Technical MCQs</h2>
-            <p>Practice programming, DBMS, OS, and core CS subjects.</p>
-            <button class="btn practice" onclick="location.href='technical_practice.html'">Start Practice</button>
-            <button class="btn test" onclick="location.href='technical_test.html'">Take Test</button>
-        </div>
+    <button class="btn practice"
+        onclick="location.href='/aptitude/practice/'">
+        Start Practice
+    </button>
 
-        <div class="card">
-            <h2>🏢 Interview Questions</h2>
-            <p>Prepare with real company-wise previous interview questions.</p>
-            <button class="btn practice" onclick="location.href='interview_practice.html'">Start Practice</button>
-            <button class="btn test" onclick="location.href='interview_test.html'">Take Test</button>
-        </div>
+    <button class="btn test"
+        onclick="location.href='/aptitude/test/'">
+        Take Test
+    </button>
+</div>
 
-    </div>
+<!-- Technical -->
+<div class="card">
+    <h2>💻 Technical MCQs {% if not subscribed %}🔒{% endif %}</h2>
+    <p>Practice programming, DBMS, OS, and core CS subjects.</p>
 
-    <!-- PREMIUM SECTION -->
-    <div class="premium">
-        <h2>🚀 Unlock Premium Content</h2>
-        <p>Get access to advanced features and boost your interview preparation faster.</p>
+    {% if subscribed %}
+        <button class="btn practice"
+            onclick="location.href='/technical/practice/'">
+            Start Practice
+        </button>
 
-        <ul>
-            <li>✔ Company-specific question sets</li>
-            <li>✔ AI-powered weak area analysis</li>
-            <li>✔ Unlimited mock tests</li>
-            <li>✔ Detailed performance reports</li>
-            <li>✔ Personalized study planner</li>
-        </ul>
+        <button class="btn test"
+            onclick="location.href='/technical/test/'">
+            Take Test
+        </button>
+    {% else %}
+        <button class="btn practice"
+            onclick="location.href='/plans/'">
+            🔒 Start Practice
+        </button>
 
-        <button class="unlock" onclick="location.href='premium.html'">Unlock Premium</button>
-    </div>
+        <button class="btn test"
+            onclick="location.href='/plans/'">
+            🔒 Take Test
+        </button>
+    {% endif %}
+</div>
+
+<!-- Interview -->
+<div class="card">
+    <h2>🏢 Interview Questions {% if not subscribed %}🔒{% endif %}</h2>
+    <p>Prepare with real company-wise previous interview questions.</p>
+
+    {% if subscribed %}
+        <button class="btn practice"
+            onclick="location.href='/interview/practice/'">
+            Start Practice
+        </button>
+
+        <button class="btn test"
+            onclick="location.href='/interview/test/'">
+            Take Test
+        </button>
+    {% else %}
+        <button class="btn practice"
+            onclick="location.href='/plans/'">
+            🔒 Start Practice
+        </button>
+
+        <button class="btn test"
+            onclick="location.href='/plans/'">
+            🔒 Take Test
+        </button>
+    {% endif %}
+</div>
+
+</div>
+
+<!-- PREMIUM SECTION -->
+<div class="premium">
+    <h2>🚀 Unlock Premium Content</h2>
+    <p>Get access to advanced features.</p>
+    <p>✔ Company-specific question sets</p>
+    <p>✔ AI-powered weak area analysis</p>
+    <p>✔ Unlimited mock tests</p>
+    <p>✔ Detailed performance reports</p>
+    <p>✔ Personalized study planner</p>
+    <br>
+
+    <button class="unlock"
+        onclick="location.href='/plans/'">
+        Unlock Premium
+    </button>
+</div>
 
 </div>
 

@@ -23,7 +23,7 @@ urlpatterns = [
     path('company/', views.company, name='company'),
     path('expert/', views.expert_talks, name='expert'),
     path('communication/', views.communication, name='comm'),
-    path('aptitude/', views.aptitude, name='aptitude'),
+    path('aptitude/', views.aptitude, name='questions'),
     path('ai/', views.ai_recommendation, name='ai'),
     path('login/', views.login_view, name='login'),
     path('register/', views.register_view, name='register'),
@@ -120,5 +120,20 @@ urlpatterns = [
     path('non-verbal/', views.non_verbal, name='non_verbal'),
     path('listening/', views.listening, name='listening'),
     path('communication-quiz/', views.comm_quiz, name='comm_quiz'),
+    
+    #aptitude
+     # Free
+    path('aptitude/practice/', views.aptitude_practice, name='aptitude_practice'),
+    path('aptitude/test/', views.aptitude_test, name='aptitude_test'),
+
+    # Locked
+    path('technical/practice/', views.technical_practice, name='technical_practice'),
+    path('technical/test/', views.technical_test, name='technical_test'),
+
+    path('interview/practice/', views.interview_practice, name='interview_practice'),
+    path('interview/test/', views.interview_test, name='interview_test'),
+
+    # Subscription
+    path('subscribe/', views.subscribe, name='plans'),
     
 ]
