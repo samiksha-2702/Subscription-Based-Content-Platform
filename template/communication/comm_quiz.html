@@ -42,11 +42,16 @@ button{
     cursor:pointer;
 }
 
+button:hover{
+    background:#2563eb;
+}
+
 .result{
     margin-top:25px;
     font-size:20px;
     color:#22c55e;
 }
+
 .correct{ color:#22c55e; }
 .wrong{ color:#ef4444; }
 </style>
@@ -61,10 +66,15 @@ button{
 
 <div class="container">
 
-<form id="quizForm">
+<form id="quizForm"></form>
 
-<!-- Questions -->
+<button type="button" onclick="submitQuiz()">Submit Quiz</button>
+<div id="result" class="result"></div>
+
+</div>
+
 <script>
+// Questions Data
 const questions = [
 ["Effective communication requires:",["Only speaking","Only listening","Both speaking and listening","None"],2],
 ["Eye contact shows:",["Confidence","Fear","Anger","Confusion"],0],
@@ -88,31 +98,33 @@ const questions = [
 ["Feedback in communication is:",["Response","Silence","Noise","Barrier"],0]
 ];
 
-window.onload=function(){
+// Load Questions AFTER page loads (important fix)
+document.addEventListener("DOMContentLoaded", function(){
     let form=document.getElementById("quizForm");
+
     questions.forEach((q,i)=>{
         let div=document.createElement("div");
         div.className="question";
+
         let html="<b>Q"+(i+1)+". "+q[0]+"</b><br>";
+
         q[1].forEach((opt,j)=>{
-            html+=`<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`;
+            html+=`<label>
+                        <input type="radio" name="q${i}" value="${j}">
+                        ${opt}
+                    </label><br>`;
         });
+
         html+=`<div id="ans${i}"></div>`;
         div.innerHTML=html;
         form.appendChild(div);
     });
-}
-</script>
+});
 
-<button type="button" onclick="submitQuiz()">Submit Quiz</button>
-<div id="result" class="result"></div>
-
-</form>
-</div>
-
-<script>
+// Submit Quiz
 function submitQuiz(){
     let score=0;
+
     questions.forEach((q,i)=>{
         let selected=document.querySelector(`input[name="q${i}"]:checked`);
         let ansDiv=document.getElementById("ans"+i);
@@ -120,17 +132,17 @@ function submitQuiz(){
         if(selected){
             if(parseInt(selected.value)===q[2]){
                 score++;
-                ansDiv.innerHTML="<span class='correct'>Correct</span>";
+                ansDiv.innerHTML="<span class='correct'>✔ Correct</span>";
             }else{
-                ansDiv.innerHTML="<span class='wrong'>Wrong | Correct answer: "+q[1][q[2]]+"</span>";
+                ansDiv.innerHTML="<span class='wrong'>✖ Wrong | Correct: "+q[1][q[2]]+"</span>";
             }
         }else{
-            ansDiv.innerHTML="<span class='wrong'>Not attempted | Correct answer: "+q[1][q[2]]+"</span>";
+            ansDiv.innerHTML="<span class='wrong'>Not attempted | Correct: "+q[1][q[2]]+"</span>";
         }
     });
 
-    document.getElementById("result").innerHTML=
-        "Your Score: "+score+" / "+questions.length;
+    document.getElementById("result").innerHTML =
+        "🎯 Your Score: "+score+" / "+questions.length;
 }
 </script>
 
