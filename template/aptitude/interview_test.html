@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Interview Test | PrepEdge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{margin:0;font-family:"Segoe UI",sans-serif;background:linear-gradient(135deg,#020617,#0f172a);color:white;}
+header{text-align:center;padding:20px;background:rgba(255,255,255,0.05);}
+.container{max-width:900px;margin:auto;padding:20px;}
+.card{background:rgba(255,255,255,0.05);padding:20px;border-radius:10px;margin-bottom:15px;}
+.option{display:block;background:#1f2937;padding:10px;margin:8px 0;border-radius:6px;cursor:pointer;}
+.option:hover{background:#374151;}
+.btn{padding:12px 20px;border:none;border-radius:8px;background:#22c55e;color:white;cursor:pointer;font-weight:bold;margin-top:10px;}
+.score{text-align:center;font-size:22px;margin-top:20px;}
+.correct{background:#15803d !important;}
+.wrong{background:#b91c1c !important;}
+#timer{text-align:center;font-size:20px;margin-bottom:20px;}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🤝 Interview Test</h1>
+<p id="timer">Time Left: 10:00</p>
+</header>
+
+<div class="container">
+<form id="quizForm">
+
+<div class="card" data-answer="STAR">
+<h3>1. How do you answer behavioral questions?</h3>
+<label class="option"><input type="radio" name="q0" value="STAR">Use STAR Method</label>
+<label class="option"><input type="radio" name="q0" value="TellStory">Just Tell a Story</label>
+<label class="option"><input type="radio" name="q0" value="Guess">Guess</label>
+</div>
+
+<div class="card" data-answer="Research">
+<h3>2. How to prepare for company-specific questions?</h3>
+<label class="option"><input type="radio" name="q1" value="Research">Research the company</label>
+<label class="option"><input type="radio" name="q1" value="Ignore">Ignore</label>
+<label class="option"><input type="radio" name="q1" value="Random">Random Answer</label>
+</div>
+
+<div class="card" data-answer="Yes">
+<h3>3. Should you ask questions at the end of the interview?</h3>
+<label class="option"><input type="radio" name="q2" value="Yes">Yes</label>
+<label class="option"><input type="radio" name="q2" value="No">No</label>
+</div>
+
+<div class="card" data-answer="Confidence">
+<h3>4. Which trait is most important during an interview?</h3>
+<label class="option"><input type="radio" name="q3" value="Confidence">Confidence</label>
+<label class="option"><input type="radio" name="q3" value="Speed">Speed</label>
+<label class="option"><input type="radio" name="q3" value="Memory">Memory</label>
+</div>
+
+<button type="button" class="btn" onclick="calculateScore()">Submit Test</button>
+</form>
+<div class="score" id="scoreDiv"></div>
+</div>
+
+<script>
+function calculateScore(){
+    const cards=document.querySelectorAll(".card");
+    let score=0;
+    cards.forEach(card=>{
+        const correct=card.getAttribute("data-answer");
+        const selected=card.querySelector('input[type="radio"]:checked');
+        card.querySelectorAll(".option").forEach(label=>label.classList.remove("correct","wrong"));
+        if(selected){
+            if(selected.value===correct){score++; selected.parentElement.classList.add("correct");}
+            else{selected.parentElement.classList.add("wrong");}
+        }
+    });
+    document.getElementById("scoreDiv").innerHTML=`🎯 Your Score: ${score}/${cards.length}`;
+}
+
+// Timer 10 minutes
+let totalSeconds=600;
+let timerEl=document.getElementById("timer");
+let timerInterval=setInterval(()=>{
+    let minutes=Math.floor(totalSeconds/60);
+    let seconds=totalSeconds%60;
+    timerEl.innerHTML=`Time Left: ${minutes}:${seconds<10?'0'+seconds:seconds}`;
+    totalSeconds--;
+    if(totalSeconds<0){
+        clearInterval(timerInterval);
+        calculateScore();
+        alert("Time's up! Test submitted.");
+    }
+},1000);
+</script>
+
+</body>
+</html>

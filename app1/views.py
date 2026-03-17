@@ -301,3 +301,47 @@ def listening(request):
 
 def comm_quiz(request):
     return render(request, 'communication/comm_quiz.html')
+
+#aptitude
+# Dummy subscription check
+def is_subscribed(user):
+    return user.is_authenticated and hasattr(user, 'subscription') and user.subscription.is_active
+
+
+def practice_hub(request):
+    return render(request, 'questions.html', {
+        'subscribed': is_subscribed(request.user)
+    })
+
+
+# FREE
+def aptitude_practice(request):
+    return render(request, 'aptitude/aptitude_practice.html')
+
+def aptitude_test(request):
+    return render(request, 'aptitude/aptitude_test.html')
+
+
+# LOCKED
+def technical_practice(request):
+   
+    return render(request, 'aptitude/technical_practice.html')
+
+
+def technical_test(request):
+    
+    return render(request, 'aptitude/technical_test.html')
+
+
+def interview_practice(request):
+   
+    return render(request, 'aptitude/interview_practice.html')
+
+
+def interview_test(request):
+   
+    return render(request, 'aptitude/interview_test.html')
+
+
+def subscribe(request):
+    return render(request, 'plans.html')

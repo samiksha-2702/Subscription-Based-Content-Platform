@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technical Practice | PrepEdge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+    margin:0;
+    font-family:"Segoe UI",sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+}
+header{
+    text-align:center;
+    padding:20px;
+    background:rgba(255,255,255,0.05);
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:20px;
+}
+select{
+    padding:10px;
+    margin-bottom:20px;
+    border-radius:6px;
+    border:none;
+    font-size:16px;
+}
+.card{
+    background:rgba(255,255,255,0.05);
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+.btn{
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:10px;
+}
+textarea{
+    width:100%;
+    margin-top:15px;
+    background:#1f2937;
+    color:white;
+    border-radius:6px;
+    padding:10px;
+    border:none;
+    font-family:monospace;
+    font-size:14px;
+}
+#output{
+    background:#111827;
+    color:white;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+    min-height:50px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>💻 Technical Practice</h1>
+<p>Select language → Solve coding questions → Run code</p>
+</header>
+
+<div class="container">
+
+<label>Select Language:</label>
+<select id="languageSelect" onchange="showQuestions()">
+    <option value="">--Select Language--</option>
+    <option value="python">Python</option>
+    <option value="cpp">C++</option>
+    <option value="java">Java</option>
+</select>
+
+<!-- Questions will appear here -->
+<div id="quizForm"></div>
+
+<!-- Compiler -->
+<h2>🖥️ Online Compiler</h2>
+<textarea id="codeInput" rows="12" placeholder="Click 'Solve in Compiler' to load code..."></textarea>
+
+<button class="btn" onclick="runCode()">▶ Run Code</button>
+
+<pre id="output"></pre>
+
+</div>
+
+<script>
+
+// QUESTIONS DATA
+const questions = {
+    python: [
+        { q: "Print Hello World", starter: "print('Hello World')" },
+        { q: "Print square of number", starter: "n=int(input())\nprint(n*n)" }
+    ],
+    cpp: [
+        { q: "Print Hello World", starter: "#include <iostream>\nusing namespace std;\nint main(){\n cout<<\"Hello World\";\n return 0;\n}" },
+        { q: "Print square of number", starter: "#include <iostream>\nusing namespace std;\nint main(){\n int n;\n cin>>n;\n cout<<n*n;\n return 0;\n}" }
+    ],
+    java: [
+        { q: "Print Hello World", starter: "public class Main{\n public static void main(String[] args){\n System.out.println(\"Hello World\");\n }\n}" },
+        { q: "Print square of number", starter: "import java.util.*;\npublic class Main{\n public static void main(String[] args){\n Scanner sc=new Scanner(System.in);\n int n=sc.nextInt();\n System.out.println(n*n);\n }\n}" }
+    ]
+};
+
+// SHOW QUESTIONS (FIXED)
+function showQuestions() {
+    console.log("Function called");
+
+    const lang = document.getElementById("languageSelect").value;
+    console.log("Selected:", lang);
+
+    const container = document.getElementById("quizForm");
+    container.innerHTML = "";
+
+    if (!lang) {
+        container.innerHTML = "<p>Please select a language</p>";
+        return;
+    }
+
+    questions[lang].forEach((qObj, index) => {
+        let card = document.createElement("div");
+        card.classList.add("card");
+
+        card.innerHTML = `
+            <h3>${index + 1}. ${qObj.q}</h3>
+            <button type="button" class="btn" onclick="loadCode(${index})">
+                Solve in Compiler
+            </button>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+// LOAD CODE
+function loadCode(index) {
+    const lang = document.getElementById("languageSelect").value;
+    document.getElementById("codeInput").value = questions[lang][index].starter;
+}
+
+// RUN CODE (DEMO MODE)
+function runCode() {
+    const code = document.getElementById("codeInput").value;
+
+    if (!code) {
+        document.getElementById("output").textContent = "⚠️ No code to run!";
+        return;
+    }
+
+    // Demo output (no API needed)
+    if (code.includes("Hello")) {
+        document.getElementById("output").textContent = "Hello World";
+    } else if (code.includes("*")) {
+        document.getElementById("output").textContent = "Output: (Demo calculation)";
+    } else {
+        document.getElementById("output").textContent = "Code executed successfully!";
+    }
+}
+
+</script>
+
+</body>
+</html>

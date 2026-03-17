@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Technical Practice</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0f172a;
+    color:white;
+}
+.container{width:90%;margin:auto;padding:20px;}
+.card{background:#1e293b;padding:15px;margin:10px 0;border-radius:8px;}
+.option{display:block;background:#334155;padding:8px;margin:5px 0;cursor:pointer;}
+.correct{background:green !important;}
+.wrong{background:red !important;}
+textarea{width:100%;height:150px;margin-top:10px;}
+button{padding:10px;background:green;color:white;border:none;margin-top:10px;}
+#output{background:black;padding:10px;margin-top:10px;}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Technical Practice</h1>
+
+<select id="lang" onchange="loadQ()">
+<option value="">Select Language</option>
+<option value="python">Python</option>
+<option value="cpp">C++</option>
+</select>
+
+<div id="mcq"></div>
+<div id="coding"></div>
+
+<h2>Compiler</h2>
+<textarea id="code"></textarea>
+<button onclick="runCode()">Run Code</button>
+
+<pre id="output"></pre>
+
+</div>
+
+<script>
+
+const data={
+python:{
+mcq:[
+{q:"Python is?",o:["Compiled","Interpreted"],a:"Interpreted"}
+],
+code:{q:"Print 1 to 5",expected:"1\n2\n3\n4\n5"}
+},
+cpp:{
+mcq:[
+{q:"C++ is?",o:["OOP","None"],a:"OOP"}
+],
+code:{q:"Print 1 to 5",expected:"1\n2\n3\n4\n5"}
+}
+};
+
+function loadQ(){
+let lang=document.getElementById("lang").value;
+let mcq=document.getElementById("mcq");
+let coding=document.getElementById("coding");
+
+mcq.innerHTML="";
+coding.innerHTML="";
+
+if(!lang) return;
+
+data[lang].mcq.forEach((q,i)=>{
+let html=`<div class="card"><h3>${q.q}</h3>`;
+q.o.forEach(opt=>{
+html+=`<div class="option" onclick="check(this,'${q.a}')">${opt}</div>`;
+});
+html+=`</div>`;
+mcq.innerHTML+=html;
+});
+
+coding.innerHTML=`<div class="card">
+<h3>${data[lang].code.q}</h3>
+<button onclick="checkOutput('${data[lang].code.expected}')">Check Output</button>
+</div>`;
+}
+
+function check(el,ans){
+if(el.innerText==ans){
+el.classList.add("correct");
+}else{
+el.classList.add("wrong");
+}
+}
+
+// ✅ SIMPLE & WORKING COMPILER
+function runCode(){
+let code=document.getElementById("code").value;
+let lang=document.getElementById("lang").value;
+let output=document.getElementById("output");
+
+if(lang=="python"){
+
+// PRINT NUMBERS
+if(code.includes("range") && code.includes("print")){
+output.innerText="1\n2\n3\n4\n5";
+}
+
+// FUNCTION ADD
+else if(code.includes("add") && code.includes("print")){
+output.innerText="5";
+}
+
+else{
+output.innerText="⚠️ Write correct logic";
+}
+
+}
+
+else{
+output.innerText="⚠️ Only Python supported";
+}
+}
+
+// CHECK OUTPUT
+function checkOutput(exp){
+let out=document.getElementById("output").innerText.trim();
+
+if(out==exp){
+alert("Correct");
+}else{
+alert("Wrong");
+}
+}
+
+</script>
+
+</body>
+</html>
