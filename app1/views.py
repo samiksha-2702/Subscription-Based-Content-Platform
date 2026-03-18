@@ -602,3 +602,17 @@ def premium_dashboard(request):
         'completed':      progress,
         'total_topics':   total_topics,
     })
+    
+    #plans
+def plans(request):
+    return render(request, 'plans.html')
+
+
+# 🟢 Login Page
+def login_view(request):
+    return render(request, 'login.html')
+
+
+# 🟢 Payment Page
+def payment(request):
+    return render(request, 'payment.html')

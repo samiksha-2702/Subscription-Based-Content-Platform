@@ -115,4 +115,7 @@ urlpatterns = [
 
     # Subscription
     path('subscribe/', views.subscribe, name='subscribe'),
+    path('login/', views.login_view, name='login'),
+    path('plans/', views.plans, name='plans'),
+    path('payment/', views.payment, name='payment'),
 ]

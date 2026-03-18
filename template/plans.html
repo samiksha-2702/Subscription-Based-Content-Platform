@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,54 +11,81 @@
 <style>
 
 body{
-font-family:Segoe UI, Arial, sans-serif;
-background: linear-gradient(135deg,#0f172a,#020617);
-color:white;
+    font-family:Segoe UI, Arial, sans-serif;
+    background: linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+}
+
+/* Navbar */
+.navbar{
+    background: rgba(0,0,0,0.5) !important;
+    backdrop-filter: blur(12px);
+}
+
+/* Heading */
+.main-title{
+    font-size:2.5rem;
+    font-weight:700;
+    background: linear-gradient(90deg,#3b82f6,#06b6d4);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
 }
 
 /* Glass cards */
 .plan-card{
-background: rgba(255,255,255,0.06);
-backdrop-filter: blur(12px);
-border-radius:18px;
-transition:0.35s;
-box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(14px);
+    border-radius:20px;
+    transition:0.4s;
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    border:1px solid rgba(255,255,255,0.08);
 }
 
 .plan-card:hover{
-transform: translateY(-8px) scale(1.03);
-box-shadow:0 15px 40px rgba(59,130,246,0.4);
+    transform: translateY(-10px) scale(1.04);
+    box-shadow:0 20px 50px rgba(59,130,246,0.4);
 }
 
 /* Premium highlight */
 .premium{
-border:2px solid #3b82f6;
-position:relative;
+    border:2px solid #3b82f6;
+    position:relative;
+    transform: scale(1.05);
 }
 
 .premium-badge{
-position:absolute;
-top:-12px;
-left:50%;
-transform:translateX(-50%);
-background:#3b82f6;
-padding:6px 14px;
-border-radius:20px;
-font-size:12px;
-font-weight:bold;
+    position:absolute;
+    top:-12px;
+    left:50%;
+    transform:translateX(-50%);
+    background:linear-gradient(90deg,#3b82f6,#06b6d4);
+    padding:6px 16px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
 }
 
 /* Buttons */
 .btn-modern{
-border-radius:12px;
-padding:12px;
-font-weight:bold;
+    border-radius:14px;
+    padding:12px;
+    font-weight:bold;
+    transition:0.3s;
 }
 
-/* Navbar blur */
-.navbar{
-background: rgba(0,0,0,0.4) !important;
-backdrop-filter: blur(10px);
+.btn-modern:hover{
+    transform:scale(1.05);
+}
+
+/* Feature list */
+.features li{
+    margin-bottom:8px;
+    font-size:15px;
+}
+
+/* Footer */
+footer{
+    border-top:1px solid rgba(255,255,255,0.1);
 }
 
 </style>
@@ -68,13 +96,15 @@ backdrop-filter: blur(10px);
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
 <div class="container">
-<a class="navbar-brand fw-bold text-info" href="index.html">PrepEdge</a>
+<a class="navbar-brand fw-bold text-info" href="{% url 'home' %}">
+PrepEdge
+</a>
 
 <div>
-<a href="index.html" class="btn btn-outline-light btn-sm me-2">
+<a href="{% url 'home' %}" class="btn btn-outline-light btn-sm me-2">
 ← Home
 </a>
-<a href="login.html" class="btn btn-info btn-sm">
+<a href="{% url 'login' %}" class="btn btn-info btn-sm">
 Login
 </a>
 </div>
@@ -85,14 +115,17 @@ Login
 <!-- Plans -->
 <div class="container my-5">
 
-<h2 class="text-center mb-2 fw-bold">Choose Your Subscription Plan</h2>
+<h2 class="text-center main-title mb-2">
+Choose Your Plan 🚀
+</h2>
+
 <p class="text-center text-secondary mb-5">
 Unlock premium interview preparation tools & AI insights
 </p>
 
 <div class="row justify-content-center g-4">
 
-<!-- Free -->
+<!-- Free Plan -->
 <div class="col-md-4">
 <div class="plan-card p-4 text-center h-100">
 
@@ -101,27 +134,27 @@ Unlock premium interview preparation tools & AI insights
 
 <h1 class="text-success my-3">₹0</h1>
 
-<ul class="list-unstyled text-start mb-4">
+<ul class="list-unstyled text-start mb-4 features">
 <li>✔ Limited interview questions</li>
 <li>✔ Basic explanations</li>
 <li>✔ Articles access</li>
-<li>❌ Mock tests</li>
-<li>❌ AI insights</li>
+<li class="text-secondary">❌ Mock tests</li>
+<li class="text-secondary">❌ AI insights</li>
 </ul>
 
-<a href="login.html" 
+<a href="{% url 'login' %}" 
    class="btn btn-outline-info w-100 btn-modern">
-Continue Free
+Start Free
 </a>
 
 </div>
 </div>
 
-<!-- Premium -->
+<!-- Premium Plan -->
 <div class="col-md-4">
 <div class="plan-card premium p-4 text-center h-100">
 
-<div class="premium-badge">Most Popular</div>
+<div class="premium-badge">🔥 Most Popular</div>
 
 <h4>Premium Plan</h4>
 <p class="text-secondary">For serious preparation</p>
@@ -129,7 +162,7 @@ Continue Free
 <h1 class="text-primary my-3">₹299</h1>
 <p class="text-secondary">per month</p>
 
-<ul class="list-unstyled text-start mb-4">
+<ul class="list-unstyled text-start mb-4 features">
 <li>✔ Unlimited questions</li>
 <li>✔ Topic mock tests</li>
 <li>✔ Score analytics</li>
@@ -137,7 +170,7 @@ Continue Free
 <li>✔ Interview simulator</li>
 </ul>
 
-<a href="payment.html" 
+<a href="{% url 'payment' %}" 
    class="btn btn-primary w-100 btn-modern">
 Subscribe Now
 </a>
