@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}AI Recommendations — PrepEdge{% endblock %}
+
+{% block content %}
+<div class="mb-5">
+
+    <h2>🤖 AI Recommendations</h2>
+    <p class="text-muted">Personalised study plan based on your performance</p>
+
+    <!-- Refresh Recommendations Button -->
+    <form method="POST" action="{% url 'ai_refresh' %}" class="mb-4">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">🔄 Refresh Recommendations</button>
+    </form>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6>Quizzes Attempted</h6>
+                    <p class="display-6">{{ total_attempts }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6>Pass Rate</h6>
+                    <p class="display-6">{{ pass_rate }}%</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h6>Topics to Improve</h6>
+                    <p class="display-6">{{ weak_areas|length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recommendations -->
+    <h4>📋 Your Action Plan</h4>
+    {% if recommendations %}
+        <div class="list-group mb-4">
+            {% for rec in recommendations %}
+            <div class="list-group-item shadow-sm mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        {% if rec.priority == 1 %}<span class="badge bg-danger">Urgent</span>
+                        {% elif rec.priority <= 3 %}<span class="badge bg-warning text-dark">High</span>
+                        {% elif rec.priority <= 5 %}<span class="badge bg-info text-dark">Medium</span>
+                        {% else %}<span class="badge bg-secondary">Low</span>{% endif %}
+                        {{ rec.get_rec_type_display }} – {{ rec.title }}
+                    </div>
+                    {% if rec.url %}
+                        <a href="{{ rec.url }}" class="btn btn-sm btn-outline-primary">Go to Resource</a>
+                    {% endif %}
+                </div>
+                <p class="mt-2 mb-0">{{ rec.description }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-success">
+            🎉 Great job! No urgent recommendations right now.
+        </div>
+    {% endif %}
+
+    <!-- Links -->
+    <div class="mb-4">
+        <a href="{% url 'ai_weak_areas' %}" class="btn btn-outline-secondary me-2">📊 View Weak Areas</a>
+        <a href="{% url 'ai_learning_path' %}" class="btn btn-outline-secondary">🗺️ View Learning Path</a>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Weak Areas — PrepEdge{% endblock %}
+
+{% block content %}
+<h2>📊 Your Weak Areas by Module</h2>
+<p class="text-muted">Areas where your scores suggest more practice is needed.</p>
+
+{% if by_module %}
+    {% for module, areas in by_module.items %}
+        <h4 class="mt-4">{{ module }}</h4>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Topic</th>
+                    <th>Weakness</th>
+                    <th>Reason</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for wa in areas %}
+                <tr>
+                    <td>{{ wa.topic.name }}</td>
+                    <td>{{ wa.weakness_score|floatformat:0 }}%</td>
+                    <td>{{ wa.reason|truncatechars:50 }}</td>
+                    <td>{{ wa.last_updated|timesince }} ago</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endfor %}
+{% else %}
+    <div class="alert alert-info">
+        🎉 No weak areas found! Complete some quizzes to get started.
+    </div>
+{% endif %}
+{% endblock %}
