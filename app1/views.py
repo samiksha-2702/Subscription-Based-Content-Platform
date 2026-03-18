@@ -686,3 +686,17 @@ def process_payment(request):
     from django.contrib import messages
     messages.success(request, '🎉 Payment successful! You are now a Premium member.')
     return redirect('index')
+    
+    #plans
+def plans(request):
+    return render(request, 'plans.html')
+
+
+# 🟢 Login Page
+def login_view(request):
+    return render(request, 'login.html')
+
+
+# 🟢 Payment Page
+def payment(request):
+    return render(request, 'payment.html')
