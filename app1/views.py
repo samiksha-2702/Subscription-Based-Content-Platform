@@ -175,6 +175,9 @@ def subscribe(request):
 def programming_home(request):
     return render(request, 'programming.html')
 
+def home(request):
+    return render(request, 'home.html')
+
 
 # ══════════════════════════════════════════════════════════════════
 # LIVE SESSION REGISTRATION

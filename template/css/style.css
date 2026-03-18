@@ -112,3 +112,9 @@ footer {
     color: #aaa;
 }
 
+
+/* U */
+.info-item {
+    text-decoration: none;  /* This removes the underline */
+    color: inherit;         /* This keeps the text color consistent */
+}

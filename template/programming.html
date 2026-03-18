@@ -1,138 +1,783 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Programming Languages</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Programming Languages - PrepEdge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<style>
-* { box-sizing: border-box; }
+    <!-- Google Fonts for better typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
-}
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-header {
-    text-align: center;
-    padding: 40px 20px;
-    background: rgba(15,23,42,0.7);
-    backdrop-filter: blur(8px);
-}
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-.container {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: auto;
-}
+      body {
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #0a0f1e, #030614);
+        color: white;
+        min-height: 100vh;
+        line-height: 1.6;
+      }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 28px;
-}
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
 
-.card-link {
-    text-decoration: none;
-    color: white;
-}
+      ::-webkit-scrollbar-track {
+        background: #1a1f2e;
+      }
 
-.card {
-    background: linear-gradient(145deg, #111827, #0b1220);
-    border-radius: 16px;
-    padding: 30px 20px;
-    text-align: center;
-    transition: 0.35s ease;
-}
+      ::-webkit-scrollbar-thumb {
+        background: #3b82f6;
+        border-radius: 4px;
+      }
 
-.card:hover {
-    transform: translateY(-8px) scale(1.03);
-}
+      ::-webkit-scrollbar-thumb:hover {
+        background: #2563eb;
+      }
 
-.card img {
-    width: 250px;
-    height: 90px;
-    object-fit: contain;
-    margin-bottom: 14px;
-}
+      /* Header */
+      header {
+        text-align: center;
+        padding: 60px 20px 40px;
+        position: relative;
+        overflow: hidden;
+        background: rgba(15, 23, 42, 0.7);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+      }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: #020617;
-    opacity: 0.7;
-}
-</style>
-</head>
+      header::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -10%;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(
+          circle,
+          rgba(59, 130, 246, 0.15) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        z-index: 0;
+        animation: float 8s ease-in-out infinite;
+      }
 
-<body>
+      header::after {
+        content: "";
+        position: absolute;
+        bottom: -30%;
+        left: -10%;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(
+          circle,
+          rgba(139, 92, 246, 0.1) 0%,
+          transparent 70%
+        );
+        border-radius: 50%;
+        z-index: 0;
+        animation: float 10s ease-in-out infinite reverse;
+      }
 
-<header>
-    <h1>Programming Languages</h1>
-    <p>Select a language to continue</p>
-</header>
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-20px) scale(1.05);
+        }
+      }
 
-<div class="container">
-<div class="grid">
+      header h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: -0.02em;
+        position: relative;
+        z-index: 1;
+      }
 
-<!-- Python -->
-<a href="{% url 'python_info' %}" class="card-link">
-<div class="card">
-    <img src="{% static 'image/python.jpg' %}" alt="Python">
-    <h3>Python</h3>
-</div>
-</a>
+      header p {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1;
+      }
 
-<!-- Java -->
-<a href="{% url 'javainfo' %}" class="card-link">
-<div class="card">
-    <img src="{% static 'image/java.png' %}" alt="Java">
-    <h3>Java</h3>
-</div>
-</a>
+      /* Search and filter */
+      .search-section {
+        max-width: 600px;
+        margin: -20px auto 30px;
+        padding: 0 20px;
+        position: relative;
+        z-index: 10;
+      }
 
-<!-- C++ -->
-<a href="{% url 'cppinfo' %}" class="card-link">
-<div class="card">
-    <img src="{% static 'image/cpp.png' %}" alt="C++">
-    <h3>C++</h3>
-</div>
-</a>
+      .search-box {
+        display: flex;
+        gap: 10px;
+        background: rgba(26, 31, 46, 0.95);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 12px;
+        padding: 5px 5px 5px 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
 
-<!-- JavaScript -->
-<a href="{% url 'javasinfo' %}" class="card-link">
-<div class="card">
-    <img src="{% static 'image/javascript.png' %}" alt="JS">
-    <h3>JavaScript</h3>
-</div>
-</a>
+      .search-box input {
+        flex: 1;
+        background: transparent;
+        border: none;
+        padding: 15px 0;
+        color: white;
+        font-size: 1rem;
+        outline: none;
+      }
 
-<!-- SQL -->
-<a href="{% url 'sql_info' %}" class="card-link">
-<div class="card">
-    <img src="{% static 'image/sql.jpg' %}" alt="SQL">
-    <h3>SQL</h3>
-</div>
-</a>
+      .search-box input::placeholder {
+        color: #64748b;
+      }
 
-<!-- DSA -->
-<a href="{% url 'dsa_info' %}" class="card-link">
-<div class="card">
-    <img src="{% static 'image/dsa.png' %}" alt="DSA">
-    <h3>Data Structures</h3>
-</div>
-</a>
+      .search-box button {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        border: none;
+        color: white;
+        padding: 12px 30px;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
 
-</div>
-</div>
+      .search-box button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+      }
 
-<footer>
-© Interview Prep Platform
-</footer>
+      /* Container */
+      .container {
+        padding: 40px 30px;
+        max-width: 1400px;
+        margin: auto;
+      }
 
-</body>
+      /* Back to Home link - preserved original URL */
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #94a3b8;
+        text-decoration: none;
+        margin-bottom: 25px;
+        font-size: 0.95rem;
+        transition: all 0.3s;
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+
+      .back-link:hover {
+        color: #60a5fa;
+        border-color: #3b82f6;
+        transform: translateX(-5px);
+      }
+
+      /* Grid */
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+        margin-top: 30px;
+      }
+
+      .card-link {
+        text-decoration: none;
+        color: white;
+      }
+
+      .card {
+        background: linear-gradient(145deg, #1a1f2e, #111827);
+        border-radius: 20px;
+        padding: 35px 20px 25px;
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+        transform: translateX(-100%);
+        transition: transform 0.6s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow:
+          0 20px 40px -15px rgba(0, 0, 0, 0.5),
+          0 0 30px rgba(59, 130, 246, 0.2);
+      }
+
+      .card:hover::before {
+        transform: translateX(0);
+      }
+
+      .card img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+        margin-bottom: 20px;
+        transition: all 0.4s ease;
+        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+      }
+
+      .card:hover img {
+        transform: scale(1.1) rotate(3deg);
+        filter: drop-shadow(0 8px 20px rgba(59, 130, 246, 0.4));
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #e2e8f0;
+        transition: color 0.3s;
+      }
+
+      .card:hover h3 {
+        color: #60a5fa;
+      }
+
+      /* Popular languages badge */
+      .popular-badge {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #000;
+        padding: 4px 12px;
+        border-radius: 30px;
+        font-size: 0.7rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+        z-index: 1;
+      }
+
+      /* Difficulty indicator */
+      .difficulty {
+        font-size: 0.85rem;
+        color: #94a3b8;
+        margin: 10px 0;
+        padding: 4px 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Stats */
+      .stats {
+        display: flex;
+        gap: 15px;
+        margin-top: 10px;
+        font-size: 0.85rem;
+        color: #64748b;
+      }
+
+      .stats span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .stats i {
+        color: #3b82f6;
+      }
+
+      /* Info banner - FIXED: Removed underline from links */
+      .info-banner {
+        background: linear-gradient(145deg, #1a1f2e, #111827);
+        border-radius: 16px;
+        padding: 30px;
+        margin-top: 50px;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 20px;
+      }
+
+      .info-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 12px;
+        text-decoration: none; /* This removes the underline */
+        color: inherit; /* This keeps the text color consistent */
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .info-item:hover {
+        background: rgba(59, 130, 246, 0.1);
+        transform: translateX(5px);
+        border-color: rgba(59, 130, 246, 0.3);
+      }
+
+      .info-item i {
+        font-size: 1.8rem;
+        color: #3b82f6;
+        transition: transform 0.3s ease;
+      }
+
+      .info-item:hover i {
+        transform: scale(1.1);
+      }
+
+      .info-item h4 {
+        font-size: 1rem;
+        margin-bottom: 4px;
+        color: #e2e8f0;
+      }
+
+      .info-item p {
+        font-size: 0.85rem;
+        color: #94a3b8;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 30px;
+        margin-top: 60px;
+        background: #030614;
+        border-top: 1px solid rgba(59, 130, 246, 0.1);
+        color: #64748b;
+        font-size: 0.9rem;
+      }
+
+      /* Animation for cards */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .card {
+        animation: fadeInUp 0.5s ease forwards;
+        opacity: 0;
+      }
+
+      .card:nth-child(1) {
+        animation-delay: 0.1s;
+      }
+      .card:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .card:nth-child(3) {
+        animation-delay: 0.2s;
+      }
+      .card:nth-child(4) {
+        animation-delay: 0.25s;
+      }
+      .card:nth-child(5) {
+        animation-delay: 0.3s;
+      }
+      .card:nth-child(6) {
+        animation-delay: 0.35s;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        header h1 {
+          font-size: 2.2rem;
+        }
+
+        header p {
+          font-size: 1rem;
+        }
+
+        .container {
+          padding: 20px;
+        }
+
+        .search-box {
+          flex-direction: column;
+          padding: 5px;
+        }
+
+        .search-box button {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .grid {
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 20px;
+        }
+
+        .card img {
+          width: 100px;
+          height: 100px;
+        }
+
+        .card h3 {
+          font-size: 1.3rem;
+        }
+
+        .info-banner {
+          grid-template-columns: 1fr;
+          padding: 20px;
+        }
+
+        .back-link {
+          margin-left: 20px;
+        }
+      }
+
+      /* Loading animation */
+      .card img {
+        background: linear-gradient(90deg, #1a1f2e, #2d3748, #1a1f2e);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
+        border-radius: 8px;
+      }
+
+      @keyframes loading {
+        0% {
+          background-position: 200% 0;
+        }
+        100% {
+          background-position: -200% 0;
+        }
+      }
+
+      /* Remove animation after load */
+      .card img.loaded {
+        animation: none;
+      }
+
+      /* Empty state for search */
+      .no-results {
+        grid-column: 1 / -1;
+        text-align: center;
+        padding: 60px;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 20px;
+        color: #94a3b8;
+        font-size: 1.1rem;
+        display: none;
+      }
+
+      .no-results i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        color: #3b82f6;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header (preserved original structure) -->
+    <header>
+      <h1>
+        <i class="fas fa-code" style="margin-right: 10px"></i>Programming
+        Languages
+      </h1>
+      <p>Select a language to continue your learning journey</p>
+    </header>
+
+    <!-- Search Section (new addition but doesn't affect URLs) -->
+    <div class="search-section">
+      <div class="search-box">
+        <input
+          type="text"
+          placeholder="Search for Python, Java, C++..."
+          id="searchInput"
+        />
+        <button onclick="searchLanguage()">
+          <i class="fas fa-search"></i> Search
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Back link - using original URL pattern -->
+      <a href="{% url 'home' %}" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Home
+      </a>
+
+      <!-- Languages Grid - preserved all original URLs -->
+      <div class="grid" id="languagesGrid">
+        <!-- Python - original URL preserved -->
+        <a href="{% url 'python_info' %}" class="card-link">
+          <div class="card">
+            <span class="popular-badge"
+              ><i class="fas fa-star"></i> Popular</span
+            >
+            <img
+              src="{% static 'image/python.jpg' %}"
+              alt="Python"
+              onload="this.classList.add('loaded')"
+            />
+            <h3>Python</h3>
+            <div class="difficulty">
+              <i class="fas fa-thermometer-half"></i> Beginner Friendly
+            </div>
+            <div class="stats">
+              <span><i class="far fa-file-code"></i> 50+ Topics</span>
+              <span><i class="far fa-clock"></i> 30 hrs</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Java - original URL preserved -->
+        <a href="{% url 'javainfo' %}" class="card-link">
+          <div class="card">
+            <img
+              src="{% static 'image/java.png' %}"
+              alt="Java"
+              onload="this.classList.add('loaded')"
+            />
+            <h3>Java</h3>
+            <div class="difficulty">
+              <i class="fas fa-thermometer-three-quarters"></i> Intermediate
+            </div>
+            <div class="stats">
+              <span><i class="far fa-file-code"></i> 45+ Topics</span>
+              <span><i class="far fa-clock"></i> 40 hrs</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- C++ - original URL preserved -->
+        <a href="{% url 'cppinfo' %}" class="card-link">
+          <div class="card">
+            <img
+              src="{% static 'image/cpp.png' %}"
+              alt="C++"
+              onload="this.classList.add('loaded')"
+            />
+            <h3>C++</h3>
+            <div class="difficulty">
+              <i class="fas fa-thermometer-full"></i> Advanced
+            </div>
+            <div class="stats">
+              <span><i class="far fa-file-code"></i> 40+ Topics</span>
+              <span><i class="far fa-clock"></i> 35 hrs</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- JavaScript - original URL preserved -->
+        <a href="{% url 'javasinfo' %}" class="card-link">
+          <div class="card">
+            <img
+              src="{% static 'image/javascript.png' %}"
+              alt="JavaScript"
+              onload="this.classList.add('loaded')"
+            />
+            <h3>JavaScript</h3>
+            <div class="difficulty">
+              <i class="fas fa-thermometer-half"></i> Beginner Friendly
+            </div>
+            <div class="stats">
+              <span><i class="far fa-file-code"></i> 35+ Topics</span>
+              <span><i class="far fa-clock"></i> 25 hrs</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- SQL - original URL preserved -->
+        <a href="{% url 'sql_info' %}" class="card-link">
+          <div class="card">
+            <img
+              src="{% static 'image/sql.jpg' %}"
+              alt="SQL"
+              onload="this.classList.add('loaded')"
+            />
+            <h3>SQL</h3>
+            <div class="difficulty">
+              <i class="fas fa-thermometer-quarter"></i> Beginner
+            </div>
+            <div class="stats">
+              <span><i class="far fa-file-code"></i> 25+ Topics</span>
+              <span><i class="far fa-clock"></i> 15 hrs</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- DSA - original URL preserved -->
+        <a href="{% url 'dsa_info' %}" class="card-link">
+          <div class="card">
+            <span class="popular-badge"
+              ><i class="fas fa-trophy"></i> Interview Focus</span
+            >
+            <img
+              src="{% static 'image/dsa.png' %}"
+              alt="DSA"
+              onload="this.classList.add('loaded')"
+            />
+            <h3>Data Structures</h3>
+            <div class="difficulty">
+              <i class="fas fa-thermometer-full"></i> Advanced
+            </div>
+            <div class="stats">
+              <span><i class="far fa-file-code"></i> 60+ Topics</span>
+              <span><i class="far fa-clock"></i> 50 hrs</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- No results message (hidden by default) -->
+        <div class="no-results" id="noResults">
+          <i class="fas fa-search"></i>
+          <p>No languages found matching your search</p>
+        </div>
+      </div>
+
+      <!-- Info Banner - FIXED: No underline on links -->
+      <div class="info-banner">
+        <!-- Expert Talks -->
+        <a href="{% url 'expert' %}" class="info-item">
+          <i class="fas fa-video"></i>
+          <div>
+            <h4>Video Tutorials</h4>
+            <p>Learn from experts</p>
+          </div>
+        </a>
+
+        <!-- Aptitude -->
+        <a href="{% url 'questions' %}" class="info-item">
+          <i class="fas fa-code"></i>
+          <div>
+            <h4>Practice Problems</h4>
+            <p>Hands-on coding</p>
+          </div>
+        </a>
+
+        <!-- MCQ -->
+        <a href="{% url 'questions' %}" class="info-item">
+          <i class="fas fa-question-circle"></i>
+          <div>
+            <h4>MCQ Tests</h4>
+            <p>Test your knowledge</p>
+          </div>
+        </a>
+
+        <!-- AI Recommendations -->
+        <a href="{% url 'ai' %}" class="info-item">
+          <i class="fas fa-chart-line"></i>
+          <div>
+            <h4>AI Recommendations</h4>
+            <p>Monitor improvement</p>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer - preserved original text -->
+    <footer>© Interview Prep Platform</footer>
+
+    <!-- Search functionality - purely frontend, doesn't affect URLs -->
+    <script>
+      function searchLanguage() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toUpperCase();
+        const grid = document.getElementById("languagesGrid");
+        const cards = grid.getElementsByClassName("card-link");
+        const noResults = document.getElementById("noResults");
+        let visibleCount = 0;
+
+        for (let i = 0; i < cards.length; i++) {
+          const card = cards[i];
+          const title = card.querySelector("h3");
+          if (title) {
+            const txtValue = title.textContent || title.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              card.style.display = "";
+              visibleCount++;
+            } else {
+              card.style.display = "none";
+            }
+          }
+        }
+
+        // Show/hide no results message
+        if (visibleCount === 0) {
+          noResults.style.display = "block";
+        } else {
+          noResults.style.display = "none";
+        }
+      }
+
+      // Enter key support
+      document
+        .getElementById("searchInput")
+        .addEventListener("keyup", function (event) {
+          if (event.key === "Enter") {
+            searchLanguage();
+          }
+        });
+
+      // Clear loading animation after images load
+      document.querySelectorAll(".card img").forEach((img) => {
+        if (img.complete) {
+          img.classList.add("loaded");
+        }
+      });
+    </script>
+  </body>
 </html>
