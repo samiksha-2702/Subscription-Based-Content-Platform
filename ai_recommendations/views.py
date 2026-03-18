@@ -1,7 +1,15 @@
+"""
+ai_recommendations/views.py
+============================
+Full updated view that feeds every context variable
+required by the dynamic ai.html template.
+"""
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.db.models import Avg, Count, Max, Min
 
@@ -307,12 +315,12 @@ def record_practice_completion(user, topic_slug: str, exercise_count: int = 1):
     if not created:
         obj.exercise_count += exercise_count
         obj.save(update_fields=['exercise_count', 'completed_at'])
- 
+
 # ─────────────────────────────────────────────────────────────────
 # VIEW: Weak Areas Detail
 # URL:  /ai/weak-areas/   name='ai_weak_areas'
 # ─────────────────────────────────────────────────────────────────
- 
+
 @login_required
 def weak_areas_detail(request):
     weak_areas = (
@@ -325,18 +333,18 @@ def weak_areas_detail(request):
     for wa in weak_areas:
         mod = wa.topic.get_module_display()
         by_module.setdefault(mod, []).append(wa)
- 
+
     return render(request, 'ai/weak_areas.html', {
         'by_module': by_module,
         'page_title': 'My Weak Areas',
     })
- 
- 
+
+
 # ─────────────────────────────────────────────────────────────────
 # VIEW: Learning Path
 # URL:  /ai/learning-path/   name='ai_learning_path'
 # ─────────────────────────────────────────────────────────────────
- 
+
 @login_required
 def learning_path(request):
     from .ai_engine import LearningPathBuilder, WeaknessAnalyzer
@@ -344,18 +352,18 @@ def learning_path(request):
     path_slugs = LearningPathBuilder().build(weaknesses)
     topic_map  = {t.slug: t for t in Topic.objects.filter(slug__in=path_slugs)}
     path_topics = [topic_map[s] for s in path_slugs if s in topic_map]
- 
+
     return render(request, 'ai/learning_path.html', {
         'path_topics': path_topics,
         'page_title':  'Your Learning Path',
     })
- 
- 
+
+
 # ─────────────────────────────────────────────────────────────────
 # VIEW: JSON API
 # URL:  /ai/api/recommendations/   name='ai_recommendations_api'
 # ─────────────────────────────────────────────────────────────────
- 
+
 @login_required
 def recommendations_api(request):
     recs = (
@@ -377,16 +385,17 @@ def recommendations_api(request):
         for r in recs
     ]
     return JsonResponse({'recommendations': data})
- 
- 
+
+
 # ─────────────────────────────────────────────────────────────────
 # VIEW: Record Score from test page JS (AJAX POST)
 # URL:  /ai/record-score/   name='ai_record_score'
 # Called automatically by the score reporter injected in test pages
 # ─────────────────────────────────────────────────────────────────
- 
+
 import json
- 
+
+@csrf_exempt
 @require_POST
 def record_score(request):
     """
@@ -396,25 +405,24 @@ def record_score(request):
     """
     if not request.user.is_authenticated:
         return JsonResponse({'status': 'ignored'}, status=200)
- 
+
     try:
         data  = json.loads(request.body)
         slug  = str(data.get('topic', '')).strip()
         score = float(data.get('score', 0))
     except (ValueError, KeyError, json.JSONDecodeError):
         return JsonResponse({'status': 'error', 'msg': 'bad payload'}, status=400)
- 
+
     if not slug or not (0 <= score <= 100):
         return JsonResponse({'status': 'error', 'msg': 'invalid data'}, status=400)
- 
+
     topic = Topic.objects.filter(slug=slug).first()
     if topic is None:
         return JsonResponse({'status': 'ignored', 'msg': f'unknown topic: {slug}'}, status=200)
- 
+
     UserQuizAttempt.objects.create(
         user  = request.user,
         topic = topic,
         score = score,
     )
     return JsonResponse({'status': 'ok', 'topic': slug, 'score': score})
- 

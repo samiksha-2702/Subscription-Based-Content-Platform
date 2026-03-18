@@ -1,9 +1,10 @@
+from django.contrib import admin
 from django.urls import include, path
 from app1 import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', views.index, name='index'),
-    path('', views.home, name='home'),
 
     # AI Recommendations module — MUST come before old ai-home view
     path('ai/', include('ai_recommendations.urls')),
@@ -115,4 +116,6 @@ urlpatterns = [
 
     # Subscription
     path('subscribe/', views.subscribe, name='subscribe'),
+    path('process-payment/', views.process_payment, name='process_payment'),
+    path('dashboard/', views.premium_dashboard, name='premium_dashboard'),
 ]

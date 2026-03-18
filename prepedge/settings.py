@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app1',
-    'ai_recommendations',
+    'ai_recommendations', 
 ]
 
 MIDDLEWARE = [
@@ -97,3 +97,5 @@ STATICFILES_DIRS = [
 LOGIN_URL = '/login/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
