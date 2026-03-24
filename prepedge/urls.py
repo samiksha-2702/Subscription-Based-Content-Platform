@@ -1,10 +1,15 @@
+from django.contrib import admin
 from django.urls import include, path
 from app1 import views
 from django.contrib import admin 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> 878ea130b19cba61339d90e2639c53926ca37067
     # AI Recommendations module — MUST come before old ai-home view
     path('ai/', include('ai_recommendations.urls')),
     # Old static AI page renamed to avoid clash with ai/ prefix above
@@ -116,6 +121,12 @@ urlpatterns = [
 
     # Subscription
     path('subscribe/', views.subscribe, name='subscribe'),
+<<<<<<< HEAD
+=======
+    path('process-payment/', views.process_payment, name='process_payment'),
+    path('dashboard/', views.premium_dashboard, name='premium_dashboard'),
+    path('login/', views.login_view, name='login'),
+>>>>>>> 878ea130b19cba61339d90e2639c53926ca37067
     path('plans/', views.plans, name='plans'),
     path('payment/', views.payment, name='payment'),
 ]
