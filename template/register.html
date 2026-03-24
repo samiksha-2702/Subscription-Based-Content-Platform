@@ -60,7 +60,7 @@ body{
   {% endif %}
 
   <!-- FIXED: Real Django form — method POST, CSRF token, redirects to index on success -->
-  <form method="POST" action="{% url 'register' %}">
+  <form method="POST" action="">
     {% csrf_token %}
 
     <div class="form-floating mb-3 label-white">

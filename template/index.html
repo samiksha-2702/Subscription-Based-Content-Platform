@@ -83,13 +83,10 @@
       .brand {
         font-size: 28px;
         font-weight: 800;
-        background: linear-gradient(135deg, #fff, #94a3b8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text; /* standard version */
         background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        background-clip: text;
         letter-spacing: -0.5px;
         position: relative;
       }
@@ -108,6 +105,7 @@
       .nav-links {
         display: flex;
         gap: 10px;
+        align-items: center;
       }
 
       .nav-links a {
@@ -144,6 +142,89 @@
 
       .nav-links a:hover::before {
         left: 100%;
+      }
+
+      /* Profile Dropdown */
+      .profile-dropdown {
+        position: relative;
+      }
+
+      .profile-btn {
+        padding: 10px 20px;
+        color: #e2e8f0;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-btn:hover {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: #3b82f6;
+        color: #60a5fa;
+        transform: translateY(-1px);
+      }
+
+      .profile-btn i {
+        font-size: 1.1rem;
+      }
+
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        min-width: 220px;
+        background: linear-gradient(145deg, #1a1f2e, #111827);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 1001;
+        overflow: hidden;
+      }
+
+      .profile-dropdown.open .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #e2e8f0;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+        border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+      }
+
+      .dropdown-item:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-item:hover {
+        background: rgba(59, 130, 246, 0.1);
+        color: #60a5fa;
+        padding-left: 28px;
+      }
+
+      .dropdown-item i {
+        width: 20px;
+        font-size: 0.95rem;
+        opacity: 0.8;
       }
 
       /* Hero Section */
@@ -189,8 +270,7 @@
       }
 
       @keyframes float {
-        0%,
-        100% {
+        0%, 100% {
           transform: translateY(0) scale(1);
         }
         50% {
@@ -205,7 +285,7 @@
         background: linear-gradient(135deg, #fff, #94a3b8);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text; /* standard version */
+        background-clip: text;
         letter-spacing: -0.02em;
         line-height: 1.2;
         animation: fadeInUp 0.8s ease;
@@ -295,7 +375,7 @@
         background: linear-gradient(135deg, #fff, #94a3b8);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text; /* standard version */
+        background-clip: text;
       }
 
       .section-title p {
@@ -362,6 +442,9 @@
         border-radius: 16px;
         transition: transform 0.4s ease;
         border: 2px solid rgba(59, 130, 246, 0.2);
+        background: linear-gradient(90deg, #1a1f2e, #2d3748, #1a1f2e);
+        background-size: 200% 100%;
+        animation: loading 1.5s infinite;
       }
 
       .card:hover img {
@@ -427,7 +510,7 @@
         background: linear-gradient(135deg, #fff, #94a3b8);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        background-clip: text; /* standard version */
+        background-clip: text;
         margin-bottom: 5px;
       }
 
@@ -493,9 +576,19 @@
           font-size: 24px;
         }
 
-        .nav-links a {
+        .nav-links {
+          gap: 8px;
+        }
+
+        .nav-links a,
+        .profile-btn {
           padding: 8px 12px;
           font-size: 0.9rem;
+        }
+
+        .dropdown-menu {
+          min-width: 200px;
+          right: -10px;
         }
 
         .hero h1 {
@@ -550,12 +643,6 @@
       }
 
       /* Loading animation for images */
-      .card img {
-        background: linear-gradient(90deg, #1a1f2e, #2d3748, #1a1f2e);
-        background-size: 200% 100%;
-        animation: loading 1.5s infinite;
-      }
-
       @keyframes loading {
         0% {
           background-position: 200% 0;
@@ -584,22 +671,58 @@
   </head>
 
   <body>
-    <!-- Navbar -->
-    <div class="navbar" id="navbar">
+    <!-- Navbar - WITH PROFILE DROPDOWN -->
+   <div class="navbar" id="navbar">
       <div class="brand">PrepEdge</div>
       <div class="nav-links">
-        <a href="{% url 'plans' %}"
-          ><i class="fas fa-crown" style="margin-right: 5px"></i>Subscription</a
-        >
-        <a href="{% url 'register' %}"
-          ><i class="fas fa-user-plus" style="margin-right: 5px"></i>Signup</a
-        >
-        <a href="{% url 'login' %}"
-          ><i class="fas fa-sign-in-alt" style="margin-right: 5px"></i>Login</a
-        >
+        <a href="{% url 'plans' %}">
+          <i class="fas fa-crown" style="margin-right: 5px"></i>Subscription
+        </a>
+        
+        {% if user.is_authenticated %}
+          <!-- SHOW PROFILE DROPDOWN WHEN LOGGED IN -->
+          <div class="profile-dropdown">
+            <button class="profile-btn" id="profileToggle">
+              <i class="fas fa-user-circle"></i>
+              <span>{{ user.username }}</span>
+              <i class="fas fa-chevron-down" style="font-size: 0.8rem; transition: transform 0.3s;"></i>
+            </button>
+            <div class="dropdown-menu">
+              <a href="{% url 'profile' %}" class="dropdown-item">
+                <i class="fas fa-user"></i>
+                <span>My Profile</span>
+              </a>
+              <a href="#" class="dropdown-item" onclick="openSettings()">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+              </a>
+              <a href="#" class="dropdown-item" onclick="downloadReport()">
+                <i class="fas fa-download"></i>
+                <span>Download Report</span>
+              </a>
+              <a href="{% url 'plans' %}" class="dropdown-item">
+                <i class="fas fa-star"></i>
+                <span>Upgrade Plan</span>
+              </a>
+              <a href="{% url 'logout' %}" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+              </a>
+            </div>
+          </div>
+        {% else %}
+          <!-- SHOW LOGIN/SIGNUP WHEN NOT LOGGED IN -->
+          <a href="{% url 'register' %}">
+            <i class="fas fa-user-plus" style="margin-right: 5px"></i>Signup
+          </a>
+          <a href="{% url 'login' %}">
+            <i class="fas fa-sign-in-alt" style="margin-right: 5px"></i>Login
+          </a>
+        {% endif %}
       </div>
     </div>
 
+    <!-- [Rest of your HTML remains EXACTLY the same] -->
     <!-- Hero -->
     <section class="hero">
       <h1>Practice, Learn, and Crack Interviews</h1>
@@ -618,26 +741,26 @@
     </section>
 
     <!-- Stats Section -->
-    <div class="stat-item">
-      <div class="stat-number">✔</div>
-      <div class="stat-label">Personalized Learning</div>
+    <div class="container">
+      <div class="stats-section">
+        <div class="stat-item">
+          <div class="stat-number">✔</div>
+          <div class="stat-label">Personalized Learning</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">✔</div>
+          <div class="stat-label">AI Recommendations</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">✔</div>
+          <div class="stat-label">Progress Tracking</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">✔</div>
+          <div class="stat-label">Interview Prep Content</div>
+        </div>
+      </div>
     </div>
-
-    <div class="stat-item">
-      <div class="stat-number">✔</div>
-      <div class="stat-label">AI Recommendations</div>
-    </div>
-
-    <div class="stat-item">
-      <div class="stat-number">✔</div>
-      <div class="stat-label">Progress Tracking</div>
-    </div>
-
-    <div class="stat-item">
-      <div class="stat-number">✔</div>
-      <div class="stat-label">Interview Prep Content</div>
-    </div>
-
 
     <!-- Features Section -->
     <div class="container" id="features">
@@ -658,9 +781,9 @@
               loading="lazy"
             />
             <div class="card-content">
-              <span class="card-tag"
-                ><i class="fas fa-code"></i> Technical</span
-              >
+              <span class="card-tag">
+                <i class="fas fa-code"></i> Technical
+              </span>
               <h3>Programming Languages</h3>
               <p>
                 Master Python, Java, C++, and more with hands-on coding
@@ -678,9 +801,9 @@
               loading="lazy"
             />
             <div class="card-content">
-              <span class="card-tag"
-                ><i class="fas fa-building"></i> Insights</span
-              >
+              <span class="card-tag">
+                <i class="fas fa-building"></i> Insights
+              </span>
               <h3>Company Info & Blogs</h3>
               <p>
                 Explore company cultures, interview experiences, and success
@@ -698,9 +821,9 @@
               loading="lazy"
             />
             <div class="card-content">
-              <span class="card-tag"
-                ><i class="fas fa-chalkboard-teacher"></i> Guidance</span
-              >
+              <span class="card-tag">
+                <i class="fas fa-chalkboard-teacher"></i> Guidance
+              </span>
               <h3>Expert Talks</h3>
               <p>
                 Learn from industry veterans with exclusive interview tips and
@@ -718,9 +841,9 @@
               loading="lazy"
             />
             <div class="card-content">
-              <span class="card-tag"
-                ><i class="fas fa-comments"></i> Soft Skills</span
-              >
+              <span class="card-tag">
+                <i class="fas fa-comments"></i> Soft Skills
+              </span>
               <h3>Communication & Soft Skills</h3>
               <p>Enhance your interpersonal skills and ace HR interviews</p>
             </div>
@@ -735,9 +858,9 @@
               loading="lazy"
             />
             <div class="card-content">
-              <span class="card-tag"
-                ><i class="fas fa-puzzle-piece"></i> Practice</span
-              >
+              <span class="card-tag">
+                <i class="fas fa-puzzle-piece"></i> Practice
+              </span>
               <h3>Aptitude & MCQ</h3>
               <p>
                 Test your skills with comprehensive aptitude and technical MCQs
@@ -751,9 +874,9 @@
             <span class="featured-badge"><i class="fas fa-star"></i> New</span>
             <img src="{% static 'image/ai.png' %}" alt="AI" loading="lazy" />
             <div class="card-content">
-              <span class="card-tag"
-                ><i class="fas fa-robot"></i> AI-Powered</span
-              >
+              <span class="card-tag">
+                <i class="fas fa-robot"></i> AI-Powered
+              </span>
               <h3>AI Recommendations</h3>
               <p>
                 Get personalized learning paths and smart insights powered by AI
@@ -785,8 +908,9 @@
       </div>
     </footer>
 
-    <!-- Navbar scroll script -->
+    <!-- Scripts -->
     <script>
+      // Navbar scroll effect
       window.addEventListener("scroll", function () {
         const navbar = document.getElementById("navbar");
         if (window.scrollY > 50) {
@@ -794,6 +918,24 @@
         } else {
           navbar.classList.remove("scrolled");
         }
+      });
+
+      // Profile Dropdown Toggle
+      const profileToggle = document.getElementById('profileToggle');
+      const profileDropdown = document.querySelector('.profile-dropdown');
+      const chevron = profileToggle.querySelector('.fa-chevron-down');
+
+      profileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('open');
+        chevron.style.transform = profileDropdown.classList.contains('open') 
+          ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', function() {
+        profileDropdown.classList.remove('open');
+        chevron.style.transform = 'rotate(0deg)';
       });
 
       // Add loading animation to images

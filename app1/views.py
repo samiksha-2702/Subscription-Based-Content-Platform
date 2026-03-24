@@ -3,9 +3,67 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.utils import timezone
+from .models import UserProfile
+from django.contrib.auth.hashers import make_password
+
+def register(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        full_name = request.POST.get("full_name")
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        password2 = request.POST.get("password2")
+
+        # 1. Password match check
+        if password != password2:
+            return render(request, "register.html", {"error": "Passwords do not match"})
+
+        # 2. Username exists check
+        if User.objects.filter(username=username).exists():
+            return render(request, "register.html", {"error": "Username already exists"})
+
+        # 3. Create User
+        user = User.objects.create(
+            username=username,
+            email=email,
+            password=make_password(password),
+            first_name=full_name
+        )
+
+        # 4. Create Profile
+        UserProfile.objects.create(user=user)
+
+        # 5. Redirect to login
+        return redirect("login")
+
+    return render(request, "register.html")
+
+#login
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            print("LOGIN SUCCESS")  # check terminal
+            login(request, user)
+            return redirect("index") # or dashboard
+        else:
+            return render(request, "login.html", {
+                "error": "Invalid username or password",
+                "username": username
+            })
+        
+    return render(request, "login.html")
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+def profile_view(request):
+    return render(request, 'profile.html')
 
 
-# ══════════════════════════════════════════════════════════════════
 # HELPERS
 # ══════════════════════════════════════════════════════════════════
 
@@ -76,62 +134,6 @@ def _save_test_result(user, module, test_name, score_pct,
 # ══════════════════════════════════════════════════════════════════
 # AUTH VIEWS
 # ══════════════════════════════════════════════════════════════════
-
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('index')
-    error = None
-    username = ''
-    if request.method == 'POST':
-        username = request.POST.get('username', '').strip()
-        password = request.POST.get('password', '')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            _ensure_profile(user)
-            _get_subscription(user)
-            next_url = request.GET.get('next') or request.POST.get('next') or 'index'
-            return redirect(next_url)
-        else:
-            error = 'Invalid username or password. Please try again.'
-    return render(request, 'login.html', {'error': error, 'username': username})
-
-
-def register_view(request):
-    if request.user.is_authenticated:
-        return redirect('index')
-    error = None
-    username = email = full_name = ''
-    if request.method == 'POST':
-        username  = request.POST.get('username',  '').strip()
-        full_name = request.POST.get('full_name', '').strip()
-        email     = request.POST.get('email',     '').strip()
-        password  = request.POST.get('password',  '')
-        password2 = request.POST.get('password2', '')
-        if not username:
-            error = 'Username is required.'
-        elif len(password) < 6:
-            error = 'Password must be at least 6 characters.'
-        elif password != password2:
-            error = 'Passwords do not match.'
-        elif User.objects.filter(username=username).exists():
-            error = f'Username "{username}" is already taken.'
-        else:
-            user = User.objects.create_user(username=username, email=email, password=password)
-            if full_name:
-                parts = full_name.split(' ', 1)
-                user.first_name = parts[0]
-                user.last_name  = parts[1] if len(parts) > 1 else ''
-                user.save()
-            _ensure_profile(user)
-            _get_subscription(user)   # creates free subscription
-            login(request, user)
-            return redirect('index')
-    return render(request, 'register.html', {
-        'error': error, 'username': username,
-        'email': email, 'full_name': full_name,
-    })
-
 
 def logout_view(request):
     logout(request)
