@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
-from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
-from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib import messages
 from django.utils import timezone
 from .models import UserProfile
@@ -89,18 +85,6 @@ def _ensure_profile(user):
     UserProfile.objects.get_or_create(user=user)
 
 
-
-def _record_login(request, user):
-    """Record every successful login to LoginHistory."""
-    try:
-        from .models import LoginHistory
-        x_forwarded = request.META.get('HTTP_X_FORWARDED_FOR')
-        ip = x_forwarded.split(',')[0].strip() if x_forwarded else request.META.get('REMOTE_ADDR')
-        ua = request.META.get('HTTP_USER_AGENT', '')[:500]
-        LoginHistory.objects.create(user=user, ip_address=ip, user_agent=ua)
-    except Exception:
-        pass  # never let this break the login flow
-
 def _mark_progress(user, module, topic_name, content_type='lesson', completed=False):
     """Record that a user visited / completed a topic page."""
     if not user.is_authenticated:
@@ -147,74 +131,6 @@ def _save_test_result(user, module, test_name, score_pct,
             pass
 
 
-# ══════════════════════════════════════════════════════════════════
-# AUTH VIEWS
-# ══════════════════════════════════════════════════════════════════
-
-<<<<<<< HEAD
-=======
-def login_view(request):
-    if request.user.is_authenticated:
-        return redirect('index')
-    error = None
-    username = ''
-    if request.method == 'POST':
-        username = request.POST.get('username', '').strip()
-        password = request.POST.get('password', '')
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            _ensure_profile(user)
-            _get_subscription(user)
-            _record_login(request, user)
-            next_url = request.GET.get('next') or request.POST.get('next') or 'index'
-            return redirect(next_url)
-        else:
-            error = 'Invalid username or password. Please try again.'
-    return render(request, 'login.html', {'error': error, 'username': username})
-
-
-def register_view(request):
-    if request.user.is_authenticated:
-        return redirect('index')
-    error = None
-    username = email = full_name = ''
-    if request.method == 'POST':
-        username  = request.POST.get('username',  '').strip()
-        full_name = request.POST.get('full_name', '').strip()
-        email     = request.POST.get('email',     '').strip()
-        password  = request.POST.get('password',  '')
-        password2 = request.POST.get('password2', '')
-        if not username:
-            error = 'Username is required.'
-        elif len(password) < 6:
-            error = 'Password must be at least 6 characters.'
-        elif password != password2:
-            error = 'Passwords do not match.'
-        elif User.objects.filter(username=username).exists():
-            error = f'Username "{username}" is already taken.'
-        else:
-            user = User.objects.create_user(username=username, email=email, password=password)
-            if full_name:
-                parts = full_name.split(' ', 1)
-                user.first_name = parts[0]
-                user.last_name  = parts[1] if len(parts) > 1 else ''
-                user.save()
-            _ensure_profile(user)
-            _get_subscription(user)   # creates free subscription
-            login(request, user)
-            return redirect('index')
-    return render(request, 'register.html', {
-        'error': error, 'username': username,
-        'email': email, 'full_name': full_name,
-    })
-
-
->>>>>>> 878ea130b19cba61339d90e2639c53926ca37067
-def logout_view(request):
-    logout(request)
-    return redirect('index')
-
 
 # ══════════════════════════════════════════════════════════════════
 # MAIN PAGES
@@ -252,6 +168,9 @@ def subscribe(request):
 
 def programming_home(request):
     return render(request, 'programming.html')
+
+def home(request):
+    return render(request, 'home.html')
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -325,7 +244,6 @@ def py_function_practice(request):
     _mark_progress(request.user, 'python', 'Function Practice', 'practice')
     return render(request, 'pyfunctionpractice.html')
 
-@ensure_csrf_cookie
 def python_test(request):
     if request.method == 'POST':
         try:
@@ -379,7 +297,6 @@ def java_oop_practice(request):
     _mark_progress(request.user, 'java', 'Java OOP Practice', 'practice')
     return render(request, 'Java/java_oop_practice.html')
 
-@ensure_csrf_cookie
 def java_test(request):
     if request.method == 'POST':
         try:
@@ -415,7 +332,6 @@ def cpp_practice(request):
     _mark_progress(request.user, 'cpp', 'C++ Practice', 'practice')
     return render(request, 'cpp/cpp_practice.html')
 
-@ensure_csrf_cookie
 def cpp_test(request):
     if request.method == 'POST':
         try:
@@ -455,7 +371,6 @@ def js_practice(request):
     _mark_progress(request.user, 'javascript', 'JS Practice', 'practice')
     return render(request, 'js/js_practice.html')
 
-@ensure_csrf_cookie
 def js_test(request):
     if request.method == 'POST':
         try:
@@ -495,7 +410,6 @@ def sql_practice(request):
     _mark_progress(request.user, 'sql', 'SQL Practice', 'practice')
     return render(request, 'sql/sql_practice.html')
 
-@ensure_csrf_cookie
 def sql_test(request):
     if request.method == 'POST':
         try:
@@ -531,7 +445,6 @@ def dsa_practice(request):
     _mark_progress(request.user, 'dsa', 'DSA Practice', 'practice')
     return render(request, 'ds/dsa_practice.html')
 
-@ensure_csrf_cookie
 def dsa_test(request):
     if request.method == 'POST':
         try:
@@ -683,70 +596,6 @@ def premium_dashboard(request):
         'completed':      progress,
         'total_topics':   total_topics,
     })
-
-
-# ══════════════════════════════════════════════════════════════════
-# PAYMENT VIEW
-# Called when user clicks "Pay Now" on payment.html
-# Records a PaymentRecord and upgrades subscription on success
-# ══════════════════════════════════════════════════════════════════
-
-@require_POST
-def process_payment(request):
-    """
-    Receives payment form data, records a PaymentRecord,
-    and upgrades the user's subscription to Premium.
-    In production replace this with a real payment gateway.
-    """
-    from .models import PaymentRecord, Subscription
-    import json
-
-    if not request.user.is_authenticated:
-        return JsonResponse({'status': 'error', 'msg': 'Login required'}, status=401)
-
-    # Accept both JSON and regular form POST
-    try:
-        if request.content_type and 'json' in request.content_type:
-            data   = json.loads(request.body)
-            amount = float(data.get('amount', 499))
-            method = data.get('method', 'card')
-            txn_id = data.get('transaction_id', '')
-        else:
-            amount = float(request.POST.get('amount', 499))
-            method = request.POST.get('method', 'card')
-            txn_id = request.POST.get('transaction_id', '')
-    except (ValueError, Exception):
-        amount, method, txn_id = 499, 'card', ''
-
-    # Record payment
-    payment = PaymentRecord.objects.create(
-        user           = request.user,
-        plan           = 'premium',
-        amount         = amount,
-        currency       = 'INR',
-        method         = method,
-        transaction_id = txn_id,
-        status         = 'success',   # mark success directly (replace with gateway check)
-        notes          = 'Self-serve payment via PrepEdge plans page',
-    )
-
-    # Upgrade subscription
-    from datetime import timedelta
-    Subscription.objects.update_or_create(
-        user=request.user,
-        defaults={
-            'plan':       'premium',
-            'status':     'active',
-            'expires_at': timezone.now() + timedelta(days=30),
-        }
-    )
-
-    if request.content_type and 'json' in request.content_type:
-        return JsonResponse({'status': 'ok', 'payment_id': payment.id})
-
-    from django.contrib import messages
-    messages.success(request, '🎉 Payment successful! You are now a Premium member.')
-    return redirect('index')
     
     #plans
 def plans(request):
