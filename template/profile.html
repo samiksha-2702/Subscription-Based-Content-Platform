@@ -1,181 +1,620 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Profile | PrepEdge - AI-Powered Interview Preparation</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profile | PrepEdge - AI-Powered Interview Preparation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Fonts & Icons -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-  <style>
-    /* (Your CSS remains unchanged) */
-  </style>
-</head>
-
-<body>
-
-<div class="navbar" id="navbar">
-  <div class="brand">PrepEdge</div>
-
-  <div class="nav-links">
-    <a href="{% url 'index' %}">
-      <i class="fas fa-home"></i> Home
-    </a>
-
-    <a href="{% url 'plans' %}">
-      <i class="fas fa-crown"></i> Subscription
-    </a>
-
-    {% if user.is_authenticated %}
-    <div class="profile-dropdown">
-      <button class="profile-btn" id="profileToggle">
-        <i class="fas fa-user-circle"></i>
-        <span>{{ user.username|default:"User" }}</span>
-        <i class="fas fa-chevron-down"></i>
-      </button>
-
-      <div class="dropdown-menu">
-        <a href="{% url 'profile' %}" class="dropdown-item active">
-          <i class="fas fa-user"></i> My Profile
-        </a>
-
-        <a href="#" class="dropdown-item" onclick="openSettings()">
-          <i class="fas fa-cog"></i> Settings
-        </a>
-
-        <a href="#" class="dropdown-item" onclick="downloadReport()">
-          <i class="fas fa-download"></i> Download Report
-        </a>
-
-        <a href="{% url 'plans' %}" class="dropdown-item">
-          <i class="fas fa-star"></i> Upgrade Plan
-        </a>
-
-        <a href="{% url 'logout' %}" class="dropdown-item">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </a>
-      </div>
-    </div>
-    {% else %}
-      <a href="{% url 'login' %}">Login</a>
-    {% endif %}
-  </div>
-</div>
-
-<div class="container">
-
-  <div class="profile-header">
-    <div class="profile-avatar">
-      <i class="fas fa-user"></i>
-    </div>
-
-    <h1>{{ user.username|default:"Your Name" }}</h1>
-    <div class="profile-email">
-      {{ user.email|default:"email@example.com" }}
-    </div>
-  </div>
-
-  <!-- Stats -->
-  <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-number">12</div>
-      <div class="stat-label">Total Tests Completed</div>
-    </div>
-
-    <div class="stat-card">
-      <div class="stat-number">78%</div>
-      <div class="stat-label">Average Score</div>
-    </div>
-  </div>
-
-  <!-- Progress -->
-  <div class="progress-section">
-    <h2 class="progress-title">Your Progress</h2>
-
-    <div class="progress-item">
-      <div class="progress-label">
-        <span>Programming</span>
-        <span>85%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" data-width="85%"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Buttons -->
-  <div class="action-buttons">
-    <a href="#" class="btn btn-primary" onclick="openEditProfile()">
-      <i class="fas fa-edit"></i> Edit Profile
-    </a>
-
-    <a href="{% url 'logout' %}" class="btn btn-danger">
-      <i class="fas fa-sign-out-alt"></i> Logout
-    </a>
-  </div>
-
-</div>
-
-<script>
-  // Navbar scroll
-  window.addEventListener("scroll", function () {
-    const navbar = document.getElementById("navbar");
-    if (navbar) {
-      navbar.classList.toggle("scrolled", window.scrollY > 50);
-    }
-  });
-
-  // Dropdown handling (safe)
-  const profileToggle = document.getElementById('profileToggle');
-  const profileDropdown = document.querySelector('.profile-dropdown');
-
-  if (profileToggle && profileDropdown) {
-    const chevron = profileToggle.querySelector('.fa-chevron-down');
-
-    profileToggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      profileDropdown.classList.toggle('open');
-
-      if (chevron) {
-        chevron.style.transform = profileDropdown.classList.contains('open')
-          ? 'rotate(180deg)'
-          : 'rotate(0deg)';
+    <style>
+      /* [All your existing CSS unchanged - just adding dropdown styles] */
+      
+      /* Profile Dropdown Styles (same as index.html) */
+      .profile-dropdown {
+        position: relative;
       }
-    });
 
-    document.addEventListener('click', function () {
-      profileDropdown.classList.remove('open');
-      if (chevron) chevron.style.transform = 'rotate(0deg)';
-    });
-  }
+      .profile-btn {
+        padding: 10px 20px;
+        color: #e2e8f0;
+        background: rgba(59, 130, 246, 0.1);
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        border-radius: 8px;
+        font-weight: 500;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s;
+        position: relative;
+        overflow: hidden;
+      }
 
-  // Progress animation
-  window.addEventListener('load', function () {
-    document.querySelectorAll('.progress-fill').forEach(fill => {
-      const width = fill.getAttribute('data-width');
-      fill.style.width = width;
-    });
-  });
+      .profile-btn:hover {
+        background: rgba(59, 130, 246, 0.2);
+        border-color: #3b82f6;
+        color: #60a5fa;
+        transform: translateY(-1px);
+      }
 
-  // Functions
-  function openEditProfile() {
-    alert('Edit profile coming soon!');
-  }
+      .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        min-width: 220px;
+        background: linear-gradient(145deg, #1a1f2e, #111827);
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 12px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-10px);
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 1001;
+        overflow: hidden;
+      }
 
-  function openSettings() {
-    alert('Settings coming soon!');
-  }
+      .profile-dropdown.open .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+      }
 
-  function downloadReport() {
-    alert('Downloading report...');
-  }
-</script>
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 14px 20px;
+        color: #e2e8f0;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s;
+        border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+      }
 
-</body>
+      .dropdown-item:last-child {
+        border-bottom: none;
+      }
+
+      .dropdown-item:hover {
+        background: rgba(59, 130, 246, 0.1);
+        color: #60a5fa;
+        padding-left: 28px;
+      }
+
+      /* [All your existing CSS remains exactly the same] */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: "Inter", "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(135deg, #0a0f1e, #030614);
+        color: white;
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      /* [All your navbar, container, profile styles unchanged - keeping full CSS] */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 50px;
+        position: sticky;
+        top: 0;
+        background: rgba(10, 15, 30, 0.8);
+        backdrop-filter: blur(12px);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        border-bottom: 1px solid rgba(59, 130, 246, 0.1);
+      }
+
+      .navbar.scrolled {
+        padding: 15px 50px;
+        background: rgba(10, 15, 30, 0.95);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        border-bottom-color: rgba(59, 130, 246, 0.3);
+      }
+
+      .brand {
+        font-size: 28px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -0.5px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .nav-links a {
+        padding: 10px 20px;
+        color: #e2e8f0;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .nav-links a::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+        transition: left 0.5s;
+      }
+
+      .nav-links a:hover {
+        color: #60a5fa;
+        background: rgba(59, 130, 246, 0.1);
+      }
+
+      .nav-links a:hover::before {
+        left: 100%;
+      }
+
+      .nav-links .active {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+      }
+
+      /* [All other styles unchanged - container, profile-header, stats-grid, etc.] */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 40px 20px;
+      }
+
+      .profile-header {
+        text-align: center;
+        margin-bottom: 60px;
+        position: relative;
+      }
+
+      .profile-avatar {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        border: 5px solid rgba(59, 130, 246, 0.3);
+        margin: 0 auto 20px;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        transition: all 0.3s ease;
+        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+      }
+
+      .profile-header:hover .profile-avatar {
+        transform: scale(1.05);
+        border-color: rgba(59, 130, 246, 0.6);
+        box-shadow: 0 25px 50px rgba(59, 130, 246, 0.3);
+      }
+
+      .profile-header h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+      }
+
+      .profile-email {
+        color: #94a3b8;
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+      }
+
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+        margin-bottom: 60px;
+      }
+
+      .stat-card {
+        background: linear-gradient(145deg, #1a1f2e, #111827);
+        padding: 30px;
+        border-radius: 20px;
+        text-align: center;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .stat-card:hover {
+        transform: translateY(-5px);
+        border-color: rgba(59, 130, 246, 0.3);
+        box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+      }
+
+      .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+      }
+
+      .stat-label {
+        color: #94a3b8;
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      .progress-section {
+        background: linear-gradient(145deg, #1a1f2e, #111827);
+        border-radius: 24px;
+        padding: 40px;
+        border: 1px solid rgba(59, 130, 246, 0.1);
+        margin-bottom: 40px;
+      }
+
+      .progress-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        color: #e2e8f0;
+      }
+
+      .progress-item {
+        margin-bottom: 25px;
+      }
+
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+
+      .progress-bar {
+        height: 8px;
+        background: rgba(59, 130, 246, 0.2);
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+        border-radius: 4px;
+        transition: width 2s ease;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 40px;
+      }
+
+      .btn {
+        padding: 14px 32px;
+        border-radius: 12px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1rem;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+        color: white;
+        box-shadow: 0 10px 20px rgba(59, 130,246, 0.3);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.05);
+        color: #e2e8f0;
+        border: 1px solid rgba(59, 130, 246, 0.3);
+        backdrop-filter: blur(10px);
+      }
+
+      .btn-secondary:hover {
+        background: rgba(59, 130, 246, 0.1);
+        border-color: #3b82f6;
+        transform: translateY(-3px);
+      }
+
+      .btn-danger {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        color: white;
+        box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
+      }
+
+      .btn-danger:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 30px rgba(239, 68, 68, 0.4);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .navbar {
+          padding: 15px 20px;
+        }
+
+        .brand {
+          font-size: 24px;
+        }
+
+        .nav-links {
+          gap: 8px;
+        }
+
+        .nav-links a,
+        .profile-btn {
+          padding: 8px 12px;
+          font-size: 0.9rem;
+        }
+
+        .dropdown-menu {
+          min-width: 200px;
+          right: -10px;
+        }
+
+        .container {
+          padding: 20px 15px;
+        }
+
+        .profile-header h1 {
+          font-size: 2rem;
+        }
+
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 20px;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .btn {
+          width: 100%;
+          max-width: 300px;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Navbar - SAME CONDITIONAL LOGIC AS INDEX -->
+    <div class="navbar" id="navbar">
+      <div class="brand">PrepEdge</div>
+      <div class="nav-links">
+        <a href="{% url 'index' %}"><i class="fas fa-home" style="margin-right: 5px"></i>Home</a>
+        <a href="{% url 'plans' %}"><i class="fas fa-crown" style="margin-right: 5px"></i>Subscription</a>
+        
+        <!-- Profile Dropdown (always shown on profile page since user must be authenticated) -->
+        <div class="profile-dropdown">
+          <button class="profile-btn" id="profileToggle">
+            <i class="fas fa-user-circle"></i>
+            <span>{{ user.username }}</span>
+            <i class="fas fa-chevron-down" style="font-size: 0.8rem; transition: transform 0.3s;"></i>
+          </button>
+          <div class="dropdown-menu">
+            <a href="{% url 'profile' %}" class="dropdown-item active">
+              <i class="fas fa-user"></i>
+              <span>My Profile</span>
+            </a>
+            <a href="#" class="dropdown-item" onclick="openSettings()">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+            <a href="#" class="dropdown-item" onclick="downloadReport()">
+              <i class="fas fa-download"></i>
+              <span>Download Report</span>
+            </a>
+            <a href="{% url 'plans' %}" class="dropdown-item">
+              <i class="fas fa-star"></i>
+              <span>Upgrade Plan</span>
+            </a>
+            <a href="{% url 'logout' %}" class="dropdown-item">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Profile Header -->
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <h1>{{ user.username | default:"Your Name" }}</h1>
+        <div class="profile-email">{{ user.email | default:"email@example.com" }}</div>
+        <div class="profile-badge">
+          <span style="background: linear-gradient(135deg, #10b981, #059669); padding: 6px 16px; border-radius: 25px; font-size: 0.9rem; font-weight: 600;">
+            <i class="fas fa-check-circle" style="margin-right: 5px;"></i>Active Member
+          </span>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Total Tests Completed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">78%</div>
+          <div class="stat-label">Average Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">5</div>
+          <div class="stat-label">Active Streaks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">24h</div>
+          <div class="stat-label">Last Active</div>
+        </div>
+      </div>
+
+      <!-- Progress Section -->
+      <div class="progress-section">
+        <h2 class="progress-title">
+          <i class="fas fa-chart-line" style="margin-right: 10px; color: #3b82f6;"></i>
+          Your Progress
+        </h2>
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Programming Skills</span>
+            <span>85%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="85%"></div>
+          </div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Soft Skills</span>
+            <span>72%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="72%"></div>
+          </div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>Technical Knowledge</span>
+            <span>91%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" data-width="91%"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons - FIXED LOGOUT -->
+      <div class="action-buttons">
+        <a href="#" class="btn btn-primary" onclick="openEditProfile()">
+          <i class="fas fa-edit"></i>
+          Edit Profile
+        </a>
+        <a href="#" class="btn btn-secondary" onclick="downloadReport()">
+          <i class="fas fa-download"></i>
+          Download Report
+        </a>
+        <a href="{% url 'logout' %}" class="btn btn-danger">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </a>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        const navbar = document.getElementById("navbar");
+        if (window.scrollY > 50) {
+          navbar.classList.add("scrolled");
+        } else {
+          navbar.classList.remove("scrolled");
+        }
+      });
+
+      // Profile Dropdown Toggle
+      const profileToggle = document.getElementById('profileToggle');
+      const profileDropdown = document.querySelector('.profile-dropdown');
+      const chevron = profileToggle.querySelector('.fa-chevron-down');
+
+      profileToggle.addEventListener('click', function(e) {
+        e.stopPropagation();
+        profileDropdown.classList.toggle('open');
+        chevron.style.transform = profileDropdown.classList.contains('open') 
+          ? 'rotate(180deg)' : 'rotate(0deg)';
+      });
+
+      document.addEventListener('click', function() {
+        profileDropdown.classList.remove('open');
+        chevron.style.transform = 'rotate(0deg)';
+      });
+
+      // Auto-close dropdown after clicking any item
+      document.querySelectorAll('.dropdown-item').forEach(item => {
+        item.addEventListener('click', function() {
+          profileDropdown.classList.remove('open');
+          chevron.style.transform = 'rotate(0deg)';
+        });
+      });
+
+      // Action button functions
+      function openEditProfile() {
+        alert('Edit profile page coming soon!');
+      }
+
+      function openSettings() {
+        alert('Settings page coming soon!');
+      }
+
+      function downloadReport() {
+        alert('Downloading progress report...');
+      }
+
+      // Animate progress bars on load
+      window.addEventListener('load', function() {
+        const progressFills = document.querySelectorAll('.progress-fill');
+        progressFills.forEach(fill => {
+          const targetWidth = fill.getAttribute('data-width');
+          fill.style.width = '0%';
+          setTimeout(() => {
+            fill.style.width = targetWidth;
+          }, 500);
+        });
+      });
+    </script>
+  </body>
 </html>

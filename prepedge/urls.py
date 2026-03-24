@@ -7,6 +7,7 @@ urlpatterns = [
 
     # Home
     path('', views.index, name='index'),
+    path('',views.home, name="home" ),
 
     # AI Recommendations
     path('ai/', include('ai_recommendations.urls')),

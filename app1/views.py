@@ -138,6 +138,8 @@ def _save_test_result(user, module, test_name, score_pct,
 
 def index(request):
     return render(request, 'index.html')
+def home(request):
+    return render(request, 'home.html')
 
 def programming(request):
     return render(request, 'programming.html')
