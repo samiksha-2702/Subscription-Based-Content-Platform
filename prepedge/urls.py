@@ -41,8 +41,8 @@ urlpatterns = [
     path('python/libraries/', views.python_libraries, name='pythonlibraries'),
     path('python/practice-basics/', views.py_basics_practice, name='pybasicspractice'),
     path('python/practice-loops/', views.py_loop_practice, name='pylooppractice'),
-   path('python/practice-functions/<int:test_id>/', views.py_function_practice, name='pyfunctionpractice'),
-   path('python/test/', views.python_test, name='python_test'),
+    path('python/practice-functions/', views.py_function_practice, name='pyfunctionpractice'),
+    path('python/test/', views.python_test, name='python_test'),
 
     # Java
     path('java/', views.java_info, name='javainfo'),
