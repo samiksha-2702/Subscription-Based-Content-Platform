@@ -9,7 +9,9 @@ from .models import (
     LiveSession, LiveSessionRegistration,
     UserProgress, TestResult, ContactMessage,
 )
+from .models import Test
 
+admin.site.register(Test)
 # ══════════════════════════════════════════════════════════════════
 # SITE HEADER
 # ══════════════════════════════════════════════════════════════════
@@ -90,15 +92,18 @@ class ExtendedUserAdmin(BaseUserAdmin):
             plan = obj.subscription.plan
             if plan == 'premium':
                 return format_html(
-                    '<span style="background:#f59e0b;color:#000;padding:2px 10px;'
-                    'border-radius:6px;font-size:11px;font-weight:700;">⭐ PREMIUM</span>'
-                )
+    '<span style="background:#6b7280;color:#fff;padding:2px 10px;'
+    'border-radius:6px;font-size:11px;">{}</span>',
+    'FREE'
+)
         except Exception:
             pass
         return format_html(
-            '<span style="background:#6b7280;color:#fff;padding:2px 10px;'
-            'border-radius:6px;font-size:11px;">FREE</span>'
-        )
+    '<span style="background:#6b7280;color:#fff;padding:2px 10px;'
+    'border-radius:6px;font-size:11px;">{}</span>',
+    'FREE'
+)
+        
     plan_badge.short_description = 'Plan'
 
     def total_tests(self, obj):
@@ -181,12 +186,12 @@ class SubscriptionAdmin(admin.ModelAdmin):
     email.short_description = 'Email'
 
     def plan_badge(self, obj):
-        if obj.plan == 'premium':
-            return format_html(
-                '<b style="color:#f59e0b;">⭐ Premium</b>'
-            )
-        return format_html('<span style="color:#9ca3af;">Free</span>')
-    plan_badge.short_description = 'Plan'
+        try:
+            if obj.subscription.plan == 'premium':
+             return "⭐ PREMIUM"
+        except:
+            pass
+        return "FREE"
 
     def status_badge(self, obj):
         colours = {'active': '#22c55e', 'expired': '#ef4444', 'cancelled': '#6b7280'}
@@ -344,7 +349,7 @@ class UserProgressAdmin(admin.ModelAdmin):
     def completed_badge(self, obj):
         if obj.completed:
             return format_html('<span style="color:#22c55e;font-weight:700;">✅ Done</span>')
-        return format_html('<span style="color:#f59e0b;">🔄 In Progress</span>')
+        return format_html('<span style="color:{};">{}</span>', '#f59e0b', '🔄 In Progress')
     completed_badge.short_description = 'Status'
 
 
@@ -354,12 +359,11 @@ class UserProgressAdmin(admin.ModelAdmin):
 
 @admin.register(TestResult)
 class TestResultAdmin(admin.ModelAdmin):
-    list_display  = ['user', 'module', 'test_name', 'score_bar',
-                     'grade_badge', 'passed_badge', 'attempted_at']
-    list_filter   = ['module', 'attempted_at']
-    search_fields = ['user__username', 'test_name']
-    ordering      = ['-attempted_at']
-    readonly_fields = ['attempted_at']
+    list_display = ['user', 'test', 'score_bar', 'grade_badge', 'passed_badge', 'date_attempted']
+    list_filter = ['test', 'date_attempted']
+    search_fields = ['user__username', 'test__name']
+    ordering = ['-date_attempted']
+    readonly_fields = ['date_attempted']
 
     def score_bar(self, obj):
         colour = '#22c55e' if obj.score >= 60 else '#ef4444'
@@ -367,24 +371,19 @@ class TestResultAdmin(admin.ModelAdmin):
             '<div style="background:#1e293b;border-radius:4px;width:120px;height:14px;">'
             '<div style="background:{};width:{}%;height:100%;border-radius:4px;"></div>'
             '</div> <small>{}%</small>',
-            colour, min(obj.score, 100), f'{obj.score:.0f}'
+            colour, min(obj.score, 100), obj.score
         )
-    score_bar.short_description = 'Score'
 
     def grade_badge(self, obj):
         colours = {'A':'#22c55e','B':'#3b82f6','C':'#f59e0b','F':'#ef4444'}
-        g = obj.grade
         return format_html(
-            '<span style="background:{};color:#fff;padding:1px 8px;'
-            'border-radius:4px;font-weight:700;">{}</span>',
-            colours.get(g,'#6b7280'), g
+            '<span style="background:{};color:#fff;padding:2px 8px;border-radius:4px;">{}</span>',
+            colours.get(obj.grade,'#6b7280'), obj.grade
         )
-    grade_badge.short_description = 'Grade'
 
-    @admin.display(boolean=True, description='Passed')
+    @admin.display(boolean=True)
     def passed_badge(self, obj):
         return obj.passed
-
 
 # ══════════════════════════════════════════════════════════════════
 # CONTACT MESSAGES

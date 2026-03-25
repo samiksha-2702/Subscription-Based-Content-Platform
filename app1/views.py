@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.utils import timezone
 from .models import UserProfile
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import login_required
+from .models import TestResult, Test
+from django.shortcuts import render, get_object_or_404 , redirect
 
 def register(request):
     if request.method == "POST":
@@ -235,16 +238,16 @@ def python_libraries(request):
     return render(request, 'pythonlibraries.html')
 
 def py_basics_practice(request):
-    _mark_progress(request.user, 'python', 'Basics Practice', 'practice')
-    return render(request, 'pybasicspractice.html')
+    test = Test.objects.filter(name="Python Basics Test").first()   # OR id=1
+    return render(request, 'pybasicspractice.html', {'test': test})
 
 def py_loop_practice(request):
     _mark_progress(request.user, 'python', 'Loop Practice', 'practice')
     return render(request, 'pylooppractice.html')
 
-def py_function_practice(request):
-    _mark_progress(request.user, 'python', 'Function Practice', 'practice')
-    return render(request, 'pyfunctionpractice.html')
+def py_function_practice(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+    return render(request, "pyfunctionpractice.html", {"test": test}) 
 
 def python_test(request):
     if request.method == 'POST':
@@ -612,3 +615,35 @@ def login_view(request):
 # 🟢 Payment Page
 def payment(request):
     return render(request, 'payment.html')
+
+@login_required
+def submit_test(request, test_id):
+    print("VIEW HIT")
+
+    if request.method == "POST":
+
+        test = get_object_or_404(Test, id=test_id)
+
+        total = request.POST.get("total") or 0
+        correct = request.POST.get("correct") or 0
+        wrong = request.POST.get("wrong") or 0
+        skipped = request.POST.get("skipped") or 0
+        score = request.POST.get("score") or 0
+        time_taken = request.POST.get("time_taken") or 0
+
+        result = TestResult.objects.create(
+            user=request.user,
+            test=test,
+            total_questions=int(total),
+            correct_answers=int(correct),
+            wrong_answers=int(wrong),
+            skipped_questions=int(skipped),
+            score=int(score),
+            time_taken=int(time_taken)
+        )
+
+        return redirect('result', result_id=result.id)
+def result_page(request, result_id):
+    result = get_object_or_404(TestResult, id=result_id)
+    return render(request, 'result.html', {'result': result})
+
