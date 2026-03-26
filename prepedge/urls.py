@@ -1,26 +1,35 @@
-from django.contrib import admin
 from django.urls import include, path
 from app1 import views
+from django.contrib import admin
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # Home
     path('', views.index, name='index'),
     path('home/', views.index, name='home'),
 
-    # AI Recommendations module — MUST come before old ai-home view
+    # AI Recommendations
     path('ai/', include('ai_recommendations.urls')),
-    # Old static AI page renamed to avoid clash with ai/ prefix above
     path('ai-home/', views.ai_recommendation, name='ai'),
 
+    # Main modules
     path('programming/', views.programming, name='programming'),
     path('company/', views.company, name='company'),
     path('expert/', views.expert_talks, name='expert'),
     path('communication/', views.communication, name='comm'),
     path('aptitude/', views.aptitude, name='questions'),
-    path('login/', views.login_view, name='login'),
-    path('register/', views.register_view, name='register'),
-    path('logout/', views.logout_view, name='logout'),
+
+    # Auth
+    path('login/', views.user_login, name='login'),
+    path('register/', views.register, name='register'),
+    path('logout/', views.user_logout, name='logout'),
+    path('profile/', views.profile_view, name='profile'),
+
+    # Plans & Payment
     path('plans/', views.plans, name='plans'),
+    path('payment/', views.payment, name='payment'),
+    path('subscribe/', views.subscribe, name='subscribe'),
 
     # Python
     path('python/', views.python_info, name='python_info'),
@@ -31,9 +40,9 @@ urlpatterns = [
     path('python/comparison/', views.python_comparison, name='pythoncomparision'),
     path('python/libraries/', views.python_libraries, name='pythonlibraries'),
     path('python/practice-basics/', views.py_basics_practice, name='pybasicspractice'),
-    path('python/practice-loops/', views.py_loop_practice, name='pylooppractice'),
-    path('python/practice-functions/', views.py_function_practice, name='pyfunctionpractice'),
-    path('python/test/', views.python_test, name='python_test'),
+    path('python/practice-loops/<int:test_id>/', views.py_loop_practice, name='pylooppractice'),
+path('python/practice-functions/<int:test_id>/', views.py_function_practice, name='pyfunctionpractice'),
+path('python/test/<int:test_id>/', views.python_test, name='python_test'),
 
     # Java
     path('java/', views.java_info, name='javainfo'),
@@ -64,6 +73,7 @@ urlpatterns = [
     path('js/es6/', views.js_es6, name='js_es6'),
     path('js/practice/', views.js_practice, name='js_practice'),
     path('js/test/', views.js_test, name='js_test'),
+    path('js/result/<int:result_id>/', views.result_page, name='result'),
 
     # SQL
     path('sql/', views.sql_info, name='sql_info'),
@@ -82,16 +92,17 @@ urlpatterns = [
     path('dsa-practice/', views.dsa_practice, name='dsa_practice'),
     path('dsa-test/', views.dsa_test, name='dsa_test'),
 
-    # Expert
+    # Expert sessions
     path('live-session-register/', views.live_session_register, name='live-session-regest'),
     path('view-talks/', views.view_talks, name='view_talks'),
 
-    # Company blogs (renamed from duplicate 'company' name)
+    # Company blogs
     path('companies/', views.companies_blogs, name='companies_blogs'),
     path('google/', views.google, name='google'),
     path('amazon/', views.amazon, name='amazon'),
     path('microsoft/', views.microsoft, name='microsoft'),
     path('meta/', views.meta, name='meta'),
+
     path('interview-tips/', views.interview_tips, name='interview-tips'),
     path('resume-guide/', views.resume_guide, name='resume-guide'),
     path('tech-trends/', views.tech_trends, name='tech-trends'),
@@ -114,12 +125,7 @@ urlpatterns = [
     path('technical/test/', views.technical_test, name='technical_test'),
     path('interview/practice/', views.interview_practice, name='interview_practice'),
     path('interview/test/', views.interview_test, name='interview_test'),
-
-    # Subscription
-    path('subscribe/', views.subscribe, name='subscribe'),
-    path('process-payment/', views.process_payment, name='process_payment'),
-    path('dashboard/', views.premium_dashboard, name='premium_dashboard'),
-    path('login/', views.login_view, name='login'),
-    path('plans/', views.plans, name='plans'),
-    path('payment/', views.payment, name='payment'),
+    
+   path('submit-test/<int:test_id>/', views.submit_test, name='submit_test'),
+    path('result/<int:result_id>/', views.result_page, name='result'),
 ]

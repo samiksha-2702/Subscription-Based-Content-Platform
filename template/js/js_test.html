@@ -4,7 +4,6 @@
 <head>
     <title>15 Minute JavaScript Test</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <style>
         body {
             margin: 0;
@@ -17,9 +16,7 @@
             margin: auto;
             padding: 25px;
         }
-        h1 {
-            text-align: center;
-        }
+        h1 { text-align: center; }
         .timer {
             text-align: center;
             font-size: 22px;
@@ -45,10 +42,9 @@
             background: #2563eb;
             color: white;
             font-weight: bold;
+            margin-top: 10px;
         }
-        button:hover {
-            background: #1d4ed8;
-        }
+        button:hover { background: #1d4ed8; }
         .result {
             background: #16a34a;
             padding: 18px;
@@ -66,8 +62,16 @@
             color: white;
             text-decoration: none;
         }
-        .back-btn:hover {
-            background: #1d4ed8;
+        .back-btn:hover { background: #1d4ed8; }
+        textarea {
+            width: 100%;
+            height: 120px;
+            border-radius: 8px;
+            border: none;
+            padding: 12px;
+            margin-top: 8px;
+            font-family: Arial;
+            font-size: 14px;
         }
     </style>
 </head>
@@ -78,43 +82,60 @@
 
     <div class="timer" id="timer">Time Left: 15:00</div>
 
-    <form id="testForm">
-        {% comment %}
-            Questions will be injected via JS
-        {% endcomment %}
+    <!-- MCQ Form -->
+    <form id="testForm" method="POST" action="{% url 'submit_test' test.id %}">
+        {% csrf_token %}
     </form>
 
+    <!-- Descriptive Questions -->
+    <div class="section-title">Descriptive Questions</div>
+    <div class="card">
+        <b>1. Explain difference between var, let, and const in JS.</b>
+        <textarea id="desc1" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="card">
+        <b>2. Explain JavaScript data types with examples.</b>
+        <textarea id="desc2" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="card">
+        <b>3. Explain a for loop with an example in JS.</b>
+        <textarea id="desc3" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="card">
+        <b>4. What is a function in JavaScript and why is it used?</b>
+        <textarea id="desc4" placeholder="Write your answer here..."></textarea>
+    </div>
+    <div class="card">
+        <b>5. Explain Object-Oriented Programming (OOP) in JS.</b>
+        <textarea id="desc5" placeholder="Write your answer here..."></textarea>
+    </div>
+
     <div style="text-align:center">
-        <button onclick="submitTest()" type="button">Submit Test</button>
+        <button type="button" onclick="submitTest()">Submit Test</button>
     </div>
 
     <div id="resultBox"></div>
 
     <a href="{% url 'javasinfo' %}" class="back-btn">⬅ Back to JS Module</a>
-
 </div>
 
 <script>
 const questions = [
-    ["Which of the following is a JS data type?",["String","Integer","Character","Decimal"],0],
-    ["What is the output of `typeof []`?",["object","array","list","undefined"],0],
-    ["Which keyword declares a block scoped variable?",["var","let","dim","constit"],1],
-    ["What is the output of `2+3+'5'`?",["55","235","5","Error"],1],
-    ["Which method adds an element at the end of an array?",["push()","pop()","shift()","unshift()"],0],
-    ["Which operator is used for strict equality?",["==","===","!=","<>"],1],
-    ["Which symbol is used for comments?",["#","//","/* */","<!-- -->"],1],
-    ["What is the output of `console.log(0 == false)`?",["true","false","error","undefined"],0],
-    ["Which method converts JSON string to object?",["JSON.parse()","JSON.stringify()","JSON.toObject()","parseJSON()"],0],
-    ["Which is correct way to define an arrow function?",["function a(){}","let a = () => {}","let a = function(){}","def a(){}"],1],
-    ["Which keyword is used for inheritance in JS classes?",["extends","inherits","superclass","parent"],0],
-    ["Which method removes the first element of an array?",["shift()","pop()","slice()","unshift()"],0],
-    ["What is `NaN` in JS?",["Not a Number","Null and None","Never a Number","New Array Number"],0],
-    ["Which event triggers when a form is submitted?",["onchange","onsubmit","onclick","onfocus"],1],
-    ["Which of these is NOT a JS loop?",["for","while","repeat","do...while"],2]
+    ["Which of the following is a JS data type?", ["String","Integer","Character","Decimal"], 0],
+    ["What is the output of `typeof []`?", ["object","array","list","undefined"], 0],
+    ["Which keyword declares a block scoped variable?", ["var","let","dim","constit"], 1],
+    ["What is the output of `2+3+'5'`?", ["55","235","5","Error"], 1],
+    ["Which method adds an element at the end of an array?", ["push()","pop()","shift()","unshift()"], 0],
+    ["Which operator is used for strict equality?", ["==","===","!=","<>"], 1],
+    ["Which symbol is used for comments?", ["#","//","/* */","<!-- -->"], 1],
+    ["What is the output of `console.log(0 == false)`?", ["true","false","error","undefined"], 0],
+    ["Which method converts JSON string to object?", ["JSON.parse()","JSON.stringify()","JSON.toObject()","parseJSON()"], 0],
+    ["Which is correct way to define an arrow function?", ["function a(){}","let a = () => {}","let a = function(){}","def a(){}"], 1],
 ];
 
 const form = document.getElementById("testForm");
 
+// Render MCQs dynamically
 questions.forEach((q,i)=>{
     let html = `<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
     q[1].forEach((opt,j)=>{
@@ -129,8 +150,7 @@ let time = 900;
 const timer = setInterval(()=>{
     let m = Math.floor(time/60);
     let s = time%60;
-    document.getElementById("timer").innerText =
-        `Time Left: ${m}:${s<10?"0":""}${s}`;
+    document.getElementById("timer").innerText = `Time Left: ${m}:${s<10?"0":""}${s}`;
     time--;
     if(time < 0){
         clearInterval(timer);
@@ -138,19 +158,48 @@ const timer = setInterval(()=>{
     }
 },1000);
 
-// ===== SUBMIT =====
-function submitTest(){
+// ===== SUBMIT FUNCTION =====
+function submitTest() {
     clearInterval(timer);
+
+    // Calculate MCQ Score
     let score = 0;
     questions.forEach((q,i)=>{
         let ans = document.querySelector(`input[name=q${i}]:checked`);
         if(ans && Number(ans.value) === q[2]) score++;
     });
-    document.getElementById("resultBox").innerHTML =
-        `<div class="result">Final Score: ${score} / ${questions.length}</div>`;
-    window.scrollTo(0,document.body.scrollHeight);
-}
-</script>
 
+    // Save descriptive answers in localStorage
+    for(let i=1;i<=5;i++){
+        localStorage.setItem("desc"+i, document.getElementById("desc"+i).value);
+    }
+
+    // Prepare form data
+    let formData = new URLSearchParams();
+    formData.append("score", score);
+    formData.append("total", questions.length);
+    formData.append("correct", score);
+    formData.append("wrong", questions.length - score);
+    formData.append("skipped", 0);
+    formData.append("time_taken", 900 - time); // time left
+
+    // Send AJAX POST request
+    fetch("{% url 'submit_test' test.id %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": "{{ csrf_token }}",
+            "X-Requested-With": "XMLHttpRequest"  // important
+        },
+        body: formData.toString()
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        window.location.href = data.redirect_url;  // ✅ redirect to result page
+    })
+    .catch(err => console.log("Error:", err));
+
+};
+</script>
 </body>
 </html>

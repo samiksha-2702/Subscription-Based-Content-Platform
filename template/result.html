@@ -4,17 +4,65 @@
     <title>Result | PrepEdge</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body class="bg-dark text-light">
 
-<div class="container my-5 text-center">
-    <h3>Test Result</h3>
-    <h4 class="text-success">Score: 70%</h4>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-black px-4">
+    <a class="navbar-brand fw-bold" href="/">PrepEdge</a>
 
-    <div class="card p-3 mt-3">
-        <p>Strong: Python</p>
-        <p class="text-danger">Weak: DBMS</p>
-        <p class="text-primary">AI Recommendation: Practice DBMS questions</p>
+   
+</nav>
+
+<div class="container py-5">
+
+    <div class="text-center mb-4">
+        <h1 class="fw-bold">🎯 Test Result</h1>
+        <p class="text-secondary">Here is your performance summary</p>
     </div>
+
+    <div class="card bg-dark border-light shadow-lg rounded-4">
+        <div class="card-body p-4">
+
+            <div class="row text-center mb-4">
+
+                <div class="col-md-3">
+                    <h5 class="text-white">Total Score</h5>
+                    <h2 class="fw-bold text-warning">{{ result.score }}</h2>
+                </div>
+
+                <div class="col-md-3">
+                    <h5 class="text-white">Correct</h5>
+                    <h3 class="fw-bold text-success">{{ result.correct_answers }}</h3>
+                </div>
+
+                <div class="col-md-3">
+                    <h5 class="text-white">Wrong</h5>
+                    <h3 class="fw-bold text-danger">{{ result.wrong_answers }}</h3>
+                </div>
+
+                <div class="col-md-3">
+                    <h5 class="text-white">Skipped</h5>
+                    <h3 class="fw-bold text-info">{{ result.skipped_questions }}</h3>
+                </div>
+
+            </div>
+
+            <hr class="border-light">
+
+            <div class="text-center">
+                <h5 class="text-white">⏱ Time Taken</h5>
+                <h4 class="text-light">{{ result.time_taken }} seconds</h4>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/" class="btn btn-primary px-4 me-2">Go to Home</a>
+        <a href="/logout/" class="btn btn-outline-danger px-4">Logout</a>
+    </div>
+
 </div>
 
 </body>

@@ -51,58 +51,56 @@ button{
 <button onclick="history.back()">⬅ Back</button>
 <a href="{% url 'index' %}"><button>🏠 Module Home</button></a>
 
-<form id="quizForm">
+<!-- Form submits score to Django -->
+<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="score" id="scoreField">
 
-<div class="card">
-Q1. Who developed C++?<br>
-<label><input type="radio" name="q1" value="a"> Dennis Ritchie</label><br>
-<label><input type="radio" name="q1" value="b"> Bjarne Stroustrup</label><br>
-<label><input type="radio" name="q1" value="c"> James Gosling</label>
-</div>
+    <div class="timer">Time Left: <span id="time">15:00</span></div>
 
-<div class="card">
-Q2. Which symbol is used for input in C++?<br>
-<label><input type="radio" name="q2" value="a"> >></label><br>
-<label><input type="radio" name="q2" value="b"> <<</label><br>
-<label><input type="radio" name="q2" value="c"> ::</label>
-</div>
+    <div class="card">
+    Q1. Who developed C++?<br>
+    <label><input type="radio" name="q1" value="a"> Dennis Ritchie</label><br>
+    <label><input type="radio" name="q1" value="b"> Bjarne Stroustrup</label><br>
+    <label><input type="radio" name="q1" value="c"> James Gosling</label>
+    </div>
 
-<div class="card">
-Q3. Which is dynamic array container?<br>
-<label><input type="radio" name="q3" value="a"> vector</label><br>
-<label><input type="radio" name="q3" value="b"> array</label><br>
-<label><input type="radio" name="q3" value="c"> pointer</label>
-</div>
+    <div class="card">
+    Q2. Which symbol is used for input in C++?<br>
+    <label><input type="radio" name="q2" value="a"> >></label><br>
+    <label><input type="radio" name="q2" value="b"> <<</label><br>
+    <label><input type="radio" name="q2" value="c"> ::</label>
+    </div>
 
-<div class="card">
-Q4. OOP stands for?<br>
-<label><input type="radio" name="q4" value="a"> Object Oriented Programming</label><br>
-<label><input type="radio" name="q4" value="b"> Object Only Program</label><br>
-<label><input type="radio" name="q4" value="c"> Order Of Program</label>
-</div>
+    <div class="card">
+    Q3. Which is dynamic array container?<br>
+    <label><input type="radio" name="q3" value="a"> vector</label><br>
+    <label><input type="radio" name="q3" value="b"> array</label><br>
+    <label><input type="radio" name="q3" value="c"> pointer</label>
+    </div>
 
-<div class="card">
-Q5. Which keyword is used for inheritance?<br>
-<label><input type="radio" name="q5" value="a"> extends</label><br>
-<label><input type="radio" name="q5" value="b"> inherits</label><br>
-<label><input type="radio" name="q5" value="c"> :</label>
-</div>
+    <div class="card">
+    Q4. OOP stands for?<br>
+    <label><input type="radio" name="q4" value="a"> Object Oriented Programming</label><br>
+    <label><input type="radio" name="q4" value="b"> Object Only Program</label><br>
+    <label><input type="radio" name="q4" value="c"> Order Of Program</label>
+    </div>
 
-<button type="button" onclick="submitQuiz()">Submit Test</button>
+    <div class="card">
+    Q5. Which keyword is used for inheritance?<br>
+    <label><input type="radio" name="q5" value="a"> extends</label><br>
+    <label><input type="radio" name="q5" value="b"> inherits</label><br>
+    <label><input type="radio" name="q5" value="c"> :</label>
+    </div>
+
+    <button type="button" onclick="submitQuiz()">Submit Test</button>
 
 </form>
 
 <div id="result" class="card" style="display:none"></div>
 
 <script>
-
-const answers = {
-    q1:"b",
-    q2:"a",
-    q3:"a",
-    q4:"a",
-    q5:"c"
-};
+const answers = {q1:"b", q2:"a", q3:"a", q4:"a", q5:"c"};
 
 function submitQuiz(){
     let score = 0;
@@ -119,22 +117,24 @@ function submitQuiz(){
     }
 
     output += `<h2>Score: ${score}/5</h2>`;
-
     document.getElementById("result").innerHTML = output;
     document.getElementById("result").style.display="block";
+
+    // Set hidden field and submit to Django
+    document.getElementById("scoreField").value = score;
+    document.getElementById("quizForm").submit();
 }
 
-//// TIMER
-
+// TIMER
 let total = 15 * 60;
 
 function updateTimer(){
     let min = Math.floor(total/60);
-    let sec = total%60;
+    let sec = total % 60;
     document.getElementById("time").innerText =
         `${min}:${sec.toString().padStart(2,"0")}`;
 
-    if(total<=0){
+    if(total <= 0){
         submitQuiz();
         alert("Time Up!");
     }

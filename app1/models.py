@@ -1,25 +1,19 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db import models
 
-
-# ══════════════════════════════════════════════════════════════════
-# 1. USER PROFILE
-# ══════════════════════════════════════════════════════════════════
+from django.db import models
 
 class UserProfile(models.Model):
-    user       = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    bio        = models.TextField(blank=True, default='')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    bio = models.TextField(blank=True, default='')
     avatar_url = models.URLField(blank=True, default='')
-    phone      = models.CharField(max_length=20, blank=True, default='')
+    phone = models.CharField(max_length=20, blank=True, default='')
     created_at = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        verbose_name = 'User Profile'
 
     def __str__(self):
         return f"Profile — {self.user.username}"
-
 
 # ══════════════════════════════════════════════════════════════════
 # 2. LOGIN HISTORY
@@ -191,40 +185,67 @@ class UserProgress(models.Model):
 # 7. TEST RESULT
 # ══════════════════════════════════════════════════════════════════
 
-class TestResult(models.Model):
-    MODULE_CHOICES = [
-        ('python','Python'), ('java','Java'), ('cpp','C++'),
-        ('javascript','JavaScript'), ('sql','SQL'), ('dsa','DSA'),
-        ('communication','Communication'), ('aptitude','Aptitude'),
-        ('interview','Interview'), ('technical','Technical'),
+class Test(models.Model):
+
+    LANGUAGE_CHOICES = [
+        ('python', 'Python'),
+        ('java', 'Java'),
+        ('sql', 'SQL'),
+        ('js', 'JavaScript'),     # ✅ NEW
+        ('cpp', 'C++'),           # ✅ NEW
+        ('dsa', 'Data Structures') # ✅ NEW
     ]
 
-    user            = models.ForeignKey(User, on_delete=models.CASCADE, related_name='test_results')
-    module          = models.CharField(max_length=30, choices=MODULE_CHOICES)
-    test_name       = models.CharField(max_length=200)
-    score           = models.FloatField()
-    total_questions = models.PositiveIntegerField(default=0)
-    correct_answers = models.PositiveIntegerField(default=0)
-    time_taken      = models.PositiveIntegerField(default=0)
-    attempted_at    = models.DateTimeField(auto_now_add=True)
+    CATEGORY_CHOICES = [
+        ('basics', 'Basics Test'),
+        ('functions', 'Function Test'),
+        ('loops', 'Loop Test'),
+        ('oop', 'OOP Test'),
+        ('general', 'Full Test'),
+    ]
 
-    class Meta:
-        ordering = ['-attempted_at']
-        verbose_name = 'Test Result'
+    name = models.CharField(max_length=100)
+    total_marks = models.IntegerField()
+    language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default='python')
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='basics')
 
     def __str__(self):
-        return f"{self.user.username} | {self.test_name} | {self.score:.1f}%"
+        return f"{self.language.upper()} - {self.name}"
+
+class TestResult(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='test_results')
+    test = models.ForeignKey(Test, on_delete=models.CASCADE, null=True, blank=True)
+    total_questions = models.IntegerField()
+    correct_answers = models.IntegerField()
+    skipped_questions = models.IntegerField(default=0)
+    wrong_answers = models.IntegerField(default=0)
+    score = models.IntegerField(default=0)
+    time_taken = models.IntegerField()
+    date_attempted = models.DateTimeField(auto_now_add=True)
+
+    # Add descriptive answers
+    desc1 = models.TextField(blank=True, null=True)
+    desc2 = models.TextField(blank=True, null=True)
+    desc3 = models.TextField(blank=True, null=True)
+    desc4 = models.TextField(blank=True, null=True)
+    desc5 = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.test.name}"
+    # ✅ OPTIONAL (for admin display)
+    @property
+    def grade(self):
+        if self.score >= 80:
+            return 'A'
+        elif self.score >= 60:
+            return 'B'
+        elif self.score >= 40:
+            return 'C'
+        return 'F'
 
     @property
     def passed(self):
-        return self.score >= 60.0
-
-    @property
-    def grade(self):
-        if self.score >= 90: return 'A'
-        if self.score >= 75: return 'B'
-        if self.score >= 60: return 'C'
-        return 'F'
+        return self.score >= 40
 
 
 # ══════════════════════════════════════════════════════════════════

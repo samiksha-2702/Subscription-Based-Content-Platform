@@ -7,40 +7,42 @@
 
 <style>
 body{
-font-family:Segoe UI;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:white;
-padding:30px
+    font-family:Segoe UI;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:white;
+    padding:30px
 }
 
 .card{
-max-width:900px;
-margin:auto;
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(12px);
-padding:30px;
-border-radius:16px
+    max-width:900px;
+    margin:auto;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(12px);
+    padding:30px;
+    border-radius:16px
 }
 
 .q{
-margin:20px 0;
-padding:18px;
-background:#020617;
-border-radius:12px
+    margin:20px 0;
+    padding:18px;
+    background:#020617;
+    border-radius:12px
 }
 
 label{
-display:block;
-margin:6px 0
+    display:block;
+    margin:6px 0;
+    cursor:pointer;
 }
 
 button{
-padding:12px 18px;
-border:none;
-border-radius:10px;
-background:#16a34a;
-color:white;
-cursor:pointer
+    padding:12px 18px;
+    border:none;
+    border-radius:10px;
+    background:#16a34a;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
 }
 </style>
 
@@ -52,29 +54,31 @@ cursor:pointer
 
 <h2>Java Loops Practice Test</h2>
 
-<form>
+<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="score" id="scoreField">
 
-<div class="q">Loop with fixed iterations?
+<div class="q">1. Loop with fixed iterations?
 <label><input type="radio" name="q1" value="a"> for</label>
 <label><input type="radio" name="q1" value="b"> while</label>
 </div>
 
-<div class="q">Runs at least once?
+<div class="q">2. Runs at least once?
 <label><input type="radio" name="q2" value="a"> for</label>
 <label><input type="radio" name="q2" value="b"> do-while</label>
 </div>
 
-<div class="q">Skip iteration?
+<div class="q">3. Skip iteration?
 <label><input type="radio" name="q3" value="a"> continue</label>
 <label><input type="radio" name="q3" value="b"> skip</label>
 </div>
 
-<div class="q">Exit loop?
+<div class="q">4. Exit loop?
 <label><input type="radio" name="q4" value="a"> break</label>
 <label><input type="radio" name="q4" value="b"> exit</label>
 </div>
 
-<div class="q">Infinite loop possible?
+<div class="q">5. Infinite loop possible?
 <label><input type="radio" name="q5" value="a"> Yes</label>
 <label><input type="radio" name="q5" value="b"> No</label>
 </div>
@@ -88,39 +92,43 @@ cursor:pointer
 </div>
 
 <script>
-
 function check(){
 
-let a={q1:"a",q2:"b",q3:"a",q4:"a",q5:"a"};
-let s=0,r="";
+    let answers = {q1:"a", q2:"b", q3:"a", q4:"a", q5:"a"};
+    let score = 0;
+    let resultHTML = "";
 
-for(let k in a){
+    for(let key in answers){
 
-let v=document.querySelector(`input[name=${k}]:checked`);
+        let selected = document.querySelector(`input[name=${key}]:checked`);
 
-if(v && v.value===a[k]){
-s++;
-r+=`Q${k[1]} ✅<br>`;
+        if(!selected){
+            resultHTML += `Q${key[1]} ⚠️ Not Answered<br>`;
+            continue;
+        }
+
+        if(selected.value === answers[key]){
+            score++;
+            resultHTML += `Q${key[1]} ✅ Correct<br>`;
+        } 
+        else{
+            resultHTML += `Q${key[1]} ❌ Wrong<br>`;
+        }
+    }
+
+    // set score
+    document.getElementById("scoreField").value = score;
+
+    // show result before submit
+    document.getElementById("result").innerHTML = `
+    <div class="q">
+        <h3>Score: ${score}/5</h3>
+        ${resultHTML}
+    </div>`;
+
+    // submit to Django
+    document.getElementById("quizForm").submit();
 }
-else{
-r+=`Q${k[1]} ❌ Correct: ${a[k].toUpperCase()}<br>`;
-}
-
-}
-
-document.getElementById("result").innerHTML=
-`<div class="q">
-<h3>Score ${s}/5</h3>
-${r}
-<br>
-<button onclick="location.reload()">Retry</button>
-<a href="{% url 'javainfo' %}">
-<button type="button">Back</button>
-</a>
-</div>`;
-
-}
-
 </script>
 
 </body>

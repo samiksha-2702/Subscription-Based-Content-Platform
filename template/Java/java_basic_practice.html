@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Java Basics Test</title>
+<title>{{ test.name }}</title>
 
 <style>
 body{
@@ -54,9 +54,19 @@ background:#111827;
 <body>
 
 <div class="card">
-<h2>Java Basics Practice Test</h2>
+<h2>{{ test.name }}</h2>
 
-<form id="quiz">
+<!-- ✅ IMPORTANT: FORM CONNECTED TO DJANGO -->
+<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+{% csrf_token %}
+
+<!-- hidden fields -->
+<input type="hidden" name="total" id="total">
+<input type="hidden" name="correct" id="correct">
+<input type="hidden" name="wrong" id="wrong">
+<input type="hidden" name="skipped" id="skipped">
+<input type="hidden" name="score" id="score">
+<input type="hidden" name="time_taken" id="time_taken">
 
 <div class="q">1️⃣ Java is which type of language?
 <label><input type="radio" name="q1" value="a"> Procedural</label>
@@ -100,33 +110,52 @@ background:#111827;
 function check(){
 
 const ans={q1:"b",q2:"a",q3:"b",q4:"c",q5:"b"};
-let score=0,html="";
+
+let score=0,correct=0,wrong=0,skipped=0;
+let total=5;
+let html="";
 
 for(let k in ans){
 
 let v=document.querySelector(`input[name=${k}]:checked`);
 
-if(v && v.value===ans[k]){
+if(!v){
+skipped++;
+html+=`Question ${k[1]} ❌ Skipped<br>`;
+}
+else if(v.value===ans[k]){
 score++;
+correct++;
 html+=`Question ${k[1]} ✅ Correct<br>`;
 }else{
+wrong++;
 html+=`Question ${k[1]} ❌ Correct Answer: ${ans[k].toUpperCase()}<br>`;
 }
 
 }
 
-let percent = score*20;
+// percentage
+let percent = (score/total)*100;
 
+// ✅ fill hidden fields
+document.getElementById("total").value = total;
+document.getElementById("correct").value = correct;
+document.getElementById("wrong").value = wrong;
+document.getElementById("skipped").value = skipped;
+document.getElementById("score").value = percent;
+document.getElementById("time_taken").value = 60;
+
+// show result
 document.getElementById("result").innerHTML = `
 <div class="result">
-<h3>Score: ${score}/5 (${percent}%)</h3>
+<h3>Score: ${score}/${total} (${percent.toFixed(2)}%)</h3>
 ${html}
 <br>
 <button onclick="location.reload()">Retry</button>
-<a href="{% url 'javainfo' %}">
-<button type="button">Back</button>
-</a>
 </div>`;
+
+// ✅ SUBMIT TO DJANGO
+document.getElementById("quizForm").submit();
 
 }
 </script>
