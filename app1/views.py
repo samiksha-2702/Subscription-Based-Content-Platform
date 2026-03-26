@@ -10,9 +10,6 @@ from .models import TestResult, Test
 from django.shortcuts import render, get_object_or_404 , redirect
 from django.http import JsonResponse
 from django.urls import reverse
-from datetime import timedelta
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
 
 
 def register(request):
@@ -757,6 +754,15 @@ def result_page(request, result_id):
     result = get_object_or_404(TestResult, id=result_id)
     return render(request, 'result.html', {'result': result})
 
+
+import json
+import uuid
+from django.utils import timezone
+from datetime import timedelta
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect
 # ──────────────────────────────────────────────
 # 1.  PLANS PAGE  (no changes needed, already works)
 # ──────────────────────────────────────────────
