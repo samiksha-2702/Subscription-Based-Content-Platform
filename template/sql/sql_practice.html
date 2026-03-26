@@ -2,146 +2,163 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>SQL Practice</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<style>
-body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb;}
-.container{max-width:1000px;margin:auto;padding:25px;}
-h1{text-align:center;}
-.section{font-size:22px;margin:30px 0 15px;border-left:4px solid #22c55e;padding-left:10px;}
-.card{background:#111827;padding:20px;border-radius:14px;margin-bottom:18px;}
-button{padding:10px 16px;border:none;border-radius:8px;background:#16a34a;color:white;font-weight:600;cursor:pointer;}
-button:hover{background:#15803d;}
-textarea{width:100%;height:140px;border-radius:8px;border:none;padding:12px;margin-top:10px;font-family:monospace;}
-.output{background:black;padding:12px;border-radius:8px;margin-top:10px;color:#22c55e;}
-.result{background:#14532d;padding:15px;border-radius:8px;margin-top:15px;}
-.btn{background:#16a34a;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;}
-.top{text-align:center;margin-bottom:20px;}
-</style>
+    <title>SQL 15-Minute Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body{
+            margin:0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg,#020617,#0f172a);
+            color: #e5e7eb;
+        }
+        .container{max-width:1000px;margin:auto;padding:25px;}
+        h1{text-align:center;}
+        .timer{text-align:center;font-size:22px;font-weight:bold;background:#ef4444;padding:12px;border-radius:8px;margin-bottom:25px;}
+        .card{background:#111827;padding:20px;border-radius:10px;margin-bottom:18px;box-shadow:0 6px 18px rgba(0,0,0,.5);}
+        button{padding:12px 18px;font-size:16px;border-radius:8px;border:none;cursor:pointer;background:#16a34a;color:white;font-weight:bold;margin-top:10px;}
+        button:hover{background:#15803d;}
+        .result{background:#14532d;padding:15px;border-radius:8px;margin-top:15px;text-align:center;font-size:18px;}
+        textarea{width:100%;height:120px;border-radius:8px;border:none;padding:12px;margin-top:10px;font-family:monospace;}
+        .back-btn{display:inline-block;margin-top:20px;padding:10px 16px;border-radius:8px;background:#2563eb;color:white;text-decoration:none;}
+        .back-btn:hover{background:#1d4ed8;}
+    </style>
 </head>
-
 <body>
-
 <div class="container">
+    <h1>SQL 15-Minute Test</h1>
+    <div class="timer" id="timer">Time Left: 15:00</div>
 
-<h1>SQL Practice Zone</h1>
+    <!-- Test Form -->
+    <form id="sqlForm" method="POST" action="{% url 'submit_test' test.id %}">
+        {% csrf_token %}
+        <!-- MCQs will render here -->
+        <div id="mcqForm"></div>
 
-<div class="top">
-<a href="{% url 'sql_info' %}" class="btn">⬅ Back</a>
-</div>
+        <!-- Descriptive Questions -->
+        <div class="card">
+            <b>1. Explain difference between WHERE and HAVING.</b>
+            <textarea name="desc1" id="desc1" placeholder="Write your answer here..."></textarea>
+        </div>
+        <div class="card">
+            <b>2. Explain normalization.</b>
+            <textarea name="desc2" id="desc2" placeholder="Write your answer here..."></textarea>
+        </div>
+        <div class="card">
+            <b>3. What are joins? Explain types.</b>
+            <textarea name="desc3" id="desc3" placeholder="Write your answer here..."></textarea>
+        </div>
+        <div class="card">
+            <b>4. Primary key vs Foreign key.</b>
+            <textarea name="desc4" id="desc4" placeholder="Write your answer here..."></textarea>
+        </div>
+        <div class="card">
+            <b>5. What is an index?</b>
+            <textarea name="desc5" id="desc5" placeholder="Write your answer here..."></textarea>
+        </div>
 
-<div class="section">MCQ Practice</div>
+        <div style="text-align:center">
+            <button type="button" onclick="submitSQLTest()">Submit Test</button>
+        </div>
+    </form>
 
-<form id="mcqForm"></form>
+    <div id="resultBox"></div>
 
-<button onclick="checkMCQ()">Check Answers</button>
-
-<div id="mcqResult"></div>
-
-<div class="section">Descriptive Practice</div>
-
-<div class="card">
-<b>1. Explain difference between WHERE and HAVING.</b>
-<textarea id="d1"></textarea>
-</div>
-
-<div class="card">
-<b>2. Explain normalization.</b>
-<textarea id="d2"></textarea>
-</div>
-
-<div class="card">
-<b>3. What are joins? Explain types.</b>
-<textarea id="d3"></textarea>
-</div>
-
-<div class="card">
-<b>4. Primary key vs Foreign key.</b>
-<textarea id="d4"></textarea>
-</div>
-
-<div class="card">
-<b>5. What is an index?</b>
-<textarea id="d5"></textarea>
-</div>
-
-<button onclick="saveDesc()">Save Answers</button>
-
-<div class="section">Query Practice Area</div>
-
-<div class="card">
-
-<p>Sample table: students(id, name, marks, city)</p>
-
-<textarea id="sqlArea">SELECT * FROM students;</textarea>
-
-<button onclick="runSQL()">Run Query</button>
-
-<div class="output" id="out"></div>
-
-</div>
-
+    <a href="{% url 'sql_info' %}" class="back-btn">⬅ Back to SQL Module</a>
 </div>
 
 <script>
-
+// MCQ Data
 const mcqs = [
-["SELECT is used to",["Delete","Fetch","Update","Drop"],1],
-["Primary key allows NULL?",["Yes","No","Sometimes","Unknown"],1],
-["GROUP BY is used with",["Aggregate","Join","Delete","Key"],0],
-["COUNT() is",["Aggregate","Constraint","DDL","Join"],0],
-["UNIQUE allows duplicate?",["Yes","No","Only text","Only int"],1]
+    ["SELECT is used to", ["Delete","Fetch","Update","Drop"], 1],
+    ["Primary key allows NULL?", ["Yes","No","Sometimes","Unknown"], 1],
+    ["GROUP BY is used with", ["Aggregate","Join","Delete","Key"], 0],
+    ["COUNT() is", ["Aggregate","Constraint","DDL","Join"], 0],
+    ["UNIQUE allows duplicate?", ["Yes","No","Only text","Only int"], 1]
 ];
 
 const form = document.getElementById("mcqForm");
 
+// Render MCQs dynamically
 mcqs.forEach((q,i)=>{
-let h=`<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
-q[1].forEach((o,j)=>h+=`<input type=radio name=q${i} value=${j}> ${o}<br>`);
-h+="</div>";
-form.innerHTML+=h;
+    let html = `<div class="card"><b>${i+1}. ${q[0]}</b><br>`;
+    q[1].forEach((opt,j)=>{
+        html += `<input type="radio" name="q${i}" value="${j}"> ${opt}<br>`;
+    });
+    html += "</div>";
+    form.innerHTML += html;
 });
 
-function checkMCQ(){
-let s=0;
-mcqs.forEach((q,i)=>{
-let a=document.querySelector(`input[name=q${i}]:checked`);
-if(a && a.value==q[2]) s++;
-});
-mcqResult.innerHTML=`<div class=result>Score ${s}/${mcqs.length}</div>`;
+// ===== TIMER =====
+let time = 900; // 15 minutes
+const timerInterval = setInterval(()=>{
+    let m = Math.floor(time/60);
+    let s = time%60;
+    document.getElementById("timer").innerText = `Time Left: ${m}:${s<10?"0":""}${s}`;
+    time--;
+    if(time<0){
+        clearInterval(timerInterval);
+        submitSQLTest();
+    }
+},1000);
+
+// ===== SUBMIT FUNCTION =====
+function submitSQLTest(){
+    clearInterval(timerInterval);
+
+    // MCQ Score
+    let score=0;
+    mcqs.forEach((q,i)=>{
+        let ans = document.querySelector(`input[name=q${i}]:checked`);
+        if(ans && Number(ans.value) === q[2]) score++;
+    });
+
+    // Save descriptive answers in localStorage
+    for(let i=1;i<=5;i++){
+        localStorage.setItem("sql"+i, document.getElementById("desc"+i).value);
+    }
+
+    // Prepare POST data
+    let formData = new URLSearchParams();
+    formData.append("score", score);
+    formData.append("total", mcqs.length);
+    formData.append("correct", score);
+    formData.append("wrong", mcqs.length - score);
+    formData.append("skipped", 0);
+    formData.append("time_taken", 0); // optional
+
+    // Add descriptive answers
+    for(let i=1;i<=5;i++){
+        formData.append(`desc${i}`, document.getElementById(`desc${i}`).value);
+    }
+
+    // Submit to Django
+    fetch("{% url 'submit_test' test.id %}", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "X-CSRFToken": "{{ csrf_token }}",
+            "X-Requested-With": "XMLHttpRequest"
+        },
+        body: formData.toString()
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        // Redirect to result page
+        window.location.href = data.redirect_url;
+    })
+    .catch(err => console.log(err));
+
+    // Show local result
+    document.getElementById("resultBox").innerHTML =
+        `<div class="result">MCQ Score: ${score} / ${mcqs.length}</div>`;
 }
 
-function saveDesc(){
-for(let i=1;i<=5;i++)
-localStorage.setItem("sql"+i,document.getElementById("d"+i).value);
-alert("Saved ✅");
-}
-
-window.onload=()=>{
-for(let i=1;i<=5;i++)
-document.getElementById("d"+i).value=localStorage.getItem("sql"+i)||"";
-}
-
-function runSQL(){
-
-let q=sqlArea.value.toLowerCase();
-
-if(q.includes("select"))
-out.innerHTML="Simulated result:<br>1 Amit 78 Pune<br>2 Neha 85 Mumbai";
-
-else if(q.includes("where"))
-out.innerHTML="Filter applied (simulation)";
-
-else if(q.includes("join"))
-out.innerHTML="Join executed (simulation)";
-
-else
-out.innerHTML="Query executed (simulation mode)";
-
-}
-
+// Load saved descriptive answers
+window.onload = ()=>{
+    for(let i=1;i<=5;i++){
+        document.getElementById("desc"+i).value = localStorage.getItem("sql"+i)||"";
+    }
+};
 </script>
-
 </body>
 </html>

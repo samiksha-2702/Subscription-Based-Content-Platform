@@ -11,6 +11,7 @@ from django.shortcuts import render, get_object_or_404 , redirect
 from django.http import JsonResponse
 from django.urls import reverse
 
+
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -502,20 +503,20 @@ def sql_advanced(request):
     return render(request, 'sql/sql_advanced.html')
 
 def sql_practice(request):
-    _mark_progress(request.user, 'sql', 'SQL Practice', 'practice')
-    return render(request, 'sql/sql_practice.html')
+     test = Test.objects.filter(name="SQL Practice").first()
+     _mark_progress(request.user, 'sql', 'SQL Practice', 'practice')
+     return render(request, 'sql/sql_practice.html', {"test": test})
 
 def sql_test(request):
-    if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'sql', 'SQL Test', score)
-            _mark_progress(request.user, 'sql', 'SQL Test', 'test', completed=True)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'sql/sql_test.html')
+    test = Test.objects.filter(name="SQL Test").first()
 
+    if request.method == "POST" and request.is_ajax():
+        # Get score from POST
+        score = int(request.POST.get("score", 0))
+        result = _save_test_result(request.user, 'sql', test.name, score)
+        return JsonResponse({"redirect_url": f"/result/{result.id}/"})
 
+    return render(request, "sql/sql_test.html", {"test": test})
 # ══════════════════════════════════════════════════════════════════
 # DSA MODULE
 # ══════════════════════════════════════════════════════════════════
