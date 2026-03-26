@@ -5,6 +5,7 @@ from app1 import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('home/', views.index, name='home'),
 
     # AI Recommendations module — MUST come before old ai-home view
     path('ai/', include('ai_recommendations.urls')),
