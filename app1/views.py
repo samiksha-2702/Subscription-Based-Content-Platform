@@ -10,6 +10,9 @@ from .models import TestResult, Test
 from django.shortcuts import render, get_object_or_404 , redirect
 from django.http import JsonResponse
 from django.urls import reverse
+from datetime import timedelta
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 def register(request):
@@ -754,3 +757,69 @@ def result_page(request, result_id):
     result = get_object_or_404(TestResult, id=result_id)
     return render(request, 'result.html', {'result': result})
 
+# ──────────────────────────────────────────────
+# 1.  PLANS PAGE  (no changes needed, already works)
+# ──────────────────────────────────────────────
+def plans(request):
+    return render(request, 'plans.html')
+ 
+ 
+# ──────────────────────────────────────────────
+# 2.  PAYMENT PAGE  (replaces the old 1-liner)
+# ──────────────────────────────────────────────
+def payment(request):
+    # Optional: redirect to login if not authenticated
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return render(request, 'payment.html')
+ 
+ 
+# ──────────────────────────────────────────────
+# 3.  PAYMENT VERIFY  (new endpoint — called by JS)
+# ──────────────────────────────────────────────
+@login_required
+def payment_verify(request):
+    """
+    Called via fetch() from payment.html after the dummy Razorpay
+    animation completes.  Marks the user's subscription as Premium
+    and saves a PaymentRecord.
+    """
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'POST required'}, status=405)
+ 
+    try:
+        data = json.loads(request.body)
+    except json.JSONDecodeError:
+        return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+ 
+    txn_id = data.get('razorpay_payment_id', f"DEMO_{uuid.uuid4().hex[:12].upper()}")
+    plan   = data.get('plan', 'premium')
+    amount = data.get('amount', 299)
+ 
+    # ── Save / update Subscription ──────────────────────────────
+    from .models import Subscription, PaymentRecord
+ 
+    sub, _ = Subscription.objects.get_or_create(user=request.user)
+    sub.plan       = plan
+    sub.status     = 'active'
+    sub.expires_at = timezone.now() + timedelta(days=30)
+    sub.save()
+ 
+    # ── Save PaymentRecord ───────────────────────────────────────
+    PaymentRecord.objects.create(
+        user           = request.user,
+        plan           = plan,
+        amount         = amount,
+        currency       = 'INR',
+        status         = 'success',
+        method         = 'other',          # dummy — no real method known
+        transaction_id = txn_id,
+        notes          = 'Demo Razorpay payment (academic project)',
+    )
+ 
+    return JsonResponse({
+        'status'         : 'success',
+        'transaction_id' : txn_id,
+        'plan'           : plan,
+        'expires_at'     : sub.expires_at.isoformat(),
+    })

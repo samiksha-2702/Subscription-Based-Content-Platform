@@ -7,7 +7,7 @@ urlpatterns = [
 
     # Home
     path('', views.index, name='index'),
-    path('',views.home, name="home" ),
+    path('home/', views.index, name='home'),
 
     # AI Recommendations
     path('ai/', include('ai_recommendations.urls')),
@@ -27,9 +27,10 @@ urlpatterns = [
     path('profile/', views.profile_view, name='profile'),
 
     # Plans & Payment
-    path('plans/', views.plans, name='plans'),
-    path('payment/', views.payment, name='payment'),
-    path('subscribe/', views.subscribe, name='subscribe'),
+    path('plans/',           views.plans,           name='plans'),
+    path('payment/',         views.payment,          name='payment'),
+    path('payment/verify/',  views.payment_verify,   name='payment_verify'),
+    path('subscribe/',       views.subscribe,        name='subscribe'),
 
     # Python
     path('python/', views.python_info, name='python_info'),
@@ -41,8 +42,8 @@ urlpatterns = [
     path('python/libraries/', views.python_libraries, name='pythonlibraries'),
     path('python/practice-basics/', views.py_basics_practice, name='pybasicspractice'),
     path('python/practice-loops/<int:test_id>/', views.py_loop_practice, name='pylooppractice'),
-path('python/practice-functions/<int:test_id>/', views.py_function_practice, name='pyfunctionpractice'),
-path('python/test/<int:test_id>/', views.python_test, name='python_test'),
+    path('python/practice-functions/<int:test_id>/', views.py_function_practice, name='pyfunctionpractice'),
+    path('python/test/<int:test_id>/', views.python_test, name='python_test'),
 
     # Java
     path('java/', views.java_info, name='javainfo'),
