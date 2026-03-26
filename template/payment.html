@@ -1,94 +1,606 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Payment | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #020617, #0f172a);
+    min-height: 100vh;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
 
-body{
-font-family:Segoe UI, Arial;
-background: linear-gradient(135deg,#0f172a,#020617);
-color:white;
-}
+  .checkout-wrapper {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
 
-/* Glass card */
-.pay-card{
-background: rgba(255,255,255,0.08);
-backdrop-filter: blur(14px);
-border-radius:18px;
-box-shadow:0 10px 40px rgba(0,0,0,0.6);
-}
+  /* Left: Order Summary */
+  .order-summary {
+    flex: 1;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 28px;
+    backdrop-filter: blur(14px);
+  }
 
-.method-box{
-background: rgba(255,255,255,0.06);
-border-radius:12px;
-padding:10px;
-margin-bottom:10px;
-cursor:pointer;
-transition:0.25s;
-}
+  .plan-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
 
-.method-box:hover{
-background: rgba(59,130,246,0.25);
-}
+  .plan-price {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
 
+  .plan-period { color: #64748b; font-size: 14px; margin-bottom: 24px; }
+
+  .feature-list { list-style: none; padding: 0; margin: 0 0 24px 0; }
+  .feature-list li {
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feature-list .check { color: #22d3ee; font-size: 13px; }
+
+  .price-breakdown {
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: 8px;
+  }
+  .price-breakdown .row-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: #94a3b8;
+  }
+  .price-breakdown .total-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 10px;
+    margin-top: 6px;
+  }
+
+  /* Right: Payment Form */
+  .pay-card {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 20px;
+    padding: 28px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .razorpay-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .rp-logo {
+    background: #072654;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-weight: 900;
+    font-size: 13px;
+    color: #528FF0;
+    letter-spacing: -0.03em;
+  }
+
+  .rp-tagline { font-size: 12px; color: #64748b; }
+
+  /* Method Tabs */
+  .method-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .method-tab {
+    flex: 1;
+    min-width: 70px;
+    padding: 10px 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 12px;
+    color: #94a3b8;
+  }
+
+  .method-tab.active {
+    background: rgba(59,130,246,0.2);
+    border-color: #3b82f6;
+    color: white;
+  }
+
+  .method-tab i { display: block; font-size: 18px; margin-bottom: 4px; }
+
+  /* Form panels */
+  .pay-panel { display: none; }
+  .pay-panel.active { display: block; }
+
+  .form-control-dark {
+    background: rgba(255,255,255,0.06) !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    color: white !important;
+    border-radius: 10px !important;
+    padding: 12px 14px !important;
+    font-size: 14px;
+    transition: 0.2s;
+  }
+
+  .form-control-dark:focus {
+    background: rgba(255,255,255,0.1) !important;
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+    outline: none;
+  }
+
+  .form-control-dark::placeholder { color: #475569 !important; }
+
+  label.form-label { font-size: 13px; color: #94a3b8; margin-bottom: 6px; }
+
+  .card-icons { display: flex; gap: 8px; margin-bottom: 8px; }
+  .card-icon {
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 11px;
+    color: #94a3b8;
+  }
+
+  /* UPI Panel */
+  .upi-apps { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .upi-app {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .upi-app:hover, .upi-app.selected {
+    background: rgba(59,130,246,0.2);
+    border-color: #3b82f6;
+    color: white;
+  }
+
+  /* Net Banking */
+  .bank-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 16px; }
+  .bank-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #94a3b8;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .bank-item:hover, .bank-item.selected {
+    background: rgba(59,130,246,0.15);
+    border-color: #3b82f6;
+    color: white;
+  }
+
+  /* Wallets */
+  .wallet-list { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .wallet-item {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #94a3b8;
+  }
+  .wallet-item:hover, .wallet-item.selected {
+    background: rgba(59,130,246,0.2);
+    border-color: #3b82f6;
+    color: white;
+  }
+
+  /* Pay button */
+  .btn-pay {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(90deg, #3b82f6, #06b6d4);
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 0.03em;
+    margin-top: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-pay:hover { transform: scale(1.02); box-shadow: 0 8px 30px rgba(59,130,246,0.4); }
+  .btn-pay:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+  .secure-note {
+    text-align: center;
+    font-size: 12px;
+    color: #475569;
+    margin-top: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+
+  /* Processing Overlay */
+  #processingModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #processingModal.show { display: flex; }
+
+  .spinner-ring {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba(59,130,246,0.2);
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 20px;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .success-icon {
+    font-size: 56px;
+    color: #22c55e;
+    margin-bottom: 16px;
+    animation: popIn 0.4s ease-out;
+  }
+
+  @keyframes popIn {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  .txn-box {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 12px 24px;
+    font-family: monospace;
+    font-size: 13px;
+    color: #94a3b8;
+    margin: 12px 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .checkout-wrapper { flex-direction: column; }
+  }
 </style>
 </head>
-
 <body>
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-
-<div class="pay-card p-4 text-center" style="width:420px">
-
-<h4 class="mb-2">Premium Subscription</h4>
-<p class="text-secondary">Unlock full PrepEdge access</p>
-
-<h2 class="text-info mb-3">₹299</h2>
-
-<!-- Plan Info -->
-<div class="text-start mb-3">
-✔ Unlimited mock tests<br>
-✔ AI recommendations<br>
-✔ Interview simulator<br>
-✔ Performance analytics
+<!-- Processing / Success Modal -->
+<div id="processingModal">
+  <div id="processingContent">
+    <div class="spinner-ring"></div>
+    <h5 class="mb-1">Processing Payment…</h5>
+    <p style="color:#64748b;font-size:14px">Please do not close this window</p>
+  </div>
+  <div id="successContent" style="display:none">
+    <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+    <h4 class="mb-1">Payment Successful!</h4>
+    <p style="color:#94a3b8;font-size:14px">Your PrepEdge Premium is now active 🎉</p>
+    <div class="txn-box" id="txnIdBox">TXN ID: —</div>
+    <p style="color:#64748b;font-size:12px">Redirecting you to dashboard…</p>
+  </div>
 </div>
 
-<hr class="border-secondary">
+<div class="checkout-wrapper">
 
-<h6 class="mb-3">Select Payment Method</h6>
+  <!-- LEFT: Order Summary -->
+  <div class="order-summary">
+    <div class="plan-badge">🔥 Most Popular</div>
+    <h3 style="font-weight:700;margin-bottom:4px">PrepEdge Premium</h3>
+    <p style="color:#64748b;font-size:14px;margin-bottom:16px">Everything you need to crack your dream company</p>
 
-<div class="method-box">UPI</div>
-<div class="method-box">Credit / Debit Card</div>
-<div class="method-box">Net Banking</div>
+    <div class="plan-price">₹299</div>
+    <div class="plan-period">per month · cancel anytime</div>
 
-<button onclick="paySuccess()" class="btn btn-success w-100 mt-3">
-Pay Now (Demo)
-</button>
+    <ul class="feature-list">
+      <li><span class="check"><i class="fas fa-check-circle"></i></span> Unlimited Mock Tests (Python, Java, C++, DSA…)</li>
+      <li><span class="check"><i class="fas fa-check-circle"></i></span> AI-Powered Weak Area Detection</li>
+      <li><span class="check"><i class="fas fa-check-circle"></i></span> Interview Simulator with Feedback</li>
+      <li><span class="check"><i class="fas fa-check-circle"></i></span> Score Analytics & Progress Tracking</li>
+      <li><span class="check"><i class="fas fa-check-circle"></i></span> Expert Talk Sessions Access</li>
+      <li><span class="check"><i class="fas fa-check-circle"></i></span> Company-Specific Preparation Guides</li>
+    </ul>
 
-<a href="/plans/" class="btn btn-outline-light w-100 mt-2">
-← Back to Plans
-</a>
+    <div class="price-breakdown">
+      <div class="row-line"><span>Premium Plan (1 month)</span><span>₹349</span></div>
+      <div class="row-line"><span>Discount (14% off)</span><span style="color:#22c55e">-₹50</span></div>
+      <div class="total-line"><span>Total Due</span><span>₹299</span></div>
+    </div>
 
-<small class="text-secondary d-block mt-3">
-* Demo payment for academic project only
-</small>
+    <p style="font-size:12px;color:#475569;margin-top:16px;text-align:center">
+      <i class="fas fa-shield-alt" style="color:#3b82f6"></i>
+      &nbsp;256-bit SSL secured · 100% safe
+    </p>
+  </div>
 
-</div>
+  <!-- RIGHT: Pay Card -->
+  <div class="pay-card">
+
+    <!-- Razorpay branding -->
+    <div class="razorpay-header">
+      <div class="rp-logo">razorpay</div>
+      <div>
+        <div style="font-size:13px;font-weight:600">Secure Checkout</div>
+        <div class="rp-tagline">Powered by Razorpay (Demo Mode)</div>
+      </div>
+    </div>
+
+    <h6 style="margin-bottom:14px;color:#94a3b8;font-size:13px;text-transform:uppercase;letter-spacing:0.08em">
+      Select Payment Method
+    </h6>
+
+    <!-- Method Tabs -->
+    <div class="method-tabs">
+      <div class="method-tab active" onclick="switchTab('card', this)">
+        <i class="fas fa-credit-card"></i>Card
+      </div>
+      <div class="method-tab" onclick="switchTab('upi', this)">
+        <i class="fas fa-mobile-alt"></i>UPI
+      </div>
+      <div class="method-tab" onclick="switchTab('netbanking', this)">
+        <i class="fas fa-university"></i>Net Banking
+      </div>
+      <div class="method-tab" onclick="switchTab('wallet', this)">
+        <i class="fas fa-wallet"></i>Wallet
+      </div>
+    </div>
+
+    <!-- CARD Panel -->
+    <div class="pay-panel active" id="panel-card">
+      <div class="card-icons">
+        <span class="card-icon"><i class="fab fa-cc-visa"></i> Visa</span>
+        <span class="card-icon"><i class="fab fa-cc-mastercard"></i> Master</span>
+        <span class="card-icon"><i class="fab fa-cc-amex"></i> Amex</span>
+        <span class="card-icon">RuPay</span>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Card Number</label>
+        <input type="text" class="form-control form-control-dark" id="cardNumber"
+               placeholder="4111 1111 1111 1111" maxlength="19" oninput="formatCard(this)">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Cardholder Name</label>
+        <input type="text" class="form-control form-control-dark" id="cardName"
+               placeholder="Name on card">
+      </div>
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <label class="form-label">Expiry</label>
+          <input type="text" class="form-control form-control-dark" id="cardExpiry"
+                 placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)">
+        </div>
+        <div class="col-6">
+          <label class="form-label">CVV</label>
+          <input type="password" class="form-control form-control-dark" id="cardCvv"
+                 placeholder="•••" maxlength="4">
+        </div>
+      </div>
+    </div>
+
+    <!-- UPI Panel -->
+    <div class="pay-panel" id="panel-upi">
+      <p style="color:#94a3b8;font-size:13px;margin-bottom:12px">Choose UPI App</p>
+      <div class="upi-apps" id="upiApps">
+        <div class="upi-app" onclick="selectUpi(this)">📱 GPay</div>
+        <div class="upi-app" onclick="selectUpi(this)">💜 PhonePe</div>
+        <div class="upi-app" onclick="selectUpi(this)">🔵 Paytm</div>
+        <div class="upi-app" onclick="selectUpi(this)">🟠 BHIM</div>
+        <div class="upi-app" onclick="selectUpi(this)">🟢 Amazon Pay</div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Or enter UPI ID</label>
+        <input type="text" class="form-control form-control-dark" id="upiId"
+               placeholder="yourname@upi">
+      </div>
+    </div>
+
+    <!-- Net Banking Panel -->
+    <div class="pay-panel" id="panel-netbanking">
+      <p style="color:#94a3b8;font-size:13px;margin-bottom:12px">Select your bank</p>
+      <div class="bank-list" id="bankList">
+        <div class="bank-item" onclick="selectBank(this)">🏦 SBI</div>
+        <div class="bank-item" onclick="selectBank(this)">🏦 HDFC</div>
+        <div class="bank-item" onclick="selectBank(this)">🏦 ICICI</div>
+        <div class="bank-item" onclick="selectBank(this)">🏦 Axis Bank</div>
+        <div class="bank-item" onclick="selectBank(this)">🏦 Kotak</div>
+        <div class="bank-item" onclick="selectBank(this)">🏦 PNB</div>
+      </div>
+      <div class="mb-2">
+        <label class="form-label">Search other bank</label>
+        <input type="text" class="form-control form-control-dark" placeholder="Type bank name…">
+      </div>
+    </div>
+
+    <!-- Wallet Panel -->
+    <div class="pay-panel" id="panel-wallet">
+      <p style="color:#94a3b8;font-size:13px;margin-bottom:12px">Select Wallet</p>
+      <div class="wallet-list">
+        <div class="wallet-item" onclick="selectWallet(this)">💙 Paytm</div>
+        <div class="wallet-item" onclick="selectWallet(this)">🟢 Amazon Pay</div>
+        <div class="wallet-item" onclick="selectWallet(this)">🟣 Freecharge</div>
+        <div class="wallet-item" onclick="selectWallet(this)">🔴 MobiKwik</div>
+      </div>
+    </div>
+
+    <!-- Pay Button -->
+    <button class="btn-pay" id="payBtn" onclick="initiatePayment()">
+      <i class="fas fa-lock" style="font-size:13px;margin-right:8px"></i>
+      Pay ₹299 Securely
+    </button>
+
+    <div class="secure-note">
+      <i class="fas fa-shield-alt" style="color:#3b82f6"></i>
+      Your payment is 100% secure &amp; encrypted
+      &nbsp;·&nbsp;
+      <i class="fas fa-tag" style="color:#22d3ee"></i>
+      Demo mode — no real charge
+    </div>
+
+  </div>
 </div>
 
 <script>
-
-function paySuccess(){
-alert("Payment Successful ✅");
-
-window.location="/login/";
+// ─── Tab switching ───────────────────────────────────────────────
+function switchTab(name, el) {
+  document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.pay-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
 }
 
+// ─── Card formatting ─────────────────────────────────────────────
+function formatCard(el) {
+  let v = el.value.replace(/\D/g, '').slice(0, 16);
+  el.value = v.replace(/(.{4})/g, '$1 ').trim();
+}
+
+function formatExpiry(el) {
+  let v = el.value.replace(/\D/g, '').slice(0, 4);
+  if (v.length >= 3) v = v.slice(0,2) + ' / ' + v.slice(2);
+  el.value = v;
+}
+
+// ─── Selection helpers ───────────────────────────────────────────
+function selectUpi(el) {
+  document.querySelectorAll('.upi-app').forEach(a => a.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectBank(el) {
+  document.querySelectorAll('.bank-item').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function selectWallet(el) {
+  document.querySelectorAll('.wallet-item').forEach(w => w.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+// ─── Payment flow ────────────────────────────────────────────────
+function generateTxnId() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let id = 'pay_';
+  for (let i = 0; i < 16; i++) id += chars[Math.floor(Math.random() * chars.length)];
+  return id;
+}
+
+function initiatePayment() {
+  const modal = document.getElementById('processingModal');
+  modal.classList.add('show');
+
+  setTimeout(() => {
+    document.getElementById('processingContent').style.display = 'none';
+    const txn = generateTxnId();
+    document.getElementById('txnIdBox').textContent = 'TXN ID: ' + txn;
+    document.getElementById('successContent').style.display = 'block';
+
+    // POST to Django backend to mark subscription as premium
+    fetch('/payment/verify/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken')
+      },
+      body: JSON.stringify({
+        razorpay_payment_id: txn,
+        plan: 'premium',
+        amount: 299
+      })
+    }).catch(() => {}); // silently fail if endpoint missing
+
+    setTimeout(() => { window.location = '/profile/'; }, 2500);
+  }, 2200);
+}
+
+function getCookie(name) {
+  let val = null;
+  document.cookie.split(';').forEach(c => {
+    const [k, v] = c.trim().split('=');
+    if (k === name) val = decodeURIComponent(v);
+  });
+  return val;
+}
 </script>
 
 </body>
