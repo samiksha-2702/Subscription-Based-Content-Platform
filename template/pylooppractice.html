@@ -2,49 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Python Coding Test</title>
+<title>{{ test.name }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-* { box-sizing: border-box; }
-
 body{
 margin:0;
 font-family:"Segoe UI",Arial,sans-serif;
 background:linear-gradient(135deg,#020617,#0f172a);
 color:#e5e7eb;
 }
-
-header{
-padding:25px 20px;
-text-align:center;
-background:rgba(2,6,23,0.8);
-backdrop-filter:blur(10px);
-box-shadow:0 4px 30px rgba(0,0,0,0.6);
-}
-
-header h1{ margin:0; font-size:28px; }
-header p{ opacity:.7; }
-
 .container{
 max-width:900px;
 margin:auto;
 padding:30px 20px;
 }
-
 .card{
-background:linear-gradient(145deg,#111827,#0b1220);
-border-radius:14px;
+background:#111827;
+border-radius:12px;
 padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.6),
-inset 0 0 0 1px rgba(255,255,255,0.05);
 margin-bottom:20px;
 }
-
-.card h3{
-color:#93c5fd;
-}
-
 textarea{
 width:100%;
 height:120px;
@@ -54,153 +32,78 @@ border-radius:8px;
 border:none;
 padding:10px;
 font-family:monospace;
-font-size:14px;
 }
-
 .btn{
-display:inline-block;
-margin-top:10px;
 padding:10px 16px;
 border-radius:8px;
-background:linear-gradient(135deg,#2563eb,#1d4ed8);
+background:#2563eb;
 color:white;
-text-decoration:none;
-font-weight:600;
-transition:.3s;
 border:none;
 cursor:pointer;
-}
-
-.btn:hover{
-transform:scale(1.05);
-box-shadow:0 8px 20px rgba(37,99,235,.5);
-}
-
-.result{
-background:rgba(59,130,246,0.2);
-padding:15px;
-border-radius:10px;
-margin-top:20px;
-color:#fff;
-}
-
-code{
-background:#1f2937;
-padding:4px 8px;
-border-radius:6px;
-display:block;
-margin-top:5px;
-}
-
-footer{
-text-align:center;
-padding:25px;
-opacity:.6;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>Python Coding Test</h1>
-<p>Write solutions for the exercises below</p>
-</header>
-
 <div class="container">
 
-<form id="codingForm">
+<h1>{{ test.name }} (ID: {{ test.id }})</h1>
+
+<form id="codingForm" method="POST" action="{% url 'submit_test' test.id %}">
+{% csrf_token %}
+
+<!-- Hidden fields -->
+<input type="hidden" name="total" id="total">
+<input type="hidden" name="correct" id="correct">
+<input type="hidden" name="wrong" id="wrong">
+<input type="hidden" name="skipped" id="skipped">
+<input type="hidden" name="score" id="score">
+<input type="hidden" name="time_taken" id="time_taken">
 
 <div class="card">
-<h3>1. Swap two numbers without using a third variable</h3>
-
-<textarea name="q1" placeholder="Example:
-a = 5
-b = 10
-a,b = b,a
-print(a,b)"></textarea>
-
+<h3>1. Swap two numbers</h3>
+<textarea name="q1"></textarea>
 </div>
 
 <div class="card">
-<h3>2. Check if a number is prime</h3>
-
-<textarea name="q2" placeholder="Write Python code here..."></textarea>
-
+<h3>2. Prime number check</h3>
+<textarea name="q2"></textarea>
 </div>
 
 <div class="card">
-<h3>3. Print Fibonacci series up to n terms</h3>
-
-<textarea name="q3" placeholder="Write Python code here..."></textarea>
-
+<h3>3. Fibonacci</h3>
+<textarea name="q3"></textarea>
 </div>
 
-<button type="button" class="btn" onclick="submitCoding()">Submit</button>
+<button type="button" class="btn" onclick="submitCoding()">Submit Test</button>
 
 </form>
 
-<div id="result" class="result" style="display:none;"></div>
-
-<a href="{% url 'index' %}" class="btn" style="margin-top:20px;">Back to Main Page</a>
-
 </div>
 
-<footer>
-© Interview Prep Platform — Python Module
-</footer>
-
 <script>
-
 function submitCoding(){
 
-let resultHTML = "<h2>Reference Solutions</h2>";
+let total = 3;
+let correct = 0;
+let wrong = 0;
+let skipped = 0;
 
-resultHTML += `
-<h3>1. Swap Two Numbers</h3>
-<code>
-a = 5
-b = 10
-a, b = b, a
-print(a,b)
-</code>
-`;
+// simple scoring (you can upgrade later)
+let score = 0;
 
-resultHTML += `
-<h3>2. Prime Number Check</h3>
-<code>
-num = 7
-flag = False
+// fill hidden fields
+document.getElementById("total").value = total;
+document.getElementById("correct").value = correct;
+document.getElementById("wrong").value = wrong;
+document.getElementById("skipped").value = skipped;
+document.getElementById("score").value = score;
+document.getElementById("time_taken").value = 60;
 
-for i in range(2, num):
-    if num % i == 0:
-        flag = True
-        break
-
-if flag:
-    print("Not Prime")
-else:
-    print("Prime")
-</code>
-`;
-
-resultHTML += `
-<h3>3. Fibonacci Series</h3>
-<code>
-n = 10
-a,b = 0,1
-
-for i in range(n):
-    print(a)
-    a,b = b,a+b
-</code>
-`;
-
-document.getElementById("result").style.display="block";
-document.getElementById("result").innerHTML=resultHTML;
-
+// submit form
+document.getElementById("codingForm").submit();
 }
-
 </script>
 
 </body>

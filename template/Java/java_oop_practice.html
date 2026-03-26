@@ -51,29 +51,31 @@ button{
 <div class="card">
 <h2>Java OOP Practice Test</h2>
 
-<form>
+<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+    {% csrf_token %}
+    <input type="hidden" name="score" id="scoreField">
 
-<div class="q">Encapsulation means?
+<div class="q">1. Encapsulation means?
 <label><input type="radio" name="q1" value="a"> Data hiding</label>
 <label><input type="radio" name="q1" value="b"> Looping</label>
 </div>
 
-<div class="q">Inheritance keyword?
+<div class="q">2. Inheritance keyword?
 <label><input type="radio" name="q2" value="a"> extends</label>
 <label><input type="radio" name="q2" value="b"> inherits</label>
 </div>
 
-<div class="q">Same method name different params?
+<div class="q">3. Same method name different params?
 <label><input type="radio" name="q3" value="a"> Overloading</label>
 <label><input type="radio" name="q3" value="b"> Overriding</label>
 </div>
 
-<div class="q">Runtime polymorphism?
+<div class="q">4. Runtime polymorphism?
 <label><input type="radio" name="q4" value="a"> Overriding</label>
 <label><input type="radio" name="q4" value="b"> Constructor</label>
 </div>
 
-<div class="q">Blueprint of object?
+<div class="q">5. Blueprint of object?
 <label><input type="radio" name="q5" value="a"> Class</label>
 <label><input type="radio" name="q5" value="b"> Method</label>
 </div>
@@ -88,27 +90,41 @@ button{
 
 <script>
 function check(){
-    let a={q1:"a",q2:"a",q3:"a",q4:"a",q5:"a"};
-    let s=0,r="";
-    for(let k in a){
-        let v=document.querySelector(`input[name=${k}]:checked`);
-        if(v && v.value===a[k]){
-            s++;
-            r+=`Q${k[1]} ✅<br>`;
-        } else {
-            r+=`Q${k[1]} ❌ Correct: ${a[k].toUpperCase()}<br>`;
+
+    let answers = {q1:"a", q2:"a", q3:"a", q4:"a", q5:"a"};
+    let score = 0;
+    let resultHTML = "";
+
+    for(let key in answers){
+
+        let selected = document.querySelector(`input[name=${key}]:checked`);
+
+        if(!selected){
+            resultHTML += `Q${key[1]} ⚠️ Not Answered<br>`;
+            continue;
+        }
+
+        if(selected.value === answers[key]){
+            score++;
+            resultHTML += `Q${key[1]} ✅ Correct<br>`;
+        } 
+        else{
+            resultHTML += `Q${key[1]} ❌ Wrong<br>`;
         }
     }
-    document.getElementById("result").innerHTML=
-    `<div class="q">
-        <h3>Score ${s}/5</h3>
-        ${r}
-        <br>
-        <button onclick="location.reload()">Retry</button>
-        <a href="{% url 'javainfo' %}">
-            <button type="button">Back</button>
-        </a>
+
+    // ✅ set score for backend
+    document.getElementById("scoreField").value = score;
+
+    // ✅ show result before submit
+    document.getElementById("result").innerHTML = `
+    <div class="q">
+        <h3>Score: ${score}/5</h3>
+        ${resultHTML}
     </div>`;
+
+    // ✅ submit to Django
+    document.getElementById("quizForm").submit();
 }
 </script>
 

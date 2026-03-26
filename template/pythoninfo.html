@@ -269,8 +269,7 @@ opacity:.6;
 <li>Factorial</li>
 <li>Fibonacci</li>
 </ul>
-<a href="{% url 'pylooppractice' %}" class="btn">Solve</a>
-</div>
+<a href="{% url 'pylooppractice' 3 %}" class="btn">Solve</a></div>
 
 <div class="card">
 <h3>Chapter 3 — Functions</h3>
@@ -279,9 +278,10 @@ opacity:.6;
 <li>Lambda problems</li>
 <li>Decorator basics</li>
 </ul>
-<a href="{% url 'pyfunctionpractice' %}" class="btn">Solve</a>
-</div>
 
+<a href="{% url 'pyfunctionpractice' 2 %}" class="btn">Solve</a>
+
+</div>
 </div>
 
 <!-- QUICK TEST -->
@@ -291,7 +291,7 @@ opacity:.6;
 <div class="card">
 <h3>Python 15-Minute Quick Test</h3>
 <p>Timed MCQ + coding questions with instant score.</p>
-<a href="{% url 'python_test' %}" class="btn">Start Test</a>
+<a href="{% url 'python_test' 4 %}" class="btn">Start Test</a>
 </div>
 
 </div>

@@ -186,12 +186,31 @@ class UserProgress(models.Model):
 # ══════════════════════════════════════════════════════════════════
 
 class Test(models.Model):
-    name = models.CharField(max_length=200)
+
+    LANGUAGE_CHOICES = [
+        ('python', 'Python'),
+        ('java', 'Java'),
+        ('sql', 'SQL'),
+        ('js', 'JavaScript'),     # ✅ NEW
+        ('cpp', 'C++'),           # ✅ NEW
+        ('dsa', 'Data Structures') # ✅ NEW
+    ]
+
+    CATEGORY_CHOICES = [
+        ('basics', 'Basics Test'),
+        ('functions', 'Function Test'),
+        ('loops', 'Loop Test'),
+        ('oop', 'OOP Test'),
+        ('general', 'Full Test'),
+    ]
+
+    name = models.CharField(max_length=100)
     total_marks = models.IntegerField()
+    language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default='python')
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='basics')
 
     def __str__(self):
-        return self.name
-
+        return f"{self.language.upper()} - {self.name}"
 
 class TestResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='test_results')
@@ -201,13 +220,18 @@ class TestResult(models.Model):
     skipped_questions = models.IntegerField(default=0)
     wrong_answers = models.IntegerField(default=0)
     score = models.IntegerField(default=0)
-
     time_taken = models.IntegerField()
     date_attempted = models.DateTimeField(auto_now_add=True)
 
+    # Add descriptive answers
+    desc1 = models.TextField(blank=True, null=True)
+    desc2 = models.TextField(blank=True, null=True)
+    desc3 = models.TextField(blank=True, null=True)
+    desc4 = models.TextField(blank=True, null=True)
+    desc5 = models.TextField(blank=True, null=True)
+
     def __str__(self):
         return f"{self.user.username} - {self.test.name}"
-
     # ✅ OPTIONAL (for admin display)
     @property
     def grade(self):

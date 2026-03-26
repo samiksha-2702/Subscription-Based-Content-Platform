@@ -8,6 +8,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 from .models import TestResult, Test
 from django.shortcuts import render, get_object_or_404 , redirect
+from django.http import JsonResponse
+from django.urls import reverse
 
 def register(request):
     if request.method == "POST":
@@ -238,27 +240,63 @@ def python_libraries(request):
     return render(request, 'pythonlibraries.html')
 
 def py_basics_practice(request):
-    test = Test.objects.filter(name="Python Basics Test").first()   # OR id=1
-    return render(request, 'pybasicspractice.html', {'test': test})
+    test = Test.objects.filter(category="basics").first()
 
-def py_loop_practice(request):
-    _mark_progress(request.user, 'python', 'Loop Practice', 'practice')
-    return render(request, 'pylooppractice.html')
+    if request.method == 'POST':
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'python',
+            test.name,   # ✅ IMPORTANT
+            score
+        )
+
+    return render(request, 'pybasicspractice.html', {'test': test})
+def py_loop_practice(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+    if request.method == 'POST':
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'python',
+            test.name,
+            score
+        )
+
+    return render(request, 'pylooppractice.html', {'test': test})
 
 def py_function_practice(request, test_id):
     test = get_object_or_404(Test, id=test_id)
-    return render(request, "pyfunctionpractice.html", {"test": test}) 
 
-def python_test(request):
     if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'python', 'Python Test', score)
-            _mark_progress(request.user, 'python', 'Python Test', 'test', completed=True)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'python_test.html')
+        score = float(request.POST.get('score', 0))
 
+        _save_test_result(
+            request.user,
+            'python',
+            test.name,   # ✅ IMPORTANT FIX
+            score
+        )
+
+    return render(request, "pyfunctionpractice.html", {"test": test})
+
+
+def python_test(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+
+    if request.method == 'POST':
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'python',
+            test.name,
+            score
+        )
+
+    return render(request, 'python_test.html', {'test': test})
 
 # ══════════════════════════════════════════════════════════════════
 # JAVA MODULE
@@ -291,26 +329,63 @@ def springboot(request):
     return render(request, 'Java/springboot.html')
 
 def java_basic_practice(request):
-    _mark_progress(request.user, 'java', 'Java Basics Practice', 'practice')
-    return render(request, 'Java/java_basic_practice.html')
+    test = Test.objects.filter(name="Java Basics Test").first()
+
+    if request.method == 'POST':
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'java',
+            test.name,   # ✅ dynamic test name
+            score
+        )
+
+    return render(request, "java/java_basic_practice.html", {"test": test})
 
 def java_loop_practice(request):
-    _mark_progress(request.user, 'java', 'Java Loop Practice', 'practice')
-    return render(request, 'Java/java_loop_practice.html')
+    test = Test.objects.filter(name="Java Loop Test").first()
+
+    if request.method == 'POST':
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'java',
+            test.name,
+            score
+        )
+
+    return render(request, "java/java_loop_practice.html", {"test": test})
 
 def java_oop_practice(request):
-    _mark_progress(request.user, 'java', 'Java OOP Practice', 'practice')
-    return render(request, 'Java/java_oop_practice.html')
+    test = Test.objects.filter(name="Java OOP Test").first()
 
-def java_test(request):
     if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'java', 'Java Test', score)
-            _mark_progress(request.user, 'java', 'Java Test', 'test', completed=True)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'Java/java_test.html')
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'java',
+            test.name,
+            score
+        )
+
+    return render(request, "java/java_oop_practice.html", {"test": test})
+def java_test(request):
+    test = Test.objects.filter(name="Java Test").first()
+
+    if request.method == 'POST':
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'java',
+            test.name,
+            score
+        )
+
+    return render(request, "java_test.html", {"test": test})
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -334,20 +409,29 @@ def cpp_oop(request):
     return render(request, 'cpp/cpp_oop.html')
 
 def cpp_practice(request):
+    # Get the C++ test object
+    test = Test.objects.filter(name="C++ Practice").first()
+    
+    # Mark practice progress
     _mark_progress(request.user, 'cpp', 'C++ Practice', 'practice')
-    return render(request, 'cpp/cpp_practice.html')
-
+    
+    # Pass test to template
+    return render(request, 'cpp/cpp_practice.html', {"test": test})
 def cpp_test(request):
+    # This will raise a 404 if no test exists
+    test = Test.objects.filter(name="C++ Test").first()
+    
     if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'cpp', 'C++ Test', score)
-            _mark_progress(request.user, 'cpp', 'C++ Test', 'test', completed=True)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'cpp/cpp_test.html')
+        score = float(request.POST.get('score', 0))
 
+        _save_test_result(
+            request.user,
+            'cpp',
+            test.name,
+            score
+        )
 
+    return render(request, "cpp/cpp_test.html", {"test": test})
 # ══════════════════════════════════════════════════════════════════
 # JAVASCRIPT MODULE
 # ══════════════════════════════════════════════════════════════════
@@ -373,18 +457,24 @@ def js_es6(request):
     return render(request, 'js/js_es6.html')
 
 def js_practice(request):
-    _mark_progress(request.user, 'javascript', 'JS Practice', 'practice')
-    return render(request, 'js/js_practice.html')
+    test = Test.objects.filter(name="JavaScript Practice").first()
+    _mark_progress(request.user, 'js', 'javascript Practice', 'practice')
+    return render(request, 'js/js_practice.html', {"test": test})
 
 def js_test(request):
+    test = Test.objects.filter(name="JavaScript Test").first()
+    
     if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'javascript', 'JS Test', score)
-            _mark_progress(request.user, 'javascript', 'JS Test', 'test', completed=True)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'js/js_test.html')
+        score = float(request.POST.get('score', 0))
+
+        _save_test_result(
+            request.user,
+            'js',
+            test.name,
+            score
+        )
+
+    return render(request, "js/js_test.html", {"test": test})
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -624,24 +714,40 @@ def submit_test(request, test_id):
 
         test = get_object_or_404(Test, id=test_id)
 
-        total = request.POST.get("total") or 0
-        correct = request.POST.get("correct") or 0
-        wrong = request.POST.get("wrong") or 0
-        skipped = request.POST.get("skipped") or 0
-        score = request.POST.get("score") or 0
-        time_taken = request.POST.get("time_taken") or 0
+        total = int(request.POST.get("total") or 0)
+        correct = int(request.POST.get("correct") or 0)
+        wrong = int(request.POST.get("wrong") or 0)
+        skipped = int(request.POST.get("skipped") or 0)
+        score = int(request.POST.get("score") or 0)
+        time_taken = int(request.POST.get("time_taken") or 0)
+
+        # Get descriptive answers
+        desc1 = request.POST.get("desc1", "")
+        desc2 = request.POST.get("desc2", "")
+        desc3 = request.POST.get("desc3", "")
+        desc4 = request.POST.get("desc4", "")
+        desc5 = request.POST.get("desc5", "")
 
         result = TestResult.objects.create(
             user=request.user,
             test=test,
-            total_questions=int(total),
-            correct_answers=int(correct),
-            wrong_answers=int(wrong),
-            skipped_questions=int(skipped),
-            score=int(score),
-            time_taken=int(time_taken)
+            total_questions=total,
+            correct_answers=correct,
+            wrong_answers=wrong,
+            skipped_questions=skipped,
+            score=score,
+            time_taken=time_taken,
+            desc1=desc1,
+            desc2=desc2,
+            desc3=desc3,
+            desc4=desc4,
+            desc5=desc5
         )
 
+        if request.headers.get("x-requested-with") == "XMLHttpRequest":
+            return JsonResponse({"redirect_url": reverse('result', args=[result.id])})
+        
+        # If normal POST, just redirect
         return redirect('result', result_id=result.id)
 def result_page(request, result_id):
     result = get_object_or_404(TestResult, id=result_id)

@@ -40,9 +40,9 @@ urlpatterns = [
     path('python/comparison/', views.python_comparison, name='pythoncomparision'),
     path('python/libraries/', views.python_libraries, name='pythonlibraries'),
     path('python/practice-basics/', views.py_basics_practice, name='pybasicspractice'),
-    path('python/practice-loops/', views.py_loop_practice, name='pylooppractice'),
-    path('python/practice-functions/', views.py_function_practice, name='pyfunctionpractice'),
-    path('python/test/', views.python_test, name='python_test'),
+    path('python/practice-loops/<int:test_id>/', views.py_loop_practice, name='pylooppractice'),
+path('python/practice-functions/<int:test_id>/', views.py_function_practice, name='pyfunctionpractice'),
+path('python/test/<int:test_id>/', views.python_test, name='python_test'),
 
     # Java
     path('java/', views.java_info, name='javainfo'),
@@ -73,6 +73,7 @@ urlpatterns = [
     path('js/es6/', views.js_es6, name='js_es6'),
     path('js/practice/', views.js_practice, name='js_practice'),
     path('js/test/', views.js_test, name='js_test'),
+    path('js/result/<int:result_id>/', views.result_page, name='result'),
 
     # SQL
     path('sql/', views.sql_info, name='sql_info'),
