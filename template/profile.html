@@ -74,17 +74,6 @@ padding:25px;
 border-radius:12px;
 }
 
-.progress-bar{
-height:8px;
-background:#1f2937;
-border-radius:4px;
-}
-
-.progress-fill{
-height:100%;
-background:#3b82f6;
-}
-
 .btn{
 padding:12px 20px;
 border-radius:8px;
@@ -161,19 +150,19 @@ No activity
 
 </div>
 
-<!-- PROGRESS -->
+<!-- RECENT TESTS -->
 <div class="progress-section">
 
 <h2>Recent Tests</h2>
 
-{% for r in results %}
+{% for r in results|slice:":5" %}
 <div style="margin-bottom:15px; padding:10px; background:#1f2937; border-radius:8px;">
 
     <strong>{{ r.test.name }}</strong><br>
 
-    Score: {{ r.marks }}% <br>
+    Score: {{ r.score }}% <br>
 
-    Grade: {{ r.grade_badge }} <br>
+    Grade: {{ r.grade }} <br>
 
     Status:
     {% if r.passed %}
@@ -183,29 +172,13 @@ No activity
     {% endif %}
 
     <br>
+
     <small style="color:#9ca3af;">
         {{ r.date_attempted|date:"M d, Y - H:i" }}
     </small>
 
 </div>
 
-{% empty %}
-<p>No tests attempted yet.</p>
-{% endfor %}
-
-</div>
-
-</div>
-
-<!-- RECENT TESTS -->
-<div class="progress-section">
-
-<h2>Recent Tests</h2>
-
-{% for r in request.user.testresult_set.all|slice:":5" %}
-<div style="margin-bottom:10px;">
-<strong>{{ r.test.name }}</strong> - {{ r.marks }}%
-</div>
 {% empty %}
 <p>No tests attempted yet.</p>
 {% endfor %}

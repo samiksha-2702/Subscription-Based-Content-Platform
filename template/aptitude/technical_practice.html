@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,29 +13,40 @@ body{
     background:linear-gradient(135deg,#020617,#0f172a);
     color:white;
 }
+
 header{
     text-align:center;
     padding:20px;
     background:rgba(255,255,255,0.05);
 }
+
 .container{
-    max-width:900px;
+    max-width:1000px;
     margin:auto;
     padding:20px;
 }
+
 select{
     padding:10px;
-    margin-bottom:20px;
     border-radius:6px;
     border:none;
     font-size:16px;
+    margin-bottom:20px;
 }
+
 .card{
-    background:rgba(255,255,255,0.05);
+    background:rgba(255,255,255,0.06);
     padding:20px;
-    border-radius:10px;
+    border-radius:12px;
     margin-bottom:15px;
+    transition:0.3s;
 }
+
+.card:hover{
+    transform:scale(1.02);
+    background:rgba(255,255,255,0.1);
+}
+
 .btn{
     padding:10px 15px;
     border:none;
@@ -43,27 +55,47 @@ select{
     color:white;
     cursor:pointer;
     font-weight:bold;
-    margin-top:10px;
+    margin-right:10px;
 }
+
+.btn:hover{
+    background:#16a34a;
+}
+
+.btn-clear{
+    background:#ef4444;
+}
+
+.btn-clear:hover{
+    background:#dc2626;
+}
+
 textarea{
     width:100%;
     margin-top:15px;
     background:#1f2937;
     color:white;
-    border-radius:6px;
-    padding:10px;
+    border-radius:8px;
+    padding:12px;
     border:none;
     font-family:monospace;
     font-size:14px;
 }
+
 #output{
     background:#111827;
-    color:white;
-    padding:10px;
+    color:#00ffcc;
+    padding:12px;
     margin-top:10px;
-    border-radius:6px;
-    min-height:50px;
+    border-radius:8px;
+    min-height:60px;
 }
+
+.loader{
+    display:none;
+    margin-top:10px;
+}
+
 </style>
 </head>
 
@@ -71,12 +103,12 @@ textarea{
 
 <header>
 <h1>💻 Technical Practice</h1>
-<p>Select language → Solve coding questions → Run code</p>
+<p>Select language → Solve → Run Code</p>
 </header>
 
 <div class="container">
 
-<label>Select Language:</label>
+<!-- LANGUAGE SELECT -->
 <select id="languageSelect" onchange="showQuestions()">
     <option value="">--Select Language--</option>
     <option value="python">Python</option>
@@ -84,14 +116,28 @@ textarea{
     <option value="java">Java</option>
 </select>
 
-<!-- Questions will appear here -->
 <div id="quizForm"></div>
 
-<!-- Compiler -->
-<h2>🖥️ Online Compiler</h2>
-<textarea id="codeInput" rows="12" placeholder="Click 'Solve in Compiler' to load code..."></textarea>
+<!-- COMPILER -->
+<h2>🖥️ Compiler</h2>
 
-<button class="btn" onclick="runCode()">▶ Run Code</button>
+<form method="POST" action="{% url 'submit_test' test.id %}" id="submitForm">
+    {% csrf_token %}
+
+    <textarea id="codeInput" name="code" rows="12" placeholder="Select a question..."></textarea>
+
+    <!-- HIDDEN SCORE -->
+    <input type="hidden" name="score" id="scoreInput">
+
+    <br><br>
+
+    <button type="button" class="btn" onclick="runCode()">▶ Run</button>
+    <button type="button" class="btn btn-clear" onclick="clearCode()">🗑 Clear</button>
+    <button type="button" class="btn" onclick="submitTest()">📤 Submit Test</button>
+
+</form>
+
+<div class="loader" id="loader">⏳ Running...</div>
 
 <pre id="output"></pre>
 
@@ -99,15 +145,15 @@ textarea{
 
 <script>
 
-// QUESTIONS DATA
+// QUESTIONS
 const questions = {
     python: [
         { q: "Print Hello World", starter: "print('Hello World')" },
         { q: "Print square of number", starter: "n=int(input())\nprint(n*n)" }
     ],
     cpp: [
-        { q: "Print Hello World", starter: "#include <iostream>\nusing namespace std;\nint main(){\n cout<<\"Hello World\";\n return 0;\n}" },
-        { q: "Print square of number", starter: "#include <iostream>\nusing namespace std;\nint main(){\n int n;\n cin>>n;\n cout<<n*n;\n return 0;\n}" }
+        { q: "Print Hello World", starter: "#include <iostream>\nusing namespace std;\nint main(){ cout<<\"Hello World\"; return 0; }" },
+        { q: "Print square of number", starter: "#include <iostream>\nusing namespace std;\nint main(){ int n; cin>>n; cout<<n*n; return 0; }" }
     ],
     java: [
         { q: "Print Hello World", starter: "public class Main{\n public static void main(String[] args){\n System.out.println(\"Hello World\");\n }\n}" },
@@ -115,30 +161,22 @@ const questions = {
     ]
 };
 
-// SHOW QUESTIONS (FIXED)
-function showQuestions() {
-    console.log("Function called");
-
+// SHOW QUESTIONS
+function showQuestions(){
     const lang = document.getElementById("languageSelect").value;
-    console.log("Selected:", lang);
-
     const container = document.getElementById("quizForm");
+
     container.innerHTML = "";
 
-    if (!lang) {
-        container.innerHTML = "<p>Please select a language</p>";
-        return;
-    }
+    if(!lang) return;
 
-    questions[lang].forEach((qObj, index) => {
+    questions[lang].forEach((qObj, index)=>{
         let card = document.createElement("div");
-        card.classList.add("card");
+        card.className = "card";
 
         card.innerHTML = `
-            <h3>${index + 1}. ${qObj.q}</h3>
-            <button type="button" class="btn" onclick="loadCode(${index})">
-                Solve in Compiler
-            </button>
+            <h3>Q${index+1}. ${qObj.q}</h3>
+            <button class="btn" onclick="loadCode(${index})">Solve</button>
         `;
 
         container.appendChild(card);
@@ -146,28 +184,55 @@ function showQuestions() {
 }
 
 // LOAD CODE
-function loadCode(index) {
+function loadCode(index){
     const lang = document.getElementById("languageSelect").value;
     document.getElementById("codeInput").value = questions[lang][index].starter;
 }
 
-// RUN CODE (DEMO MODE)
-function runCode() {
+// RUN CODE (DEMO)
+function runCode(){
     const code = document.getElementById("codeInput").value;
+    const output = document.getElementById("output");
+    const loader = document.getElementById("loader");
 
-    if (!code) {
-        document.getElementById("output").textContent = "⚠️ No code to run!";
+    if(!code){
+        output.textContent = "⚠️ No code entered!";
         return;
     }
 
-    // Demo output (no API needed)
-    if (code.includes("Hello")) {
-        document.getElementById("output").textContent = "Hello World";
-    } else if (code.includes("*")) {
-        document.getElementById("output").textContent = "Output: (Demo calculation)";
-    } else {
-        document.getElementById("output").textContent = "Code executed successfully!";
-    }
+    loader.style.display = "block";
+    output.textContent = "";
+
+    setTimeout(()=>{
+        loader.style.display = "none";
+
+        if(code.includes("Hello")){
+            output.textContent = "Hello World";
+        }
+        else if(code.includes("*")){
+            output.textContent = "Output: (Demo)";
+        }
+        else{
+            output.textContent = "Code executed successfully!";
+        }
+    },1000);
+}
+
+// CLEAR
+function clearCode(){
+    document.getElementById("codeInput").value = "";
+    document.getElementById("output").textContent = "";
+}
+
+// SUBMIT TEST (IMPORTANT)
+function submitTest(){
+
+    // SIMPLE DEMO SCORE (you can enhance later)
+    let score = 1;
+
+    document.getElementById("scoreInput").value = score;
+
+    document.getElementById("submitForm").submit();
 }
 
 </script>

@@ -13,6 +13,7 @@ from django.urls import reverse
 from datetime import timedelta
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Avg
+from django.http import HttpResponse
 
 
 def register(request):
@@ -79,8 +80,7 @@ def profile_view(request):
 
     total_tests = results.count()
 
-    # ✅ Use marks instead of score
-    avg_score = results.aggregate(avg=Avg('marks'))['avg'] or 0
+    avg_score = results.aggregate(avg=Avg('score'))['avg'] or 0
 
     last_active = results.order_by('-date_attempted').first()
 
@@ -651,13 +651,8 @@ def listening(request):
     return render(request, 'communication/listening.html')
 
 def comm_quiz(request):
-    if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'communication', 'Communication Quiz', score)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'communication/comm_quiz.html')
+    test = Test.objects.filter(name="communication Test").first()
+    return render(request, 'communication/comm_quiz.html', {"test": test})
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -676,45 +671,78 @@ def practice_hub(request):
     return render(request, 'questions.html', {'subscribed': is_subscribed(request.user)})
 
 def aptitude_practice(request):
-    _mark_progress(request.user, 'aptitude', 'Aptitude Practice', 'practice')
-    return render(request, 'aptitude/aptitude_practice.html')
+    test = Test.objects.filter(name="Aptitude Practice Test").first()
+    _mark_progress(request.user, 'apti', 'Aptitude Practice Test', 'practice')
+    return render(request, 'aptitude/aptitude_practice.html', {"test": test})
 
 def aptitude_test(request):
-    if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'aptitude', 'Aptitude Test', score)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'aptitude/aptitude_test.html')
+    test = Test.objects.filter(name="Aptitude Test").first()
+
+    if request.method == "POST":
+        score = int(request.POST.get("score", 0))
+
+        result = _save_test_result(request.user, 'apti', test.name, score)
+
+        return JsonResponse({
+            "redirect_url": f"/result/{result.id}/"
+        })
+
+    return render(request, "aptitude/aptitude_test.html", {"test": test})
 
 def technical_practice(request):
-    _mark_progress(request.user, 'aptitude', 'Technical Practice', 'practice')
-    return render(request, 'aptitude/technical_practice.html')
+    test = Test.objects.filter(name="Technical Practice Test").first()
 
+    # ⚠️ Safety check
+    if not test:
+        return render(request, 'aptitude/technical_practice.html', {
+            "error": "Test not found"
+        })
+
+    _mark_progress(request.user, 'tech', 'Technical Practice Test', 'practice')
+
+    return render(request, 'aptitude/technical_practice.html', {
+        "test": test
+    })
+ 
 def technical_test(request):
-    if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'aptitude', 'Technical Test', score)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'aptitude/technical_test.html')
+    test = Test.objects.filter(name="Technical Test").first()
+    if request.method == "POST":
+        score = int(request.POST.get("score", 0))
 
+        result = _save_test_result(request.user, 'tech', test.name, score)
+
+        return JsonResponse({
+            "redirect_url": f"/result/{result.id}/"
+        })
+
+    return render(request, "aptitude/technical_test.html", {"test": test})
 def interview_practice(request):
-    _mark_progress(request.user, 'aptitude', 'Interview Practice', 'practice')
-    return render(request, 'aptitude/interview_practice.html')
+    test = Test.objects.filter(name="Interview Practice Test").first()
 
+    # ❗ Safety check
+    if not test:
+        return HttpResponse("Test not found. Please create 'Interview Practice Test' in DB.")
+
+    # Track progress (only if user is logged in)
+    if request.user.is_authenticated:
+        _mark_progress(request.user, 'interv', 'Interview Practice Test', 'practice')
+
+    return render(request, 'aptitude/interview_practice.html', {
+        "test": test
+    })
 def interview_test(request):
-    if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'aptitude', 'Interview Test', score)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'aptitude/interview_test.html')
+    test = Test.objects.filter(name="Interview Test").first()
 
+    if request.method == "POST":
+        score = int(request.POST.get("score", 0))
 
+        result = _save_test_result(request.user, 'interv', test.name, score)
+
+        return JsonResponse({
+            "redirect_url": f"/result/{result.id}/"
+        })
+
+    return render(request, "aptitude/interview_test.html", {"test": test})
 # ══════════════════════════════════════════════════════════════════
 # PREMIUM DASHBOARD
 # ══════════════════════════════════════════════════════════════════
@@ -775,8 +803,6 @@ def start_trial(request):
 
 @login_required
 def submit_test(request, test_id):
-    print("VIEW HIT")
-
     if request.method == "POST":
 
         test = get_object_or_404(Test, id=test_id)
@@ -785,15 +811,19 @@ def submit_test(request, test_id):
         correct = int(request.POST.get("correct") or 0)
         wrong = int(request.POST.get("wrong") or 0)
         skipped = int(request.POST.get("skipped") or 0)
-        score = int(request.POST.get("score") or 0)
         time_taken = int(request.POST.get("time_taken") or 0)
 
-        # Get descriptive answers
         desc1 = request.POST.get("desc1", "")
         desc2 = request.POST.get("desc2", "")
         desc3 = request.POST.get("desc3", "")
         desc4 = request.POST.get("desc4", "")
         desc5 = request.POST.get("desc5", "")
+
+        # ✅ CALCULATE MARKS (ASSUMPTION: each question = 1 mark)
+        obtained_marks = correct  # change if you have different marking
+
+        # ✅ SCORE BASED ON TOTAL MARKS OF TEST
+        score = round((obtained_marks / test.total_marks) * 100, 2) if test.total_marks > 0 else 0
 
         result = TestResult.objects.create(
             user=request.user,
@@ -802,6 +832,7 @@ def submit_test(request, test_id):
             correct_answers=correct,
             wrong_answers=wrong,
             skipped_questions=skipped,
+            obtained_marks=obtained_marks,
             score=score,
             time_taken=time_taken,
             desc1=desc1,
@@ -811,11 +842,15 @@ def submit_test(request, test_id):
             desc5=desc5
         )
 
+        # ✅ AJAX RESPONSE
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            return JsonResponse({"redirect_url": reverse('result', args=[result.id])})
-        
-        # If normal POST, just redirect
+            return JsonResponse({
+                "redirect_url": reverse('result', args=[result.id])
+            })
+
+        # ✅ NORMAL REDIRECT
         return redirect('result', result_id=result.id)
+    
 def result_page(request, result_id):
     result = get_object_or_404(TestResult, id=result_id)
     return render(request, 'result.html', {'result': result})

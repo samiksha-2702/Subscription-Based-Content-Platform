@@ -49,19 +49,9 @@ header{
     cursor:pointer;
     font-weight:bold;
 }
-.score{
-    text-align:center;
-    font-size:22px;
-    margin-top:20px;
-}
-.correct{
-    background:#15803d !important;
-}
-.wrong{
-    background:#b91c1c !important;
-}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -70,136 +60,63 @@ header{
 
 <div class="container">
 
-<form id="quizForm">
+<form method="POST" action="{% url 'submit_test' test.id %}">
+{% csrf_token %}
 
-<!-- Question 1 -->
-<div class="card" data-answer="27">
-    <h3>1. What is 12 + 15?</h3>
-    <label class="option"><input type="radio" name="q0" value="25">25</label>
-    <label class="option"><input type="radio" name="q0" value="27">27</label>
-    <label class="option"><input type="radio" name="q0" value="28">28</label>
-    <label class="option"><input type="radio" name="q0" value="30">30</label>
+<!-- Q1 -->
+<div class="card">
+<h3>1. What is 12 + 15?</h3>
+<label class="option"><input type="radio" name="q0" value="25">25</label>
+<label class="option"><input type="radio" name="q0" value="27">27</label>
+<label class="option"><input type="radio" name="q0" value="28">28</label>
+<label class="option"><input type="radio" name="q0" value="30">30</label>
 </div>
 
-<!-- Question 2 -->
-<div class="card" data-answer="72">
-    <h3>2. What is 9 × 8?</h3>
-    <label class="option"><input type="radio" name="q1" value="72">72</label>
-    <label class="option"><input type="radio" name="q1" value="64">64</label>
-    <label class="option"><input type="radio" name="q1" value="70">70</label>
-    <label class="option"><input type="radio" name="q1" value="80">80</label>
+<!-- Q2 -->
+<div class="card">
+<h3>2. What is 9 × 8?</h3>
+<label class="option"><input type="radio" name="q1" value="72">72</label>
+<label class="option"><input type="radio" name="q1" value="64">64</label>
+<label class="option"><input type="radio" name="q1" value="70">70</label>
+<label class="option"><input type="radio" name="q1" value="80">80</label>
 </div>
 
-<!-- Question 3 -->
-<div class="card" data-answer="49">
-    <h3>3. Square of 7?</h3>
-    <label class="option"><input type="radio" name="q2" value="49">49</label>
-    <label class="option"><input type="radio" name="q2" value="42">42</label>
-    <label class="option"><input type="radio" name="q2" value="56">56</label>
-    <label class="option"><input type="radio" name="q2" value="63">63</label>
+<!-- Q3 -->
+<div class="card">
+<h3>3. Square of 7?</h3>
+<label class="option"><input type="radio" name="q2" value="49">49</label>
+<label class="option"><input type="radio" name="q2" value="42">42</label>
+<label class="option"><input type="radio" name="q2" value="56">56</label>
+<label class="option"><input type="radio" name="q2" value="63">63</label>
 </div>
 
-<!-- Question 4 -->
-<div class="card" data-answer="27">
-    <h3>4. Cube of 3?</h3>
-    <label class="option"><input type="radio" name="q3" value="27">27</label>
-    <label class="option"><input type="radio" name="q3" value="9">9</label>
-    <label class="option"><input type="radio" name="q3" value="18">18</label>
-    <label class="option"><input type="radio" name="q3" value="36">36</label>
+<!-- Q4 -->
+<div class="card">
+<h3>4. Cube of 3?</h3>
+<label class="option"><input type="radio" name="q3" value="27">27</label>
+<label class="option"><input type="radio" name="q3" value="9">9</label>
+<label class="option"><input type="radio" name="q3" value="18">18</label>
+<label class="option"><input type="radio" name="q3" value="36">36</label>
 </div>
 
-<!-- Question 5 -->
-<div class="card" data-answer="25">
-    <h3>5. 100 ÷ 4?</h3>
-    <label class="option"><input type="radio" name="q4" value="20">20</label>
-    <label class="option"><input type="radio" name="q4" value="25">25</label>
-    <label class="option"><input type="radio" name="q4" value="30">30</label>
-    <label class="option"><input type="radio" name="q4" value="40">40</label>
+<!-- Q5 -->
+<div class="card">
+<h3>5. 100 ÷ 4?</h3>
+<label class="option"><input type="radio" name="q4" value="20">20</label>
+<label class="option"><input type="radio" name="q4" value="25">25</label>
+<label class="option"><input type="radio" name="q4" value="30">30</label>
+<label class="option"><input type="radio" name="q4" value="40">40</label>
 </div>
 
-<!-- Question 6 -->
-<div class="card" data-answer="30">
-    <h3>6. 15% of 200?</h3>
-    <label class="option"><input type="radio" name="q5" value="25">25</label>
-    <label class="option"><input type="radio" name="q5" value="30">30</label>
-    <label class="option"><input type="radio" name="q5" value="35">35</label>
-    <label class="option"><input type="radio" name="q5" value="40">40</label>
+<!-- Add Q6 to Q25 same way -->
+
+<div style="text-align:center;">
+    <button type="submit" class="btn">Submit Test</button>
 </div>
-
-<!-- Question 7 -->
-<div class="card" data-answer="100">
-    <h3>7. 45 + 55?</h3>
-    <label class="option"><input type="radio" name="q6" value="90">90</label>
-    <label class="option"><input type="radio" name="q6" value="95">95</label>
-    <label class="option"><input type="radio" name="q6" value="100">100</label>
-    <label class="option"><input type="radio" name="q6" value="105">105</label>
-</div>
-
-<!-- Question 8 -->
-<div class="card" data-answer="8">
-    <h3>8. 64 ÷ 8?</h3>
-    <label class="option"><input type="radio" name="q7" value="6">6</label>
-    <label class="option"><input type="radio" name="q7" value="7">7</label>
-    <label class="option"><input type="radio" name="q7" value="8">8</label>
-    <label class="option"><input type="radio" name="q7" value="9">9</label>
-</div>
-
-<!-- Question 9 -->
-<div class="card" data-answer="121">
-    <h3>9. 11 × 11?</h3>
-    <label class="option"><input type="radio" name="q8" value="111">111</label>
-    <label class="option"><input type="radio" name="q8" value="121">121</label>
-    <label class="option"><input type="radio" name="q8" value="131">131</label>
-    <label class="option"><input type="radio" name="q8" value="141">141</label>
-</div>
-
-<!-- Question 10 -->
-<div class="card" data-answer="45">
-    <h3>10. 50% of 90?</h3>
-    <label class="option"><input type="radio" name="q9" value="40">40</label>
-    <label class="option"><input type="radio" name="q9" value="45">45</label>
-    <label class="option"><input type="radio" name="q9" value="50">50</label>
-    <label class="option"><input type="radio" name="q9" value="55">55</label>
-</div>
-
-<!-- Questions 11-25: replicate same pattern -->
-<!-- Change question text, options, data-answer for all 25 -->
-
-<button type="button" class="btn" onclick="calculateScore()">Submit Answers</button>
 
 </form>
 
-<div class="score" id="scoreDiv"></div>
-
 </div>
-
-<script>
-function calculateScore() {
-    let cards = document.querySelectorAll(".card");
-    let score = 0;
-
-    cards.forEach(card => {
-        let correct = card.getAttribute("data-answer");
-        let selected = card.querySelector('input[type="radio"]:checked');
-
-        // Remove previous coloring
-        card.querySelectorAll(".option").forEach(label => {
-            label.classList.remove("correct","wrong");
-        });
-
-        if(selected){
-            if(selected.value === correct){
-                score++;
-                selected.parentElement.classList.add("correct");
-            } else {
-                selected.parentElement.classList.add("wrong");
-            }
-        }
-    });
-
-    document.getElementById("scoreDiv").innerHTML = "🎯 Your Score: " + score + "/" + cards.length;
-}
-</script>
 
 </body>
 </html>

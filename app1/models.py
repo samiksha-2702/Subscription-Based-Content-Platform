@@ -193,7 +193,11 @@ class Test(models.Model):
         ('sql', 'SQL'),
         ('js', 'JavaScript'),
         ('cpp', 'C++'),
-        ('dsa', 'Data Structures')
+        ('dsa', 'Data Structures'),
+        ('comm', 'Communication'),
+        ('apti', 'Aptitude'),
+        ('interv', 'Interview'),
+        ('tech', 'Technical'),
     ]
 
     CATEGORY_CHOICES = [
@@ -205,11 +209,9 @@ class Test(models.Model):
     ]
 
     name = models.CharField(max_length=100)
-    total_marks = models.IntegerField()
+    total_marks = models.IntegerField()  # total marks of test
     language = models.CharField(max_length=20, choices=LANGUAGE_CHOICES, default='python')
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='basics')
-
-    # 🔥 NEW (optional but recommended)
     pass_percentage = models.IntegerField(default=40)
 
     def __str__(self):
@@ -222,16 +224,18 @@ class TestResult(models.Model):
 
     total_questions = models.IntegerField()
     correct_answers = models.IntegerField()
-    skipped_questions = models.IntegerField(default=0)
     wrong_answers = models.IntegerField(default=0)
+    skipped_questions = models.IntegerField(default=0)
 
-    # 🔥 CHANGED: renamed from score → marks
-    marks = models.FloatField(default=0)
+    # ✅ STORED SCORE (IMPORTANT)
+    score = models.FloatField(default=0)
+
+    # ✅ OPTIONAL: store actual marks if needed
+    obtained_marks = models.FloatField(default=0)
 
     time_taken = models.IntegerField()
     date_attempted = models.DateTimeField(auto_now_add=True)
 
-    # Descriptive answers
     desc1 = models.TextField(blank=True, null=True)
     desc2 = models.TextField(blank=True, null=True)
     desc3 = models.TextField(blank=True, null=True)
@@ -241,14 +245,7 @@ class TestResult(models.Model):
     def __str__(self):
         return f"{self.user.username} - {self.test.name if self.test else 'No Test'}"
 
-    # ✅ AUTO CALCULATED PERCENTAGE
-    @property
-    def score(self):
-        if self.total_questions == 0:
-            return 0
-        return round((self.correct_answers / self.total_questions) * 100, 2)
-
-    # ✅ GRADE BASED ON PERCENTAGE
+    # ✅ GRADE BASED ON SCORE
     @property
     def grade(self):
         if self.score >= 80:
@@ -259,7 +256,7 @@ class TestResult(models.Model):
             return 'C'
         return 'F'
 
-    # ✅ PASS / FAIL (dynamic per test)
+    # ✅ PASS / FAIL
     @property
     def passed(self):
         if self.test and self.test.pass_percentage:

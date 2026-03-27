@@ -27,19 +27,10 @@ class Migration(migrations.Migration):
             name='userprofile',
             options={},
         ),
-        migrations.RenameField(
-            model_name='testresult',
-            old_name='attempted_at',
-            new_name='date_attempted',
-        ),
-        migrations.RemoveField(
-            model_name='testresult',
-            name='module',
-        ),
-        migrations.RemoveField(
-            model_name='testresult',
-            name='test_name',
-        ),
+       
+        
+        
+       
         migrations.AddField(
             model_name='testresult',
             name='skipped_questions',

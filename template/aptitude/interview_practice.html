@@ -3,49 +3,91 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Interview Practice | PrepEdge</title>
+<title>Interview Practice</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
-body{margin:0;font-family:"Segoe UI",sans-serif;background:linear-gradient(135deg,#020617,#0f172a);color:white;}
-header{text-align:center;padding:20px;background:rgba(255,255,255,0.05);}
-.container{max-width:900px;margin:auto;padding:20px;}
-.card{background:rgba(255,255,255,0.05);padding:20px;border-radius:10px;margin-bottom:15px;}
+body{
+margin:0;
+font-family:Segoe UI, sans-serif;
+background:linear-gradient(135deg,#020617,#0f172a);
+color:white;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+padding:20px;
+border-radius:10px;
+margin-bottom:15px;
+}
+
+textarea{
+width:100%;
+height:80px;
+margin-top:10px;
+padding:10px;
+border-radius:6px;
+border:none;
+outline:none;
+}
+
+button{
+padding:12px 20px;
+background:#3b82f6;
+border:none;
+color:white;
+border-radius:6px;
+cursor:pointer;
+margin-top:10px;
+}
 </style>
 </head>
+
 <body>
 
-<header>
-<h1>🤝 Interview Practice</h1>
-</header>
-
 <div class="container">
+
+<h1>🤝 Interview Practice Test</h1>
+
+<form method="POST" action="{% url 'submit_test' test.id %}">
+{% csrf_token %}
+
 <div class="card">
 <h3>1. Tell me about yourself?</h3>
-<p>Tip: Summarize your background, skills, and career goals concisely.</p>
+<textarea name="q1" placeholder="Write your answer..."></textarea>
 </div>
 
 <div class="card">
 <h3>2. What are your strengths and weaknesses?</h3>
-<p>Tip: Be honest. Mention strengths aligned with the job and weaknesses you are improving.</p>
+<textarea name="q2" placeholder="Write your answer..."></textarea>
 </div>
 
 <div class="card">
 <h3>3. Why do you want to work for this company?</h3>
-<p>Tip: Show you researched the company and are aligned with its vision.</p>
+<textarea name="q3" placeholder="Write your answer..."></textarea>
 </div>
 
 <div class="card">
 <h3>4. Explain a challenging project you worked on.</h3>
-<p>Tip: Use STAR method (Situation, Task, Action, Result) to structure your answer.</p>
+<textarea name="q4" placeholder="Write your answer..."></textarea>
 </div>
 
 <div class="card">
 <h3>5. Where do you see yourself in 5 years?</h3>
-<p>Tip: Focus on growth, learning, and contribution to the organization.</p>
+<textarea name="q5" placeholder="Write your answer..."></textarea>
 </div>
 
-<!-- Add more practice questions as needed -->
+<button type="submit">Submit Test</button>
+
+</form>
 
 </div>
+
 </body>
 </html>

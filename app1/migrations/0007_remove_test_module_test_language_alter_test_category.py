@@ -10,10 +10,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='test',
-            name='module',
-        ),
+       
         migrations.AddField(
             model_name='test',
             name='language',
