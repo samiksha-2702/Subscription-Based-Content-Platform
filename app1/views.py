@@ -813,12 +813,13 @@ def submit_test(request, test_id):
         desc4 = request.POST.get("desc4", "")
         desc5 = request.POST.get("desc5", "")
 
-        # ✅ CALCULATE MARKS (ASSUMPTION: each question = 1 mark)
-        obtained_marks = correct  # change if you have different marking
+        # ✅ CALCULATE MARKS
+        obtained_marks = correct  # adjust if negative marking exists
 
-        # ✅ SCORE BASED ON TOTAL MARKS OF TEST
+        # ✅ SCORE (%)
         score = round((obtained_marks / test.total_marks) * 100, 2) if test.total_marks > 0 else 0
 
+        # ✅ SAVE RESULT (REMOVED 'marks' FIELD)
         result = TestResult.objects.create(
             user=request.user,
             test=test,
@@ -827,7 +828,6 @@ def submit_test(request, test_id):
             wrong_answers=wrong,
             skipped_questions=skipped,
             obtained_marks=obtained_marks,
-            marks=score,
             time_taken=time_taken,
             desc1=desc1,
             desc2=desc2,
@@ -843,7 +843,7 @@ def submit_test(request, test_id):
             })
 
         # ✅ NORMAL REDIRECT
-        return redirect('result', result_id=result.id)
+        return redirect('result', result.id)
     
 def result_page(request, result_id):
     result = get_object_or_404(TestResult, id=result_id)
