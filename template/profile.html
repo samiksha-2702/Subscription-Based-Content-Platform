@@ -102,6 +102,7 @@ margin:10px;
 
 <!-- PROFILE -->
 <div class="profile-header">
+
 <div class="profile-avatar">
 <i class="fas fa-user"></i>
 </div>
@@ -111,17 +112,32 @@ margin:10px;
 
 <!-- SUBSCRIPTION -->
 <div style="margin-top:10px;">
-{% if subscription %}
-<span style="background:#f59e0b;padding:6px 14px;border-radius:20px;">
-<i class="fas fa-crown"></i> {{ subscription.plan_name }}
-</span>
-{% else %}
-<span style="background:#374151;padding:6px 14px;border-radius:20px;">
-Free Plan
-</span>
-{% endif %}
-</div>
 
+{% if subscription %}
+
+    <span style="background:#f59e0b;padding:6px 14px;border-radius:20px;">
+        <i class="fas fa-crown"></i> {{ subscription.plan }}
+    </span>
+
+    <br><br>
+
+    {% if subscription.is_active %}
+        <a href="{% url 'cancel_subscription' %}" class="btn btn-danger">
+            Cancel Subscription
+        </a>
+    {% else %}
+        <span style="color:#ef4444;">Subscription Expired</span>
+    {% endif %}
+
+{% else %}
+
+    <span style="background:#374151;padding:6px 14px;border-radius:20px;">
+        Free Plan
+    </span>
+
+{% endif %}
+
+</div>
 </div>
 
 <!-- STATS -->
@@ -156,11 +172,12 @@ No activity
 <h2>Recent Tests</h2>
 
 {% for r in results|slice:":5" %}
+
 <div style="margin-bottom:15px; padding:10px; background:#1f2937; border-radius:8px;">
 
     <strong>{{ r.test.name }}</strong><br>
 
-    Score: {{ r.score }}% <br>
+    Score: {{ r.score|default:0 }}% <br>
 
     Grade: {{ r.grade }} <br>
 

@@ -57,15 +57,23 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            print("LOGIN SUCCESS")  # check terminal
+            print("LOGIN SUCCESS")
             login(request, user)
-            return redirect("plans") # or dashboard
+
+            # ✅ CHECK SUBSCRIPTION
+            subscription = getattr(user, 'subscription', None)
+
+            if subscription and subscription.is_active:
+                return redirect("index")  # already subscribed
+            else:
+                return redirect("plans")  # not subscribed
+
         else:
             return render(request, "login.html", {
                 "error": "Invalid username or password",
                 "username": username
             })
-        
+
     return render(request, "login.html")
 @login_required
 def user_logout(request):
@@ -87,6 +95,12 @@ def profile_view(request):
 
     subscription = Subscription.objects.filter(user=user).first()
 
+    # ✅ Only check expiry (DO NOT assign is_active)
+    if subscription and subscription.expires_at:
+        if subscription.expires_at < timezone.now():
+            subscription.status = 'expired'
+            subscription.save()
+
     context = {
         'total_tests': total_tests,
         'avg_score': round(avg_score, 2),
@@ -96,6 +110,53 @@ def profile_view(request):
     }
 
     return render(request, 'profile.html', context)
+def activate_subscription(user):
+    subscription, created = Subscription.objects.get_or_create(user=user)
+
+    subscription.plan = 'premium'
+    subscription.status = 'active'
+
+    # ✅ SET EXPIRY DATE (30 days)
+    subscription.expires_at = timezone.now() + timedelta(days=30)
+
+    subscription.save()
+    
+@login_required
+def subscription_view(request):
+    subscription = getattr(request.user, 'subscription', None)
+
+    # ✅ If already active → don't allow again
+    if subscription and subscription.is_active:
+        return redirect("index")
+
+    return render(request, "plans.html")
+
+def check_expiry(user):
+    subscription = getattr(user, 'subscription', None)
+
+    if subscription and subscription.expires_at:
+        if subscription.expires_at < timezone.now():
+            subscription.status = 'expired'
+            subscription.save()
+@login_required
+def plans(request):
+    subscription = getattr(request.user, 'subscription', None)
+
+    if subscription and subscription.is_active:
+        return redirect("dashboard")
+
+    return render(request, "plans.html")
+
+@login_required
+def cancel_subscription(request):
+    sub = Subscription.objects.filter(user=request.user).first()
+
+    if sub:
+        sub.status = 'cancelled'   # or 'expired'
+        sub.expires_at = timezone.now()  # immediate expiry
+        sub.save()
+
+    return redirect('profile')
 # HELPERS
 # ══════════════════════════════════════════════════════════════════
 
@@ -767,17 +828,7 @@ def premium_dashboard(request):
         'total_topics':   total_topics,
     })
     
-    #plans
-@login_required
-def plans(request):
-    return render(request, 'plans.html')
-
-
-# 🟢 Login Page
-def login_view(request):
-    return render(request, 'login.html')
-
-
+    
 @login_required
 def start_trial(request):
     from datetime import timedelta
@@ -813,13 +864,13 @@ def submit_test(request, test_id):
         desc4 = request.POST.get("desc4", "")
         desc5 = request.POST.get("desc5", "")
 
-        # ✅ CALCULATE MARKS
-        obtained_marks = correct  # adjust if negative marking exists
+        # ✅ Calculate marks
+        obtained_marks = correct  # or your logic
 
-        # ✅ SCORE (%)
+        # ✅ Calculate score
         score = round((obtained_marks / test.total_marks) * 100, 2) if test.total_marks > 0 else 0
 
-        # ✅ SAVE RESULT (REMOVED 'marks' FIELD)
+        # ✅ SAVE RESULT WITH SCORE
         result = TestResult.objects.create(
             user=request.user,
             test=test,
@@ -827,6 +878,7 @@ def submit_test(request, test_id):
             correct_answers=correct,
             wrong_answers=wrong,
             skipped_questions=skipped,
+            score=score,   # 🔥 THIS WAS MISSING
             obtained_marks=obtained_marks,
             time_taken=time_taken,
             desc1=desc1,
@@ -836,15 +888,12 @@ def submit_test(request, test_id):
             desc5=desc5
         )
 
-        # ✅ AJAX RESPONSE
         if request.headers.get("x-requested-with") == "XMLHttpRequest":
             return JsonResponse({
                 "redirect_url": reverse('result', args=[result.id])
             })
 
-        # ✅ NORMAL REDIRECT
-        return redirect('result', result.id)
-    
+        return redirect('result', result.id)   
 def result_page(request, result_id):
     result = get_object_or_404(TestResult, id=result_id)
     return render(request, 'result.html', {'result': result})

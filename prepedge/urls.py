@@ -130,5 +130,6 @@ urlpatterns = [
     
    path('submit-test/<int:test_id>/', views.submit_test, name='submit_test'),
     path('result/<int:result_id>/', views.result_page, name='result'),
-    path('start-trial/', views.start_trial, name='start_trial')
+    path('start-trial/', views.start_trial, name='start_trial'),
+    path('cancel-subscription/', views.cancel_subscription, name='cancel_subscription'),
 ]
