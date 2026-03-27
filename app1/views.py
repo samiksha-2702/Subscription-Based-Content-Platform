@@ -11,7 +11,6 @@ from django.shortcuts import render, get_object_or_404 , redirect
 from django.http import JsonResponse
 from django.urls import reverse
 from datetime import timedelta
-from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Avg
 
@@ -59,7 +58,7 @@ def user_login(request):
         if user is not None:
             print("LOGIN SUCCESS")  # check terminal
             login(request, user)
-            return redirect("index") # or dashboard
+            return redirect("plans") # or dashboard
         else:
             return render(request, "login.html", {
                 "error": "Invalid username or password",
@@ -67,6 +66,7 @@ def user_login(request):
             })
         
     return render(request, "login.html")
+@login_required
 def user_logout(request):
     logout(request)
     return redirect('login')
@@ -188,34 +188,34 @@ def index(request):
     return render(request, 'index.html')
 def home(request):
     return render(request, 'home.html')
-
+@login_required
 def programming(request):
     return render(request, 'programming.html')
-
+@login_required
 def company(request):
     return render(request, 'company.html')
-
+@login_required
 def expert_talks(request):
     return render(request, 'expert/expert.html')
-
+@login_required
 def communication(request):
     return render(request, 'communication/comm.html')
-
+@login_required
 def aptitude(request):
     sub = _get_subscription(request.user)
     return render(request, 'questions.html', {
         'subscribed': sub.is_premium if sub else False
     })
-
+@login_required
 def ai_recommendation(request):
     return render(request, 'ai.html')
-
+@login_required
 def plans(request):
     return render(request, 'plans.html')
-
+@login_required
 def subscribe(request):
     return render(request, 'plans.html')
-
+@login_required
 def programming_home(request):
     return render(request, 'programming.html')
 
@@ -738,12 +738,34 @@ def premium_dashboard(request):
         'completed':      progress,
         'total_topics':   total_topics,
     })
+    
+    #plans
+@login_required
+def plans(request):
+    return render(request, 'plans.html')
 
 
 # 🟢 Login Page
 def login_view(request):
     return render(request, 'login.html')
 
+
+@login_required
+def start_trial(request):
+    from datetime import timedelta
+    from django.utils import timezone
+    from .models import Subscription
+
+    Subscription.objects.update_or_create(
+        user=request.user,
+        defaults={
+            'plan': 'premium',
+            'status': 'active',
+            'expires_at': timezone.now() + timedelta(days=7)
+        }
+    )
+
+    return redirect('index')
 
 @login_required
 def submit_test(request, test_id):

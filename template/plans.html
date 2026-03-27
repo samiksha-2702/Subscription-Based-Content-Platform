@@ -100,15 +100,6 @@ footer{
 PrepEdge
 </a>
 
-<div>
-<a href="{% url 'home' %}" class="btn btn-outline-light btn-sm me-2">
-← Home
-</a>
-<a href="{% url 'login' %}" class="btn btn-info btn-sm">
-Login
-</a>
-</div>
-
 </div>
 </nav>
 
@@ -125,32 +116,34 @@ Unlock premium interview preparation tools & AI insights
 
 <div class="row justify-content-center g-4">
 
-<!-- Free Plan -->
+<!-- 🔥 FREE TRIAL -->
 <div class="col-md-4">
 <div class="plan-card p-4 text-center h-100">
 
-<h4>Free Plan</h4>
-<p class="text-secondary">For beginners</p>
+<h4>7 Days Free Trial</h4>
+<p class="text-secondary">Try all premium features</p>
 
 <h1 class="text-success my-3">₹0</h1>
+<p class="text-secondary">for 7 days</p>
 
 <ul class="list-unstyled text-start mb-4 features">
-<li>✔ Limited interview questions</li>
-<li>✔ Basic explanations</li>
-<li>✔ Articles access</li>
-<li class="text-secondary">❌ Mock tests</li>
-<li class="text-secondary">❌ AI insights</li>
+<li>✔ Unlimited questions</li>
+<li>✔ Topic mock tests</li>
+<li>✔ Score analytics</li>
+<li>✔ AI insights</li>
+<li>✔ Interview simulator</li>
+<li class="text-warning">⏳ 7 days trial only</li>
 </ul>
 
-<a href="{% url 'login' %}" 
+<a href="{% url 'start_trial' %}" 
    class="btn btn-outline-info w-100 btn-modern">
-Start Free
+Start Free Trial
 </a>
 
 </div>
 </div>
 
-<!-- Premium Plan -->
+<!-- 💎 PREMIUM -->
 <div class="col-md-4">
 <div class="plan-card premium p-4 text-center h-100">
 
