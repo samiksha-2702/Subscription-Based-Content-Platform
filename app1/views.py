@@ -10,13 +10,10 @@ from .models import TestResult, Test , Subscription
 from django.shortcuts import render, get_object_or_404 , redirect
 from django.http import JsonResponse
 from django.urls import reverse
-<<<<<<< HEAD
 from datetime import timedelta
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Avg
-=======
->>>>>>> 5dd32239723f2b8e06eb3262006c876bfd21918c
 
 
 def register(request):
