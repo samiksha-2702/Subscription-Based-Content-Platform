@@ -72,6 +72,7 @@ def user_logout(request):
     return redirect('login')
 
 
+@login_required
 def profile_view(request):
     user = request.user
 
@@ -217,9 +218,6 @@ def subscribe(request):
 
 def programming_home(request):
     return render(request, 'programming.html')
-
-def home(request):
-    return render(request, 'home.html')
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -725,7 +723,7 @@ def premium_dashboard(request):
 
     if request.user.is_authenticated:
         recent_results = TestResult.objects.filter(
-            user=request.user).order_by('-attempted_at')[:5]
+            user=request.user).order_by('-date_attempted')[:5]
         progress = UserProgress.objects.filter(
             user=request.user, completed=True).count()
         total_topics = UserProgress.objects.filter(
@@ -740,20 +738,12 @@ def premium_dashboard(request):
         'completed':      progress,
         'total_topics':   total_topics,
     })
-    
-    #plans
-def plans(request):
-    return render(request, 'plans.html')
 
 
 # 🟢 Login Page
 def login_view(request):
     return render(request, 'login.html')
 
-
-# 🟢 Payment Page
-def payment(request):
-    return render(request, 'payment.html')
 
 @login_required
 def submit_test(request, test_id):
@@ -784,7 +774,7 @@ def submit_test(request, test_id):
             correct_answers=correct,
             wrong_answers=wrong,
             skipped_questions=skipped,
-            score=score,
+            marks=score,
             time_taken=time_taken,
             desc1=desc1,
             desc2=desc2,
