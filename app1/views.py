@@ -72,6 +72,7 @@ def user_logout(request):
     logout(request)
     return redirect('login')
 
+
 @login_required
 def profile_view(request):
     user = request.user
@@ -217,9 +218,6 @@ def subscribe(request):
 @login_required
 def programming_home(request):
     return render(request, 'programming.html')
-
-def home(request):
-    return render(request, 'home.html')
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -753,7 +751,7 @@ def premium_dashboard(request):
 
     if request.user.is_authenticated:
         recent_results = TestResult.objects.filter(
-            user=request.user).order_by('-attempted_at')[:5]
+            user=request.user).order_by('-date_attempted')[:5]
         progress = UserProgress.objects.filter(
             user=request.user, completed=True).count()
         total_topics = UserProgress.objects.filter(
@@ -779,10 +777,6 @@ def plans(request):
 def login_view(request):
     return render(request, 'login.html')
 
-
-# 🟢 Payment Page
-def payment(request):
-    return render(request, 'payment.html')
 
 @login_required
 def start_trial(request):
@@ -833,7 +827,7 @@ def submit_test(request, test_id):
             wrong_answers=wrong,
             skipped_questions=skipped,
             obtained_marks=obtained_marks,
-            score=score,
+            marks=score,
             time_taken=time_taken,
             desc1=desc1,
             desc2=desc2,
@@ -864,12 +858,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, redirect
-# ──────────────────────────────────────────────
-# 1.  PLANS PAGE  (no changes needed, already works)
-# ──────────────────────────────────────────────
-def plans(request):
-    return render(request, 'plans.html')
- 
+
  
 # ──────────────────────────────────────────────
 # 2.  PAYMENT PAGE  (replaces the old 1-liner)
