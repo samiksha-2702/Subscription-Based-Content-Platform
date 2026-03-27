@@ -91,19 +91,28 @@ function submitTest() {
 
     // Send AJAX POST
     fetch("{% url 'submit_test' test.id %}", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "X-CSRFToken": csrfToken
-        },
-        body: new URLSearchParams({score: score})
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-CSRFToken": csrfToken,
+        "X-Requested-With": "XMLHttpRequest"   // ✅ IMPORTANT
+    },
+    body: new URLSearchParams({
+        score: score,
+        total: Q.length,
+        correct: score,
+        wrong: Q.length - score,
+        skipped: 0,
+        time_taken: 900 - time
     })
-    .then(resp => resp.json())
-    .then(data => {
-        // Redirect to result page
-        window.location.href = data.redirect_url;
-    })
-    .catch(err => console.error(err));
+
+})
+.then(resp => resp.json())
+.then(data => {
+    console.log(data);  // optional debug
+    window.location.href = data.redirect_url;
+})
+.catch(err => console.error(err));
 }
 
 // Bind submit button

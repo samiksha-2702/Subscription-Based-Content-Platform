@@ -2,28 +2,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>JavaScript Practice Page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JavaScript Practice Zone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-    body {
-        margin:0;
-        font-family: Arial, sans-serif;
-        background: linear-gradient(135deg,#1e293b,#020617);
-        color:#e5e7eb;
-    }
-    .container { max-width:1000px; margin:auto; padding:25px; }
-    h1 { text-align:center; }
-    .section-title { font-size:22px; margin:30px 0 15px; border-left:4px solid #3b82f6; padding-left:10px; }
-    .card { background:#0f172a; padding:20px; border-radius:12px; margin-bottom:18px; box-shadow:0 6px 18px rgba(0,0,0,.5); }
-    button { padding:10px 16px; border:none; border-radius:8px; cursor:pointer; font-weight:bold; background:#2563eb; color:white; margin-top:10px; }
-    button:hover { background:#1d4ed8; }
-    textarea { width:100%; height:140px; border-radius:8px; border:none; padding:12px; font-family:Arial; font-size:14px; margin-top:10px; }
-    .output { background:black; padding:12px; border-radius:8px; margin-top:10px; min-height:40px; color:#22c55e; overflow-y: auto;
-    max-height: 200px;
- }
-    .result { background:#16a34a; padding:15px; border-radius:8px; margin-top:15px; }
-    </style>
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(135deg,#1e293b,#020617);
+color:#e5e7eb;
+}
+
+.container{
+max-width:1000px;
+margin:auto;
+padding:25px;
+}
+
+h1{text-align:center}
+
+.section-title{
+font-size:22px;
+margin:30px 0 15px;
+border-left:4px solid #3b82f6;
+padding-left:10px;
+}
+
+.card{
+background:#0f172a;
+padding:20px;
+border-radius:12px;
+margin-bottom:18px;
+}
+
+button{
+padding:10px 16px;
+border:none;
+border-radius:8px;
+background:#2563eb;
+color:white;
+cursor:pointer;
+margin-top:10px;
+}
+
+textarea{
+width:100%;
+min-height:120px;
+padding:12px;
+border-radius:8px;
+border:1px solid #334155;
+background:#020617;
+color:white;
+margin-top:10px;
+}
+
+.output{
+background:black;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+color:#22c55e;
+max-height:200px;
+overflow:auto;
+}
+
+.result{
+background:#16a34a;
+padding:12px;
+border-radius:8px;
+margin-top:10px;
+}
+</style>
 </head>
 
 <body>
@@ -32,152 +81,153 @@
 
 <h1>JavaScript Practice Zone</h1>
 
-<!-- ================= FORM START ================= -->
 <form method="POST" action="{% url 'submit_test' test.id %}" id="practiceForm">
-    {% csrf_token %}
-    <input type="hidden" name="mcq_score" id="mcq_score" value="0">
-    <input type="hidden" name="d1" id="d1_hidden">
-    <input type="hidden" name="d2" id="d2_hidden">
-    <input type="hidden" name="d3" id="d3_hidden">
-    <input type="hidden" name="d4" id="d4_hidden">
-    <input type="hidden" name="d5" id="d5_hidden">
+{% csrf_token %}
 
-    <!-- ================= MCQ ================= -->
-    <div class="section-title">MCQ Practice</div>
-    <div id="mcqForm"></div>
-    <button type="button" onclick="checkMCQ()">Check MCQ Score</button>
-    <div id="mcqResult"></div>
+<input type="hidden" name="mcq_score" id="mcq_score">
+<input type="hidden" name="d1" id="d1_hidden">
+<input type="hidden" name="d2" id="d2_hidden">
+<input type="hidden" name="d3" id="d3_hidden">
+<input type="hidden" name="d4" id="d4_hidden">
+<input type="hidden" name="d5" id="d5_hidden">
 
-    <!-- ================= DESCRIPTIVE ================= -->
-    <div class="section-title">Descriptive Practice</div>
-    <div class="card">
-        <b>1. Difference between var, let, and const.</b>
-        <textarea id="d1" placeholder="Write your answer here..."></textarea>
-    </div>
-    <div class="card">
-        <b>2. Explain JavaScript data types.</b>
-        <textarea id="d2" placeholder="Write your answer here..."></textarea>
-    </div>
-    <div class="card">
-        <b>3. Explain a for loop with example in JS.</b>
-        <textarea id="d3" placeholder="Write your answer here..."></textarea>
-    </div>
-    <div class="card">
-        <b>4. What is a function in JavaScript and why is it used?</b>
-        <textarea id="d4" placeholder="Write your answer here..."></textarea>
-    </div>
-    <div class="card">
-        <b>5. Explain Object-Oriented Programming (OOP) in JS.</b>
-        <textarea id="d5" placeholder="Write your answer here..."></textarea>
-    </div>
+<!-- ================= MCQ ================= -->
+<div class="section-title">MCQ Practice</div>
+<div id="mcqForm"></div>
+<button type="button" onclick="checkMCQ()">Check MCQ Score</button>
+<div id="mcqResult"></div>
 
-    <!-- ================= CODE PRACTICE ================= -->
-    <div class="section-title">Practice Logic Here (JS Runner)</div>
-    <div class="card">
-        <textarea id="codeArea">
-// Test small logic here
-let x = 5;
-let y = 7;
-console.log(x*y);
-        </textarea>
-        <button type="button" onclick="runCode()">Run Code</button>
-        <div class="output" id="output"></div>
-    </div>
+<!-- ================= DESCRIPTIVE ================= -->
+<div class="section-title">Descriptive Questions</div>
 
-    <button type="button" onclick="submitTest()">Submit All Answers</button>
+<div class="card">
+<label><b>1. Difference between var, let, and const</b></label>
+<textarea id="d1"></textarea>
+</div>
+
+<div class="card">
+<label><b>2. Explain JavaScript data types</b></label>
+<textarea id="d2"></textarea>
+</div>
+
+<div class="card">
+<label><b>3. Explain for loop with example</b></label>
+<textarea id="d3"></textarea>
+</div>
+
+<div class="card">
+<label><b>4. What is function in JavaScript?</b></label>
+<textarea id="d4"></textarea>
+</div>
+
+<div class="card">
+<label><b>5. Explain OOP in JavaScript</b></label>
+<textarea id="d5"></textarea>
+</div>
+
+<!-- ================= CODE ================= -->
+<div class="section-title">Code Practice</div>
+<textarea id="codeArea">console.log("Hello JS");</textarea>
+<button type="button" onclick="runCode()">Run Code</button>
+<div class="output" id="output"></div>
+
+<button type="button" onclick="submitTest()">Submit All</button>
+
 </form>
-
-<a href="{% url 'javasinfo' %}" style="display:inline-block;margin-top:20px;padding:10px 16px;background:#2563eb;color:white;border-radius:8px;text-decoration:none;">Back to Module</a>
 
 </div>
 
 <script>
-// ================= MCQ SETUP =================
+
+// ================= MCQ DATA =================
 const mcqs = [
-    ["Which of these is a JS data type?", ["String","Integer","Character","Decimal"], 0],
-    ["What is the output of typeof []?", ["object","array","list","undefined"], 0],
-    ["Which keyword declares a block scoped variable?", ["var","let","const","dim"], 1],
-    ["What does '===' operator do?", ["Assign","Strict equality","Compare types","None"], 1],
-    ["Which method adds element to the end of an array?", ["push()","pop()","shift()","unshift()"], 0]
+["JS data type?", ["String","Integer","Character","Decimal"], 0],
+["typeof [] ?", ["object","array","list","undefined"], 0],
+["Block scope keyword?", ["var","let","const","dim"], 1],
+["=== operator?", ["Assign","Strict equality","Compare","None"], 1],
+["Array end method?", ["push()","pop()","shift()","unshift()"], 0]
 ];
 
 const formDiv = document.getElementById("mcqForm");
-// Load previous MCQ selections from localStorage
-mcqs.forEach((q,i)=>{
-    const saved = localStorage.getItem("mcq"+i);
-    if(saved !== null){
-        const radio = document.querySelector(`input[name=m${i}][value='${saved}']`);
-        if(radio) radio.checked = true;
-    }
 
-    // Save selection on change
-    document.querySelectorAll(`input[name=m${i}]`).forEach(radio=>{
-        radio.addEventListener('change', () => {
-            localStorage.setItem("mcq"+i, radio.value);
-        });
-    });
+// ================= RENDER MCQ =================
+mcqs.forEach((q,i)=>{
+let html=`<div class="card"><b>${i+1}. ${q[0]}</b>`;
+q[1].forEach((opt,j)=>{
+html+=`<label><input type="radio" name="m${i}" value="${j}"> ${opt}</label>`;
 });
+html+=`</div>`;
+formDiv.innerHTML+=html;
+});
+
+// ================= LOAD SAVED MCQ =================
+mcqs.forEach((q,i)=>{
+const saved=localStorage.getItem("mcq"+i);
+if(saved!==null){
+const radio=document.querySelector(`input[name=m${i}][value='${saved}']`);
+if(radio) radio.checked=true;
+}
+document.querySelectorAll(`input[name=m${i}]`).forEach(r=>{
+r.addEventListener("change",()=>localStorage.setItem("mcq"+i,r.value));
+});
+});
+
+// ================= MCQ SCORE =================
 function checkMCQ(){
-    let score = 0;
-    mcqs.forEach((q,i)=>{
-        let ans = document.querySelector(`input[name=m${i}]:checked`);
-        if(ans && Number(ans.value) === q[2]) score++;
-    });
-    document.getElementById("mcqResult").innerHTML =
-        `<div class="result">Score: ${score} / ${mcqs.length}</div>`;
-    return score;
+let score=0;
+mcqs.forEach((q,i)=>{
+let ans=document.querySelector(`input[name=m${i}]:checked`);
+if(ans && Number(ans.value)===q[2]) score++;
+});
+document.getElementById("mcqResult").innerHTML=`<div class="result">Score: ${score}/${mcqs.length}</div>`;
+return score;
 }
 
 // ================= CODE RUNNER =================
 function runCode(){
-    let code = document.getElementById("codeArea").value;
-    let outputDiv = document.getElementById("output");
-    outputDiv.innerHTML=""; // clear previous output
+let code=document.getElementById("codeArea").value;
+let output=document.getElementById("output");
+output.innerHTML="";
 
-    // Create a temporary console
-    const originalConsole = console.log;
-    console.log = function(msg){
-        outputDiv.innerHTML += msg + "<br>";
-    };
+const originalLog=console.log;
+console.log=function(msg){output.innerHTML+=msg+"<br>";};
 
-    try {
-        eval(code); // run code
-    } catch(e){
-        outputDiv.innerHTML = "Error: " + e.message;
-    }
+try{eval(code);}catch(e){output.innerHTML="Error: "+e.message;}
 
-    console.log = originalConsole; // restore original console
+console.log=originalLog;
 }
 
-// ================= SUBMIT FORM =================
+// ================= SUBMIT =================
 function submitTest(){
-    if(confirm("Are you sure you want to submit all answers?")){
-        // Calculate MCQ score
-        document.getElementById("mcq_score").value = checkMCQ();
 
-        // Save descriptive answers
-        for(let i=1; i<=5; i++){
-            document.getElementById("d"+i+"_hidden").value = document.getElementById("d"+i).value;
-        }
+if(!confirm("Submit test?")) return;
 
-        // Submit form
-        document.getElementById("practiceForm").submit();
-    }
+document.getElementById("mcq_score").value=checkMCQ();
+
+// Save descriptive
+for(let i=1;i<=5;i++){
+document.getElementById("d"+i+"_hidden").value=
+document.getElementById("d"+i).value;
 }
 
-// ================= LOAD PREVIOUS ANSWERS =================
-window.onload = function(){
-    for(let i=1;i<=5;i++){
-        document.getElementById("d"+i).value = localStorage.getItem("desc"+i) || "";
-    }
+document.getElementById("practiceForm").submit();
+}
+
+// ================= LOAD SAVED TEXT =================
+window.onload=()=>{
+for(let i=1;i<=5;i++){
+document.getElementById("d"+i).value=
+localStorage.getItem("desc"+i)||"";
+}
 };
-// Auto-save descriptive answers as user types
-for(let i=1; i<=5; i++){
-    const textarea = document.getElementById("d"+i);
-    textarea.addEventListener('input', () => {
-        localStorage.setItem("desc"+i, textarea.value);
-    });
+
+// Auto save
+for(let i=1;i<=5;i++){
+document.getElementById("d"+i).addEventListener("input",e=>{
+localStorage.setItem("desc"+i,e.target.value);
+});
 }
+
 </script>
 
 </body>

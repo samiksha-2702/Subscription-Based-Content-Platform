@@ -1,244 +1,164 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DSA Practice Sets</title>
+<title>DSA Test</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
 body{
 margin:0;
-font-family:Segoe UI, Arial, sans-serif;
+font-family:Segoe UI;
 background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb
+color:#e5e7eb;
 }
-
-header{
-padding:25px;
-text-align:center;
-background:#020617;
-border-bottom:1px solid #1f2937
-}
-
 .container{
-max-width:1100px;
+max-width:900px;
 margin:auto;
-padding:30px 20px
+padding:20px;
 }
-
 .card{
 background:#111827;
-padding:22px;
-border-radius:14px;
-margin-bottom:22px;
-border:1px solid #1f2937;
-box-shadow:0 10px 25px rgba(0,0,0,.5);
-transition:.3s
+padding:20px;
+border-radius:12px;
+margin-bottom:20px;
 }
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 0 20px rgba(34,197,94,.25)
-}
-
-.card h2{
-margin-top:0;
-color:#22c55e
-}
-
-code{
-display:block;
-background:#020617;
-padding:10px;
-border-radius:8px;
-margin-top:10px;
-white-space:pre-wrap;
-font-family:monospace
-}
-
 .btn{
-padding:10px 16px;
+padding:10px 15px;
 background:#22c55e;
 border:none;
 border-radius:8px;
 color:white;
-font-weight:600;
 cursor:pointer;
-margin:10px 5px 10px 0;
-transition:.2s
 }
-
-.btn:hover{
-background:#16a34a;
-transform:scale(1.05)
-}
-
-input[type="text"], textarea{
-width:100%;
-padding:10px;
-margin:8px 0;
-border-radius:6px;
-background:#0f172a;
-border:1px solid #1f2937;
-color:white
-}
-
-label{
-display:block;
-margin-top:8px;
-cursor:pointer
-}
-
-#mcqScore{
-margin-top:10px;
-font-size:18px;
-font-weight:bold
-}
-
 .progress{
-width:100%;
 background:#020617;
-border-radius:8px;
+height:10px;
+border-radius:6px;
 margin-top:10px;
-overflow:hidden
 }
-
 .progress-bar{
 height:10px;
 width:0%;
 background:#22c55e;
-transition:.4s
 }
-
+textarea{
+width:100%;
+padding:10px;
+margin-top:8px;
+background:#0f172a;
+color:white;
+border:1px solid #1f2937;
+border-radius:6px;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>DSA Practice Sets</h1>
-<p>MCQs • Descriptive Questions • Code Practice</p>
-</header>
-
 <div class="container">
 
-<button class="btn" onclick="history.back()">⬅ Back</button>
+<h1>DSA Test</h1>
 
-<!-- MCQ -->
+<form id="testForm">
+{% csrf_token %}
 
 <div class="card">
+<h3>MCQs</h3>
 
-<h2>Multiple Choice Questions</h2>
-
-<form id="mcqForm">
-
-<p>1. Which data structure is FIFO?</p>
+<p>1. FIFO structure?</p>
 <label><input type="radio" name="q1" value="0"> Stack</label>
 <label><input type="radio" name="q1" value="1"> Queue</label>
-<label><input type="radio" name="q1" value="0"> Linked List</label>
 
-<p>2. Best case complexity of Bubble Sort?</p>
+<p>2. Bubble sort best case?</p>
 <label><input type="radio" name="q2" value="1"> O(n)</label>
 <label><input type="radio" name="q2" value="0"> O(n²)</label>
-<label><input type="radio" name="q2" value="0"> O(log n)</label>
 
-<p>3. Binary search requires?</p>
-<label><input type="radio" name="q3" value="0"> Unsorted array</label>
-<label><input type="radio" name="q3" value="1"> Sorted array</label>
-<label><input type="radio" name="q3" value="0"> Stack</label>
+<p>3. Binary search needs?</p>
+<label><input type="radio" name="q3" value="1"> Sorted</label>
+<label><input type="radio" name="q3" value="0"> Unsorted</label>
 
-<p>4. Which structure uses nodes and pointers?</p>
-<label><input type="radio" name="q4" value="0"> Array</label>
+<p>4. Uses nodes?</p>
 <label><input type="radio" name="q4" value="1"> Linked List</label>
-<label><input type="radio" name="q4" value="0"> Queue</label>
+<label><input type="radio" name="q4" value="0"> Array</label>
 
-<button type="button" class="btn" onclick="calculateMCQ()">Submit MCQs</button>
-<button type="reset" class="btn">Reset</button>
+</div>
 
-<p id="mcqScore"></p>
+<div class="card">
+<h3>Descriptive</h3>
+<textarea id="desc1" placeholder="Stack vs Queue"></textarea>
+<textarea id="desc2" placeholder="Merge Sort"></textarea>
+<textarea id="desc3" placeholder="Linked List vs Array"></textarea>
+</div>
+
+<div class="card">
+<h3>Code Practice</h3>
+<textarea id="code" placeholder="Write code here..."></textarea>
+</div>
+
+<button type="button" class="btn" onclick="submitTest()">Submit Test</button>
+
+<p id="scoreText"></p>
 
 <div class="progress">
-<div class="progress-bar" id="progressBar"></div>
+<div class="progress-bar" id="bar"></div>
 </div>
 
 </form>
-
-</div>
-
-<!-- DESCRIPTIVE -->
-
-<div class="card">
-
-<h2>Descriptive Questions</h2>
-
-<p>Write your answer in the box below:</p>
-
-<label>1. Explain the difference between stack and queue:</label>
-<textarea rows="4" placeholder="Your answer here..."></textarea>
-
-<label>2. Explain Merge Sort algorithm with steps:</label>
-<textarea rows="4" placeholder="Your answer here..."></textarea>
-
-<label>3. When is a linked list preferred over an array?</label>
-<textarea rows="4" placeholder="Your answer here..."></textarea>
-
-</div>
-
-<!-- CODE PRACTICE -->
-
-<div class="card">
-
-<h2>Code Practice</h2>
-
-<p>Write pseudo-code or notes for these tasks:</p>
-
-<ul>
-<li>Reverse an array</li>
-<li>Implement stack using array</li>
-<li>Find maximum element in a linked list</li>
-<li>Check if string is palindrome</li>
-</ul>
-
-<textarea rows="6" placeholder="Write your code or notes here..."></textarea>
-
-</div>
-
 </div>
 
 <script>
 
-function calculateMCQ(){
+function submitTest(){
 
-const f=document.getElementById('mcqForm');
+let score = 0;
 
-let score=0;
-
+// MCQ logic
 for(let i=1;i<=4;i++){
-
-const q=f['q'+i];
-
-for(let j=0;j<q.length;j++){
-
-if(q[j].checked && q[j].value=='1') score++;
-
+    let options = document.getElementsByName("q"+i);
+    for(let j=0;j<options.length;j++){
+        if(options[j].checked && options[j].value=="1"){
+            score++;
+        }
+    }
 }
 
-}
+// UI update
+document.getElementById("scoreText").innerText = "Score: "+score+"/4";
+document.getElementById("bar").style.width = (score*25)+"%";
 
-let text="Your MCQ Score: "+score+"/4";
+// CSRF
+const csrf = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-let color="#22c55e";
+// SEND TO DJANGO
+fetch("{% url 'submit_test' test.id %}", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "X-CSRFToken": csrf,
+        "X-Requested-With": "XMLHttpRequest"
+    },
+    body: new URLSearchParams({
+        score: score,
+        total: 4,
+        correct: score,
+        wrong: 4 - score,
+        skipped: 0,
+        time_taken: 0,
 
-if(score<=1) color="#ef4444";
-else if(score==2) color="#f59e0b";
-
-const scoreBox=document.getElementById('mcqScore');
-
-scoreBox.innerText=text;
-scoreBox.style.color=color;
-
-document.getElementById("progressBar").style.width=(score*25)+"%";
+        desc1: document.getElementById("desc1").value,
+        desc2: document.getElementById("desc2").value,
+        desc3: document.getElementById("desc3").value,
+        desc4: "",
+        desc5: ""
+    })
+})
+.then(res => res.json())
+.then(data => {
+    window.location.href = data.redirect_url;
+})
+.catch(err => console.error(err));
 
 }
 

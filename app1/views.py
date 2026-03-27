@@ -6,13 +6,14 @@ from django.utils import timezone
 from .models import UserProfile
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
-from .models import TestResult, Test
+from .models import TestResult, Test , Subscription
 from django.shortcuts import render, get_object_or_404 , redirect
 from django.http import JsonResponse
 from django.urls import reverse
 from datetime import timedelta
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Avg
 
 
 def register(request):
@@ -69,10 +70,31 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+
 def profile_view(request):
-    return render(request, 'profile.html')
+    user = request.user
 
+    results = TestResult.objects.filter(user=user)
 
+    total_tests = results.count()
+
+    # ✅ Use marks instead of score
+    avg_score = results.aggregate(avg=Avg('marks'))['avg'] or 0
+
+    last_active = results.order_by('-date_attempted').first()
+
+    subscription = Subscription.objects.filter(user=user).first()
+
+    context = {
+        'total_tests': total_tests,
+        'avg_score': round(avg_score, 2),
+        'last_active': last_active.date_attempted if last_active else None,
+        'subscription': subscription,
+        'results': results
+    }
+
+    return render(request, 'profile.html', context)
 # HELPERS
 # ══════════════════════════════════════════════════════════════════
 
@@ -111,27 +133,42 @@ def _mark_progress(user, module, topic_name, content_type='lesson', completed=Fa
 
 def _save_test_result(user, module, test_name, score_pct,
                       total_q=0, correct=0, time_sec=0):
-    """Save a TestResult row and also feed the AI tracker."""
+
     if not user.is_authenticated:
         return
-    from .models import TestResult
-    TestResult.objects.create(
-        user=user, module=module, test_name=test_name,
-        score=score_pct, total_questions=total_q,
-        correct_answers=correct, time_taken=time_sec,
+
+    from .models import TestResult, Test
+
+    # ✅ Get actual Test object
+    test = Test.objects.filter(name=test_name).first()
+
+    # ✅ Calculate marks if not given
+    if total_q > 0 and correct > 0:
+        score_pct = (correct / total_q) * 100
+
+    result = TestResult.objects.create(
+        user=user,
+        test=test,                    # ✅ correct field
+        total_questions=total_q,
+        correct_answers=correct,
+        marks=score_pct,             # ✅ IMPORTANT FIX
+        time_taken=time_sec,
     )
-    # Also record for AI recommendations engine
+
+    # AI recommendation (keep same)
     SLUG_MAP = {
-        'python':       'python-basics',
-        'java':         'java-basics',
-        'cpp':          'cpp-basics',
-        'javascript':   'js-basics',
-        'sql':          'sql-basics',
-        'dsa':          'dsa-basics',
-        'communication':'comm-interview',
-        'aptitude':     'comm-interview',
+        'python': 'python-basics',
+        'java': 'java-basics',
+        'cpp': 'cpp-basics',
+        'javascript': 'js-basics',
+        'sql': 'sql-basics',
+        'dsa': 'dsa-basics',
+        'communication': 'comm-interview',
+        'aptitude': 'comm-interview',
     }
+
     slug = SLUG_MAP.get(module)
+
     if slug:
         try:
             from ai_recommendations.views import record_quiz_attempt
@@ -139,6 +176,7 @@ def _save_test_result(user, module, test_name, score_pct,
         except Exception:
             pass
 
+    return result
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -389,7 +427,7 @@ def java_test(request):
             score
         )
 
-    return render(request, "java_test.html", {"test": test})
+    return render(request, "java/java_test.html", {"test": test})
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -513,11 +551,14 @@ def sql_practice(request):
 def sql_test(request):
     test = Test.objects.filter(name="SQL Test").first()
 
-    if request.method == "POST" and request.is_ajax():
-        # Get score from POST
+    if request.method == "POST":
         score = int(request.POST.get("score", 0))
+
         result = _save_test_result(request.user, 'sql', test.name, score)
-        return JsonResponse({"redirect_url": f"/result/{result.id}/"})
+
+        return JsonResponse({
+            "redirect_url": f"/result/{result.id}/"
+        })
 
     return render(request, "sql/sql_test.html", {"test": test})
 # ══════════════════════════════════════════════════════════════════
@@ -541,19 +582,23 @@ def dsa_sort(request):
     return render(request, 'ds/dsa_sort.html')
 
 def dsa_practice(request):
+    test = Test.objects.filter(name="DSA Practice").first()
     _mark_progress(request.user, 'dsa', 'DSA Practice', 'practice')
-    return render(request, 'ds/dsa_practice.html')
+    return render(request, 'ds/dsa_practice.html', {"test": test})
 
 def dsa_test(request):
-    if request.method == 'POST':
-        try:
-            score = float(request.POST.get('score', 0))
-            _save_test_result(request.user, 'dsa', 'DSA Test', score)
-            _mark_progress(request.user, 'dsa', 'DSA Test', 'test', completed=True)
-        except (ValueError, TypeError):
-            pass
-    return render(request, 'ds/dsa_test.html')
+     test = Test.objects.filter(name="DSA Test").first()
 
+     if request.method == "POST":
+        score = int(request.POST.get("score", 0))
+
+        result = _save_test_result(request.user, 'dsa', test.name, score)
+
+        return JsonResponse({
+            "redirect_url": f"/result/{result.id}/"
+        })
+
+     return render(request, "ds/dsa_test.html", {"test": test})
 
 # ══════════════════════════════════════════════════════════════════
 # COMPANY MODULE

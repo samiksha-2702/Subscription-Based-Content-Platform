@@ -1,4 +1,4 @@
-```html
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,216 +7,65 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-
-body{
-margin:0;
-font-family:Segoe UI, Arial, sans-serif;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb
-}
-
-header{
-padding:25px;
-text-align:center;
-background:#020617;
-border-bottom:1px solid #1f2937
-}
-
-.container{
-max-width:1100px;
-margin:auto;
-padding:30px 20px
-}
-
-.card{
-background:#111827;
-padding:22px;
-border-radius:14px;
-margin-bottom:22px;
-border:1px solid #1f2937;
-box-shadow:0 10px 25px rgba(0,0,0,.5);
-transition:.3s
-}
-
-.card:hover{
-transform:translateY(-4px);
-box-shadow:0 0 20px rgba(59,130,246,.25)
-}
-
-.card h2{
-margin-top:0;
-color:#facc15
-}
-
-.btn{
-padding:10px 16px;
-background:#facc15;
-border:none;
-border-radius:8px;
-color:#111;
-font-weight:600;
-cursor:pointer;
-margin-bottom:20px;
-transition:.2s
-}
-
-.btn:hover{
-transform:scale(1.05);
-background:#eab308
-}
-
-label{
-display:block;
-margin-top:10px;
-cursor:pointer
-}
-
-#timer{
-font-weight:bold;
-font-size:18px;
-margin-bottom:20px;
-text-align:center
-}
-
-#testScore{
-font-size:20px;
-font-weight:bold;
-margin-top:20px
-}
-
-.progress{
-width:100%;
-background:#020617;
-border-radius:8px;
-margin-top:10px;
-overflow:hidden
-}
-
-.progress-bar{
-height:10px;
-width:0%;
-background:#facc15;
-transition:.4s
-}
-
+body{margin:0;font-family:Segoe UI;background:linear-gradient(135deg,#020617,#0f172a);color:#e5e7eb}
+header{padding:25px;text-align:center;background:#020617;border-bottom:1px solid #1f2937}
+.container{max-width:1100px;margin:auto;padding:30px 20px}
+.card{background:#111827;padding:22px;border-radius:14px;margin-bottom:22px;border:1px solid #1f2937}
+.card h2{color:#facc15}
+.btn{padding:10px 16px;background:#facc15;border:none;border-radius:8px;color:#111;font-weight:600;cursor:pointer}
+label{display:block;margin-top:10px}
+#timer{text-align:center;font-weight:bold;margin-bottom:15px}
+.progress{background:#020617;height:10px;border-radius:8px}
+.progress-bar{height:10px;width:0%;background:#facc15}
 </style>
 </head>
 
 <body>
 
 <header>
-
 <h1>DSA 15-Minute Test</h1>
-<p>MCQs with instant scoring</p>
-
-<div id="timer">Time Left: 15:00</div>
-
-<div class="progress">
-<div class="progress-bar" id="progressBar"></div>
-</div>
-
+<div id="timer">15:00</div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 </header>
 
 <div class="container">
 
-<button class="btn" onclick="history.back()">⬅ Back</button>
-
 <form id="testForm">
+{% csrf_token %}
 
 <!-- QUESTIONS -->
+<script>
+const questions = [
+"Divide & Conquer?","Stack follows?","Binary search works on?","Quick Sort worst case?",
+"Linear search complexity?","Stable sort?","FIFO structure?","Bubble sort best case?",
+"Array access complexity?","Queue removal?","Linked list insert head?","Binary search best case?",
+"In-place sort?","Linked list usage?","Recursion uses?"
+];
 
-<div class="card">
-<h2>1. Which algorithm is divide & conquer?</h2>
-<label><input type="radio" name="q1" value="1"> Merge Sort</label>
-<label><input type="radio" name="q1" value="0"> Bubble Sort</label>
-<label><input type="radio" name="q1" value="0"> Linear Search</label>
-</div>
+const options = [
+["Merge Sort","Bubble Sort","Linear Search"],
+["LIFO","FIFO"],
+["Sorted","Unsorted"],
+["O(n²)","O(n log n)"],
+["O(n)","O(log n)"],
+["Merge Sort","Quick Sort"],
+["Queue","Stack"],
+["O(n)","O(n²)"],
+["O(1)","O(n)"],
+["Dequeue","Push"],
+["O(1)","O(n)"],
+["O(1)","O(log n)"],
+["Quick Sort","Merge Sort"],
+["Dynamic memory","Fixed"],
+["Stack","Queue"]
+];
 
-<div class="card">
-<h2>2. Stack follows?</h2>
-<label><input type="radio" name="q2" value="1"> LIFO</label>
-<label><input type="radio" name="q2" value="0"> FIFO</label>
-</div>
+const answers=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+</script>
 
-<div class="card">
-<h2>3. Binary search works on?</h2>
-<label><input type="radio" name="q3" value="1"> Sorted array</label>
-<label><input type="radio" name="q3" value="0"> Unsorted array</label>
-</div>
+<div id="questions"></div>
 
-<div class="card">
-<h2>4. Worst case of Quick Sort?</h2>
-<label><input type="radio" name="q4" value="1"> O(n²)</label>
-<label><input type="radio" name="q4" value="0"> O(n log n)</label>
-</div>
-
-<div class="card">
-<h2>5. Time complexity of Linear Search?</h2>
-<label><input type="radio" name="q5" value="1"> O(n)</label>
-<label><input type="radio" name="q5" value="0"> O(log n)</label>
-</div>
-
-<div class="card">
-<h2>6. Which is stable sort?</h2>
-<label><input type="radio" name="q6" value="1"> Merge Sort</label>
-<label><input type="radio" name="q6" value="0"> Quick Sort</label>
-</div>
-
-<div class="card">
-<h2>7. Which data structure is FIFO?</h2>
-<label><input type="radio" name="q7" value="1"> Queue</label>
-<label><input type="radio" name="q7" value="0"> Stack</label>
-</div>
-
-<div class="card">
-<h2>8. Best case of Bubble Sort?</h2>
-<label><input type="radio" name="q8" value="1"> O(n)</label>
-<label><input type="radio" name="q8" value="0"> O(n²)</label>
-</div>
-
-<div class="card">
-<h2>9. Accessing an array element complexity?</h2>
-<label><input type="radio" name="q9" value="1"> O(1)</label>
-<label><input type="radio" name="q9" value="0"> O(n)</label>
-</div>
-
-<div class="card">
-<h2>10. Queue removal operation?</h2>
-<label><input type="radio" name="q10" value="1"> Dequeue</label>
-<label><input type="radio" name="q10" value="0"> Push</label>
-</div>
-
-<div class="card">
-<h2>11. Linked list insertion at head?</h2>
-<label><input type="radio" name="q11" value="1"> O(1)</label>
-<label><input type="radio" name="q11" value="0"> O(n)</label>
-</div>
-
-<div class="card">
-<h2>12. Binary Search best case?</h2>
-<label><input type="radio" name="q12" value="1"> O(1)</label>
-<label><input type="radio" name="q12" value="0"> O(log n)</label>
-</div>
-
-<div class="card">
-<h2>13. Which sort is in-place?</h2>
-<label><input type="radio" name="q13" value="1"> Quick Sort</label>
-<label><input type="radio" name="q13" value="0"> Merge Sort</label>
-</div>
-
-<div class="card">
-<h2>14. When use linked list over array?</h2>
-<label><input type="radio" name="q14" value="1"> Dynamic memory needed</label>
-<label><input type="radio" name="q14" value="0"> Fixed size array</label>
-</div>
-
-<div class="card">
-<h2>15. Recursion uses which structure?</h2>
-<label><input type="radio" name="q15" value="1"> Stack</label>
-<label><input type="radio" name="q15" value="0"> Queue</label>
-</div>
-
-<button type="button" class="btn" onclick="calculateTest()">Submit Test</button>
+<button type="button" class="btn" onclick="submitTest()">Submit Test</button>
 
 <p id="testScore"></p>
 
@@ -226,66 +75,74 @@ transition:.4s
 
 <script>
 
-let time=15*60
-const timerEl=document.getElementById('timer')
+// Render questions
+const qDiv=document.getElementById("questions");
 
-const timerInterval=setInterval(()=>{
+questions.forEach((q,i)=>{
+let html=`<div class="card"><h2>${i+1}. ${q}</h2>`;
+options[i].forEach((opt,j)=>{
+html+=`<label><input type="radio" name="q${i}" value="${j}"> ${opt}</label>`;
+});
+html+=`</div>`;
+qDiv.innerHTML+=html;
+});
 
-let min=Math.floor(time/60)
-let sec=time%60
+// Timer
+let time=900;
+const timerEl=document.getElementById("timer");
 
-timerEl.innerText=`Time Left: ${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`
-
-if(time<120){
-timerEl.style.color="#ef4444"
-}
-
-time--
-
+setInterval(()=>{
+let m=Math.floor(time/60);
+let s=time%60;
+timerEl.innerText=`${m}:${s<10?"0":""}${s}`;
+time--;
 if(time<0){
-clearInterval(timerInterval)
-alert("Time's up! Submitting test.")
-calculateTest()
+alert("Time up!");
+submitTest();
 }
+},1000);
 
-},1000)
+// Submit function
+function submitTest(){
 
+let score=0;
 
-function calculateTest(){
-
-const f=document.getElementById('testForm')
-
-let score=0
-
-for(let i=1;i<=15;i++){
-
-const q=f['q'+i]
-
-for(let j=0;j<q.length;j++){
-
-if(q[j].checked && q[j].value=='1') score++
-
+questions.forEach((q,i)=>{
+const selected=document.querySelector(`input[name="q${i}"]:checked`);
+if(selected && parseInt(selected.value)===answers[i]){
+score++;
 }
+});
 
-}
+let percent=(score/15)*100;
+document.getElementById("progressBar").style.width=percent+"%";
+document.getElementById("testScore").innerText="Score: "+score+"/15";
 
-let percent=(score/15)*100
+// CSRF
+const csrf=document.querySelector('[name=csrfmiddlewaretoken]').value;
 
-document.getElementById("progressBar").style.width=percent+"%"
-
-let text="Your Score: "+score+"/15"
-
-let color="#22c55e"
-
-if(score<=5) color="#ef4444"
-else if(score<=10) color="#f59e0b"
-
-const scoreBox=document.getElementById('testScore')
-
-scoreBox.innerText=text
-scoreBox.style.color=color
-
-window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})
+// SEND TO DJANGO
+fetch("{% url 'submit_test' test.id %}",{
+method:"POST",
+headers:{
+"Content-Type":"application/x-www-form-urlencoded",
+"X-CSRFToken":csrf,
+"X-Requested-With":"XMLHttpRequest"
+},
+body:new URLSearchParams({
+score:score,
+total:15,
+correct:score,
+wrong:15-score,
+skipped:0,
+time_taken:900-time
+})
+})
+.then(res=>res.json())
+.then(data=>{
+window.location.href=data.redirect_url;
+})
+.catch(err=>console.error(err));
 
 }
 
@@ -293,4 +150,3 @@ window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})
 
 </body>
 </html>
-```
