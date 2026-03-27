@@ -84,7 +84,7 @@ urlpatterns = [
     path('sql-advanced/', views.sql_advanced, name='sql_advanced'),
     path('sql-practice/', views.sql_practice, name='sql_practice'),
     path('sql-test/', views.sql_test, name='sql_test'),
-     path('sql/result/<int:result_id>/', views.result_page, name='result'),
+    path('sql/result/<int:result_id>/', views.result_page, name='result'),
 
     # DSA
     path('ds/', views.dsa_info, name='dsa_info'),
@@ -130,4 +130,5 @@ urlpatterns = [
     
    path('submit-test/<int:test_id>/', views.submit_test, name='submit_test'),
     path('result/<int:result_id>/', views.result_page, name='result'),
+    path('start-trial/', views.start_trial, name='start_trial')
 ]
