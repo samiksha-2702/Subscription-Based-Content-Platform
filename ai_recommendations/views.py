@@ -35,6 +35,7 @@ def _compute_performance_summary(user):
       strongest_topic   – str or None
       weakest_topic     – str or None
       smart_insights    – list of str
+      
     """
     attempts_qs = UserQuizAttempt.objects.filter(user=user)
     total_attempts = attempts_qs.count()
@@ -46,6 +47,7 @@ def _compute_performance_summary(user):
             'strongest_topic':  None,
             'weakest_topic':    None,
             'smart_insights':   [],
+            'pass_rate': 0,
         }
 
     # Overall accuracy = mean of all quiz scores
@@ -176,6 +178,7 @@ def ai_dashboard(request):
     weak_areas        : list[UserWeakArea]  each enriched with .avg_score
     recommendations   : QuerySet[UserRecommendation]
     smart_insights    : list[str]
+    
     """
     user = request.user
 
@@ -191,10 +194,10 @@ def ai_dashboard(request):
         .order_by('-weakness_score')
     )
 
-    if not weak_areas_qs.exists() and summary['total_attempts'] > 0:
-        # Auto-generate on first visit if user has data but no computed rows yet
+    if summary['total_attempts'] > 0:
         engine = RecommendationEngine(user)
-        engine.run(save_to_db=True)
+        result = engine.run(save_to_db=True)
+        print("Engine run:", result)  # debug
         weak_areas_qs = (
             UserWeakArea.objects
             .filter(user=user)
@@ -230,6 +233,7 @@ def ai_dashboard(request):
 
         # Page meta
         'page_title':       'AI Recommendations',
+        'pass_rate': summary['pass_rate'],
     }
 
     return render(request, 'ai.html', context)
@@ -426,3 +430,23 @@ def record_score(request):
         score = score,
     )
     return JsonResponse({'status': 'ok', 'topic': slug, 'score': score})
+
+
+from .models import UserRecommendation, UserWeakArea
+
+def generate_recommendations(user):
+    weak_areas = UserWeakArea.objects.filter(user=user).order_by('-weakness_score')[:5]
+
+    # clear old ones (optional)
+    UserRecommendation.objects.filter(user=user).delete()
+
+    for weak in weak_areas:
+        UserRecommendation.objects.create(
+            user=user,
+            topic=weak.topic,
+            rec_type='topic',
+            title=f"Improve {weak.topic.name}",
+            description=f"You are weak in {weak.topic.name}. {weak.reason}",
+            url=f"/learn/{weak.topic.slug}/",
+            priority=int(weak.weakness_score * 10)
+        )

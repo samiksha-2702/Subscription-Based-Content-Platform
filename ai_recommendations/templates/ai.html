@@ -14,7 +14,6 @@ body {
     color: white;
 }
 
-/* Header */
 header {
     text-align: center;
     padding: 40px 20px;
@@ -29,14 +28,12 @@ header {
     margin: auto;
 }
 
-/* Grid Layout */
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 28px;
 }
 
-/* Card Styling */
 .card {
     background: linear-gradient(145deg, #111827, #0b1220);
     border-radius: 16px;
@@ -66,22 +63,11 @@ header {
 }
 
 .card:hover::after { opacity: 1; }
+.card h3 { margin-top: 0; font-size: 18px; }
+.card p  { font-size: 14px; opacity: 0.8; }
 
-.card h3 {
-    margin-top: 0;
-    font-size: 18px;
-}
-
-.card p {
-    font-size: 14px;
-    opacity: 0.8;
-}
-
-/* Table Section */
-.table-container {
-    margin-top: 50px;
-    overflow-x: auto;
-}
+/* Table */
+.table-container { margin-top: 50px; overflow-x: auto; }
 
 table {
     width: 100%;
@@ -91,48 +77,27 @@ table {
     overflow: hidden;
 }
 
-th, td {
-    padding: 14px;
-    text-align: center;
-}
-
-th {
-    background: #0b1220;
-}
-
-tr:nth-child(even) {
-    background: #0f172a;
-}
+th, td { padding: 14px; text-align: center; }
+th { background: #0b1220; }
+tr:nth-child(even) { background: #0f172a; }
 
 .weak   { color: #f87171; }
 .good   { color: #34d399; }
 .strong { color: #60a5fa; }
 
-/* Recommendation Section */
-.recommendation {
-    margin-top: 50px;
-}
+/* Recommendations */
+.recommendation { margin-top: 50px; }
+.recommendation .card { cursor: pointer; }
 
-.recommendation .card {
-    cursor: pointer;
-}
+.badge-urgent { background: #ef4444; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
+.badge-high   { background: #f59e0b; color: #000; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
+.badge-medium { background: #3b82f6; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
+.badge-low    { background: #6b7280; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
 
-/* Priority badge */
-.badge-urgent   { background: #ef4444; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-.badge-high     { background: #f59e0b; color: #000; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-.badge-medium   { background: #3b82f6; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-.badge-low      { background: #6b7280; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-
-.rec-link {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 13px;
-    color: #60a5fa;
-    text-decoration: none;
-}
+.rec-link { display: inline-block; margin-top: 10px; font-size: 13px; color: #60a5fa; text-decoration: none; }
 .rec-link:hover { text-decoration: underline; }
 
-/* Insight Box */
+/* Insight */
 .insight {
     margin-top: 50px;
     padding: 25px;
@@ -141,7 +106,7 @@ tr:nth-child(even) {
     box-shadow: 0 10px 25px rgba(0,0,0,0.6);
 }
 
-/* Refresh button */
+/* Buttons */
 .refresh-form { text-align: right; margin-bottom: 10px; }
 .btn-refresh {
     background: transparent;
@@ -152,11 +117,60 @@ tr:nth-child(even) {
     cursor: pointer;
     font-size: 14px;
     transition: background 0.2s;
+    text-decoration: none;
+    display: inline-block;
 }
 .btn-refresh:hover { background: rgba(59,130,246,0.15); }
 
-/* Empty state */
 .empty-state { opacity: 0.5; font-style: italic; margin: 20px 0; }
+
+/* Empty state hero */
+.no-data-hero {
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(145deg, #111827, #0b1220);
+    border-radius: 16px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.no-data-hero .icon { font-size: 56px; margin: 0; line-height: 1; }
+.no-data-hero h2   { margin: 16px 0 8px; font-size: 22px; }
+.no-data-hero p    { opacity: 0.6; max-width: 400px; margin: 0 auto; font-size: 15px; line-height: 1.6; }
+.no-data-hero .steps {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 32px 0;
+    flex-wrap: wrap;
+}
+.no-data-hero .step {
+    background: rgba(59,130,246,0.08);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    width: 160px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+.no-data-hero .step .step-num {
+    font-size: 22px;
+    font-weight: bold;
+    color: #60a5fa;
+    margin-bottom: 6px;
+}
+.no-data-hero .cta {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 11px 28px;
+    border: 1px solid #3b82f6;
+    color: #60a5fa;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+.no-data-hero .cta:hover { background: rgba(59,130,246,0.15); }
 
 footer {
     text-align: center;
@@ -177,7 +191,7 @@ footer {
 
 <div class="container">
 
-    <!-- Refresh Button -->
+    <!-- Refresh Button — always visible -->
     <div class="refresh-form">
         <form method="post" action="{% url 'ai_refresh' %}">
             {% csrf_token %}
@@ -185,28 +199,60 @@ footer {
         </form>
     </div>
 
-    <!-- ────────────────────────────────────────────────────────
+    {% if total_attempts == 0 %}
+    <!-- ══════════════════════════════════════════════════════
+         EMPTY STATE — no tests taken yet
+    ══════════════════════════════════════════════════════ -->
+    <div class="no-data-hero">
+        <p class="icon">🎯</p>
+        <h2>Your AI dashboard is ready!</h2>
+        <p>
+            Take your first quiz so the AI can analyse your performance,
+            identify weak areas, and build your personalised study plan.
+        </p>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                Pick any topic from the home page
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                Complete the quiz
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                Come back here for your AI plan
+            </div>
+        </div>
+
+        <a href="/" class="cta">→ Go take a quiz</a>
+    </div>
+
+    {% else %}
+    <!-- ══════════════════════════════════════════════════════
+         MAIN DASHBOARD — shown after at least one test
+    ══════════════════════════════════════════════════════ -->
+
+    <!-- ────────────────────────────────────────────────────
          1. PERFORMANCE SUMMARY
-         Variables: overall_accuracy, total_attempts,
-                    strongest_topic, weakest_topic
     ──────────────────────────────────────────────────────── -->
     <h2>📊 Performance Summary</h2>
     <div class="grid">
 
         <div class="card">
             <h3>Overall Accuracy</h3>
-            <p>
-                {% if overall_accuracy is not None %}
-                    {{ overall_accuracy }}%
-                {% else %}
-                    <span class="empty-state">No data yet</span>
-                {% endif %}
-            </p>
+            <p>{{ overall_accuracy }}%</p>
         </div>
 
         <div class="card">
             <h3>Tests Attempted</h3>
-            <p>{{ total_attempts|default:"0" }}</p>
+            <p>{{ total_attempts }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Pass Rate</h3>
+            <p>{{ pass_rate }}%</p>
         </div>
 
         <div class="card">
@@ -231,13 +277,16 @@ footer {
             </p>
         </div>
 
+        <div class="card">
+            <h3>Topics to Improve</h3>
+            <p>{{ weak_areas|length }}</p>
+        </div>
+
     </div><!-- /.grid -->
 
 
-    <!-- ────────────────────────────────────────────────────────
+    <!-- ────────────────────────────────────────────────────
          2. WEAK AREA ANALYSIS
-         Variable: weak_areas  (queryset of UserWeakArea)
-         Each item has: .topic.name, .weakness_score, .reason
     ──────────────────────────────────────────────────────── -->
     <div class="table-container">
         <h2>⚠ Weak Area Analysis</h2>
@@ -251,28 +300,17 @@ footer {
                 <th>Status</th>
                 <th>Reason</th>
             </tr>
-
             {% for wa in weak_areas %}
             <tr>
                 <td>{{ wa.topic.name }}</td>
-
-                <!-- Accuracy: derived from weakness_score (1 - weakness = accuracy) -->
                 <td>
                     {% if wa.avg_score is not None %}
                         {{ wa.avg_score|floatformat:0 }}%
                     {% else %}
-                        {% with accuracy=wa.weakness_score|sub_and_pct %}
-                            {{ accuracy }}%
-                        {% endwith %}
-                        {# Fallback: show estimated accuracy as (1 - weakness) * 100 #}
                         {{ wa.estimated_accuracy }}%
                     {% endif %}
                 </td>
-
-                <!-- Weakness score as percentage -->
-                <td>{{ wa.weakness_score|floatformat:0 }}%</td>
-
-                <!-- Status label based on weakness_score -->
+                <td>{% widthratio wa.weakness_score 1 100 %}%</td>
                 <td>
                     {% if wa.weakness_score >= 0.7 %}
                         <span class="weak">Weak</span>
@@ -282,39 +320,28 @@ footer {
                         <span class="strong">Strong</span>
                     {% endif %}
                 </td>
-
-                <td style="font-size:13px; opacity:0.75;">
-                    {{ wa.reason|default:"—" }}
-                </td>
+                <td style="font-size:13px; opacity:0.75;">{{ wa.reason|default:"—" }}</td>
             </tr>
             {% endfor %}
-
         </table>
         {% else %}
-            <p class="empty-state">
-                No weak areas found yet. Complete some quizzes to get personalized analysis!
-            </p>
+            <p class="empty-state">No weak areas detected — great work!</p>
         {% endif %}
 
     </div><!-- /.table-container -->
 
 
-    <!-- ────────────────────────────────────────────────────────
+    <!-- ────────────────────────────────────────────────────
          3. PERSONALIZED RECOMMENDATIONS
-         Variable: recommendations  (queryset of UserRecommendation)
-         Each item has: .title, .description, .url, .priority,
-                        .rec_type, .get_rec_type_display, .id
     ──────────────────────────────────────────────────────── -->
     <div class="recommendation">
         <h2>🎯 Recommended For You</h2>
 
         {% if recommendations %}
         <div class="grid">
-
             {% for rec in recommendations %}
             <div class="card" id="rec-{{ rec.id }}">
 
-                <!-- Priority badge -->
                 {% if rec.priority == 1 %}
                     <span class="badge-urgent">Urgent</span>
                 {% elif rec.priority <= 3 %}
@@ -325,15 +352,13 @@ footer {
                     <span class="badge-low">Low</span>
                 {% endif %}
 
-                <h3 style="margin-top: 10px;">{{ rec.title }}</h3>
+                <h3 style="margin-top:10px;">{{ rec.title }}</h3>
                 <p>{{ rec.description }}</p>
 
-                <!-- Action link (if URL exists) -->
                 {% if rec.url %}
                     <a href="{{ rec.url }}" class="rec-link">→ Go to Resource</a>
                 {% endif %}
 
-                <!-- Dismiss button -->
                 <form method="post"
                       action="{% url 'ai_dismiss' rec.id %}"
                       class="dismiss-form"
@@ -349,8 +374,7 @@ footer {
 
             </div>
             {% endfor %}
-
-        </div><!-- /.grid -->
+        </div>
         {% else %}
             <p class="empty-state">
                 🎉 No pending recommendations. Keep up the great work, or
@@ -365,25 +389,28 @@ footer {
     </div><!-- /.recommendation -->
 
 
-    <!-- ────────────────────────────────────────────────────────
+    <!-- ────────────────────────────────────────────────────
          4. SMART INSIGHTS
-         Variable: smart_insights  (list of strings)
-         Generated dynamically in the view based on performance
     ──────────────────────────────────────────────────────── -->
     <div class="insight">
         <h2>💡 Smart Insights</h2>
-
         {% if smart_insights %}
             {% for insight in smart_insights %}
                 <p>• {{ insight }}</p>
             {% endfor %}
         {% else %}
-            <p class="empty-state">
-                Complete more quizzes to unlock personalized insights.
-            </p>
+            <p class="empty-state">Complete more quizzes to unlock personalized insights.</p>
         {% endif %}
-
     </div>
+
+    <!-- Quick links -->
+    <div style="margin-top:40px;">
+        <a href="{% url 'ai_weak_areas' %}" class="btn-refresh" style="margin-right:12px;">📊 View Weak Areas</a>
+        <a href="{% url 'ai_learning_path' %}" class="btn-refresh">🗺️ View Learning Path</a>
+    </div>
+
+    {% endif %}
+    <!-- end if total_attempts == 0 -->
 
 </div><!-- /.container -->
 
