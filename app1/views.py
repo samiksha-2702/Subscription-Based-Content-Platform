@@ -157,6 +157,22 @@ def cancel_subscription(request):
         sub.save()
 
     return redirect('profile')
+@login_required
+def about(request):
+    return render(request, 'about.html')
+from .models import Feedback
+@login_required
+def about(request):
+    if request.method == "POST":
+        Feedback.objects.create(
+            name=request.POST.get("name"),
+            email=request.POST.get("email"),
+            message=request.POST.get("message")
+        )
+
+        messages.success(request, "Message saved successfully!")
+
+    return render(request, 'about.html')
 # HELPERS
 # ══════════════════════════════════════════════════════════════════
 

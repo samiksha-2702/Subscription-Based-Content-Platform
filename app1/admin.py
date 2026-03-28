@@ -10,7 +10,9 @@ from .models import (
     UserProgress, TestResult, ContactMessage,
 )
 from .models import Test
+from .models import Feedback
 
+admin.site.register(Feedback)
 admin.site.register(Test)
 # ══════════════════════════════════════════════════════════════════
 # SITE HEADER
