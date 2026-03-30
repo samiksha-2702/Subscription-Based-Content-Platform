@@ -341,7 +341,7 @@ def ai_dashboard(request):
         'module_stats':    module_stats,
         'has_data':        has_data,
     }
-    return render(request, 'ai_recommendations/dashboard.html', context)
+    return render(request, 'ai/dashboard.html', context)
 
 
 @login_required
@@ -396,7 +396,7 @@ def weak_areas_detail(request):
         'enriched':    enriched,
         'total_topics': weak_areas.count(),
     }
-    return render(request, 'ai_recommendations/weak_areas.html', context)
+    return render(request, 'ai/weak_areas.html', context)
 
 
 @login_required
@@ -428,7 +428,7 @@ def learning_path(request):
         'weak_areas':         weak_areas,
         'unattempted_topics': unattempted_topics,
     }
-    return render(request, 'ai_recommendations/learning_path.html', context)
+    return render(request, 'ai/learning_path.html', context)
 
 
 @login_required
