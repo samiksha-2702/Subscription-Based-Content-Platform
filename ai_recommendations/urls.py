@@ -3,6 +3,8 @@ from . import views        # adjust import to match your app structure
  
 urlpatterns = [
     # Dashboard – main recommendations page
+    path('ai-home/', views.ai_recommendations, name='ai_recommendations'),
+    
     path('dashboard/',          views.ai_dashboard,            name='ai_dashboard'),
  
     # Refresh recommendations (POST)

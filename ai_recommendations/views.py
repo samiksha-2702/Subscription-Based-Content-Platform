@@ -85,7 +85,6 @@ MODULE_DISPLAY = {
 WEAK_THRESHOLD   = 60.0   # below this → weak area
 STRONG_THRESHOLD = 80.0   # above this → strength
 
-
 def _get_or_create_topic(module: str, topic_name: str = None) -> Topic | None:
     """
     Return the Topic object for a given module slug.
@@ -479,3 +478,7 @@ def record_score(request):
 
     record_quiz_attempt(request.user, module, score, name)
     return JsonResponse({'status': 'ok', 'module': module, 'score': score})
+
+
+def ai_recommendations(request):
+    return render(request, 'ai.html')
