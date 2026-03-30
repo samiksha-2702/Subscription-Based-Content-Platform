@@ -16,6 +16,7 @@ from django.db.models import Avg
 from django.http import HttpResponse
 
 
+
 def register(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -211,49 +212,56 @@ def _mark_progress(user, module, topic_name, content_type='lesson', completed=Fa
 
 def _save_test_result(user, module, test_name, score_pct,
                       total_q=0, correct=0, time_sec=0):
-
+    """
+    Save a TestResult and notify the AI recommendations engine.
+    
+    BUG FIXED: was using `marks=` which doesn't exist on TestResult.
+               Corrected to `score=` and `obtained_marks=`.
+    """
     if not user.is_authenticated:
-        return
-
+        return None
+ 
     from .models import TestResult, Test
-
-    # ✅ Get actual Test object
+ 
     test = Test.objects.filter(name=test_name).first()
-
-    # ✅ Calculate marks if not given
+ 
+    # Recalculate score from correct/total if provided
     if total_q > 0 and correct > 0:
-        score_pct = (correct / total_q) * 100
-
+        score_pct = round((correct / total_q) * 100, 2)
+ 
     result = TestResult.objects.create(
-        user=user,
-        test=test,                    # ✅ correct field
-        total_questions=total_q,
-        correct_answers=correct,
-        marks=score_pct,             # ✅ IMPORTANT FIX
-        time_taken=time_sec,
+        user             = user,
+        test             = test,
+        total_questions  = total_q,
+        correct_answers  = correct,
+        score            = score_pct,       # ✅ FIXED: was `marks=`
+        obtained_marks   = correct,
+        time_taken       = time_sec,
     )
-
-    # AI recommendation (keep same)
-    SLUG_MAP = {
-        'python': 'python-basics',
-        'java': 'java-basics',
-        'cpp': 'cpp-basics',
-        'javascript': 'js-basics',
-        'sql': 'sql-basics',
-        'dsa': 'dsa-basics',
-        'communication': 'comm-interview',
-        'aptitude': 'comm-interview',
+ 
+    # ── Notify AI recommendations engine ─────────────────────────────────
+    # Maps module keys used in app1 → module keys understood by ai_recommendations
+    MODULE_MAP = {
+        'python':   'python',
+        'java':     'java',
+        'cpp':      'cpp',
+        'js':       'javascript',
+        'sql':      'sql',
+        'dsa':      'dsa',
+        'comm':     'communication',
+        'apti':     'aptitude',
+        'tech':     'tech',
+        'interv':   'interv',
     }
-
-    slug = SLUG_MAP.get(module)
-
-    if slug:
-        try:
-            from ai_recommendations.views import record_quiz_attempt
-            record_quiz_attempt(user, slug, score_pct)
-        except Exception:
-            pass
-
+    ai_module = MODULE_MAP.get(module, module)
+ 
+    try:
+        from ai_recommendations.views import record_quiz_attempt
+        record_quiz_attempt(user, ai_module, score_pct, topic_name=test_name)
+    except Exception as exc:
+        import logging
+        logging.getLogger(__name__).warning("AI rec update failed: %s", exc)
+ 
     return result
 
 
@@ -864,52 +872,64 @@ def start_trial(request):
 
 @login_required
 def submit_test(request, test_id):
-    if request.method == "POST":
-
-        test = get_object_or_404(Test, id=test_id)
-
-        total = int(request.POST.get("total") or 0)
-        correct = int(request.POST.get("correct") or 0)
-        wrong = int(request.POST.get("wrong") or 0)
-        skipped = int(request.POST.get("skipped") or 0)
-        time_taken = int(request.POST.get("time_taken") or 0)
-
-        desc1 = request.POST.get("desc1", "")
-        desc2 = request.POST.get("desc2", "")
-        desc3 = request.POST.get("desc3", "")
-        desc4 = request.POST.get("desc4", "")
-        desc5 = request.POST.get("desc5", "")
-
-        # ✅ Calculate marks
-        obtained_marks = correct  # or your logic
-
-        # ✅ Calculate score
-        score = round((obtained_marks / test.total_marks) * 100, 2) if test.total_marks > 0 else 0
-
-        # ✅ SAVE RESULT WITH SCORE
-        result = TestResult.objects.create(
-            user=request.user,
-            test=test,
-            total_questions=total,
-            correct_answers=correct,
-            wrong_answers=wrong,
-            skipped_questions=skipped,
-            score=score,   # 🔥 THIS WAS MISSING
-            obtained_marks=obtained_marks,
-            time_taken=time_taken,
-            desc1=desc1,
-            desc2=desc2,
-            desc3=desc3,
-            desc4=desc4,
-            desc5=desc5
-        )
-
-        if request.headers.get("x-requested-with") == "XMLHttpRequest":
-            return JsonResponse({
-                "redirect_url": reverse('result', args=[result.id])
-            })
-
-        return redirect('result', result.id)   
+    if request.method != "POST":
+        return redirect('index')
+ 
+    test = get_object_or_404(Test, id=test_id)
+ 
+    total      = int(request.POST.get("total") or 0)
+    correct    = int(request.POST.get("correct") or 0)
+    wrong      = int(request.POST.get("wrong") or 0)
+    skipped    = int(request.POST.get("skipped") or 0)
+    time_taken = int(request.POST.get("time_taken") or 0)
+ 
+    score = round((correct / test.total_marks) * 100, 2) if test.total_marks > 0 else 0
+ 
+    result = TestResult.objects.create(
+        user              = request.user,
+        test              = test,
+        total_questions   = total,
+        correct_answers   = correct,
+        wrong_answers     = wrong,
+        skipped_questions = skipped,
+        score             = score,
+        obtained_marks    = correct,
+        time_taken        = time_taken,
+        desc1             = request.POST.get("desc1", ""),
+        desc2             = request.POST.get("desc2", ""),
+        desc3             = request.POST.get("desc3", ""),
+        desc4             = request.POST.get("desc4", ""),
+        desc5             = request.POST.get("desc5", ""),
+    )
+ 
+    # ── Notify AI recommendations engine ─────────────────────────────────
+    # Map test.language to the module key used in ai_recommendations
+    LANG_TO_MODULE = {
+        'python': 'python',
+        'java':   'java',
+        'cpp':    'cpp',
+        'js':     'javascript',
+        'sql':    'sql',
+        'dsa':    'dsa',
+        'comm':   'communication',
+        'apti':   'aptitude',
+        'tech':   'tech',
+        'interv': 'interv',
+    }
+    ai_module = LANG_TO_MODULE.get(test.language, test.language)
+ 
+    try:
+        from ai_recommendations.views import record_quiz_attempt
+        record_quiz_attempt(request.user, ai_module, score, topic_name=test.name)
+    except Exception as exc:
+        import logging
+        logging.getLogger(__name__).warning("AI rec update failed in submit_test: %s", exc)
+ 
+    if request.headers.get("x-requested-with") == "XMLHttpRequest":
+        return JsonResponse({"redirect_url": reverse('result', args=[result.id])})
+ 
+    return redirect('result', result.id)
+  
 def result_page(request, result_id):
     result = get_object_or_404(TestResult, id=result_id)
     return render(request, 'result.html', {'result': result})

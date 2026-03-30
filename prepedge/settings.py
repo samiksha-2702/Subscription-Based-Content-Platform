@@ -41,7 +41,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         # FIXED: includes BOTH the project-level template/ folder AND app templates/
-        'DIRS': [BASE_DIR / 'template'],
+        'DIRS': [BASE_DIR / 'template', BASE_DIR / 'ai_recommendations' / 'templates'],
         'APP_DIRS': True,   # enables ai_recommendations/templates/ to be found
         'OPTIONS': {
             'context_processors': [
