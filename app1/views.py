@@ -293,7 +293,7 @@ def aptitude(request):
     })
 @login_required
 def ai_recommendation(request):
-    return render(request, 'ai.html')
+    return render(request, 'ai/dashboard.html')
 @login_required
 def plans(request):
     return render(request, 'plans.html')

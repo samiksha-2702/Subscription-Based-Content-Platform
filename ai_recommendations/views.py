@@ -497,4 +497,4 @@ def record_score(request):
 
 
 def ai_recommendations(request):
-    return render(request, 'ai.html')
+    return render(request, 'ai/dashboard')
