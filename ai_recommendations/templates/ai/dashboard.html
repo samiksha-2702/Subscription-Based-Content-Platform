@@ -1,79 +1,257 @@
 {% extends "base.html" %}
-{% block title %}AI Recommendations — PrepEdge{% endblock %}
+{% block title %}AI Dashboard — PrepEdge{% endblock %}
 
 {% block content %}
-<div class="mb-5">
 
-    <h2>🤖 AI Recommendations</h2>
-    <p class="text-muted">Personalised study plan based on your performance</p>
+<div class="dashboard">
 
-    <!-- Refresh Recommendations Button -->
-    <form method="POST" action="{% url 'ai_refresh' %}" class="mb-4">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3 class="logo">PrepEdge</h3>
+
+    <a href="#" class="active">🏠 Dashboard</a>
+    <a href="#">📊 Analytics</a>
+    <a href="#">🧠 AI Insights</a>
+    <a href="#">📝 Tests</a>
+    <a href="#">👤 Profile</a>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HEADER -->
+    <div class="topbar">
+      <h2>AI Learning Dashboard</h2>
+
+      <form method="POST" action="{% url 'ai_refresh' %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">🔄 Refresh Recommendations</button>
-    </form>
-
-    <!-- Stats Cards -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card text-center shadow-sm">
-                <div class="card-body">
-                    <h6>Quizzes Attempted</h6>
-                    <p class="display-6">{{ total_attempts }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-center shadow-sm">
-                <div class="card-body">
-                    <h6>Pass Rate</h6>
-                    <p class="display-6">{{ pass_rate }}%</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card text-center shadow-sm">
-                <div class="card-body">
-                    <h6>Topics to Improve</h6>
-                    <p class="display-6">{{ weak_areas|length }}</p>
-                </div>
-            </div>
-        </div>
+        <button class="btn">🔄 Refresh</button>
+      </form>
     </div>
 
-    <!-- Recommendations -->
-    <h4>📋 Your Action Plan</h4>
-    {% if recommendations %}
-        <div class="list-group mb-4">
-            {% for rec in recommendations %}
-            <div class="list-group-item shadow-sm mb-2">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        {% if rec.priority == 1 %}<span class="badge bg-danger">Urgent</span>
-                        {% elif rec.priority <= 3 %}<span class="badge bg-warning text-dark">High</span>
-                        {% elif rec.priority <= 5 %}<span class="badge bg-info text-dark">Medium</span>
-                        {% else %}<span class="badge bg-secondary">Low</span>{% endif %}
-                        {{ rec.get_rec_type_display }} – {{ rec.title }}
-                    </div>
-                    {% if rec.url %}
-                        <a href="{{ rec.url }}" class="btn btn-sm btn-outline-primary">Go to Resource</a>
-                    {% endif %}
-                </div>
-                <p class="mt-2 mb-0">{{ rec.description }}</p>
-            </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <div class="alert alert-success">
-            🎉 Great job! No urgent recommendations right now.
-        </div>
-    {% endif %}
+    <!-- STATS -->
+    <div class="stats">
+      <div class="card">
+        <h5>Total Attempts</h5>
+        <h2>{{ total_attempts|default:0 }}</h2>
+      </div>
 
-    <!-- Links -->
-    <div class="mb-4">
-        <a href="{% url 'ai_weak_areas' %}" class="btn btn-outline-secondary me-2">📊 View Weak Areas</a>
-        <a href="{% url 'ai_learning_path' %}" class="btn btn-outline-secondary">🗺️ View Learning Path</a>
+      <div class="card">
+        <h5>Pass Rate</h5>
+        <h2>{{ pass_rate|default:0 }}%</h2>
+        <div class="progress">
+          <div class="progress-bar" data-width="{{ pass_rate|default:0|floatformat:0 }}"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h5>Weak Areas</h5>
+        <h2>{{ weak_areas|length }}</h2>
+      </div>
     </div>
 
+    <!-- RECOMMENDATIONS -->
+    <div class="section">
+      <h3>📋 Recommendations</h3>
+
+      <div class="grid">
+        {% for rec in recommendations %}
+        <div class="card hover">
+          <span class="badge">{{ rec.get_rec_type_display }}</span>
+          <h4>{{ rec.title }}</h4>
+          <p>{{ rec.description }}</p>
+
+          {% if rec.url %}
+          <a href="{{ rec.url }}" class="link-btn">Open</a>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- WEAK AREAS -->
+    <div class="section">
+      <h3>⚠ Weak Areas</h3>
+
+      <div class="grid">
+        {% for wa in weak_areas %}
+        <div class="card hover">
+          <h4>{{ wa.topic }}</h4>
+
+          <div class="progress">
+            <div class="progress-bar weak-bar" data-width="{{ wa.weakness_score|default:0|floatformat:0 }}"></div>
+          </div>
+
+          <p>Score: {{ wa.weakness_score|floatformat:2 }}</p>
+          <small>{{ wa.reason }}</small>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- INSIGHTS -->
+    <div class="section">
+      <h3>💡 AI Insights</h3>
+
+      <div class="card">
+        {% for insight in smart_insights %}
+          <p>• {{ insight }}</p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </main>
 </div>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0b1220;
+  color: #e5e7eb;
+}
+
+/* Layout */
+.dashboard {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background: #111827;
+  height: 100vh;
+  padding: 20px;
+  position: fixed;
+}
+
+.sidebar .logo {
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  display: block;
+  color: #9ca3af;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.sidebar a:hover,
+.sidebar .active {
+  background: #1f2937;
+  color: white;
+}
+
+/* Main */
+.main {
+  margin-left: 240px;
+  padding: 30px;
+  width: 100%;
+}
+
+/* Topbar */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+/* Button */
+.btn {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border: none;
+  padding: 10px 16px;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Cards */
+.card {
+  background: #111827;
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Hover */
+.hover:hover {
+  transform: translateY(-5px);
+  transition: 0.3s;
+  border-color: #6366f1;
+}
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+/* Section */
+.section {
+  margin-top: 30px;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Badge */
+.badge {
+  background: linear-gradient(90deg, #22c55e, #3b82f6);
+  padding: 4px 10px;
+  font-size: 11px;
+  border-radius: 6px;
+}
+
+/* Progress */
+.progress {
+  height: 6px;
+  background: #1f2937;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  transition: width 0.6s;
+}
+
+.weak-bar {
+  background: linear-gradient(90deg, #ef4444, #f97316);
+}
+
+/* Links */
+.link-btn {
+  display: inline-block;
+  margin-top: 10px;
+  color: #6366f1;
+  text-decoration: none;
+}
+
+.link-btn:hover {
+  text-decoration: underline;
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll('[data-width]').forEach(function (el) {
+    let width = parseFloat(el.getAttribute('data-width')) || 0;
+    el.style.width = Math.min(width, 100) + "%";
+  });
+});
+</script>
+
 {% endblock %}

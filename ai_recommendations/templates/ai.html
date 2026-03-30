@@ -5,179 +5,143 @@
 
 {% block extra_head %}
 <style>
-* { box-sizing: border-box; }
+:root {
+    --bg: #0f172a;
+    --card: #111827;
+    --border: rgba(255,255,255,0.08);
+    --primary: #6366f1;
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+}
 
 body {
     margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
 }
 
 header {
     text-align: center;
     padding: 40px 20px;
-    background: rgba(15,23,42,0.7);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.6);
+    border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+header p {
+    color: var(--muted);
 }
 
 .container {
-    padding: 40px 20px;
+    padding: 30px 20px;
     max-width: 1200px;
     margin: auto;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 28px;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
 }
 
 .card {
-    background: linear-gradient(145deg, #111827, #0b1220);
-    border-radius: 16px;
-    padding: 25px;
-    position: relative;
-    box-shadow:
-        0 10px 25px rgba(0,0,0,0.6),
-        inset 0 0 0 1px rgba(255,255,255,0.05);
-    transition: all 0.35s ease;
-}
-
-.card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 16px;
-    opacity: 0;
-    transition: opacity 0.35s;
-    box-shadow: 0 0 25px rgba(59,130,246,0.5);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+    transition: 0.25s;
 }
 
 .card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow:
-        0 20px 40px rgba(0,0,0,0.9),
-        0 0 20px rgba(59,130,246,0.25);
+    transform: translateY(-5px);
 }
 
-.card:hover::after { opacity: 1; }
-.card h3 { margin-top: 0; font-size: 18px; }
-.card p  { font-size: 14px; opacity: 0.8; }
-
-/* Table */
-.table-container { margin-top: 50px; overflow-x: auto; }
+.table-container {
+    margin-top: 40px;
+}
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background: #111827;
-    border-radius: 12px;
+    background: var(--card);
+    border-radius: 10px;
     overflow: hidden;
+    border: 1px solid var(--border);
 }
 
-th, td { padding: 14px; text-align: center; }
-th { background: #0b1220; }
-tr:nth-child(even) { background: #0f172a; }
-
-.weak   { color: #f87171; }
-.good   { color: #34d399; }
-.strong { color: #60a5fa; }
-
-/* Recommendations */
-.recommendation { margin-top: 50px; }
-.recommendation .card { cursor: pointer; }
-
-.badge-urgent { background: #ef4444; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-.badge-high   { background: #f59e0b; color: #000; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-.badge-medium { background: #3b82f6; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-.badge-low    { background: #6b7280; color: #fff; border-radius: 6px; padding: 2px 8px; font-size: 11px; }
-
-.rec-link { display: inline-block; margin-top: 10px; font-size: 13px; color: #60a5fa; text-decoration: none; }
-.rec-link:hover { text-decoration: underline; }
-
-/* Insight */
-.insight {
-    margin-top: 50px;
-    padding: 25px;
-    border-radius: 16px;
-    background: linear-gradient(145deg, #111827, #0b1220);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+th {
+    background: rgba(255,255,255,0.05);
+    color: var(--muted);
+    font-size: 12px;
 }
 
-/* Buttons */
-.refresh-form { text-align: right; margin-bottom: 10px; }
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+tr {
+    border-bottom: 1px solid var(--border);
+}
+
+tr:hover {
+    background: rgba(255,255,255,0.03);
+}
+
+.weak   { color: #f87171; font-weight: 600; }
+.good   { color: #facc15; font-weight: 600; }
+.strong { color: #34d399; font-weight: 600; }
+
 .btn-refresh {
-    background: transparent;
-    border: 1px solid #3b82f6;
-    color: #60a5fa;
-    padding: 8px 18px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 16px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
-    transition: background 0.2s;
-    text-decoration: none;
-    display: inline-block;
 }
-.btn-refresh:hover { background: rgba(59,130,246,0.15); }
 
-.empty-state { opacity: 0.5; font-style: italic; margin: 20px 0; }
+.btn-refresh:hover {
+    opacity: 0.9;
+}
 
-/* Empty state hero */
+.rec-link {
+    color: #818cf8;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.rec-link:hover {
+    text-decoration: underline;
+}
+
+.insight {
+    margin-top: 30px;
+    padding: 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.empty-state {
+    color: var(--muted);
+    font-style: italic;
+}
+
 .no-data-hero {
     text-align: center;
     padding: 60px 20px;
-    background: linear-gradient(145deg, #111827, #0b1220);
-    border-radius: 16px;
-    margin-bottom: 40px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
-    border: 1px solid rgba(255,255,255,0.05);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
 }
-.no-data-hero .icon { font-size: 56px; margin: 0; line-height: 1; }
-.no-data-hero h2   { margin: 16px 0 8px; font-size: 22px; }
-.no-data-hero p    { opacity: 0.6; max-width: 400px; margin: 0 auto; font-size: 15px; line-height: 1.6; }
-.no-data-hero .steps {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    margin: 32px 0;
-    flex-wrap: wrap;
-}
-.no-data-hero .step {
-    background: rgba(59,130,246,0.08);
-    border: 1px solid rgba(59,130,246,0.2);
-    border-radius: 12px;
-    padding: 16px 20px;
-    width: 160px;
-    font-size: 13px;
-    opacity: 0.85;
-}
-.no-data-hero .step .step-num {
-    font-size: 22px;
-    font-weight: bold;
-    color: #60a5fa;
-    margin-bottom: 6px;
-}
-.no-data-hero .cta {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 11px 28px;
-    border: 1px solid #3b82f6;
-    color: #60a5fa;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: background 0.2s;
-}
-.no-data-hero .cta:hover { background: rgba(59,130,246,0.15); }
 
-footer {
-    text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: #020617;
-    opacity: 0.7;
+.no-data-hero p {
+    color: var(--muted);
 }
 </style>
 {% endblock %}
@@ -186,131 +150,60 @@ footer {
 
 <header>
     <h1>🧠 AI Recommendation Dashboard</h1>
-    <p>Personalized insights based on your performance, {{ request.user.first_name|default:request.user.username }}</p>
+    <p>{{ request.user.username }}</p>
 </header>
 
 <div class="container">
 
-    <!-- Refresh Button — always visible -->
-    <div class="refresh-form">
+    <!-- Refresh -->
+    <div style="text-align:right;">
         <form method="post" action="{% url 'ai_refresh' %}">
             {% csrf_token %}
-            <button type="submit" class="btn-refresh">🔄 Refresh Recommendations</button>
+            <button class="btn-refresh">🔄 Refresh</button>
         </form>
     </div>
 
     {% if total_attempts == 0 %}
-    <!-- ══════════════════════════════════════════════════════
-         EMPTY STATE — no tests taken yet
-    ══════════════════════════════════════════════════════ -->
+
+    <!-- EMPTY STATE -->
     <div class="no-data-hero">
-        <p class="icon">🎯</p>
-        <h2>Your AI dashboard is ready!</h2>
-        <p>
-            Take your first quiz so the AI can analyse your performance,
-            identify weak areas, and build your personalised study plan.
-        </p>
-
-        <div class="steps">
-            <div class="step">
-                <div class="step-num">1</div>
-                Pick any topic from the home page
-            </div>
-            <div class="step">
-                <div class="step-num">2</div>
-                Complete the quiz
-            </div>
-            <div class="step">
-                <div class="step-num">3</div>
-                Come back here for your AI plan
-            </div>
-        </div>
-
-        <a href="/" class="cta">→ Go take a quiz</a>
+        <h2>🚀 Start Learning</h2>
+        <p>Take a quiz to unlock AI insights.</p>
+        <a href="/" class="btn-refresh">Go to Quiz</a>
     </div>
 
     {% else %}
-    <!-- ══════════════════════════════════════════════════════
-         MAIN DASHBOARD — shown after at least one test
-    ══════════════════════════════════════════════════════ -->
 
-    <!-- ────────────────────────────────────────────────────
-         1. PERFORMANCE SUMMARY
-    ──────────────────────────────────────────────────────── -->
+    <!-- SUMMARY -->
     <h2>📊 Performance Summary</h2>
     <div class="grid">
+        <div class="card"><h3>Accuracy</h3><p>{{ overall_accuracy }}%</p></div>
+        <div class="card"><h3>Tests</h3><p>{{ total_attempts }}</p></div>
+        <div class="card"><h3>Pass Rate</h3><p>{{ pass_rate }}%</p></div>
+        <div class="card"><h3>Strongest</h3><p>{{ strongest_topic|default:"—" }}</p></div>
+        <div class="card"><h3>Weakest</h3><p>{{ weakest_topic|default:"—" }}</p></div>
+        <div class="card"><h3>Weak Areas</h3><p>{{ weak_areas|length }}</p></div>
+    </div>
 
-        <div class="card">
-            <h3>Overall Accuracy</h3>
-            <p>{{ overall_accuracy }}%</p>
-        </div>
-
-        <div class="card">
-            <h3>Tests Attempted</h3>
-            <p>{{ total_attempts }}</p>
-        </div>
-
-        <div class="card">
-            <h3>Pass Rate</h3>
-            <p>{{ pass_rate }}%</p>
-        </div>
-
-        <div class="card">
-            <h3>Strongest Topic</h3>
-            <p>
-                {% if strongest_topic %}
-                    {{ strongest_topic }}
-                {% else %}
-                    <span class="empty-state">—</span>
-                {% endif %}
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Weakest Topic</h3>
-            <p>
-                {% if weakest_topic %}
-                    {{ weakest_topic }}
-                {% else %}
-                    <span class="empty-state">—</span>
-                {% endif %}
-            </p>
-        </div>
-
-        <div class="card">
-            <h3>Topics to Improve</h3>
-            <p>{{ weak_areas|length }}</p>
-        </div>
-
-    </div><!-- /.grid -->
-
-
-    <!-- ────────────────────────────────────────────────────
-         2. WEAK AREA ANALYSIS
-    ──────────────────────────────────────────────────────── -->
+    <!-- WEAK AREAS -->
     <div class="table-container">
-        <h2>⚠ Weak Area Analysis</h2>
+        <h2>⚠ Weak Areas</h2>
 
-        {% if weak_areas %}
+        {% if weak_areas|length > 0 %}
         <table>
             <tr>
                 <th>Topic</th>
-                <th>Accuracy</th>
-                <th>Weakness Score</th>
+                <th>Weakness</th>
                 <th>Status</th>
                 <th>Reason</th>
             </tr>
+
             {% for wa in weak_areas %}
             <tr>
-                <td>{{ wa.topic.name }}</td>
-                <td>
-                    {% if wa.avg_score is not None %}
-                        {{ wa.avg_score|floatformat:0 }}%
-                    {% else %}
-                        {{ wa.estimated_accuracy }}%
-                    {% endif %}
-                </td>
-                <td>{% widthratio wa.weakness_score 1 100 %}%</td>
+                <td>{{ wa.topic }}</td>
+
+                <td>{{ wa.weakness_score|floatformat:2 }}</td>
+
                 <td>
                     {% if wa.weakness_score >= 0.7 %}
                         <span class="weak">Weak</span>
@@ -320,123 +213,66 @@ footer {
                         <span class="strong">Strong</span>
                     {% endif %}
                 </td>
-                <td style="font-size:13px; opacity:0.75;">{{ wa.reason|default:"—" }}</td>
+
+                <td style="font-size:13px;">
+                    {{ wa.reason|default:"—" }}
+                </td>
             </tr>
             {% endfor %}
         </table>
         {% else %}
-            <p class="empty-state">No weak areas detected — great work!</p>
+        <p class="empty-state">No weak areas 🎉</p>
         {% endif %}
+    </div>
 
-    </div><!-- /.table-container -->
-
-
-    <!-- ────────────────────────────────────────────────────
-         3. PERSONALIZED RECOMMENDATIONS
-    ──────────────────────────────────────────────────────── -->
-    <div class="recommendation">
-        <h2>🎯 Recommended For You</h2>
+    <!-- RECOMMENDATIONS -->
+    <div class="table-container">
+        <h2>🎯 Recommendations</h2>
 
         {% if recommendations %}
         <div class="grid">
+
             {% for rec in recommendations %}
-            <div class="card" id="rec-{{ rec.id }}">
+            <div class="card">
 
-                {% if rec.priority == 1 %}
-                    <span class="badge-urgent">Urgent</span>
-                {% elif rec.priority <= 3 %}
-                    <span class="badge-high">High Priority</span>
-                {% elif rec.priority <= 5 %}
-                    <span class="badge-medium">Medium</span>
-                {% else %}
-                    <span class="badge-low">Low</span>
-                {% endif %}
-
-                <h3 style="margin-top:10px;">{{ rec.title }}</h3>
+                <h3>{{ rec.title }}</h3>
                 <p>{{ rec.description }}</p>
 
                 {% if rec.url %}
-                    <a href="{{ rec.url }}" class="rec-link">→ Go to Resource</a>
+                <a href="{{ rec.url }}" class="rec-link">Open Resource →</a>
                 {% endif %}
 
-                <form method="post"
-                      action="{% url 'ai_dismiss' rec.id %}"
-                      class="dismiss-form"
-                      style="margin-top:12px;">
+                <form method="post" action="{% url 'ai_dismiss' rec.id %}">
                     {% csrf_token %}
-                    <button type="submit"
-                            style="background:transparent; border:1px solid #374151;
-                                   color:#9ca3af; border-radius:6px; padding:4px 10px;
-                                   font-size:12px; cursor:pointer;">
-                        ✕ Dismiss
+                    <button type="submit" class="btn-refresh" style="margin-top:10px; background:#6b7280;">
+                        Dismiss
                     </button>
                 </form>
 
             </div>
             {% endfor %}
+
         </div>
         {% else %}
-            <p class="empty-state">
-                🎉 No pending recommendations. Keep up the great work, or
-                <form method="post" action="{% url 'ai_refresh' %}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn-refresh">refresh</button>
-                </form>
-                to generate new ones.
-            </p>
+        <p class="empty-state">No recommendations available.</p>
         {% endif %}
+    </div>
 
-    </div><!-- /.recommendation -->
-
-
-    <!-- ────────────────────────────────────────────────────
-         4. SMART INSIGHTS
-    ──────────────────────────────────────────────────────── -->
+    <!-- INSIGHTS -->
     <div class="insight">
-        <h2>💡 Smart Insights</h2>
+        <h2>💡 Insights</h2>
+
         {% if smart_insights %}
             {% for insight in smart_insights %}
                 <p>• {{ insight }}</p>
             {% endfor %}
         {% else %}
-            <p class="empty-state">Complete more quizzes to unlock personalized insights.</p>
+            <p class="empty-state">Complete more quizzes.</p>
         {% endif %}
     </div>
 
-    <!-- Quick links -->
-    <div style="margin-top:40px;">
-        <a href="{% url 'ai_weak_areas' %}" class="btn-refresh" style="margin-right:12px;">📊 View Weak Areas</a>
-        <a href="{% url 'ai_learning_path' %}" class="btn-refresh">🗺️ View Learning Path</a>
-    </div>
-
     {% endif %}
-    <!-- end if total_attempts == 0 -->
 
-</div><!-- /.container -->
-
-
-<!-- AJAX dismiss (no page reload) -->
-<script>
-document.querySelectorAll('.dismiss-form').forEach(function(form) {
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const card = this.closest('.card');
-        fetch(this.action, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': this.querySelector('[name=csrfmiddlewaretoken]').value,
-                'X-Requested-With': 'XMLHttpRequest',
-            }
-        }).then(function(res) {
-            if (res.ok) {
-                card.style.transition = 'opacity 0.3s, transform 0.3s';
-                card.style.opacity = '0';
-                card.style.transform = 'scale(0.95)';
-                setTimeout(function() { card.remove(); }, 320);
-            }
-        });
-    });
-});
-</script>
+</div>
 
 {% endblock %}

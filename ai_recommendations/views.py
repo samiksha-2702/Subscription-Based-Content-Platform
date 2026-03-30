@@ -32,6 +32,9 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.db.models import Avg, Count, Min, Max
 from django.utils import timezone
+from .models import UserWeakArea
+from django.db import transaction
+
 
 from .models import (
     Topic,
@@ -82,8 +85,8 @@ MODULE_DISPLAY = {
 }
 
 # Score thresholds
-WEAK_THRESHOLD   = 60.0   # below this → weak area
-STRONG_THRESHOLD = 80.0   # above this → strength
+WEAK_THRESHOLD   = 20  # below this → weak area
+STRONG_THRESHOLD = 80   # above this → strength
 
 def _get_or_create_topic(module: str, topic_name: str = None) -> Topic | None:
     """
@@ -105,58 +108,33 @@ def _get_or_create_topic(module: str, topic_name: str = None) -> Topic | None:
     return topic
 
 
-def _refresh_weak_areas(user) -> None:
-    """
-    Recompute UserWeakArea rows for this user based on ALL their quiz attempts.
+def _refresh_weak_areas(user):
 
-    weakness_score formula
-    ─────────────────────
-    For each topic the user has attempted:
-        avg_score    = average of all attempt scores (0–100)
-        attempt_pen  = penalty for few attempts  (max 0.2 if only 1 attempt)
-        weakness_score = clamp(1 - avg_score/100 + attempt_pen, 0.0, 1.0)
-
-    High weakness_score → very weak.  Low → strong.
-    """
     attempts = (
         UserQuizAttempt.objects
         .filter(user=user)
         .values('topic')
-        .annotate(
-            avg_score=Avg('score'),
-            total=Count('id'),
-        )
+        .annotate(avg_score=Avg('score'))
     )
 
-    for row in attempts:
-        topic_id  = row['topic']
-        avg_score = row['avg_score'] or 0
-        total     = row['total']
+    with transaction.atomic():
 
-        # Small penalty if the user has only 1-2 attempts (less data confidence)
-        attempt_penalty = max(0, (3 - total) * 0.07)   # 0.14, 0.07, 0 for 1,2,3+ attempts
+        # reset
+        UserWeakArea.objects.filter(user=user).delete()
 
-        raw_weakness = 1.0 - (avg_score / 100.0) + attempt_penalty
-        weakness_score = round(min(max(raw_weakness, 0.0), 1.0), 3)
+        for row in attempts:
+            topic_id = row['topic']
+            avg_score = row['avg_score'] or 0
 
-        # Build a human-readable reason
-        if avg_score < WEAK_THRESHOLD:
-            reason = f"Average score {avg_score:.1f}% across {total} attempt(s) — needs revision"
-        elif avg_score < STRONG_THRESHOLD:
-            reason = f"Average score {avg_score:.1f}% — approaching proficiency"
-        else:
-            reason = f"Average score {avg_score:.1f}% — strong performance"
-
-        UserWeakArea.objects.update_or_create(
-            user=user,
-            topic_id=topic_id,
-            defaults={
-                'weakness_score': weakness_score,
-                'reason':         reason,
-            }
-        )
-
-
+            # ✅ ONLY weak areas stored
+            if avg_score <= 20:
+                UserWeakArea.objects.create(
+                    user=user,
+                    topic_id=topic_id,
+                    reason=f"Weak performance ({avg_score:.1f}%) — needs revision",
+                )
+    # ❗ No need to manually delete old topics — handled by full reset
+    
 def _generate_recommendations(user) -> None:
     """
     Rebuild UserRecommendation rows for a user based on their weak areas.
@@ -173,52 +151,43 @@ def _generate_recommendations(user) -> None:
     # Remove stale undismissed recs
     UserRecommendation.objects.filter(user=user, is_dismissed=False).delete()
 
-    weak_areas = (
-        UserWeakArea.objects
-        .filter(user=user, weakness_score__gt=0.4)
-        .select_related('topic')
-        .order_by('-weakness_score')[:8]
-    )
+    weak_areas = [
+    {
+        'topic': wa.topic.name,
+        'module': wa.topic.module,
+        'reason': wa.reason
+    }
+    for wa in UserWeakArea.objects.filter(user=user).select_related('topic')
+]
 
     priority = 1
 
     for wa in weak_areas:
-        topic       = wa.topic
-        score_pct   = round((1 - wa.weakness_score) * 100, 1)
-        module_name = topic.get_module_display() if hasattr(topic, 'get_module_display') else topic.module.title()
+        topic = wa.topic
 
-        # ── Recommendation A: Revisit topic ──────────────────────────────
         UserRecommendation.objects.create(
-            user        = user,
-            topic       = topic,
-            rec_type    = 'topic',
-            title       = f"Revisit {topic.name}",
-            description = (
-                f"Your average score in {topic.name} is around {score_pct}%. "
-                f"Reviewing the core concepts will help solidify your understanding. "
-                f"{wa.reason}"
-            ),
-            url         = topic.resource_url or f"/{topic.module}/",
-            priority    = priority,
+            user=user,
+            topic=topic,
+            rec_type='topic',
+            title=f"Revise {topic.name}",
+            description=f"{wa.reason}. Focus on core concepts.",
+            url=topic.resource_url or f"/{topic.module}/",
+            priority=priority,
         )
         priority += 1
 
-        # ── Recommendation B: Practice exercise (only if very weak) ──────
-        if wa.weakness_score > 0.55:
+        # extra practice for very weak
+        if "Weak performance" in wa.reason:
             UserRecommendation.objects.create(
-                user        = user,
-                topic       = topic,
-                rec_type    = 'exercise',
-                title       = f"Practice {topic.name} Exercises",
-                description = (
-                    f"Hands-on practice is the fastest way to improve in {topic.name}. "
-                    f"Try the practice set to boost your confidence."
-                ),
-                url         = f"/{topic.module}/practice/",
-                priority    = priority,
+                user=user,
+                topic=topic,
+                rec_type='exercise',
+                title=f"Practice {topic.name}",
+                description="Practice questions to improve accuracy.",
+                url=f"/{topic.module}/practice/",
+                priority=priority,
             )
             priority += 1
-
     # ── Global tip ────────────────────────────────────────────────────────
     total_attempts = UserQuizAttempt.objects.filter(user=user).count()
 
@@ -287,6 +256,8 @@ def record_quiz_attempt(user, module_or_slug: str, score: float,
 
     except Exception as exc:
         logger.warning("record_quiz_attempt failed: %s", exc)
+        logger.info("Record quiz called for user: %s", user)
+        print("RECORD QUIZ TRIGGERED")
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -295,55 +266,104 @@ def record_quiz_attempt(user, module_or_slug: str, score: float,
 
 @login_required
 def ai_dashboard(request):
-    """
-    Main AI Recommendations dashboard.
-    Shows weak areas, recommendations, and a performance summary.
-    """
     user = request.user
 
-    # Pull data
-    recommendations = (
-        UserRecommendation.objects
-        .filter(user=user, is_dismissed=False)
-        .select_related('topic')
-        .order_by('priority', '-created_at')[:10]
-    )
+    _refresh_weak_areas(user)
 
-    weak_areas = (
-        UserWeakArea.objects
+    attempts = UserQuizAttempt.objects.filter(user=user)
+
+    total_attempts = attempts.count()
+
+    overall_accuracy = attempts.aggregate(avg=Avg('score'))['avg'] or 0
+    overall_accuracy = round(overall_accuracy, 2)
+
+    pass_count = UserQuizAttempt.objects.filter(
+        user=user,
+        score__gte=60
+    ).count()
+
+    pass_rate = round((pass_count / total_attempts) * 100, 2) if total_attempts else 0
+
+    # ✅ PUT YOUR CODE HERE 👇
+    topic_scores = (
+        UserQuizAttempt.objects
         .filter(user=user)
-        .select_related('topic')
-        .order_by('-weakness_score')[:6]
+        .values('topic__name')
+        .annotate(avg_score=Avg('score'))
     )
 
-    total_attempts = UserQuizAttempt.objects.filter(user=user).count()
+    strongest_topic = None
+    weakest_topic = None
 
-    # Build module-level performance summary from app1's TestResult
-    # (works even if ai_recommendations Topics aren't fully seeded)
-    try:
-        from app1.models import TestResult
-        module_stats = (
-            TestResult.objects
-            .filter(user=user)
-            .values('test__language')
-            .annotate(avg=Avg('score'), attempts=Count('id'))
-            .order_by('test__language')
-        )
-    except Exception:
-        module_stats = []
+    if topic_scores:
+        strongest = max(topic_scores, key=lambda x: x['avg_score'])
+        weakest = min(topic_scores, key=lambda x: x['avg_score'])
 
-    has_data = total_attempts > 0 or bool(module_stats)
+        if strongest['avg_score'] >= 80:
+            strongest_topic = strongest['topic__name']
+
+        if weakest['avg_score'] <= 20:
+            weakest_topic = weakest['topic__name']
+
+    topic_scores = (
+    UserQuizAttempt.objects
+    .filter(user=user)
+    .values('topic__name')
+    .annotate(avg_score=Avg('score'))
+    .order_by('-avg_score')
+)   
+
+    strongest_topic = topic_scores.first()['topic__name'] if topic_scores else None
+    weakest_topic = topic_scores.last()['topic__name'] if topic_scores else None
+
+    # Weak areas
+    weak_areas_qs = UserWeakArea.objects.filter(user=user).select_related('topic')
+
+    weak_areas = [
+        {
+            'topic': wa.topic.name,
+            'module': wa.topic.module,
+            'weakness_score': wa.weakness_score,
+            'reason': wa.reason
+        }
+        for wa in weak_areas_qs
+    ]
+
+    recommendations = UserRecommendation.objects.filter(
+        user=user,
+        is_dismissed=False
+    ).select_related('topic')
+
+    smart_insights = []
+
+    if overall_accuracy < 50:
+        smart_insights.append("Focus on strengthening your fundamentals.")
+
+    if pass_rate < 60:
+        smart_insights.append("Work on improving accuracy and speed.")
+
+    if weak_areas_qs.count() > 3:
+        smart_insights.append("You have multiple weak topics — prioritize revision.")
+
+    if strongest_topic:
+        smart_insights.append(f"Your strongest topic is {strongest_topic} — keep practicing it.")
+
+    if weakest_topic:
+        smart_insights.append(f"Your weakest topic is {weakest_topic} — needs immediate attention.")
 
     context = {
+        'total_attempts': total_attempts,
+        'overall_accuracy': round(overall_accuracy, 2),
+        'pass_rate': pass_rate,
+        'strongest_topic': strongest_topic,
+        'weakest_topic': weakest_topic,
+        'weak_areas': weak_areas,
         'recommendations': recommendations,
-        'weak_areas':      weak_areas,
-        'total_attempts':  total_attempts,
-        'module_stats':    module_stats,
-        'has_data':        has_data,
+        'smart_insights': smart_insights,
+        'recent_attempts': attempts.order_by('-attempted_at')[:5],
     }
+
     return render(request, 'ai/dashboard.html', context)
-
-
 @login_required
 @require_POST
 def refresh_recommendations(request):
@@ -365,10 +385,9 @@ def dismiss_recommendation(request, rec_id):
         return JsonResponse({'status': 'ok'})
     return redirect('ai_dashboard')
 
-
+@login_required
 @login_required
 def weak_areas_detail(request):
-    """Detailed breakdown of all weak areas with score history."""
     user = request.user
 
     weak_areas = (
@@ -378,27 +397,24 @@ def weak_areas_detail(request):
         .order_by('-weakness_score')
     )
 
-    # Attach recent attempt history to each weak area
-    enriched = []
+    by_module = {}
+
     for wa in weak_areas:
-        attempts = (
-            UserQuizAttempt.objects
-            .filter(user=user, topic=wa.topic)
-            .order_by('-attempted_at')[:5]
-        )
-        enriched.append({
-            'weak_area': wa,
-            'attempts':  attempts,
-            'pct_score': round((1 - wa.weakness_score) * 100, 1),
+        module = wa.topic.module
+
+        if module not in by_module:
+            by_module[module] = []
+
+        by_module[module].append({
+            "topic": wa.topic,
+            "weakness_score": wa.weakness_score,
+            "reason": wa.reason,
+            "last_updated": wa.last_updated,
         })
 
-    context = {
-        'enriched':    enriched,
-        'total_topics': weak_areas.count(),
-    }
-    return render(request, 'ai/weak_areas.html', context)
-
-
+    return render(request, "weak_areas.html", {
+        "by_module": by_module
+    })
 @login_required
 def learning_path(request):
     """
