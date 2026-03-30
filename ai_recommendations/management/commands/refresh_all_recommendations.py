@@ -1,3 +1,5 @@
+from unittest import result
+
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from ai_recommendations.ai_engine import RecommendationEngine
@@ -32,7 +34,8 @@ class Command(BaseCommand):
             try:
                 engine = RecommendationEngine(user)
 
-                result = engine.run(save_to_db=True) or {}
+                if not result:
+                    self.stderr.write(f"⚠ No result for {user.username}")
 
                 weaknesses = result.get('weaknesses', [])
                 recommendations = result.get('recommendations', [])

@@ -2,7 +2,6 @@ from django.urls import include, path
 from app1 import views
 from django.contrib import admin
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -12,7 +11,7 @@ urlpatterns = [
 
     # AI Recommendations
     path('ai/', include('ai_recommendations.urls')),
-    path('ai-home/', views.ai_recommendation, name='ai'),
+    # path('ai-home/', views.ai_recommendation, name='ai'),
 
     # Main modules
     path('programming/', views.programming, name='programming'),

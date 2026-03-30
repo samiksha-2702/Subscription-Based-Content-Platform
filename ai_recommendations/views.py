@@ -89,13 +89,21 @@ WEAK_THRESHOLD   = 20  # below this → weak area
 STRONG_THRESHOLD = 80   # above this → strength
 
 def _get_or_create_topic(module: str, topic_name: str = None) -> Topic | None:
+    module = module.strip().lower()
     """
     Return the Topic object for a given module slug.
     Creates a placeholder Topic automatically if one doesn't exist yet,
     so the system works even before the admin seeds the Topic table.
     """
-    slug = MODULE_TO_SLUG.get(module, f"{module}-basics")
-    name = topic_name or MODULE_DISPLAY.get(module, module.title())
+    # slug = MODULE_TO_SLUG.get(module, f"{module}-basics")
+    # name = topic_name or MODULE_DISPLAY.get(module, module.title())
+    if topic_name:
+        clean_name = topic_name.strip()
+        slug = f"{module}-{clean_name.lower().replace(' ', '-')}"
+        name = clean_name
+    else:
+        slug = MODULE_TO_SLUG.get(module, f"{module}-basics")
+        name = MODULE_DISPLAY.get(module, module.title())
 
     topic, _ = Topic.objects.get_or_create(
         slug=slug,
@@ -151,14 +159,7 @@ def _generate_recommendations(user) -> None:
     # Remove stale undismissed recs
     UserRecommendation.objects.filter(user=user, is_dismissed=False).delete()
 
-    weak_areas = [
-    {
-        'topic': wa.topic.name,
-        'module': wa.topic.module,
-        'reason': wa.reason
-    }
-    for wa in UserWeakArea.objects.filter(user=user).select_related('topic')
-]
+    weak_areas = UserWeakArea.objects.filter(user=user).select_related('topic')
 
     priority = 1
 
@@ -254,10 +255,14 @@ def record_quiz_attempt(user, module_or_slug: str, score: float,
         _refresh_weak_areas(user)
         _generate_recommendations(user)
 
+    # except Exception as exc:
+    #     logger.warning("record_quiz_attempt failed: %s", exc)
+    #     logger.info("Record quiz called for user: %s", user)
+    #     print("RECORD QUIZ TRIGGERED")
+
     except Exception as exc:
-        logger.warning("record_quiz_attempt failed: %s", exc)
-        logger.info("Record quiz called for user: %s", user)
-        print("RECORD QUIZ TRIGGERED")
+        print("ERROR:", exc)
+        raise
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -385,7 +390,7 @@ def dismiss_recommendation(request, rec_id):
         return JsonResponse({'status': 'ok'})
     return redirect('ai_dashboard')
 
-@login_required
+
 @login_required
 def weak_areas_detail(request):
     user = request.user
