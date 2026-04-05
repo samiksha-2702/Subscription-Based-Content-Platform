@@ -675,10 +675,10 @@
    <div class="navbar" id="navbar">
       <div class="brand">PrepEdge</div>
       <div class="nav-links">
-        <a href="{% url 'plans' %}">
-          <i class="fas fa-crown" style="margin-right: 5px"></i>Subscription
-        </a>
-        
+       
+        {% if not subscription %}
+    <a href="{% url 'plans' %}" class="nav-link">Upgrade plan</a>
+{% endif %}
         {% if user.is_authenticated %}
           <!-- SHOW PROFILE DROPDOWN WHEN LOGGED IN -->
           <div class="profile-dropdown">

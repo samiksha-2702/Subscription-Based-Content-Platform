@@ -568,9 +568,7 @@
         <a href="{% url 'index' %}" class="brand">PrepEdge</a>
         <div class="nav-links">
             {% if user.is_authenticated %}
-                <a href="{% url 'ai_dashboard' %}">
-                    <i class="fas fa-robot"></i> AI Dashboard
-                </a>
+            
                 <a href="{% url 'plans' %}">
                     <i class="fas fa-crown"></i> Subscription
                 </a>

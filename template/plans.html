@@ -3,71 +3,74 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Subscription Plans | PrepEdge</title>
+<title>Upgrade | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 
+/* ===== BODY ===== */
 body{
-    font-family:Segoe UI, Arial, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg,#020617,#0f172a);
     color:white;
 }
 
-/* Navbar */
+/* ===== NAVBAR ===== */
 .navbar{
-    background: rgba(0,0,0,0.5) !important;
-    backdrop-filter: blur(12px);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
 }
 
-/* Heading */
+/* ===== HEADING ===== */
 .main-title{
-    font-size:2.5rem;
-    font-weight:700;
+    text-align:center;
+    font-size:2.2rem;
+    font-weight:bold;
+    margin-bottom:10px;
     background: linear-gradient(90deg,#3b82f6,#06b6d4);
     -webkit-background-clip:text;
+    background-clip:text;
     -webkit-text-fill-color:transparent;
 }
 
-/* Glass cards */
+/* ===== CARDS ===== */
 .plan-card{
     background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(14px);
-    border-radius:20px;
-    transition:0.4s;
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
-    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(12px);
+    border-radius:18px;
+    padding:30px;
+    transition:0.3s;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
 .plan-card:hover{
-    transform: translateY(-10px) scale(1.04);
-    box-shadow:0 20px 50px rgba(59,130,246,0.4);
+    transform: translateY(-8px) scale(1.03);
 }
 
-/* Premium highlight */
+/* PREMIUM CARD */
 .premium{
     border:2px solid #3b82f6;
-    position:relative;
-    transform: scale(1.05);
 }
 
-.premium-badge{
-    position:absolute;
-    top:-12px;
-    left:50%;
-    transform:translateX(-50%);
-    background:linear-gradient(90deg,#3b82f6,#06b6d4);
-    padding:6px 16px;
-    border-radius:20px;
-    font-size:12px;
-    font-weight:bold;
+/* ===== LIST ===== */
+ul{
+    list-style:none;
+    padding-left:0;
 }
 
-/* Buttons */
+li{
+    margin:6px 0;
+}
+
+.text-muted{
+    opacity:0.6;
+}
+
+/* ===== BUTTON ===== */
 .btn-modern{
-    border-radius:14px;
+    border-radius:12px;
     padding:12px;
     font-weight:bold;
     transition:0.3s;
@@ -77,15 +80,15 @@ body{
     transform:scale(1.05);
 }
 
-/* Feature list */
-.features li{
-    margin-bottom:8px;
-    font-size:15px;
+.btn-primary{
+    box-shadow:0 0 15px rgba(59,130,246,0.6);
 }
 
-/* Footer */
-footer{
-    border-top:1px solid rgba(255,255,255,0.1);
+/* TIMER */
+.timer{
+    text-align:center;
+    margin-bottom:20px;
+    font-weight:bold;
 }
 
 </style>
@@ -93,79 +96,91 @@ footer{
 
 <body>
 
-<!-- Navbar -->
+<!-- ===== NAVBAR ===== -->
 <nav class="navbar navbar-expand-lg navbar-dark">
 <div class="container">
 <a class="navbar-brand fw-bold text-info" href="{% url 'home' %}">
-PrepEdge
+PrepEdge 
 </a>
 
+<div class="ms-auto">
+<a href="{% url 'home' %}" class="btn btn-outline-light btn-sm">
+ Home
+</a>
+</div>
 </div>
 </nav>
 
-<!-- Plans -->
+<!-- ===== MAIN ===== -->
 <div class="container my-5">
 
-<h2 class="text-center main-title mb-2">
-Choose Your Plan 🚀
-</h2>
+<h2 class="main-title">Upgrade Your Plan </h2>
 
-<p class="text-center text-secondary mb-5">
-Unlock premium interview preparation tools & AI insights
+<!-- TIMER -->
+<p class="timer text-warning">
+⏳ Ends in: <span id="timer"></span>
 </p>
+
+<!-- TOGGLE -->
+<div class="text-center mb-4">
+<button onclick="setPlan('monthly')" class="btn btn-outline-info btn-sm">Monthly</button>
+<button onclick="setPlan('yearly')" class="btn btn-outline-info btn-sm">Yearly</button>
+</div>
 
 <div class="row justify-content-center g-4">
 
-<!-- 🔥 FREE TRIAL -->
+<!-- FREE -->
 <div class="col-md-4">
-<div class="plan-card p-4 text-center h-100">
+<div class="plan-card">
 
-<h4>7 Days Free Trial</h4>
-<p class="text-secondary">Try all premium features</p>
+<h5>Free Plan</h5>
+<h2 class="text-success">₹0</h2>
 
-<h1 class="text-success my-3">₹0</h1>
-<p class="text-secondary">for 7 days</p>
+<ul>
+<li>✔ Basic Study Material</li>
+<li>✔ Limited Company Info</li>
+<li>✔ 20 Questions/day</li>
+<li>✔ Basic Aptitude</li>
+<li>✔ Basic Communication</li>
 
-<ul class="list-unstyled text-start mb-4 features">
-<li>✔ Unlimited questions</li>
-<li>✔ Topic mock tests</li>
-<li>✔ Score analytics</li>
-<li>✔ AI insights</li>
-<li>✔ Interview simulator</li>
-<li class="text-warning">⏳ 7 days trial only</li>
+<li class="text-muted">✖ AI Features</li>
+<li class="text-muted">✖ Expert Talks</li>
+<li class="text-muted">✖ Interview Simulator</li>
 </ul>
 
 <a href="{% url 'start_trial' %}" 
-   class="btn btn-outline-info w-100 btn-modern">
-Start Free Trial
+class="btn btn-outline-info w-100 btn-modern">
+Start Free
 </a>
 
 </div>
 </div>
 
-<!-- 💎 PREMIUM -->
+<!-- PREMIUM -->
 <div class="col-md-4">
-<div class="plan-card premium p-4 text-center h-100">
+<div class="plan-card premium">
 
-<div class="premium-badge">🔥 Most Popular</div>
+<h5>Premium Plan</h5>
 
-<h4>Premium Plan</h4>
-<p class="text-secondary">For serious preparation</p>
+<h2 id="price" class="text-primary">₹299</h2>
+<p id="duration">per month</p>
 
-<h1 class="text-primary my-3">₹299</h1>
-<p class="text-secondary">per month</p>
+<p class="text-danger fw-bold">🔥 Limited Offer</p>
 
-<ul class="list-unstyled text-start mb-4 features">
-<li>✔ Unlimited questions</li>
-<li>✔ Topic mock tests</li>
-<li>✔ Score analytics</li>
-<li>✔ AI weak area detection</li>
-<li>✔ Interview simulator</li>
+<ul>
+<li>✔ Full Study Material</li>
+<li>✔ Detailed Company Info</li>
+<li>✔ Unlimited Questions</li>
+<li>✔ Advanced Aptitude</li>
+<li>✔ Communication Training</li>
+<li>✔ AI Recommendations</li>
+<li>✔ Expert Talks</li>
+<li>✔ Interview Simulator</li>
 </ul>
 
-<a href="{% url 'payment' %}" 
-   class="btn btn-primary w-100 btn-modern">
-Subscribe Now
+<a id="payBtn" href="{% url 'payment' %}?plan=monthly"
+class="btn btn-primary w-100 btn-modern">
+Upgrade 
 </a>
 
 </div>
@@ -174,10 +189,48 @@ Subscribe Now
 </div>
 </div>
 
-<!-- Footer -->
-<footer class="text-center p-4 mt-5 text-secondary">
-© 2026 PrepEdge | MCA Final Year Project
-</footer>
+<script>
+
+// TOGGLE
+function setPlan(type){
+    let price = document.getElementById("price");
+    let duration = document.getElementById("duration");
+    let btn = document.getElementById("payBtn");
+
+    if(type==="yearly"){
+        price.innerHTML="₹999";
+        duration.innerHTML="per year (Save 70%)";
+        btn.href="{% url 'payment' %}?plan=yearly";
+    }else{
+        price.innerHTML="₹299";
+        duration.innerHTML="per month";
+        btn.href="{% url 'payment' %}?plan=monthly";
+    }
+}
+
+// TIMER
+function startTimer(expiry){
+    expiry = parseInt(expiry);
+
+    function update(){
+        let now = new Date().getTime();
+        let d = expiry - now;
+
+        if(d<0){ document.getElementById("timer").innerHTML="Expired"; return; }
+
+        let days=Math.floor(d/(1000*60*60*24));
+        let hours=Math.floor((d%(1000*60*60*24))/(1000*60*60));
+
+        document.getElementById("timer").innerHTML=days+"d "+hours+"h";
+    }
+
+    update();
+    setInterval(update,60000);
+}
+
+startTimer("{{ expiry|default:'0' }}");
+
+</script>
 
 </body>
 </html>

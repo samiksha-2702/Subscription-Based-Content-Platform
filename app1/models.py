@@ -40,22 +40,51 @@ class LoginHistory(models.Model):
 # ══════════════════════════════════════════════════════════════════
 
 class Subscription(models.Model):
+
     PLAN_CHOICES = [
-        ('free',    'Free'),
+        ('free', 'Free'),
         ('premium', 'Premium'),
     ]
+
     STATUS_CHOICES = [
-        ('active',    'Active'),
-        ('expired',   'Expired'),
+        ('active', 'Active'),
+        ('expired', 'Expired'),
         ('cancelled', 'Cancelled'),
     ]
 
-    user       = models.OneToOneField(User, on_delete=models.CASCADE, related_name='subscription')
-    plan       = models.CharField(max_length=20, choices=PLAN_CHOICES, default='free')
-    status     = models.CharField(max_length=20, choices=STATUS_CHOICES, default='active')
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name='subscription'
+    )
+
+    plan = models.CharField(
+        max_length=20,
+        choices=PLAN_CHOICES,
+        default='free'
+    )
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='expired'
+    )
+
     started_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(null=True, blank=True)
-    notes      = models.TextField(blank=True, default='')   # admin notes
+    updated_at = models.DateTimeField(auto_now=True)
+
+    duration_days = models.PositiveIntegerField(default=30)
+
+    payment = models.ForeignKey(
+        'PaymentRecord',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='subscriptions'
+    )
+
+    notes = models.TextField(blank=True, default='')
 
     class Meta:
         verbose_name = 'Subscription'
@@ -65,17 +94,15 @@ class Subscription(models.Model):
 
     @property
     def is_active(self):
-        if self.status != 'active':
-            return False
-        if self.expires_at and self.expires_at < timezone.now():
-            return False
-        return True
+        return (
+            self.status == 'active' and
+            self.expires_at and
+            self.expires_at > timezone.now()
+        )
 
     @property
     def is_premium(self):
         return self.plan == 'premium' and self.is_active
-
-
 # ══════════════════════════════════════════════════════════════════
 # 4. PAYMENT RECORD
 #    Every payment attempt (success or fail) is stored here
@@ -83,36 +110,36 @@ class Subscription(models.Model):
 
 class PaymentRecord(models.Model):
     STATUS_CHOICES = [
-        ('pending',   'Pending'),
-        ('success',   'Success'),
-        ('failed',    'Failed'),
-        ('refunded',  'Refunded'),
+        ('pending', 'Pending'),
+        ('success', 'Success'),
+        ('failed', 'Failed'),
+        ('refunded', 'Refunded'),
     ]
+
     METHOD_CHOICES = [
-        ('card',   'Credit / Debit Card'),
-        ('upi',    'UPI'),
-        ('wallet', 'Wallet'),
-        ('other',  'Other'),
+        ('razorpay', 'Razorpay'),
+        ('stripe', 'Stripe'),
+        ('manual', 'Manual'),
     ]
 
-    user           = models.ForeignKey(User, on_delete=models.CASCADE, related_name='payments')
-    plan           = models.CharField(max_length=20, default='premium')
-    amount         = models.DecimalField(max_digits=8, decimal_places=2, default=0)
-    currency       = models.CharField(max_length=5, default='INR')
-    status         = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    method         = models.CharField(max_length=20, choices=METHOD_CHOICES, default='card')
-    transaction_id = models.CharField(max_length=200, blank=True, default='')
-    paid_at        = models.DateTimeField(auto_now_add=True)
-    notes          = models.TextField(blank=True, default='')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    plan = models.CharField(max_length=20, default='premium')
 
-    class Meta:
-        ordering = ['-paid_at']
-        verbose_name = 'Payment Record'
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    currency = models.CharField(max_length=10, default='INR')
+
+    method = models.CharField(max_length=20, choices=METHOD_CHOICES, default='razorpay')
+
+    transaction_id = models.CharField(max_length=100, unique=True)
+
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
+    notes = models.TextField(blank=True)
+
+    paid_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} | ₹{self.amount} | {self.status} | {self.paid_at.strftime('%d %b %Y')}"
-
-
+        return f"{self.user.username} - {self.transaction_id}"
 # ══════════════════════════════════════════════════════════════════
 # 5. LIVE SESSION
 # ══════════════════════════════════════════════════════════════════
