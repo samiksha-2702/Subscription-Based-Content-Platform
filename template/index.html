@@ -1,949 +1,262 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>PrepEdge | MCA Project - AI-Powered Interview Preparation</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <!-- Google Fonts for better typography -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-
-    <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      html {
-        scroll-behavior: smooth;
-      }
-
-      body {
-        font-family: "Inter", "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(135deg, #0a0f1e, #030614);
-        color: white;
-        overflow-x: hidden;
-        line-height: 1.6;
-      }
-
-      /* Custom scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-
-      ::-webkit-scrollbar-track {
-        background: #1a1f2e;
-      }
-
-      ::-webkit-scrollbar-thumb {
-        background: #3b82f6;
-        border-radius: 4px;
-      }
-
-      ::-webkit-scrollbar-thumb:hover {
-        background: #2563eb;
-      }
-
-      /* Navbar */
-      .navbar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px 50px;
-        position: sticky;
-        top: 0;
-        background: rgba(10, 15, 30, 0.8);
-        backdrop-filter: blur(12px);
-        z-index: 1000;
-        transition: all 0.3s ease;
-        border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-      }
-
-      .navbar.scrolled {
-        padding: 15px 50px;
-        background: rgba(10, 15, 30, 0.95);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        border-bottom-color: rgba(59, 130, 246, 0.3);
-      }
-
-      .brand {
-        font-size: 28px;
-        font-weight: 800;
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        letter-spacing: -0.5px;
-        position: relative;
-      }
-
-      .brand::after {
-        content: "";
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 40px;
-        height: 3px;
-        background: linear-gradient(90deg, #3b82f6, transparent);
-        border-radius: 2px;
-      }
-
-      .nav-links {
-        display: flex;
-        gap: 10px;
-        align-items: center;
-      }
-
-      .nav-links a {
-        padding: 10px 20px;
-        color: #e2e8f0;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.3s;
-        border-radius: 8px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .nav-links a::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(59, 130, 246, 0.2),
-          transparent
-        );
-        transition: left 0.5s;
-      }
-
-      .nav-links a:hover {
-        color: #60a5fa;
-        background: rgba(59, 130, 246, 0.1);
-      }
-
-      .nav-links a:hover::before {
-        left: 100%;
-      }
-
-      /* Profile Dropdown */
-      .profile-dropdown {
-        position: relative;
-      }
-
-      .profile-btn {
-        padding: 10px 20px;
-        color: #e2e8f0;
-        background: rgba(59, 130, 246, 0.1);
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        border-radius: 8px;
-        font-weight: 500;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .profile-btn:hover {
-        background: rgba(59, 130, 246, 0.2);
-        border-color: #3b82f6;
-        color: #60a5fa;
-        transform: translateY(-1px);
-      }
-
-      .profile-btn i {
-        font-size: 1.1rem;
-      }
-
-      .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        min-width: 220px;
-        background: linear-gradient(145deg, #1a1f2e, #111827);
-        border: 1px solid rgba(59, 130, 246, 0.2);
-        border-radius: 12px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(-10px);
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        z-index: 1001;
-        overflow: hidden;
-      }
-
-      .profile-dropdown.open .dropdown-menu {
-        opacity: 1;
-        visibility: visible;
-        transform: translateY(0);
-      }
-
-      .dropdown-item {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        padding: 14px 20px;
-        color: #e2e8f0;
-        text-decoration: none;
-        font-weight: 500;
-        transition: all 0.2s;
-        border-bottom: 1px solid rgba(59, 130, 246, 0.1);
-      }
-
-      .dropdown-item:last-child {
-        border-bottom: none;
-      }
-
-      .dropdown-item:hover {
-        background: rgba(59, 130, 246, 0.1);
-        color: #60a5fa;
-        padding-left: 28px;
-      }
-
-      .dropdown-item i {
-        width: 20px;
-        font-size: 0.95rem;
-        opacity: 0.8;
-      }
-
-      /* Hero Section */
-      .hero {
-        text-align: center;
-        padding: 140px 20px 100px 20px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .hero::before {
-        content: "";
-        position: absolute;
-        top: -50%;
-        right: -10%;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(
-          circle,
-          rgba(59, 130, 246, 0.15) 0%,
-          transparent 70%
-        );
-        border-radius: 50%;
-        z-index: -1;
-        animation: float 8s ease-in-out infinite;
-      }
-
-      .hero::after {
-        content: "";
-        position: absolute;
-        bottom: -30%;
-        left: -10%;
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(
-          circle,
-          rgba(139, 92, 246, 0.1) 0%,
-          transparent 70%
-        );
-        border-radius: 50%;
-        z-index: -1;
-        animation: float 10s ease-in-out infinite reverse;
-      }
-
-      @keyframes float {
-        0%, 100% {
-          transform: translateY(0) scale(1);
-        }
-        50% {
-          transform: translateY(-30px) scale(1.05);
-        }
-      }
-
-      .hero h1 {
-        font-size: 3.5rem;
-        font-weight: 800;
-        margin-bottom: 20px;
-        background: linear-gradient(135deg, #fff, #94a3b8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        letter-spacing: -0.02em;
-        line-height: 1.2;
-        animation: fadeInUp 0.8s ease;
-      }
-
-      .hero p {
-        font-size: 1.2rem;
-        color: #94a3b8;
-        max-width: 600px;
-        margin: 0 auto 30px;
-        animation: fadeInUp 0.8s ease 0.1s both;
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* CTA Buttons */
-      .hero-buttons {
-        display: flex;
-        gap: 20px;
-        justify-content: center;
-        animation: fadeInUp 0.8s ease 0.2s both;
-      }
-
-      .btn-primary,
-      .btn-secondary {
-        padding: 14px 32px;
-        border-radius: 12px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.3s;
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 1rem;
-      }
-
-      .btn-primary {
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
-        color: white;
-        box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
-      }
-
-      .btn-primary:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
-      }
-
-      .btn-secondary {
-        background: rgba(255, 255, 255, 0.05);
-        color: #e2e8f0;
-        border: 1px solid rgba(59, 130, 246, 0.3);
-        backdrop-filter: blur(5px);
-      }
-
-      .btn-secondary:hover {
-        background: rgba(59, 130, 246, 0.1);
-        border-color: #3b82f6;
-        transform: translateY(-3px);
-      }
-
-      /* Container */
-      .container {
-        padding: 60px 30px;
-        max-width: 1400px;
-        margin: auto;
-      }
-
-      /* Section Title */
-      .section-title {
-        text-align: center;
-        margin-bottom: 50px;
-      }
-
-      .section-title h2 {
-        font-size: 2.2rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-        background: linear-gradient(135deg, #fff, #94a3b8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
-
-      .section-title p {
-        color: #64748b;
-        font-size: 1.1rem;
-        max-width: 600px;
-        margin: 0 auto;
-      }
-
-      /* Grid */
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 30px;
-        margin-top: 30px;
-      }
-
-      .card-link {
-        text-decoration: none;
-        color: white;
-      }
-
-      .card {
-        background: linear-gradient(145deg, #1a1f2e, #111827);
-        border-radius: 24px;
-        padding: 28px;
-        display: flex;
-        gap: 20px;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid rgba(59, 130, 246, 0.1);
-        position: relative;
-        overflow: hidden;
-        height: 100%;
-      }
-
-      .card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-        transform: translateX(-100%);
-        transition: transform 0.6s ease;
-      }
-
-      .card:hover {
-        transform: translateY(-8px) scale(1.02);
-        border-color: rgba(59, 130, 246, 0.3);
-        box-shadow:
-          0 20px 40px -15px rgba(0, 0, 0, 0.5),
-          0 0 30px rgba(59, 130, 246, 0.15);
-      }
-
-      .card:hover::before {
-        transform: translateX(0);
-      }
-
-      .card img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 16px;
-        transition: transform 0.4s ease;
-        border: 2px solid rgba(59, 130, 246, 0.2);
-        background: linear-gradient(90deg, #1a1f2e, #2d3748, #1a1f2e);
-        background-size: 200% 100%;
-        animation: loading 1.5s infinite;
-      }
-
-      .card:hover img {
-        transform: scale(1.05);
-        border-color: rgba(59, 130, 246, 0.5);
-      }
-
-      .card-content {
-        flex: 1;
-      }
-
-      .card h3 {
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-bottom: 10px;
-        color: #e2e8f0;
-        transition: color 0.3s;
-      }
-
-      .card:hover h3 {
-        color: #60a5fa;
-      }
-
-      .card p {
-        font-size: 0.95rem;
-        color: #94a3b8;
-        line-height: 1.6;
-        margin-bottom: 15px;
-      }
-
-      .card-tag {
-        display: inline-block;
-        padding: 4px 12px;
-        background: rgba(59, 130, 246, 0.1);
-        border-radius: 30px;
-        font-size: 0.75rem;
-        font-weight: 600;
-        color: #60a5fa;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        border: 1px solid rgba(59, 130, 246, 0.2);
-      }
-
-      /* Stats Section */
-      .stats-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 30px;
-        margin: 80px 0;
-        padding: 40px;
-        background: linear-gradient(145deg, #1a1f2e, #111827);
-        border-radius: 30px;
-        border: 1px solid rgba(59, 130, 246, 0.1);
-      }
-
-      .stat-item {
-        text-align: center;
-      }
-
-      .stat-number {
-        font-size: 2.5rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #fff, #94a3b8);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 5px;
-      }
-
-      .stat-label {
-        color: #94a3b8;
-        font-size: 0.95rem;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-
-      /* Footer */
-      footer {
-        text-align: center;
-        padding: 40px 20px;
-        background: #030614;
-        border-top: 1px solid rgba(59, 130, 246, 0.1);
-        color: #64748b;
-        font-size: 0.95rem;
-        margin-top: 60px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      footer::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, #3b82f6, transparent);
-      }
-
-      .footer-links {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin-top: 20px;
-      }
-
-      .footer-links a {
-        color: #94a3b8;
-        text-decoration: none;
-        transition: color 0.3s;
-        font-size: 0.9rem;
-      }
-
-      .footer-links a:hover {
-        color: #60a5fa;
-      }
-
-      /* Responsive */
-      @media (max-width: 768px) {
-        .navbar {
-          padding: 15px 20px;
-        }
-
-        .navbar.scrolled {
-          padding: 12px 20px;
-        }
-
-        .brand {
-          font-size: 24px;
-        }
-
-        .nav-links {
-          gap: 8px;
-        }
-
-        .nav-links a,
-        .profile-btn {
-          padding: 8px 12px;
-          font-size: 0.9rem;
-        }
-
-        .dropdown-menu {
-          min-width: 200px;
-          right: -10px;
-        }
-
-        .hero h1 {
-          font-size: 2.2rem;
-        }
-
-        .hero p {
-          font-size: 1rem;
-        }
-
-        .hero-buttons {
-          flex-direction: column;
-          gap: 15px;
-          padding: 0 20px;
-        }
-
-        .btn-primary,
-        .btn-secondary {
-          width: 100%;
-          justify-content: center;
-        }
-
-        .container {
-          padding: 40px 20px;
-        }
-
-        .grid {
-          grid-template-columns: 1fr;
-        }
-
-        .card {
-          flex-direction: column;
-          align-items: center;
-          text-align: center;
-        }
-
-        .card img {
-          width: 100px;
-          height: 100px;
-        }
-
-        .stats-section {
-          grid-template-columns: repeat(2, 1fr);
-          padding: 30px 20px;
-          margin: 40px 0;
-        }
-
-        .footer-links {
-          flex-wrap: wrap;
-          gap: 15px;
-        }
-      }
-
-      /* Loading animation for images */
-      @keyframes loading {
-        0% {
-          background-position: 200% 0;
-        }
-        100% {
-          background-position: -200% 0;
-        }
-      }
-
-      /* Featured badge */
-      .featured-badge {
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #f59e0b, #d97706);
-        color: #000;
-        padding: 4px 12px;
-        border-radius: 30px;
-        font-size: 0.7rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-      }
-    </style>
-  </head>
-
-  <body>
-    <!-- Navbar - WITH PROFILE DROPDOWN -->
-   <div class="navbar" id="navbar">
-      <div class="brand">PrepEdge</div>
-      <div class="nav-links">
-       
-        {% if not subscription %}
-    <a href="{% url 'plans' %}" class="nav-link">Upgrade plan</a>
-{% endif %}
-        {% if user.is_authenticated %}
-          <!-- SHOW PROFILE DROPDOWN WHEN LOGGED IN -->
-          <div class="profile-dropdown">
-            <button class="profile-btn" id="profileToggle">
-              <i class="fas fa-user-circle"></i>
-              <span>{{ user.username }}</span>
-              <i class="fas fa-chevron-down" style="font-size: 0.8rem; transition: transform 0.3s;"></i>
-            </button>
-            <div class="dropdown-menu">
-  <a href="{% url 'profile' %}" class="dropdown-item">
-    <i class="fas fa-user"></i>
-    <span>My Profile</span>
-  </a>
-
-  <!-- REPLACED SETTINGS WITH ABOUT US -->
-  <a href="{% url 'about' %}" class="dropdown-item">
-    <i class="fas fa-info-circle"></i>
-    <span>About Us</span>
-  </a>
-
-  <a href="{% url 'plans' %}" class="dropdown-item">
-    <i class="fas fa-star"></i>
-    <span>Upgrade Plan</span>
-  </a>
-
-  <a href="{% url 'logout' %}" class="dropdown-item">
-    <i class="fas fa-sign-out-alt"></i>
-    <span>Logout</span>
-  </a>
+<head>
+<meta charset="UTF-8" />
+<title>PrepEdge | AI Interview Prep</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #0f172a, #020617);
+  color:white;
+}
+
+/* REMOVE LINK UNDERLINE */
+.grid a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* NAVBAR */
+.navbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 40px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  position:sticky;
+  top:0;
+}
+
+.brand {
+  font-size:26px;
+  font-weight:800;
+  background:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.nav-links{display:flex;gap:15px;align-items:center;}
+
+.nav-links a{
+  color:#e5e7eb;
+  text-decoration:none;
+  padding:8px 14px;
+  border-radius:8px;
+  transition:0.3s;
+}
+
+.nav-links a:hover{
+  background:rgba(59,130,246,0.2);
+}
+
+.upgrade-btn-nav{
+  background:linear-gradient(135deg,#f59e0b,#d97706);
+  color:black;
+  font-weight:600;
+}
+
+/* PROFILE */
+.profile{position:relative;}
+
+.dropdown{
+  position:absolute;
+  top:110%;
+  right:0;
+  background:#0f172a;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  width:180px;
+  display:none;
+}
+
+.profile:hover .dropdown{display:block;}
+
+.dropdown a{padding:10px;display:block;}
+
+/* HERO */
+.hero {
+  text-align:center;
+  padding:110px 20px 60px;
+}
+
+.hero h1 {
+  font-size:3.2rem;
+  background:linear-gradient(to right,#fff,#94a3b8);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.hero p{color:#94a3b8;margin:20px 0;}
+
+.btn-primary {
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  padding:12px 25px;
+  border-radius:10px;
+  color:white;
+  text-decoration:none;
+  box-shadow:0 10px 25px rgba(59,130,246,0.3);
+}
+
+/* GRID */
+.grid {
+  max-width:1200px;
+  margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:30px;
+  padding:20px;
+}
+
+/* CARD */
+.card {
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  padding:20px;
+  border-radius:20px;
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+
+.card:hover {
+  transform:translateY(-10px) scale(1.02);
+  box-shadow:0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* SHINE EFFECT */
+.card::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.2),transparent);
+  transition:0.6s;
+}
+.card:hover::before{left:100%;}
+
+.card img {
+  width:100%;
+  height:160px;
+  object-fit:cover;
+  border-radius:12px;
+}
+
+.card h3 {
+  margin-top:15px;
+  transition:0.3s;
+}
+
+.grid a:hover h3{
+  color:#60a5fa;
+}
+
+.card p{
+  color:#9ca3af;
+  font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand">PrepEdge</div>
+
+  <div class="nav-links">
+    {% if not subscription %}
+    <a href="{% url 'plans' %}" class="upgrade-btn-nav">Upgrade</a>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <div class="profile">
+      <span><i class="fas fa-user-circle"></i> {{ user.username }}</span>
+      <div class="dropdown">
+        <a href="{% url 'profile' %}">Profile</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'plans' %}">Upgrade</a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </div>
+    </div>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Signup</a>
+    {% endif %}
+  </div>
 </div>
-          </div>
-        {% else %}
-          <!-- SHOW LOGIN/SIGNUP WHEN NOT LOGGED IN -->
-          <a href="{% url 'register' %}">
-            <i class="fas fa-user-plus" style="margin-right: 5px"></i>Signup
-          </a>
-          <a href="{% url 'login' %}">
-            <i class="fas fa-sign-in-alt" style="margin-right: 5px"></i>Login
-          </a>
-        {% endif %}
-      </div>
-    </div>
 
-    <!-- [Rest of your HTML remains EXACTLY the same] -->
-    <!-- Hero -->
-    <section class="hero">
-      <h1>Practice, Learn, and Crack Interviews</h1>
-      <p>
-        Master your interview skills with AI-powered insights, curated
-        resources, and expert guidance
-      </p>
-      <div class="hero-buttons">
-        <a href="{% url 'register' %}" class="btn-primary">
-          <i class="fas fa-rocket"></i> Get Started Free
-        </a>
-        <a href="#features" class="btn-secondary">
-          <i class="fas fa-play"></i> Watch Demo
-        </a>
-      </div>
-    </section>
+<!-- HERO -->
+<section class="hero">
+  <h1>Crack Interviews with AI </h1>
+  <p>Practice, learn and get job-ready faster</p>
+  <a href="{% url 'register' %}" class="btn-primary">Get Started</a>
+</section>
 
-    <!-- Stats Section -->
-    <div class="container">
-      <div class="stats-section">
-        <div class="stat-item">
-          <div class="stat-number">✔</div>
-          <div class="stat-label">Personalized Learning</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">✔</div>
-          <div class="stat-label">AI Recommendations</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">✔</div>
-          <div class="stat-label">Progress Tracking</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-number">✔</div>
-          <div class="stat-label">Interview Prep Content</div>
-        </div>
-      </div>
-    </div>
+<!-- GRID -->
+<div class="grid">
 
-    <!-- Features Section -->
-    <div class="container" id="features">
-      <div class="section-title">
-        <h2>Everything You Need to Succeed</h2>
-        <p>
-          Comprehensive resources and tools for your interview preparation
-          journey
-        </p>
-      </div>
+<a href="{% url 'programming' %}">
+<div class="card">
+<img src="{% static 'image/programming.jpg' %}">
+<h3>Programming</h3>
+<p>Practice coding</p>
+</div>
+</a>
 
-      <div class="grid">
-        <a href="{% url 'programming' %}" class="card-link">
-          <div class="card">
-            <img
-              src="{% static 'image/programming.jpg' %}"
-              alt="Programming"
-              loading="lazy"
-            />
-            <div class="card-content">
-              <span class="card-tag">
-                <i class="fas fa-code"></i> Technical
-              </span>
-              <h3>Programming Languages</h3>
-              <p>
-                Master Python, Java, C++, and more with hands-on coding
-                challenges
-              </p>
-            </div>
-          </div>
-        </a>
+<a href="{% url 'company' %}">
+<div class="card">
+<img src="{% static 'image/company.png' %}">
+<h3>Company Insights</h3>
+<p>Interview blogs</p>
+</div>
+</a>
 
-        <a href="{% url 'company' %}" class="card-link">
-          <div class="card">
-            <img
-              src="{% static 'image/company.png' %}"
-              alt="Company"
-              loading="lazy"
-            />
-            <div class="card-content">
-              <span class="card-tag">
-                <i class="fas fa-building"></i> Insights
-              </span>
-              <h3>Company Info & Blogs</h3>
-              <p>
-                Explore company cultures, interview experiences, and success
-                stories
-              </p>
-            </div>
-          </div>
-        </a>
+<!-- NOW NORMAL LINKS (NO LOCK UI) -->
+<a href="{% url 'expert' %}">
+<div class="card">
+<img src="{% static 'image/expert_talks.jpg' %}">
+<h3>Expert Talks</h3>
+<p>Industry guidance</p>
+</div>
+</a>
 
-        <a href="{% url 'expert' %}" class="card-link">
-          <div class="card">
-            <img
-              src="{% static 'image/expert_talks.jpg' %}"
-              alt="Expert Talks"
-              loading="lazy"
-            />
-            <div class="card-content">
-              <span class="card-tag">
-                <i class="fas fa-chalkboard-teacher"></i> Guidance
-              </span>
-              <h3>Expert Talks</h3>
-              <p>
-                Learn from industry veterans with exclusive interview tips and
-                career advice
-              </p>
-            </div>
-          </div>
-        </a>
+<a href="{% url 'comm' %}">
+<div class="card">
+<img src="{% static 'image/comm.jpg' %}">
+<h3>Communication</h3>
+<p>Soft skills</p>
+</div>
+</a>
 
-        <a href="{% url 'comm' %}" class="card-link">
-          <div class="card">
-            <img
-              src="{% static 'image/comm.jpg' %}"
-              alt="Communication"
-              loading="lazy"
-            />
-            <div class="card-content">
-              <span class="card-tag">
-                <i class="fas fa-comments"></i> Soft Skills
-              </span>
-              <h3>Communication & Soft Skills</h3>
-              <p>Enhance your interpersonal skills and ace HR interviews</p>
-            </div>
-          </div>
-        </a>
+<a href="{% url 'questions' %}">
+<div class="card">
+<img src="{% static 'image/question.jpg' %}">
+<h3>Aptitude</h3>
+<p>Practice MCQs</p>
+</div>
+</a>
 
-        <a href="{% url 'questions' %}" class="card-link">
-          <div class="card">
-            <img
-              src="{% static 'image/question.jpg' %}"
-              alt="Questions"
-              loading="lazy"
-            />
-            <div class="card-content">
-              <span class="card-tag">
-                <i class="fas fa-puzzle-piece"></i> Practice
-              </span>
-              <h3>Aptitude & MCQ</h3>
-              <p>
-                Test your skills with comprehensive aptitude and technical MCQs
-              </p>
-            </div>
-          </div>
-        </a>
+<a href="{% url 'ai_dashboard' %}">
+<div class="card">
+<img src="{% static 'image/ai.png' %}">
+<h3>AI Recommendations</h3>
+<p>Smart learning</p>
+</div>
+</a>
 
-        <a href="{% url 'ai_dashboard' %}" class="card-link">
-          <div class="card" style="position: relative">
-            <span class="featured-badge"><i class="fas fa-star"></i> New</span>
-            <img src="{% static 'image/ai.png' %}" alt="AI" loading="lazy" />
-            <div class="card-content">
-              <span class="card-tag">
-                <i class="fas fa-robot"></i> AI-Powered
-              </span>
-              <h3>AI Recommendations</h3>
-              <p>
-                Get personalized learning paths and smart insights powered by AI
-              </p>
-            </div>
-          </div>
-        </a>
-      </div>
-    </div>
+</div>
 
-    <!-- Footer -->
-    <footer>
-      <div style="margin-bottom: 20px">
-        <span
-          class="brand"
-          style="font-size: 28px; display: inline-block; margin-bottom: 15px"
-          >PrepEdge</span
-        >
-      </div>
-      <p>
-        © 2026 PrepEdge | MCA Final Year Project - Transforming Interview
-        Preparation
-      </p>
-      <div class="footer-links">
-        <a href="#"><i class="fab fa-linkedin"></i></a>
-        <a href="#"><i class="fab fa-twitter"></i></a>
-        <a href="#"><i class="fab fa-github"></i></a>
-        <a href="#"><i class="fab fa-youtube"></i></a>
-      </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script>
-      // Navbar scroll effect
-      window.addEventListener("scroll", function () {
-        const navbar = document.getElementById("navbar");
-        if (window.scrollY > 50) {
-          navbar.classList.add("scrolled");
-        } else {
-          navbar.classList.remove("scrolled");
-        }
-      });
-
-      // Profile Dropdown Toggle
-      const profileToggle = document.getElementById('profileToggle');
-      const profileDropdown = document.querySelector('.profile-dropdown');
-      const chevron = profileToggle.querySelector('.fa-chevron-down');
-
-      profileToggle.addEventListener('click', function(e) {
-        e.stopPropagation();
-        profileDropdown.classList.toggle('open');
-        chevron.style.transform = profileDropdown.classList.contains('open') 
-          ? 'rotate(180deg)' : 'rotate(0deg)';
-      });
-
-      // Close dropdown when clicking outside
-      document.addEventListener('click', function() {
-        profileDropdown.classList.remove('open');
-        chevron.style.transform = 'rotate(0deg)';
-      });
-
-      // Add loading animation to images
-      document.querySelectorAll(".card img").forEach((img) => {
-        img.addEventListener("load", function () {
-          this.style.animation = "none";
-        });
-      });
-    </script>
-  </body>
+</body>
 </html>

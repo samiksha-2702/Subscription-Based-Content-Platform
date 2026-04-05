@@ -18,7 +18,12 @@ from .models import Subscription, PaymentRecord
 from django.conf import settings
 import razorpay
 
-
+def premium_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not is_subscribed(request.user):
+            return redirect('plans')
+        return view_func(request, *args, **kwargs)
+    return wrapper
 
 def register(request):
     if request.method == "POST":
@@ -83,25 +88,29 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
-
+@property
+def is_premium(self):
+    return self.plan == 'premium' and self.is_active
 
 @login_required
 def profile_view(request):
     user = request.user
 
-    results = TestResult.objects.filter(user=user)
+    results = TestResult.objects.filter(user=user).order_by('-date_attempted')
 
     total_tests = results.count()
     avg_score = results.aggregate(avg=Avg('score'))['avg'] or 0
-    last_active = results.order_by('-date_attempted').first()
+    last_active = results.first()
 
     subscription = get_active_subscription(user)
 
     context = {
+        'results': results,
         'total_tests': total_tests,
         'avg_score': round(avg_score, 2),
         'last_active': last_active.date_attempted if last_active else None,
-        'subscription': subscription  # will be None if not premium
+        'subscription': subscription,
+        'is_premium': is_subscribed(user)   # ✅ IMPORTANT
     }
 
     return render(request, 'profile.html', context)
@@ -136,20 +145,25 @@ def check_expiry(user):
 from django.utils import timezone
 
 def get_active_subscription(user):
-    subscription = Subscription.objects.filter(user=user).first()
+    if not user.is_authenticated:
+        return None
 
-    if subscription:
-        # Expired → mark expired
-        if subscription.expires_at and subscription.expires_at < timezone.now():
-            subscription.status = 'expired'
-            subscription.save()
+    sub = Subscription.objects.filter(user=user).first()
 
-        # Return only active & valid subscription
-        if subscription.status == 'active' and subscription.expires_at > timezone.now():
-            return subscription
+    if not sub:
+        return None
+
+    # Expiry check
+    if sub.expires_at and sub.expires_at < timezone.now():
+        sub.status = 'expired'
+        sub.save()
+        return None
+
+    # ✅ ONLY premium users allowed
+    if sub.plan == 'premium' and sub.status == 'active':
+        return sub
 
     return None
-
 @login_required
 def plans(request):
     subscription = get_active_subscription(request.user)
@@ -181,9 +195,6 @@ def cancel_subscription(request):
 
     return redirect('profile')
 
-@login_required
-def about(request):
-    return render(request, 'about.html')
 from .models import Feedback
 @login_required
 def about(request):
@@ -302,8 +313,14 @@ def programming(request):
 @login_required
 def company(request):
     return render(request, 'company.html')
+
 @login_required
 def expert_talks(request):
+    sub = getattr(request.user, 'subscription', None)
+
+    if not sub or not sub.is_premium:
+        return redirect('plans')
+
     return render(request, 'expert/expert.html')
 @login_required
 def communication(request):
@@ -316,13 +333,20 @@ def aptitude(request):
     })
 @login_required
 def ai_recommendation(request):
+    sub = getattr(request.user, 'subscription', None)
+
+    if not sub or not sub.is_premium:
+        return redirect('plans')
+
     return render(request, 'ai/dashboard.html')
 @login_required
 def plans(request):
     return render(request, 'plans.html')
+
 @login_required
 def subscribe(request):
     return render(request, 'plans.html')
+
 @login_required
 def programming_home(request):
     return render(request, 'programming.html')
@@ -430,7 +454,7 @@ def py_function_practice(request, test_id):
 
     return render(request, "pyfunctionpractice.html", {"test": test})
 
-
+@premium_required
 def python_test(request, test_id):
     test = get_object_or_404(Test, id=test_id)
 
@@ -520,6 +544,7 @@ def java_oop_practice(request):
         )
 
     return render(request, "java/java_oop_practice.html", {"test": test})
+@premium_required
 def java_test(request):
     test = Test.objects.filter(name="Java Test").first()
 
@@ -565,6 +590,7 @@ def cpp_practice(request):
     
     # Pass test to template
     return render(request, 'cpp/cpp_practice.html', {"test": test})
+@premium_required
 def cpp_test(request):
     # This will raise a 404 if no test exists
     test = Test.objects.filter(name="C++ Test").first()
@@ -608,7 +634,7 @@ def js_practice(request):
     test = Test.objects.filter(name="JavaScript Practice").first()
     _mark_progress(request.user, 'js', 'javascript Practice', 'practice')
     return render(request, 'js/js_practice.html', {"test": test})
-
+@premium_required
 def js_test(request):
     test = Test.objects.filter(name="JavaScript Test").first()
     
@@ -653,7 +679,7 @@ def sql_practice(request):
      test = Test.objects.filter(name="SQL Practice").first()
      _mark_progress(request.user, 'sql', 'SQL Practice', 'practice')
      return render(request, 'sql/sql_practice.html', {"test": test})
-
+@premium_required
 def sql_test(request):
     test = Test.objects.filter(name="SQL Test").first()
 
@@ -691,7 +717,7 @@ def dsa_practice(request):
     test = Test.objects.filter(name="DSA Practice").first()
     _mark_progress(request.user, 'dsa', 'DSA Practice', 'practice')
     return render(request, 'ds/dsa_practice.html', {"test": test})
-
+@premium_required
 def dsa_test(request):
      test = Test.objects.filter(name="DSA Test").first()
 
@@ -713,15 +739,28 @@ def dsa_test(request):
 def companies_blogs(request):
     return render(request, 'company.html')
 
-def google(request):    return render(request, 'company/google.html')
-def amazon(request):    return render(request, 'company/amazon.html')
-def microsoft(request): return render(request, 'company/microsoft.html')
-def meta(request):      return render(request, 'company/meta.html')
+def google(request):  
+    return render(request, 'company/google.html')
 
-def interview_tips(request):    return render(request, 'blog/interview-tips.html')
-def resume_guide(request):      return render(request, 'blog/resume-guide.html')
-def tech_trends(request):       return render(request, 'blog/tech-trends.html')
-def experience_stories(request):return render(request, 'blog/experience-stories.html')
+def amazon(request):  
+    return render(request, 'company/amazon.html')
+@premium_required
+def microsoft(request):
+    return render(request, 'company/microsoft.html')
+@premium_required
+def meta(request):   
+    return render(request, 'company/meta.html')
+
+def interview_tips(request):  
+    return render(request, 'blog/interview-tips.html')
+def resume_guide(request):   
+    return render(request, 'blog/resume-guide.html')
+@premium_required
+def tech_trends(request):  
+    return render(request, 'blog/tech-trends.html')
+@premium_required
+def experience_stories(request):
+    return render(request, 'blog/experience-stories.html')
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -755,7 +794,7 @@ def non_verbal(request):
 def listening(request):
     _mark_progress(request.user, 'communication', 'Listening Skills')
     return render(request, 'communication/listening.html')
-
+@premium_required
 def comm_quiz(request):
     test = Test.objects.filter(name="communication Test").first()
     return render(request, 'communication/comm_quiz.html', {"test": test})
@@ -768,10 +807,24 @@ def comm_quiz(request):
 def is_subscribed(user):
     if not user.is_authenticated:
         return False
-    try:
-        return user.subscription.is_premium
-    except Exception:
+
+    sub = Subscription.objects.filter(user=user).first()
+
+    if not sub:
         return False
+
+    if sub.status != 'active':
+        return False
+
+    if not sub.expires_at:
+        return False
+
+    if sub.expires_at < timezone.now():
+        sub.status = 'expired'
+        sub.save()
+        return False
+
+    return True
 
 def practice_hub(request):
     return render(request, 'questions.html', {'subscribed': is_subscribed(request.user)})
@@ -796,9 +849,11 @@ def aptitude_test(request):
     return render(request, "aptitude/aptitude_test.html", {"test": test})
 
 def technical_practice(request):
+    if not is_subscribed(request.user):
+        return redirect('plans')   # 🔒 BLOCK FREE USERS
+
     test = Test.objects.filter(name="Technical Practice Test").first()
 
-    # ⚠️ Safety check
     if not test:
         return render(request, 'aptitude/technical_practice.html', {
             "error": "Test not found"
@@ -811,10 +866,13 @@ def technical_practice(request):
     })
  
 def technical_test(request):
+    if not is_subscribed(request.user):
+        return redirect('plans')
+
     test = Test.objects.filter(name="Technical Test").first()
+
     if request.method == "POST":
         score = int(request.POST.get("score", 0))
-
         result = _save_test_result(request.user, 'tech', test.name, score)
 
         return JsonResponse({
@@ -822,26 +880,29 @@ def technical_test(request):
         })
 
     return render(request, "aptitude/technical_test.html", {"test": test})
+
 def interview_practice(request):
+    if not is_subscribed(request.user):
+        return redirect('plans')
+
     test = Test.objects.filter(name="Interview Practice Test").first()
 
-    # ❗ Safety check
     if not test:
-        return HttpResponse("Test not found. Please create 'Interview Practice Test' in DB.")
+        return HttpResponse("Test not found.")
 
-    # Track progress (only if user is logged in)
-    if request.user.is_authenticated:
-        _mark_progress(request.user, 'interv', 'Interview Practice Test', 'practice')
+    _mark_progress(request.user, 'interv', 'Interview Practice Test', 'practice')
 
     return render(request, 'aptitude/interview_practice.html', {
         "test": test
     })
 def interview_test(request):
+    if not is_subscribed(request.user):
+        return redirect('plans')
+
     test = Test.objects.filter(name="Interview Test").first()
 
     if request.method == "POST":
         score = int(request.POST.get("score", 0))
-
         result = _save_test_result(request.user, 'interv', test.name, score)
 
         return JsonResponse({

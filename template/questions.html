@@ -7,195 +7,275 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-*{ margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-    font-family: "Segoe UI", sans-serif;
-    background: linear-gradient(135deg,#0f172a,#020617);
-    color:white;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0a0f1e,#020617);
+color:white;
 }
 
 /* HEADER */
 header{
-    padding:20px;
-    text-align:center;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom:1px solid rgba(255,255,255,0.1);
+padding:25px;
+text-align:center;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 header h1{
-    font-size:34px;
-    background: linear-gradient(90deg,#38bdf8,#6366f1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+font-size:36px;
+font-weight:800;
+background:linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 /* CONTAINER */
 .container{
-    max-width:1200px;
-    margin:auto;
-    padding:40px 20px;
+max-width:1200px;
+margin:auto;
+padding:50px 20px;
 }
 
 /* GRID */
 .grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(300px,1fr));
-    gap:30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
 }
 
 /* CARD */
 .card{
-    background: rgba(255,255,255,0.05);
-    padding:30px;
-    border-radius:15px;
-    text-align:center;
-    transition:0.4s;
+background:linear-gradient(145deg,#111827,#020617);
+padding:30px;
+border-radius:18px;
+text-align:center;
+transition:0.4s;
+position:relative;
+border:1px solid rgba(59,130,246,0.1);
 }
 
 .card:hover{
-    transform: translateY(-10px) scale(1.02);
+transform:translateY(-10px) scale(1.02);
+box-shadow:0 25px 50px rgba(0,0,0,.7),
+0 0 25px rgba(59,130,246,.3);
+}
+
+/* LOCK BADGE */
+.lock-badge{
+position:absolute;
+top:15px;
+right:15px;
+background:#f59e0b;
+color:black;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
 }
 
 /* BUTTONS */
 .btn{
-    padding:12px 20px;
-    border:none;
-    border-radius:8px;
-    cursor:pointer;
-    margin:5px;
-    font-weight:bold;
-    outline:none;
+padding:12px 20px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+margin:8px;
+font-weight:600;
+transition:0.3s;
 }
 
-.practice{ background:#22c55e; color:white; }
-.test{ background:#6366f1; color:white; }
+.practice{background:#22c55e;color:white;}
+.test{background:#6366f1;color:white;}
 
-/* PREMIUM */
+.btn:hover{
+transform:translateY(-2px);
+opacity:0.9;
+}
+
+/* PREMIUM SECTION */
 .premium{
-    margin-top:70px;
-    background: linear-gradient(135deg,#4f46e5,#9333ea);
-    padding:40px;
-    border-radius:20px;
-    text-align:center;
+margin-top:80px;
+background:linear-gradient(135deg,#4f46e5,#9333ea);
+padding:50px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 20px 50px rgba(0,0,0,.6);
 }
 
 .unlock{
-    background:white;
-    color:#4f46e5;
-    padding:14px 30px;
-    border-radius:30px;
-    border:none;
-    cursor:pointer;
+background:white;
+color:#4f46e5;
+padding:14px 30px;
+border-radius:30px;
+border:none;
+cursor:pointer;
+font-weight:600;
+}
+
+/* POPUP */
+#premiumModal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.75);
+z-index:2000;
+justify-content:center;
+align-items:center;
+}
+
+.modal-box{
+background:#111827;
+padding:30px;
+border-radius:20px;
+text-align:center;
+width:90%;
+max-width:400px;
 }
 </style>
+
 </head>
 
 <body>
 
 <header>
-    <h1>Practice Hub</h1>
-    <p>Boost Your Interview Preparation</p>
+<h1>Practice Hub</h1>
+<p>Boost Your Interview Preparation 🚀</p>
 </header>
 
 <div class="container">
 
 <div class="grid">
 
-<!-- Aptitude (FREE) -->
+<!-- ✅ APTITUDE (FREE) -->
 <div class="card">
-    <h2>🧠 Aptitude Practice</h2>
-    <p>Master quantitative, reasoning, and verbal ability questions.</p>
+<h2> Aptitude Practice</h2>
+<p>Master quantitative, reasoning, and verbal ability.</p>
 
-    <button class="btn practice"
-        onclick="location.href='/aptitude/practice/'">
-        Start Practice
-    </button>
+<button class="btn practice" onclick="location.href='/aptitude/practice/'">
+Start Practice
+</button>
 
-    <button class="btn test"
-        onclick="location.href='/aptitude/test/'">
-        Take Test
-    </button>
+<button class="btn test" onclick="location.href='/aptitude/test/'">
+Take Test
+</button>
 </div>
 
-<!-- Technical -->
+<!-- 🔒 TECHNICAL (FULL LOCK) -->
 <div class="card">
-    <h2>💻 Technical MCQs {% if not subscribed %}🔒{% endif %}</h2>
-    <p>Practice programming, DBMS, OS, and core CS subjects.</p>
+{% if not subscribed %}
+<div class="lock-badge">Premium</div>
+{% endif %}
 
-    {% if subscribed %}
-        <button class="btn practice"
-            onclick="location.href='/technical/practice/'">
-            Start Practice
-        </button>
+<h2> Technical MCQs</h2>
+<p>Programming, DBMS, OS, and CS subjects.</p>
 
-        <button class="btn test"
-            onclick="location.href='/technical/test/'">
-            Take Test
-        </button>
-    {% else %}
-        <button class="btn practice"
-            onclick="location.href='/plans/'">
-            🔒 Start Practice
-        </button>
+{% if subscribed %}
+<button class="btn practice" onclick="location.href='/technical/practice/'">
+Start Practice
+</button>
 
-        <button class="btn test"
-            onclick="location.href='/plans/'">
-            🔒 Take Test
-        </button>
-    {% endif %}
+<button class="btn test" onclick="location.href='/technical/test/'">
+Take Test
+</button>
+{% else %}
+<button class="btn practice" onclick="openModal()">
+🔒 Start Practice
+</button>
+
+<button class="btn test" onclick="openModal()">
+🔒 Take Test
+</button>
+
+<p style="font-size:12px;color:#9ca3af;">Premium required</p>
+{% endif %}
 </div>
 
-<!-- Interview -->
+<!-- 🔒 INTERVIEW (FULL LOCK) -->
 <div class="card">
-    <h2>🏢 Interview Questions {% if not subscribed %}🔒{% endif %}</h2>
-    <p>Prepare with real company-wise previous interview questions.</p>
+{% if not subscribed %}
+<div class="lock-badge">Premium</div>
+{% endif %}
 
-    {% if subscribed %}
-        <button class="btn practice"
-            onclick="location.href='/interview/practice/'">
-            Start Practice
-        </button>
+<h2> Interview Questions</h2>
+<p>Real company interview questions.</p>
 
-        <button class="btn test"
-            onclick="location.href='/interview/test/'">
-            Take Test
-        </button>
-    {% else %}
-        <button class="btn practice"
-            onclick="location.href='/plans/'">
-            🔒 Start Practice
-        </button>
+{% if subscribed %}
+<button class="btn practice" onclick="location.href='/interview/practice/'">
+Start Practice
+</button>
 
-        <button class="btn test"
-            onclick="location.href='/plans/'">
-            🔒 Take Test
-        </button>
-    {% endif %}
+<button class="btn test" onclick="location.href='/interview/test/'">
+Take Test
+</button>
+{% else %}
+<button class="btn practice" onclick="openModal()">
+🔒 Start Practice
+</button>
+
+<button class="btn test" onclick="openModal()">
+🔒 Take Test
+</button>
+
+<p style="font-size:12px;color:#9ca3af;">Premium required</p>
+{% endif %}
 </div>
 
 </div>
 
 <!-- PREMIUM SECTION -->
 <div class="premium">
-    <h2>🚀 Unlock Premium Content</h2>
-    <p>Get access to advanced features.</p>
-    <p>✔ Company-specific question sets</p>
-    <p>✔ AI-powered weak area analysis</p>
-    <p>✔ Unlimited mock tests</p>
-    <p>✔ Detailed performance reports</p>
-    <p>✔ Personalized study planner</p>
-    <br>
+<h2> Unlock Premium</h2>
 
-    <button class="unlock"
-        onclick="location.href='/plans/'">
-        Unlock Premium
-    </button>
+<p>✔ Company-specific questions</p>
+<p>✔ AI performance analysis</p>
+<p>✔ Unlimited mock tests</p>
+<p>✔ Smart study planner</p>
+
+<br>
+
+<button class="unlock" onclick="location.href='/plans/'">
+Upgrade Now
+</button>
 </div>
 
 </div>
+
+<!-- 🔥 POPUP -->
+<div id="premiumModal">
+<div class="modal-box">
+
+<i class="fas fa-lock" style="font-size:40px;color:#f59e0b;"></i>
+
+<h2>Premium Feature</h2>
+
+<p style="color:#9ca3af;">Upgrade to unlock this module </p>
+
+<br>
+
+<a href="{% url 'plans' %}" 
+style="background:#f59e0b;padding:10px 20px;border-radius:8px;text-decoration:none;color:black;font-weight:600;">
+Upgrade Now
+</a>
+
+</div>
+</div>
+
+<!-- JS -->
+<script>
+function openModal(){
+const isPremium="{{ subscribed|yesno:'true,false' }}";
+if(isPremium==="true") return;
+document.getElementById("premiumModal").style.display="flex";
+}
+
+window.onclick=function(e){
+let m=document.getElementById("premiumModal");
+if(e.target===m) m.style.display="none";
+}
+</script>
 
 </body>
 </html>
