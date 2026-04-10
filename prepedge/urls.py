@@ -134,4 +134,5 @@ urlpatterns = [
     path('cancel-subscription/', views.cancel_subscription, name='cancel_subscription'),
     path('about/', views.about, name='about'),
     path('create-order/', views.create_order),
+     path('activate-free/', views.activate_free, name='activate_free'),
 ]

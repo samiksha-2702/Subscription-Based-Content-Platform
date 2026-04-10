@@ -18,7 +18,6 @@ body{
     color:white;
 }
 
-/* NAVBAR */
 .navbar{
     display:flex;
     justify-content:space-between;
@@ -37,11 +36,8 @@ body{
     -webkit-text-fill-color:transparent;
 }
 
-.navbar a{
-    text-decoration:none;
-}
+.navbar a{text-decoration:none;}
 
-/* BUTTONS */
 .btn{
     padding:10px 18px;
     border-radius:8px;
@@ -60,14 +56,12 @@ body{
     color:white;
 }
 
-/* CONTAINER */
 .container{
     max-width:1200px;
     margin:auto;
     padding:30px;
 }
 
-/* PROFILE HEADER */
 .profile-header{
     text-align:center;
     margin-bottom:40px;
@@ -86,15 +80,9 @@ body{
     box-shadow:0 0 25px rgba(59,130,246,0.5);
 }
 
-.profile-header h1{
-    margin-top:15px;
-}
+.profile-header h1{margin-top:15px;}
+.profile-header p{color:#9ca3af;}
 
-.profile-header p{
-    color:#9ca3af;
-}
-
-/* PREMIUM BADGE */
 .badge{
     display:inline-block;
     padding:6px 12px;
@@ -114,7 +102,6 @@ body{
     color:#9ca3af;
 }
 
-/* STATS */
 .stat-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -141,11 +128,8 @@ body{
     margin-bottom:5px;
 }
 
-.card p{
-    color:#9ca3af;
-}
+.card p{color:#9ca3af;}
 
-/* PROGRESS */
 .progress-section{
     margin-top:40px;
     background:rgba(255,255,255,0.05);
@@ -162,23 +146,17 @@ body{
     transition:0.3s;
 }
 
-.test-item:hover{
-    background:#111827;
-}
+.test-item:hover{background:#111827;}
 
-/* STATUS COLORS */
 .pass{color:#22c55e;}
 .fail{color:#ef4444;}
 
-small{
-    color:#9ca3af;
-}
+small{color:#9ca3af;}
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
     <div class="brand">PrepEdge</div>
 
@@ -190,7 +168,6 @@ small{
 
 <div class="container">
 
-<!-- PROFILE -->
 <div class="profile-header">
 
     <div class="profile-avatar">
@@ -200,15 +177,18 @@ small{
     <h1>{{ user.username }}</h1>
     <p>{{ user.email }}</p>
 
-    <!-- SUBSCRIPTION -->
-    {% if subscription and subscription.status == 'active' %}
+    <!-- ✅ FINAL SUBSCRIPTION LOGIC -->
+    {% if is_premium %}
+
         <span class="badge badge-premium">
             <i class="fas fa-crown"></i> Premium Active
         </span>
 
+        {% if subscription and subscription.expires_at %}
         <p style="margin-top:8px;color:#9ca3af;">
             Valid till: {{ subscription.expires_at|date:"M d, Y" }}
         </p>
+        {% endif %}
 
         <form method="POST" action="{% url 'cancel_subscription' %}">
             {% csrf_token %}
@@ -218,11 +198,17 @@ small{
         </form>
 
     {% else %}
-        <span class="badge badge-free">Free Plan</span><br>
 
-        <a href="{% url 'plans' %}" class="btn btn-primary" style="margin-top:10px;">
+        <span class="badge badge-free">Free Plan</span>
+
+        <p style="margin-top:6px;color:#9ca3af;">
+            Upgrade to unlock AI features 🚀
+        </p>
+<br>
+        <a href="/plans/" class="btn btn-primary" style="margin-top:10px;">
             Upgrade to Premium
         </a>
+
     {% endif %}
 
 </div>
@@ -259,13 +245,9 @@ small{
     <h2 style="margin-bottom:15px;">Recent Activity</h2>
 
     {% for r in results|slice:":5" %}
-
         <div class="test-item">
-
             <strong>{{ r.test.name }}</strong><br>
-
             Score: {{ r.score|default:0 }}% <br>
-
             Grade: {{ r.grade }} <br>
 
             Status:
@@ -280,9 +262,7 @@ small{
             <small>
                 {{ r.date_attempted|date:"M d, Y - H:i" }}
             </small>
-
         </div>
-
     {% empty %}
         <p>No tests attempted yet.</p>
     {% endfor %}

@@ -18,12 +18,7 @@ from .models import Subscription, PaymentRecord
 from django.conf import settings
 import razorpay
 
-def premium_required(view_func):
-    def wrapper(request, *args, **kwargs):
-        if not is_subscribed(request.user):
-            return redirect('plans')
-        return view_func(request, *args, **kwargs)
-    return wrapper
+
 
 def register(request):
     if request.method == "POST":
@@ -88,6 +83,14 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return redirect('login')
+
+def premium_required(view_func):
+    def wrapper(request, *args, **kwargs):
+        if not is_subscribed(request.user):
+            return redirect('plans')
+        return view_func(request, *args, **kwargs)
+    return wrapper
+
 @property
 def is_premium(self):
     return self.plan == 'premium' and self.is_active
@@ -95,7 +98,6 @@ def is_premium(self):
 @login_required
 def profile_view(request):
     user = request.user
-
     results = TestResult.objects.filter(user=user).order_by('-date_attempted')
 
     total_tests = results.count()
@@ -110,17 +112,32 @@ def profile_view(request):
         'avg_score': round(avg_score, 2),
         'last_active': last_active.date_attempted if last_active else None,
         'subscription': subscription,
-        'is_premium': is_subscribed(user)   # ✅ IMPORTANT
+        'is_premium': is_subscribed(user)   # ✅ correct now
     }
 
     return render(request, 'profile.html', context)
-
 def activate_subscription(user):
     subscription, created = Subscription.objects.get_or_create(user=user)
 
     subscription.plan = 'premium'
     subscription.status = 'active'
     subscription.expires_at = timezone.now() + timedelta(days=30)
+
+    subscription.save()
+    return subscription
+
+@login_required
+def activate_free(request):
+    activate_free_plan(request.user)
+    return redirect('profile')
+
+def activate_free_plan(user):
+    subscription, created = Subscription.objects.get_or_create(user=user)
+
+    subscription.plan = 'free'
+    subscription.status = 'active'
+    subscription.expires_at = timezone.now() + timedelta(days=7)
+  # free = no expiry
 
     subscription.save()
     return subscription
@@ -157,13 +174,8 @@ def get_active_subscription(user):
     if sub.expires_at and sub.expires_at < timezone.now():
         sub.status = 'expired'
         sub.save()
-        return None
 
-    # ✅ ONLY premium users allowed
-    if sub.plan == 'premium' and sub.status == 'active':
-        return sub
-
-    return None
+    return sub  # ✅ return always
 @login_required
 def plans(request):
     subscription = get_active_subscription(request.user)
@@ -189,12 +201,12 @@ def cancel_subscription(request):
     sub = Subscription.objects.filter(user=request.user).first()
 
     if sub:
-        sub.status = 'cancelled'
-        sub.expires_at = timezone.now()
+        sub.plan = 'free'   # ✅ downgrade to free
+        sub.status = 'active'
+        sub.expires_at = None
         sub.save()
 
     return redirect('profile')
-
 from .models import Feedback
 @login_required
 def about(request):
@@ -805,26 +817,18 @@ def comm_quiz(request):
 # ══════════════════════════════════════════════════════════════════
 
 def is_subscribed(user):
-    if not user.is_authenticated:
-        return False
-
     sub = Subscription.objects.filter(user=user).first()
 
     if not sub:
         return False
 
-    if sub.status != 'active':
-        return False
-
-    if not sub.expires_at:
-        return False
-
-    if sub.expires_at < timezone.now():
+    # Expiry check
+    if sub.expires_at and sub.expires_at < timezone.now():
         sub.status = 'expired'
         sub.save()
         return False
 
-    return True
+    return sub.plan == 'premium' and sub.status == 'active'
 
 def practice_hub(request):
     return render(request, 'questions.html', {'subscribed': is_subscribed(request.user)})

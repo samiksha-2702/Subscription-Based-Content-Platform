@@ -1,5 +1,7 @@
 {% load static %}
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -20,7 +22,6 @@ body {
     color: white;
 }
 
-/* CONTAINER */
 .checkout-wrapper {
     display: flex;
     gap: 30px;
@@ -37,11 +38,6 @@ body {
     background: rgba(255,255,255,0.07);
     backdrop-filter: blur(18px);
     box-shadow: 0 15px 50px rgba(0,0,0,0.5);
-    transition: 0.3s;
-}
-
-.order-summary:hover {
-    transform: translateY(-5px);
 }
 
 .price {
@@ -66,7 +62,6 @@ body {
     justify-content: center;
 }
 
-/* BUTTON */
 .btn-pay {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
@@ -74,18 +69,6 @@ body {
     padding: 16px;
     border-radius: 12px;
     font-size: 17px;
-    font-weight: 500;
-    transition: 0.3s;
-}
-
-.btn-pay:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(59,130,246,0.5);
-}
-
-/* BADGES */
-.badges {
-    margin-top: 25px;
 }
 
 .badge-item {
@@ -94,7 +77,6 @@ body {
     color: #cbd5f5;
 }
 
-/* TRUST */
 .secure-text {
     text-align: center;
     font-size: 13px;
@@ -102,116 +84,83 @@ body {
     margin-top: 12px;
 }
 
-/* MODAL */
-#processingModal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.8);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
-}
-
-#processingModal.show {
-    display: flex;
-}
-
-.modal-box {
-    background: white;
-    color: black;
-    padding: 30px;
-    border-radius: 16px;
-    text-align: center;
-    width: 320px;
-    animation: pop 0.3s ease;
-}
-
-@keyframes pop {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-.spinner-ring {
-    width: 55px;
-    height: 55px;
-    border: 5px solid #eee;
-    border-top: 5px solid #3b82f6;
-    border-radius: 50%;
-    margin: auto;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    100% { transform: rotate(360deg); }
-}
-
-.success-icon {
-    font-size: 45px;
-    color: #22c55e;
+/* MOBILE FIX */
+@media(max-width:768px){
+    .checkout-wrapper{
+        flex-direction: column;
+    }
 }
 </style>
+
 </head>
 
 <body>
 
-<!-- MODAL -->
-<div id="processingModal">
-    <div class="modal-box">
-        <div id="processingContent">
-            <div class="spinner-ring"></div>
-            <h5 class="mt-3">Processing Payment…</h5>
-            <p>Please wait</p>
+<div class="checkout-wrapper">
+
+
+<!-- LEFT -->
+<div class="order-summary">
+    <h2>🚀 PrepEdge Premium</h2>
+    <p>Unlock full access to premium content, tests & AI tools.</p>
+
+    <!-- PLAN SELECTION -->
+    <div class="mt-3">
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="plan" checked onclick="selectPlan('monthly',299)">
+            <label class="form-check-label">Monthly - ₹299</label>
         </div>
 
-        <div id="successContent" style="display:none">
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h4 class="mt-2">Payment Successful!</h4>
-            <p>Premium Activated 🎉</p>
-            <div id="txnIdBox" style="font-size:12px;margin-top:10px;"></div>
+        <div class="form-check mt-2">
+            <input class="form-check-input" type="radio" name="plan" onclick="selectPlan('yearly',999)">
+            <label class="form-check-label">Yearly - ₹999 🔥</label>
         </div>
+
+    </div>
+
+    <div class="price" id="priceDisplay">₹299</div>
+    <p id="planText">/ month</p>
+
+    <div class="mt-3">
+        <div class="badge-item">🔒 Secure Razorpay Payment</div>
+        <div class="badge-item">⚡ Instant Activation</div>
+        <div class="badge-item">❌ No Hidden Charges</div>
+        <div class="badge-item">📚 Full Premium Access</div>
     </div>
 </div>
 
-<!-- MAIN -->
-<div class="checkout-wrapper">
+<!-- RIGHT -->
+<div class="pay-card">
+    <h3 class="mb-3">Complete Payment</h3>
 
-    <!-- LEFT -->
-    <div class="order-summary">
-        <h2>🚀 PrepEdge Premium</h2>
-        <p>Unlock full access to premium content, tests & AI tools.</p>
+    <button class="btn-pay" onclick="initiatePayment()">
+        <i class="fas fa-lock"></i> Pay ₹<span id="payAmount">299</span> Securely
+    </button>
 
-        <div class="price">₹299</div>
-        <p>/ month</p>
-
-        <div class="badges">
-            <div class="badge-item">🔒 Secure Razorpay Payment</div>
-            <div class="badge-item">⚡ Instant Activation</div>
-            <div class="badge-item">❌ No Hidden Charges</div>
-            <div class="badge-item">📚 Full Premium Access</div>
-        </div>
+    <div class="secure-text">
+        🔐 Encrypted & Safe Payment
     </div>
+</div>
 
-    <!-- RIGHT -->
-    <div class="pay-card">
-        <h3 class="mb-3">Complete Payment</h3>
-
-        <button class="btn-pay" onclick="initiatePayment()">
-            <i class="fas fa-lock"></i> Pay ₹299 Securely
-        </button>
-
-        <div class="secure-text">
-            🔐 Encrypted & Safe Payment
-        </div>
-    </div>
 
 </div>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <script>
+let selectedAmount = 299;
+let selectedPlan = 'monthly';
+
+function selectPlan(plan, amount) {
+    selectedPlan = plan;
+    selectedAmount = amount;
+
+    document.getElementById('priceDisplay').innerText = "₹" + amount;
+    document.getElementById('payAmount').innerText = amount;
+    document.getElementById('planText').innerText = plan === 'yearly' ? "/ year" : "/ month";
+}
+
 function getCookie(name) {
     let val = null;
     document.cookie.split(';').forEach(c => {
@@ -223,22 +172,14 @@ function getCookie(name) {
 
 function initiatePayment() {
 
-    document.getElementById('processingModal').classList.add('show');
-
     const options = {
         key: "{{ RAZORPAY_KEY_ID }}",
-        amount: 29900,
+        amount: selectedAmount * 100,
         currency: "INR",
         name: "PrepEdge",
-        description: "Premium Subscription",
+        description: selectedPlan === 'yearly' ? "Yearly Premium" : "Monthly Premium",
 
         handler: function (response) {
-
-            document.getElementById('processingContent').style.display = 'none';
-            document.getElementById('successContent').style.display = 'block';
-
-            document.getElementById('txnIdBox').innerHTML =
-                "Txn ID:<br><b>" + response.razorpay_payment_id + "</b>";
 
             fetch('/payment/verify/', {
                 method: 'POST',
@@ -248,14 +189,13 @@ function initiatePayment() {
                 },
                 body: JSON.stringify({
                     razorpay_payment_id: response.razorpay_payment_id,
-                    plan: 'premium',
-                    amount: 299
+                    plan: selectedPlan,
+                    amount: selectedAmount
                 })
             });
 
-            setTimeout(() => {
-                window.location.href = '/profile/';
-            }, 2500);
+            alert("Payment Successful 🎉");
+            window.location.href = '/profile/';
         },
 
         prefill: {
