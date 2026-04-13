@@ -6,172 +6,558 @@
 <title>PrepEdge | AI Interview Prep</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 body {
   font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color:white;
+  background: radial-gradient(circle at 10% 20%, #0b1120, #030712);
+  color: #f1f5f9;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* REMOVE LINK UNDERLINE */
+/* Remove link underline - KEPT ORIGINAL */
 .grid a {
   text-decoration: none;
   color: inherit;
 }
 
-/* NAVBAR */
+/* NAVBAR - Enhanced with better glass morphism */
 .navbar {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:18px 40px;
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,255,255,0.1);
-  position:sticky;
-  top:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 40px;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .brand {
-  font-size:26px;
-  font-weight:800;
-  background:linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
 }
 
-.nav-links{display:flex;gap:15px;align-items:center;}
-
-.nav-links a{
-  color:#e5e7eb;
-  text-decoration:none;
-  padding:8px 14px;
-  border-radius:8px;
-  transition:0.3s;
+.nav-links {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
-.nav-links a:hover{
-  background:rgba(59,130,246,0.2);
+.nav-links a {
+  color: #e2e8f0;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 40px;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  font-size: 0.95rem;
 }
 
-.upgrade-btn-nav{
-  background:linear-gradient(135deg,#f59e0b,#d97706);
-  color:black;
-  font-weight:600;
+.nav-links a:hover {
+  background: rgba(59, 130, 246, 0.25);
+  color: white;
+  transform: translateY(-1px);
 }
 
-/* PROFILE */
-.profile{position:relative;}
-
-.dropdown{
-  position:absolute;
-  top:110%;
-  right:0;
-  background:#0f172a;
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:10px;
-  width:180px;
-  display:none;
+.upgrade-btn-nav {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: white !important;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
 }
 
-.profile:hover .dropdown{display:block;}
+.upgrade-btn-nav:hover {
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.5);
+  transform: translateY(-2px) !important;
+}
 
-.dropdown a{padding:10px;display:block;}
+/* PROFILE - Enhanced dropdown */
+.profile {
+  position: relative;
+  cursor: pointer;
+}
 
-/* HERO */
+.profile > span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 40px;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.profile > span:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.profile i {
+  font-size: 1.1rem;
+  color: #60a5fa;
+}
+
+.dropdown {
+  position: absolute;
+  top: 120%;
+  right: 0;
+  background: #0f172a;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 16px;
+  width: 190px;
+  display: none;
+  box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.profile:hover .dropdown {
+  display: block;
+  animation: fadeInDown 0.2s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown a {
+  padding: 12px 18px;
+  display: block;
+  color: #cbd5e1;
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  border-radius: 0;
+}
+
+.dropdown a:hover {
+  background: rgba(59, 130, 246, 0.2);
+  color: white;
+  padding-left: 24px;
+}
+
+/* HERO - Refined typography */
 .hero {
-  text-align:center;
-  padding:110px 20px 60px;
+  text-align: center;
+  padding: 100px 20px 70px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .hero h1 {
-  font-size:3.2rem;
-  background:linear-gradient(to right,#fff,#94a3b8);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff, #94a3b8, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
 }
 
-.hero p{color:#94a3b8;margin:20px 0;}
+.hero p {
+  color: #94a3b8;
+  margin: 20px 0;
+  font-size: 1.2rem;
+  max-width: 550px;
+  margin-left: auto;
+  margin-right: auto;
+}
 
 .btn-primary {
-  background:linear-gradient(135deg,#3b82f6,#2563eb);
-  padding:12px 25px;
-  border-radius:10px;
-  color:white;
-  text-decoration:none;
-  box-shadow:0 10px 25px rgba(59,130,246,0.3);
+  background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
+  padding: 14px 32px;
+  border-radius: 50px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
 }
 
-/* GRID */
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 35px -8px #1e3a8a;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8, #1e40af);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* GRID - Improved spacing and responsiveness */
 .grid {
-  max-width:1200px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:30px;
-  padding:20px;
+  max-width: 1280px;
+  margin: 40px auto 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  padding: 20px;
+  flex: 1;
 }
 
-/* CARD */
+/* CARD - Premium glass morphism */
 .card {
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
-  padding:20px;
-  border-radius:20px;
-  transition:0.4s;
-  position:relative;
-  overflow:hidden;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px;
+  border-radius: 28px;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
-  transform:translateY(-10px) scale(1.02);
-  box-shadow:0 20px 50px rgba(0,0,0,0.6);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6);
+  border-color: rgba(59, 130, 246, 0.4);
+  background: rgba(255, 255, 255, 0.07);
 }
 
-/* SHINE EFFECT */
+/* SHINE EFFECT - Enhanced animation */
 .card::before {
-  content:"";
-  position:absolute;
-  top:0;
-  left:-100%;
-  width:100%;
-  height:100%;
-  background:linear-gradient(120deg,transparent,rgba(255,255,255,0.2),transparent);
-  transition:0.6s;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transition: 0.7s;
+  pointer-events: none;
 }
-.card:hover::before{left:100%;}
 
+.card:hover::before {
+  left: 100%;
+}
+
+/* Image styling */
 .card img {
-  width:100%;
-  height:160px;
-  object-fit:cover;
-  border-radius:12px;
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.3s ease;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover img {
+  transform: scale(0.98);
 }
 
 .card h3 {
-  margin-top:15px;
-  transition:0.3s;
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: 700;
+  transition: all 0.3s;
+  letter-spacing: -0.3px;
 }
 
-.grid a:hover h3{
-  color:#60a5fa;
+.grid a:hover h3 {
+  color: #60a5fa;
+  transform: translateX(4px);
 }
 
-.card p{
-  color:#9ca3af;
-  font-size:14px;
+.card p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Add subtle icon to card descriptions */
+.card p::before {
+  content: "✨";
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Bottom glow effect on card hover */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  width: 80%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #3b82f6, #a855f7, transparent);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* ========= FOOTER STYLES ========= */
+.footer {
+  background: rgba(10, 14, 23, 0.95);
+  backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(59, 130, 246, 0.2);
+  margin-top: 60px;
+  padding: 50px 40px 30px;
+}
+
+.footer-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.footer-section h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-section .brand {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  display: inline-block;
+}
+
+.footer-section p {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  color: #9ca3af;
+  background: rgba(255, 255, 255, 0.05);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background: #3b82f6;
+  color: white;
+  transform: translateY(-3px);
+}
+
+.footer-section ul {
+  list-style: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 12px;
+}
+
+.footer-section ul li a {
+  color: #9ca3af;
+  text-decoration: none;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+}
+
+.footer-section ul li a:hover {
+  color: #60a5fa;
+  padding-left: 5px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 40px;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.newsletter-form input:focus {
+  border-color: #3b82f6;
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.newsletter-form button {
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 40px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+
+.newsletter-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+
+.footer-bottom {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 30px;
+  margin-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.85rem;
+}
+
+.footer-bottom a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.footer-bottom a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+  }
+  
+  .brand {
+    font-size: 22px;
+  }
+  
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  
+  .hero p {
+    font-size: 1rem;
+  }
+  
+  .hero {
+    padding: 60px 20px 50px;
+  }
+  
+  .grid {
+    gap: 20px;
+    padding: 15px;
+  }
+  
+  .card {
+    padding: 18px;
+  }
+  
+  .card h3 {
+    font-size: 1.3rem;
+  }
+  
+  .nav-links {
+    gap: 8px;
+  }
+  
+  .nav-links a {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
+  
+  .footer {
+    padding: 40px 20px 25px;
+  }
+  
+  .footer-container {
+    gap: 30px;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-form button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .btn-primary {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Smooth scrolling for better UX */
+html {
+  scroll-behavior: smooth;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
+<!-- NAVBAR - All URLs and logic preserved -->
 <div class="navbar">
   <div class="brand">PrepEdge</div>
 
@@ -197,14 +583,14 @@ body {
   </div>
 </div>
 
-<!-- HERO -->
+<!-- HERO - Text and URL unchanged -->
 <section class="hero">
-  <h1>Crack Interviews with AI </h1>
+  <h1>Crack Interviews with AI</h1>
   <p>Practice, learn and get job-ready faster</p>
   <a href="{% url 'register' %}" class="btn-primary">Get Started</a>
 </section>
 
-<!-- GRID -->
+<!-- GRID - All URLs exactly as they were -->
 <div class="grid">
 
 <a href="{% url 'programming' %}">
@@ -223,7 +609,6 @@ body {
 </div>
 </a>
 
-<!-- NOW NORMAL LINKS (NO LOCK UI) -->
 <a href="{% url 'expert' %}">
 <div class="card">
 <img src="{% static 'image/expert_talks.jpg' %}">
@@ -257,6 +642,64 @@ body {
 </a>
 
 </div>
+
+<!-- FOOTER - New addition with preserved URLs -->
+<footer class="footer">
+  <div class="footer-container">
+    
+    <!-- Brand Section -->
+    <div class="footer-section">
+      <div class="brand">PrepEdge</div>
+      <p>AI-powered interview preparation platform helping you land your dream job with confidence.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+    
+    <!-- Quick Links -->
+    <div class="footer-section">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="{% url 'programming' %}">Programming</a></li>
+        <li><a href="{% url 'company' %}">Company Insights</a></li>
+        <li><a href="{% url 'expert' %}">Expert Talks</a></li>
+        <li><a href="{% url 'comm' %}">Communication</a></li>
+        <li><a href="{% url 'questions' %}">Aptitude</a></li>
+        <li><a href="{% url 'ai_dashboard' %}">AI Recommendations</a></li>
+      </ul>
+    </div>
+    
+    <!-- Resources -->
+    <div class="footer-section">
+      <h3>Resources</h3>
+      <ul>
+        <li><a href="{% url 'about' %}">About Us</a></li>
+        <li><a href="{% url 'plans' %}">Pricing Plans</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Success Stories</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+    
+    <!-- Newsletter -->
+    <div class="footer-section">
+      <h3>Stay Updated</h3>
+      <p>Get the latest interview tips and resources.</p>
+      <form class="newsletter-form" action="#" method="POST">
+        {% csrf_token %}
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <p>&copy; {% now "Y" %} PrepEdge. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </div>
+</footer>
 
 </body>
 </html>
