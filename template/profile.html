@@ -12,12 +12,46 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
-body{
-    font-family: 'Inter', sans-serif;
-    background: radial-gradient(circle at top,#0f172a,#020617);
-    color:white;
+/* REMOVE LINK UNDERLINE */
+a{
+    text-decoration:none;
+    color:inherit;
 }
 
+/* CLEAN PREMIUM BACKGROUND (NO ANIMATION) */
+body{
+    font-family:'Inter',sans-serif;
+    background:#020617;
+    color:white;
+    position:relative;
+}
+
+/* soft glow */
+body::before{
+    content:"";
+    position:absolute;
+    top:-200px;
+    left:-200px;
+    width:500px;
+    height:500px;
+    background: radial-gradient(circle, rgba(59,130,246,0.25), transparent 70%);
+    filter: blur(80px);
+    z-index:-1;
+}
+
+body::after{
+    content:"";
+    position:absolute;
+    bottom:-200px;
+    right:-200px;
+    width:500px;
+    height:500px;
+    background: radial-gradient(circle, rgba(139,92,246,0.25), transparent 70%);
+    filter: blur(80px);
+    z-index:-1;
+}
+
+/* NAVBAR */
 .navbar{
     display:flex;
     justify-content:space-between;
@@ -36,14 +70,20 @@ body{
     -webkit-text-fill-color:transparent;
 }
 
-.navbar a{text-decoration:none;}
-
+/* BUTTONS */
 .btn{
+    display:inline-block;
     padding:10px 18px;
-    border-radius:8px;
+    border-radius:10px;
     border:none;
     cursor:pointer;
     font-weight:600;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(0,0,0,0.4);
 }
 
 .btn-primary{
@@ -56,39 +96,60 @@ body{
     color:white;
 }
 
+/* CONTAINER */
 .container{
     max-width:1200px;
     margin:auto;
     padding:30px;
 }
 
+/* PROFILE */
 .profile-header{
     text-align:center;
     margin-bottom:40px;
 }
 
+/* Avatar */
 .profile-avatar{
     width:120px;
     height:120px;
     border-radius:50%;
-    background:linear-gradient(135deg,#3b82f6,#9333ea);
+    margin:auto;
+    position:relative;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:40px;
-    margin:auto;
-    box-shadow:0 0 25px rgba(59,130,246,0.5);
+    background:#111;
+    overflow:hidden;
+}
+
+.profile-avatar::before{
+    content:"";
+    position:absolute;
+    inset:-4px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#3b82f6,#9333ea);
+    z-index:-1;
+    filter:blur(8px);
+}
+
+.avatar-img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:50%;
 }
 
 .profile-header h1{margin-top:15px;}
 .profile-header p{color:#9ca3af;}
 
+/* BADGE */
 .badge{
     display:inline-block;
-    padding:6px 12px;
+    padding:6px 14px;
     border-radius:20px;
-    font-size:13px;
     margin-top:10px;
+    font-size:13px;
 }
 
 .badge-premium{
@@ -102,6 +163,16 @@ body{
     color:#9ca3af;
 }
 
+/* ACTION */
+.action-bar{
+    margin-top:25px;
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+/* CARDS */
 .stat-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -111,47 +182,67 @@ body{
 
 .card{
     background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.08);
+    backdrop-filter:blur(15px);
+    border:1px solid rgba(255,255,255,0.1);
     padding:25px;
     border-radius:16px;
     text-align:center;
-    transition:0.4s;
-}
-
-.card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 20px 40px rgba(0,0,0,0.6);
-}
-
-.card h2{
-    font-size:28px;
-    margin-bottom:5px;
-}
-
-.card p{color:#9ca3af;}
-
-.progress-section{
-    margin-top:40px;
-    background:rgba(255,255,255,0.05);
-    padding:25px;
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,0.08);
-}
-
-.test-item{
-    margin-bottom:15px;
-    padding:15px;
-    background:#1f2937;
-    border-radius:10px;
     transition:0.3s;
 }
 
-.test-item:hover{background:#111827;}
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card h2{font-size:30px;}
+
+/* SECTION */
+.progress-section{
+    margin-top:40px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(15px);
+    padding:25px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.1);
+}
+
+.section-title{
+    font-size:20px;
+    margin-bottom:20px;
+    font-weight:600;
+    border-left:4px solid #3b82f6;
+    padding-left:10px;
+}
+
+/* TEST */
+.test-item{
+    margin-bottom:15px;
+    padding:15px;
+    background:#111827;
+    border-radius:12px;
+}
 
 .pass{color:#22c55e;}
 .fail{color:#ef4444;}
 
 small{color:#9ca3af;}
+
+/* PROGRESS */
+.progress-bar{
+    width:100%;
+    height:8px;
+    background:#374151;
+    border-radius:10px;
+    margin:8px 0;
+}
+
+.progress-fill{
+    height:100%;
+    background:linear-gradient(135deg,#3b82f6,#22c55e);
+    border-radius:10px;
+    width:0;
+    transition:width 0.8s ease;
+}
 </style>
 </head>
 
@@ -159,7 +250,6 @@ small{color:#9ca3af;}
 
 <div class="navbar">
     <div class="brand">PrepEdge</div>
-
     <div>
         <a href="{% url 'index' %}" class="btn btn-primary">Home</a>
         <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
@@ -171,51 +261,34 @@ small{color:#9ca3af;}
 <div class="profile-header">
 
     <div class="profile-avatar">
-        <i class="fas fa-user"></i>
+        {% if user.profile.avatar_url %}
+            <img src="{{ user.profile.avatar_url }}" class="avatar-img">
+        {% else %}
+            <i class="fas fa-user"></i>
+        {% endif %}
     </div>
 
     <h1>{{ user.username }}</h1>
     <p>{{ user.email }}</p>
 
-    <!-- ✅ FINAL SUBSCRIPTION LOGIC -->
     {% if is_premium %}
-
         <span class="badge badge-premium">
             <i class="fas fa-crown"></i> Premium Active
         </span>
-
-        {% if subscription and subscription.expires_at %}
-        <p style="margin-top:8px;color:#9ca3af;">
-            Valid till: {{ subscription.expires_at|date:"M d, Y" }}
-        </p>
-        {% endif %}
-
-        <form method="POST" action="{% url 'cancel_subscription' %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">
-                Cancel Subscription
-            </button>
-        </form>
-
     {% else %}
-
-        <span class="badge badge-free">Free Plan</span>
-
-        <p style="margin-top:6px;color:#9ca3af;">
-            Upgrade to unlock AI features 🚀
-        </p>
-<br>
-        <a href="/plans/" class="btn btn-primary" style="margin-top:10px;">
-            Upgrade to Premium
-        </a>
-
+        <span class="badge badge-free">Free Plan</span><br><br>
+        <a href="/plans/" class="btn btn-primary">Upgrade</a>
     {% endif %}
+
+    <div class="action-bar">
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
+        <a href="{% url 'change_password' %}" class="btn btn-danger">Change Password</a>
+    </div>
 
 </div>
 
 <!-- STATS -->
 <div class="stat-grid">
-
     <div class="card">
         <h2>{{ total_tests }}</h2>
         <p>Total Tests</p>
@@ -236,40 +309,46 @@ small{color:#9ca3af;}
         </h2>
         <p>Last Active</p>
     </div>
-
 </div>
 
-<!-- RECENT TESTS -->
+<!-- ACTIVITY -->
 <div class="progress-section">
+<h2 class="section-title">Recent Activity</h2>
 
-    <h2 style="margin-bottom:15px;">Recent Activity</h2>
+{% for r in results|slice:":5" %}
+<div class="test-item">
+    <strong>{{ r.test.name }}</strong><br>
+    Score: {{ r.score|default:0 }}%
 
-    {% for r in results|slice:":5" %}
-        <div class="test-item">
-            <strong>{{ r.test.name }}</strong><br>
-            Score: {{ r.score|default:0 }}% <br>
-            Grade: {{ r.grade }} <br>
+    <div class="progress-bar">
+        <div class="progress-fill" data-width="{{ r.score|default:'0' }}"></div>
+    </div>
 
-            Status:
-            {% if r.passed %}
-                <span class="pass">Passed</span>
-            {% else %}
-                <span class="fail">Failed</span>
-            {% endif %}
+    {% if r.passed %}
+        <span class="pass">Passed</span>
+    {% else %}
+        <span class="fail">Failed</span>
+    {% endif %}
 
-            <br>
-
-            <small>
-                {{ r.date_attempted|date:"M d, Y - H:i" }}
-            </small>
-        </div>
-    {% empty %}
-        <p>No tests attempted yet.</p>
-    {% endfor %}
+    <br>
+    <small>{{ r.date_attempted|date:"M d, Y - H:i" }}</small>
+</div>
+{% empty %}
+<p style="text-align:center;color:#9ca3af;">No activity yet 🚀</p>
+{% endfor %}
 
 </div>
 
 </div>
+
+<script>
+document.querySelectorAll('.progress-fill').forEach(el=>{
+    let value = el.getAttribute('data-width') || 0;
+    setTimeout(()=>{
+        el.style.width = value + "%";
+    },200);
+});
+</script>
 
 </body>
 </html>

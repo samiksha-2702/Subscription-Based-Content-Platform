@@ -17,6 +17,7 @@ from django.http import HttpResponse
 from .models import Subscription, PaymentRecord
 from django.conf import settings
 import razorpay
+from django.contrib.auth import update_session_auth_hash
 
 
 
@@ -220,6 +221,64 @@ def about(request):
         messages.success(request, "Message saved successfully!")
 
     return render(request, 'about.html')
+
+@login_required
+def edit_profile(request):
+
+    user = request.user
+    profile, created = UserProfile.objects.get_or_create(user=user)
+
+    if request.method == "POST":
+        username = request.POST.get("username")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+
+        if not username or not email:
+            messages.error(request, "Username and Email are required")
+        else:
+            user.username = username
+            user.email = email
+            user.save()
+
+           
+            profile.phone = phone
+            profile.save()
+
+            messages.success(request, "Profile updated successfully")
+            return redirect("profile")
+
+    return render(request, "edit_profile.html", {
+        "user": user,
+        "profile": profile
+    })
+
+
+# 🔐 CHANGE PASSWORD
+@login_required
+@login_required
+def change_password(request):
+    if request.method == "POST":
+        current = request.POST.get('current_password')
+        new = request.POST.get('new_password')
+        confirm = request.POST.get('confirm_password')
+
+        user = request.user
+
+        if not user.check_password(current):
+            messages.error(request, "Current password is wrong")
+            return redirect('change_password')
+
+        if new != confirm:
+            messages.error(request, "Passwords do not match")
+            return redirect('change_password')
+
+        user.set_password(new)
+        user.save()
+
+        messages.success(request, "Password updated successfully")
+        return redirect('login')
+
+    return render(request, 'change_password.html')
 # HELPERS
 # ══════════════════════════════════════════════════════════════════
 

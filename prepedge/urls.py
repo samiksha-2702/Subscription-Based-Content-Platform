@@ -135,4 +135,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('create-order/', views.create_order),
      path('activate-free/', views.activate_free, name='activate_free'),
+     path("edit-profile/", views.edit_profile, name="edit_profile"),
+path("change-password/", views.change_password, name="change_password"),
 ]
