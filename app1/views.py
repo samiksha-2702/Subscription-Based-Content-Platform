@@ -143,14 +143,6 @@ def activate_free_plan(user):
     subscription.save()
     return subscription
     
-@login_required
-def subscription_view(request):
-    subscription = get_active_subscription(request.user)
-
-    if subscription and subscription.status == 'active':
-        return redirect("profile")   # or dashboard
-
-    return render(request, "plans.html")
 
 def check_expiry(user):
     subscription = getattr(user, 'subscription', None)
@@ -396,12 +388,14 @@ def expert_talks(request):
 @login_required
 def communication(request):
     return render(request, 'communication/comm.html')
+
 @login_required
 def aptitude(request):
-    sub = _get_subscription(request.user)
     return render(request, 'questions.html', {
-        'subscribed': sub.is_premium if sub else False
+        'subscribed': is_subscribed(request.user)
     })
+
+
 @login_required
 def ai_recommendation(request):
     sub = getattr(request.user, 'subscription', None)
@@ -410,6 +404,7 @@ def ai_recommendation(request):
         return redirect('plans')
 
     return render(request, 'ai/dashboard.html')
+
 @login_required
 def plans(request):
     return render(request, 'plans.html')
