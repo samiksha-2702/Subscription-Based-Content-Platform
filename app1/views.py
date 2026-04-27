@@ -18,8 +18,19 @@ from .models import Subscription, PaymentRecord
 from django.conf import settings
 import razorpay
 from django.contrib.auth import update_session_auth_hash
+from functools import wraps
+# views.py
 
-
+PLANS = {
+    "monthly": {
+        "price": 299,
+        "days": 30
+    },
+    "yearly": {
+        "price": 999,
+        "days": 365
+    }
+}
 
 def register(request):
     if request.method == "POST":
@@ -66,13 +77,12 @@ def user_login(request):
             login(request, user)
 
             # ✅ CHECK SUBSCRIPTION
-            subscription = getattr(user, 'subscription', None)
+            subscription = get_active_subscription(user)
 
-            if subscription and subscription.is_active:
-                return redirect("index")  # already subscribed
+            if subscription and has_active_subscription(user):
+              return redirect("index")
             else:
-                return redirect("plans")  # not subscribed
-
+              return redirect("plans")
         else:
             return render(request, "login.html", {
                 "error": "Invalid username or password",
@@ -80,21 +90,42 @@ def user_login(request):
             })
 
     return render(request, "login.html")
+
+from django.utils import timezone
+
+def has_active_subscription(user):
+    if not user.is_authenticated:
+        return False
+
+    sub = Subscription.objects.filter(user=user).first()
+
+    if not sub:
+        return False
+
+    # ❌ EXPIRED → mark and block
+    if sub.expires_at and sub.expires_at < timezone.now():
+        if sub.status != 'expired':
+            sub.status = 'expired'
+            sub.save()
+        return False
+
+    # ✅ ONLY premium + active allowed
+    return sub.plan == 'premium' and sub.status == 'active'
+
 @login_required
 def user_logout(request):
     logout(request)
     return redirect('login')
 
+from functools import wraps
+
 def premium_required(view_func):
+    @wraps(view_func)
     def wrapper(request, *args, **kwargs):
-        if not is_subscribed(request.user):
+        if not has_active_subscription(request.user):
             return redirect('plans')
         return view_func(request, *args, **kwargs)
     return wrapper
-
-@property
-def is_premium(self):
-    return self.plan == 'premium' and self.is_active
 
 @login_required
 def profile_view(request):
@@ -113,10 +144,10 @@ def profile_view(request):
         'avg_score': round(avg_score, 2),
         'last_active': last_active.date_attempted if last_active else None,
         'subscription': subscription,
-        'is_premium': is_subscribed(user)   # ✅ correct now
-    }
+        'is_premium': has_active_subscription(user)    }
 
     return render(request, 'profile.html', context)
+
 def activate_subscription(user):
     subscription, created = Subscription.objects.get_or_create(user=user)
 
@@ -137,8 +168,7 @@ def activate_free_plan(user):
 
     subscription.plan = 'free'
     subscription.status = 'active'
-    subscription.expires_at = timezone.now() + timedelta(days=7)
-  # free = no expiry
+    subscription.expires_at = None   # unlimited free  # free = no expiry
 
     subscription.save()
     return subscription
@@ -171,30 +201,30 @@ def get_active_subscription(user):
     if not sub:
         return None
 
-    # Expiry check
+    # auto-expire
     if sub.expires_at and sub.expires_at < timezone.now():
         sub.status = 'expired'
         sub.save()
 
-    return sub  # ✅ return always
+    return sub
+
 @login_required
 def plans(request):
     subscription = get_active_subscription(request.user)
 
-    if subscription:
-        return redirect("profile")  # already premium
+    if has_active_subscription(request.user):    
+        return redirect("profile")   
 
-    return render(request, "plans.html")
-
+    return render(request, "plans.html", {
+        "subscription": subscription,
+        "is_premium": subscription.is_premium if subscription else False
+    })
 @login_required
 def upgrade_view(request):
     subscription = get_active_subscription(request.user)
 
-    # ❌ If already premium → no upgrade
-    if subscription and subscription.status == 'active':
-        return redirect("profile")
-
-    # ✅ Only free users see upgrade
+    if has_active_subscription(request.user):
+      return redirect("profile")
     return render(request, "plans.html")
 
 @login_required
@@ -255,7 +285,6 @@ def edit_profile(request):
 
 # 🔐 CHANGE PASSWORD
 @login_required
-@login_required
 def change_password(request):
     if request.method == "POST":
         current = request.POST.get('current_password')
@@ -281,6 +310,9 @@ def change_password(request):
     return render(request, 'change_password.html')
 # HELPERS
 # ══════════════════════════════════════════════════════════════════
+def is_subscribed(user):
+    sub = Subscription.objects.filter(user=user).first()
+    return sub.is_premium if sub else False
 
 def _get_subscription(user):
     """Return the user's Subscription, creating a free one if missing."""
@@ -386,33 +418,25 @@ def company(request):
     return render(request, 'company.html')
 
 @login_required
+@premium_required
 def expert_talks(request):
-    sub = getattr(request.user, 'subscription', None)
-
-    if not sub or not sub.is_premium:
-        return redirect('plans')
-
     return render(request, 'expert/expert.html')
+
 @login_required
 def communication(request):
     return render(request, 'communication/comm.html')
+
 @login_required
 def aptitude(request):
     sub = _get_subscription(request.user)
     return render(request, 'questions.html', {
         'subscribed': sub.is_premium if sub else False
     })
+
 @login_required
+@premium_required
 def ai_recommendation(request):
-    sub = getattr(request.user, 'subscription', None)
-
-    if not sub or not sub.is_premium:
-        return redirect('plans')
-
     return render(request, 'ai/dashboard.html')
-@login_required
-def plans(request):
-    return render(request, 'plans.html')
 
 @login_required
 def subscribe(request):
@@ -809,10 +833,10 @@ def dsa_test(request):
 
 def companies_blogs(request):
     return render(request, 'company.html')
-
+@premium_required
 def google(request):  
     return render(request, 'company/google.html')
-
+@premium_required
 def amazon(request):  
     return render(request, 'company/amazon.html')
 @premium_required
@@ -875,22 +899,9 @@ def comm_quiz(request):
 # APTITUDE MODULE
 # ══════════════════════════════════════════════════════════════════
 
-def is_subscribed(user):
-    sub = Subscription.objects.filter(user=user).first()
-
-    if not sub:
-        return False
-
-    # Expiry check
-    if sub.expires_at and sub.expires_at < timezone.now():
-        sub.status = 'expired'
-        sub.save()
-        return False
-
-    return sub.plan == 'premium' and sub.status == 'active'
 
 def practice_hub(request):
-    return render(request, 'questions.html', {'subscribed': is_subscribed(request.user)})
+    return render(request, 'questions.html', {'subscribed':  has_active_subscription(request.user)})
 
 def aptitude_practice(request):
     test = Test.objects.filter(name="Aptitude Practice Test").first()
@@ -912,7 +923,7 @@ def aptitude_test(request):
     return render(request, "aptitude/aptitude_test.html", {"test": test})
 
 def technical_practice(request):
-    if not is_subscribed(request.user):
+    if not has_active_subscription(request.user):
         return redirect('plans')   # 🔒 BLOCK FREE USERS
 
     test = Test.objects.filter(name="Technical Practice Test").first()
@@ -929,7 +940,7 @@ def technical_practice(request):
     })
  
 def technical_test(request):
-    if not is_subscribed(request.user):
+    if not has_active_subscription(request.user):
         return redirect('plans')
 
     test = Test.objects.filter(name="Technical Test").first()
@@ -945,7 +956,7 @@ def technical_test(request):
     return render(request, "aptitude/technical_test.html", {"test": test})
 
 def interview_practice(request):
-    if not is_subscribed(request.user):
+    if not has_active_subscription(request.user):
         return redirect('plans')
 
     test = Test.objects.filter(name="Interview Practice Test").first()
@@ -959,7 +970,7 @@ def interview_practice(request):
         "test": test
     })
 def interview_test(request):
-    if not is_subscribed(request.user):
+    if not has_active_subscription(request.user):
         return redirect('plans')
 
     test = Test.objects.filter(name="Interview Test").first()
@@ -1083,7 +1094,6 @@ def result_page(request, result_id):
 
 
 import json
-import uuid
 from django.utils import timezone
 from datetime import timedelta
 from django.http import JsonResponse
@@ -1102,92 +1112,63 @@ def payment(request):
     'RAZORPAY_KEY_ID': settings.RAZORPAY_KEY_ID
 })
 client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
 @login_required
 def payment_verify(request):
-    if request.method != 'POST':
-        return JsonResponse({'status': 'error', 'message': 'POST required'}, status=405)
-
     try:
         data = json.loads(request.body)
-    except json.JSONDecodeError:
-        return JsonResponse({'status': 'error', 'message': 'Invalid JSON'}, status=400)
+        print("🔥 VERIFY CALLED:", data)
 
-    # Get data safely
-    txn_id = data.get('razorpay_payment_id') or f"DEMO_{uuid.uuid4().hex[:12].upper()}"
-    order_id = data.get('razorpay_order_id')
-    signature = data.get('razorpay_signature')
+        txn_id = data.get('razorpay_payment_id')
+        order_id = data.get('razorpay_order_id')
+        signature = data.get('razorpay_signature')
+        plan = data.get('plan')
 
-    plan = data.get('plan', 'premium')
-    amount = data.get('amount', 299)
+        if not plan:
+            return JsonResponse({'error': 'Plan missing'}, status=400)
 
-    # 🔐 VERIFY PAYMENT (IMPORTANT)
-    try:
-        params_dict = {
+        client = razorpay.Client(auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET
+        ))
+
+        client.utility.verify_payment_signature({
             'razorpay_payment_id': txn_id,
             'razorpay_order_id': order_id,
             'razorpay_signature': signature
-        }
-
-        client.utility.verify_payment_signature(params_dict)
-
-    except Exception:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Payment verification failed'
-        }, status=400)
-
-    # Get or create subscription
-    sub, created = Subscription.objects.get_or_create(user=request.user)
-
-    # Check if already active premium
-    if (
-        sub.plan == 'premium'
-        and sub.status == 'active'
-        and sub.expires_at
-        and sub.expires_at > timezone.now()
-    ):
-        return JsonResponse({
-            'status': 'success',
-            'message': 'Already premium'
         })
 
-    # Update subscription
-    sub.plan = plan
-    sub.status = 'active'
-    sub.started_at = timezone.now()
-    sub.expires_at = timezone.now() + timedelta(days=30)
-    sub.save()
+        plan_data = PLANS[plan]
+        duration = plan_data["days"]
 
-    # Save payment record safely
-    try:
-        PaymentRecord.objects.create(
-            user=request.user,
-            plan=plan,
-            amount=amount,
-            currency='INR',
-            status='success',
-            method='razorpay',
-            transaction_id=txn_id,
-            notes='PrepEdge payment'
-        )
-    except Exception:
-        return JsonResponse({
-            'status': 'error',
-            'message': 'Payment record saving failed'
-        }, status=500)
+        sub, _ = Subscription.objects.get_or_create(user=request.user)
 
-    return JsonResponse({
-        'status': 'success',
-        'transaction_id': txn_id,
-        'plan': plan,
-        'expires_at': sub.expires_at.isoformat(),
-    })
+        sub.plan = 'premium'
+        sub.status = 'active'
+        sub.expires_at = timezone.now() + timedelta(days=duration)
+        sub.save()
 
-@csrf_exempt
+        print("✅ UPDATED:", sub.plan)
+
+        return JsonResponse({'status': 'success'})
+
+    except Exception as e:
+        print("❌ ERROR:", str(e))
+        return JsonResponse({'status': 'error'})    
+@login_required
 def create_order(request):
     data = json.loads(request.body)
+    plan = data.get("plan")
 
-    amount = int(data['amount']) * 100  # convert to paise
+    if plan not in PLANS:
+        return JsonResponse({"error": "Invalid plan"}, status=400)
+
+    amount = PLANS[plan]["price"] * 100  # in paise
+
+    client = razorpay.Client(auth=(
+        settings.RAZORPAY_KEY_ID,
+        settings.RAZORPAY_KEY_SECRET
+    ))
 
     order = client.order.create({
         "amount": amount,

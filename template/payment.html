@@ -1,7 +1,5 @@
 {% load static %}
-
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -21,7 +19,6 @@ body {
     justify-content: center;
     color: white;
 }
-
 .checkout-wrapper {
     display: flex;
     gap: 30px;
@@ -29,120 +26,55 @@ body {
     width: 100%;
     padding: 20px;
 }
-
-/* LEFT CARD */
 .order-summary {
     flex: 1;
     padding: 40px;
     border-radius: 22px;
     background: rgba(255,255,255,0.07);
     backdrop-filter: blur(18px);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.5);
 }
-
 .price {
     font-size: 54px;
     font-weight: bold;
     margin: 25px 0;
-    background: linear-gradient(90deg, #3b82f6, #22c55e);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
-
-/* RIGHT CARD */
 .pay-card {
     flex: 1;
     padding: 40px;
     border-radius: 22px;
     background: white;
     color: black;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
-
 .btn-pay {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    background: #2563eb;
     color: white;
-    border: none;
     padding: 16px;
     border-radius: 12px;
-    font-size: 17px;
-}
-
-.badge-item {
-    margin: 8px 0;
-    font-size: 14px;
-    color: #cbd5f5;
-}
-
-.secure-text {
-    text-align: center;
-    font-size: 13px;
-    color: #6b7280;
-    margin-top: 12px;
-}
-
-/* MOBILE FIX */
-@media(max-width:768px){
-    .checkout-wrapper{
-        flex-direction: column;
-    }
+    border: none;
 }
 </style>
-
 </head>
 
 <body>
 
 <div class="checkout-wrapper">
 
-
-<!-- LEFT -->
 <div class="order-summary">
     <h2>🚀 PrepEdge Premium</h2>
-    <p>Unlock full access to premium content, tests & AI tools.</p>
 
-    <!-- PLAN SELECTION -->
-    <div class="mt-3">
-
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="plan" checked onclick="selectPlan('monthly',299)">
-            <label class="form-check-label">Monthly - ₹299</label>
-        </div>
-
-        <div class="form-check mt-2">
-            <input class="form-check-input" type="radio" name="plan" onclick="selectPlan('yearly',999)">
-            <label class="form-check-label">Yearly - ₹999 🔥</label>
-        </div>
-
+    <div>
+        <input type="radio" checked onclick="selectPlan('monthly',299)"> Monthly ₹299<br>
+        <input type="radio" onclick="selectPlan('yearly',999)"> Yearly ₹999
     </div>
 
     <div class="price" id="priceDisplay">₹299</div>
-    <p id="planText">/ month</p>
-
-    <div class="mt-3">
-        <div class="badge-item">🔒 Secure Razorpay Payment</div>
-        <div class="badge-item">⚡ Instant Activation</div>
-        <div class="badge-item">❌ No Hidden Charges</div>
-        <div class="badge-item">📚 Full Premium Access</div>
-    </div>
 </div>
 
-<!-- RIGHT -->
 <div class="pay-card">
-    <h3 class="mb-3">Complete Payment</h3>
-
     <button class="btn-pay" onclick="initiatePayment()">
-        <i class="fas fa-lock"></i> Pay ₹<span id="payAmount">299</span> Securely
+        Pay ₹<span id="payAmount">299</span>
     </button>
-
-    <div class="secure-text">
-        🔐 Encrypted & Safe Payment
-    </div>
 </div>
-
 
 </div>
 
@@ -155,10 +87,8 @@ let selectedPlan = 'monthly';
 function selectPlan(plan, amount) {
     selectedPlan = plan;
     selectedAmount = amount;
-
     document.getElementById('priceDisplay').innerText = "₹" + amount;
     document.getElementById('payAmount').innerText = amount;
-    document.getElementById('planText').innerText = plan === 'yearly' ? "/ year" : "/ month";
 }
 
 function getCookie(name) {
@@ -172,43 +102,77 @@ function getCookie(name) {
 
 function initiatePayment() {
 
-    const options = {
-        key: "{{ RAZORPAY_KEY_ID }}",
-        amount: selectedAmount * 100,
-        currency: "INR",
-        name: "PrepEdge",
-        description: selectedPlan === 'yearly' ? "Yearly Premium" : "Monthly Premium",
+    // ✅ STEP 1: Create Order from backend
+    fetch('/create_order/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({ plan: selectedPlan })
+    })
+    .then(res => res.json())
+    .then(order => {
 
-        handler: function (response) {
+        const options = {
+            key: "{{ RAZORPAY_KEY_ID }}",
+            amount: order.amount,
+            currency: "INR",
+            order_id: order.id,
 
-            fetch('/payment/verify/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: JSON.stringify({
-                    razorpay_payment_id: response.razorpay_payment_id,
-                    plan: selectedPlan,
-                    amount: selectedAmount
+            name: "PrepEdge",
+            description: selectedPlan + " subscription",
+
+            handler: function (response) {
+
+                // ✅ STEP 2: Verify payment
+                fetch('/payment_verify/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        razorpay_payment_id: response.razorpay_payment_id,
+                        razorpay_order_id: response.razorpay_order_id,
+                        razorpay_signature: response.razorpay_signature,
+                        plan: selectedPlan
+                    })
                 })
-            });
+                .then(res => res.json())
+                .then(data => {
 
-            alert("Payment Successful 🎉");
-            window.location.href = '/profile/';
-        },
+                    console.log("VERIFY RESPONSE:", data);
 
-        prefill: {
-            name: "{{ request.user.username }}",
-            email: "{{ request.user.email }}"
-        },
+                    if (data.status === 'success') {
+                        alert("Payment Successful 🎉");
+                        window.location.href = "/profile/";
+                    } else {
+                        alert("Payment verification failed");
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert("Server error");
+                });
+            },
 
-        theme: {
-            color: "#3b82f6"
-        }
-    };
+            prefill: {
+                name: "{{ request.user.username }}",
+                email: "{{ request.user.email }}"
+            },
 
-    new Razorpay(options).open();
+            theme: {
+                color: "#2563eb"
+            }
+        };
+
+        new Razorpay(options).open();
+    })
+    .catch(err => {
+        console.error("ORDER ERROR:", err);
+        alert("Unable to create order");
+    });
 }
 </script>
 

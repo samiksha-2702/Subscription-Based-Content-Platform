@@ -29,7 +29,7 @@ urlpatterns = [
     # Plans & Payment
     path('plans/',           views.plans,           name='plans'),
     path('payment/',         views.payment,          name='payment'),
-    path('payment/verify/',  views.payment_verify,   name='payment_verify'),
+    path('payment_verify/',  views.payment_verify,   name='payment_verify'),
     path('subscribe/',       views.subscribe,        name='subscribe'),
 
     # Python
@@ -133,7 +133,7 @@ urlpatterns = [
     path('start-trial/', views.start_trial, name='start_trial'),
     path('cancel-subscription/', views.cancel_subscription, name='cancel_subscription'),
     path('about/', views.about, name='about'),
-    path('create-order/', views.create_order),
+    path('create_order/', views.create_order),
      path('activate-free/', views.activate_free, name='activate_free'),
      path("edit-profile/", views.edit_profile, name="edit_profile"),
 path("change-password/", views.change_password, name="change_password"),

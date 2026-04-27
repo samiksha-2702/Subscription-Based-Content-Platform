@@ -102,7 +102,9 @@ class Subscription(models.Model):
 
     @property
     def is_premium(self):
-        return self.plan == 'premium' and self.is_active
+      if self.expires_at and self.expires_at < timezone.now():
+        return False
+      return self.plan == 'premium' and self.status == "active"
 # ══════════════════════════════════════════════════════════════════
 # 4. PAYMENT RECORD
 #    Every payment attempt (success or fail) is stored here

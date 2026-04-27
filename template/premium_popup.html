@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Premium Required</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .box {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .lock {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            margin: 10px 0;
+        }
+
+        p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #ff4d6d;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #ff1e4d;
+        }
+
+        .back {
+            display: block;
+            margin-top: 15px;
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        @keyframes fadeIn {
+            from {transform: scale(0.9); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <div class="lock">🔒</div>
+    
+    <h2>Premium Content</h2>
+    <p>This feature is available only for premium users.</p>
+
+    <a href="{% url 'plans' %}" class="btn">
+        Upgrade Now 🚀
+    </a>
+
+    <a href="javascript:history.back()" class="back">
+        ← Go Back
+    </a>
+</div>
+
+</body>
+</html>
