@@ -95,7 +95,7 @@ transform:translateY(-2px);
 opacity:0.9;
 }
 
-/* PREMIUM SECTION */
+/* PREMIUM SECTION - Only shown for non-premium users */
 .premium{
 margin-top:80px;
 background:linear-gradient(135deg,#4f46e5,#9333ea);
@@ -151,7 +151,7 @@ max-width:400px;
 
 <!-- ✅ APTITUDE (FREE) -->
 <div class="card">
-<h2> Aptitude Practice</h2>
+<h2>📊 Aptitude Practice</h2>
 <p>Master quantitative, reasoning, and verbal ability.</p>
 
 <button class="btn practice" onclick="location.href='/aptitude/practice/'">
@@ -166,10 +166,10 @@ Take Test
 <!-- 🔒 TECHNICAL (FULL LOCK) -->
 <div class="card">
 {% if not subscribed %}
-<div class="lock-badge">Premium</div>
+<div class="lock-badge">⭐ Premium</div>
 {% endif %}
 
-<h2> Technical MCQs</h2>
+<h2>💻 Technical MCQs</h2>
 <p>Programming, DBMS, OS, and CS subjects.</p>
 
 {% if subscribed %}
@@ -196,10 +196,10 @@ Take Test
 <!-- 🔒 INTERVIEW (FULL LOCK) -->
 <div class="card">
 {% if not subscribed %}
-<div class="lock-badge">Premium</div>
+<div class="lock-badge">⭐ Premium</div>
 {% endif %}
 
-<h2> Interview Questions</h2>
+<h2>🎯 Interview Questions</h2>
 <p>Real company interview questions.</p>
 
 {% if subscribed %}
@@ -225,9 +225,10 @@ Take Test
 
 </div>
 
-<!-- PREMIUM SECTION -->
+<!-- PREMIUM SECTION - ONLY SHOW IF NOT SUBSCRIBED -->
+{% if not subscribed %}
 <div class="premium">
-<h2> Unlock Premium</h2>
+<h2>✨ Unlock Premium Access ✨</h2>
 
 <p>✔ Company-specific questions</p>
 <p>✔ AI performance analysis</p>
@@ -237,9 +238,10 @@ Take Test
 <br>
 
 <button class="unlock" onclick="location.href='/plans/'">
-Upgrade Now
+Upgrade Now 🚀
 </button>
 </div>
+{% endif %}
 
 </div>
 
@@ -251,12 +253,12 @@ Upgrade Now
 
 <h2>Premium Feature</h2>
 
-<p style="color:#9ca3af;">Upgrade to unlock this module </p>
+<p style="color:#9ca3af;">Upgrade to unlock this module ⭐</p>
 
 <br>
 
 <a href="{% url 'plans' %}" 
-style="background:#f59e0b;padding:10px 20px;border-radius:8px;text-decoration:none;color:black;font-weight:600;">
+style="background:#f59e0b;padding:10px 20px;border-radius:8px;text-decoration:none;color:black;font-weight:600;display:inline-block;">
 Upgrade Now
 </a>
 
@@ -266,16 +268,33 @@ Upgrade Now
 <!-- JS -->
 <script>
 function openModal(){
-const isPremium="{{ subscribed|yesno:'true,false' }}";
-if(isPremium==="true") return;
-document.getElementById("premiumModal").style.display="flex";
+    var isPremium = "{{ subscribed|yesno:'true,false' }}";
+    if(isPremium === "true") {
+        return;
+    }
+    document.getElementById("premiumModal").style.display="flex";
 }
 
-window.onclick=function(e){
-let m=document.getElementById("premiumModal");
-if(e.target===m) m.style.display="none";
+window.onclick = function(e){
+    var modal = document.getElementById("premiumModal");
+    if(e.target === modal) {
+        modal.style.display = "none";
+    }
 }
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if(e.key === 'Escape') {
+        var modal = document.getElementById("premiumModal");
+        if(modal.style.display === "flex") {
+            modal.style.display = "none";
+        }
+    }
+});
 </script>
+
+<!-- Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </body>
 </html>
