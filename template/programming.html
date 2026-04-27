@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
       rel="stylesheet"
     />
 
@@ -29,10 +29,27 @@
 
       body {
         font-family: "Inter", "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(135deg, #0a0f1e, #030614);
-        color: white;
+        background: radial-gradient(ellipse at 20% 30%, #0a0f1c, #020408);
+        color: #f1f5f9;
         min-height: 100vh;
         line-height: 1.6;
+        position: relative;
+      }
+
+      /* Animated background particles */
+      body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+          radial-gradient(circle at 25% 40%, rgba(96, 165, 250, 0.08) 0%, transparent 50%),
+          radial-gradient(circle at 75% 60%, rgba(192, 132, 252, 0.08) 0%, transparent 50%),
+          repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 8px);
+        pointer-events: none;
+        z-index: 0;
       }
 
       /* Custom scrollbar */
@@ -42,27 +59,27 @@
       }
 
       ::-webkit-scrollbar-track {
-        background: #1a1f2e;
+        background: #0f172a;
       }
 
       ::-webkit-scrollbar-thumb {
-        background: #3b82f6;
-        border-radius: 4px;
+        background: linear-gradient(135deg, #3b82f6, #c084fc);
+        border-radius: 10px;
       }
 
       ::-webkit-scrollbar-thumb:hover {
-        background: #2563eb;
+        background: linear-gradient(135deg, #60a5fa, #d8b4fe);
       }
 
       /* Header */
       header {
         text-align: center;
-        padding: 60px 20px 40px;
+        padding: 70px 20px 50px;
         position: relative;
         overflow: hidden;
-        background: rgba(15, 23, 42, 0.7);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid rgba(59, 130, 246, 0.2);
+        background: rgba(8, 12, 24, 0.6);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(59, 130, 246, 0.25);
       }
 
       header::before {
@@ -110,10 +127,10 @@
       }
 
       header h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        margin-bottom: 15px;
-        background: linear-gradient(135deg, #fff, #94a3b8);
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, #ffffff, #c4b5fd, #a78bfa);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         letter-spacing: -0.02em;
@@ -133,7 +150,7 @@
       /* Search and filter */
       .search-section {
         max-width: 600px;
-        margin: -20px auto 30px;
+        margin: -24px auto 40px;
         padding: 0 20px;
         position: relative;
         z-index: 10;
@@ -141,237 +158,290 @@
 
       .search-box {
         display: flex;
-        gap: 10px;
-        background: rgba(26, 31, 46, 0.95);
+        gap: 12px;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(16px);
         border: 1px solid rgba(59, 130, 246, 0.3);
-        border-radius: 12px;
-        padding: 5px 5px 5px 20px;
-        backdrop-filter: blur(10px);
+        border-radius: 60px;
+        padding: 6px 6px 6px 24px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+      }
+
+      .search-box:focus-within {
+        border-color: #60a5fa;
+        box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
       }
 
       .search-box input {
         flex: 1;
         background: transparent;
         border: none;
-        padding: 15px 0;
+        padding: 14px 0;
         color: white;
         font-size: 1rem;
         outline: none;
+        font-weight: 500;
       }
 
       .search-box input::placeholder {
         color: #64748b;
+        font-weight: 400;
       }
 
       .search-box button {
         background: linear-gradient(135deg, #3b82f6, #2563eb);
         border: none;
         color: white;
-        padding: 12px 30px;
-        border-radius: 10px;
+        padding: 12px 32px;
+        border-radius: 50px;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s;
+        transition: all 0.3s ease;
         display: flex;
         align-items: center;
         gap: 8px;
+        font-size: 0.95rem;
       }
 
       .search-box button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        box-shadow: 0 5px 20px rgba(59, 130, 246, 0.4);
+        background: linear-gradient(135deg, #4f93ff, #3a7eff);
       }
 
       /* Container */
       .container {
-        padding: 40px 30px;
+        padding: 20px 40px 60px;
         max-width: 1400px;
         margin: auto;
+        position: relative;
+        z-index: 2;
       }
 
-      /* Back to Home link - preserved original URL */
+      /* Back to Home link */
       .back-link {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         color: #94a3b8;
         text-decoration: none;
-        margin-bottom: 25px;
+        margin-bottom: 30px;
         font-size: 0.95rem;
-        transition: all 0.3s;
-        padding: 8px 16px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        padding: 10px 20px;
         background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px;
+        border-radius: 50px;
         border: 1px solid rgba(59, 130, 246, 0.2);
       }
 
       .back-link:hover {
         color: #60a5fa;
         border-color: #3b82f6;
-        transform: translateX(-5px);
+        transform: translateX(-6px);
+        background: rgba(59, 130, 246, 0.1);
       }
 
       /* Grid */
       .grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 30px;
-        margin-top: 30px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 32px;
+        margin-top: 20px;
       }
 
       .card-link {
         text-decoration: none;
-        color: white;
+        color: inherit;
       }
 
       .card {
-        background: linear-gradient(145deg, #1a1f2e, #111827);
-        border-radius: 20px;
-        padding: 35px 20px 25px;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        padding: 32px 24px 28px;
         text-align: center;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        border: 1px solid rgba(59, 130, 246, 0.1);
+        transition: all 0.4s cubic-bezier(0.2, 0.95, 0.4, 1.1);
+        border: 1px solid rgba(59, 130, 246, 0.2);
         position: relative;
         overflow: hidden;
         height: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
       }
 
+      /* Animated border on hover */
       .card::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
-        transform: translateX(-100%);
-        transition: transform 0.6s ease;
+        height: 3px;
+        background: linear-gradient(90deg, transparent, #60a5fa, #c084fc, #f472b6, transparent);
+        transform: scaleX(0);
+        transition: transform 0.5s ease;
+        transform-origin: left;
+      }
+
+      /* Shine effect */
+      .card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+        transition: 0.6s;
+        pointer-events: none;
       }
 
       .card:hover {
-        transform: translateY(-10px) scale(1.02);
-        border-color: rgba(59, 130, 246, 0.3);
-        box-shadow:
-          0 20px 40px -15px rgba(0, 0, 0, 0.5),
-          0 0 30px rgba(59, 130, 246, 0.2);
+        transform: translateY(-10px);
+        border-color: rgba(96, 165, 250, 0.5);
+        background: rgba(20, 28, 48, 0.7);
+        box-shadow: 0 25px 45px -15px rgba(0, 0, 0, 0.5);
       }
 
       .card:hover::before {
-        transform: translateX(0);
+        transform: scaleX(1);
+      }
+
+      .card:hover::after {
+        left: 100%;
       }
 
       .card img {
-        width: 120px;
-        height: 120px;
+        width: 110px;
+        height: 110px;
         object-fit: contain;
         margin-bottom: 20px;
         transition: all 0.4s ease;
-        filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
       }
 
       .card:hover img {
-        transform: scale(1.1) rotate(3deg);
-        filter: drop-shadow(0 8px 20px rgba(59, 130, 246, 0.4));
+        transform: scale(1.08) rotate(2deg);
+        filter: drop-shadow(0 12px 24px rgba(59, 130, 246, 0.3));
       }
 
       .card h3 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: #e2e8f0;
-        transition: color 0.3s;
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transition: all 0.3s;
       }
 
       .card:hover h3 {
-        color: #60a5fa;
+        background: linear-gradient(135deg, #60a5fa, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
-      /* Popular languages badge */
+      /* Popular badge */
       .popular-badge {
         position: absolute;
-        top: 15px;
-        right: 15px;
-        background: linear-gradient(135deg, #f59e0b, #d97706);
-        color: #000;
-        padding: 4px 12px;
-        border-radius: 30px;
+        top: 16px;
+        right: 16px;
+        background: linear-gradient(135deg, #f59e0b, #ea580c);
+        color: white;
+        padding: 5px 14px;
+        border-radius: 50px;
         font-size: 0.7rem;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-        z-index: 1;
+        box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        z-index: 2;
+        backdrop-filter: blur(4px);
+      }
+
+      .interview-badge {
+        background: linear-gradient(135deg, #8b5cf6, #6d28d9);
       }
 
       /* Difficulty indicator */
       .difficulty {
         font-size: 0.85rem;
         color: #94a3b8;
-        margin: 10px 0;
-        padding: 4px 12px;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 30px;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        margin: 12px 0;
+        padding: 5px 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 50px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
       }
 
       /* Stats */
       .stats {
         display: flex;
-        gap: 15px;
-        margin-top: 10px;
+        gap: 20px;
+        margin-top: 14px;
         font-size: 0.85rem;
         color: #64748b;
+        padding-top: 12px;
+        border-top: 1px solid rgba(255,255,255,0.06);
+        width: 100%;
+        justify-content: center;
       }
 
       .stats span {
         display: flex;
         align-items: center;
-        gap: 5px;
+        gap: 6px;
       }
 
       .stats i {
-        color: #3b82f6;
+        color: #60a5fa;
+        font-size: 0.8rem;
       }
 
-      /* Info banner - FIXED: Removed underline from links */
+      /* Info banner - Modern */
       .info-banner {
-        background: linear-gradient(145deg, #1a1f2e, #111827);
-        border-radius: 16px;
-        padding: 30px;
-        margin-top: 50px;
-        border: 1px solid rgba(59, 130, 246, 0.1);
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        padding: 32px 28px;
+        margin-top: 60px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 20px;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 24px;
       }
 
       .info-item {
         display: flex;
         align-items: center;
-        gap: 15px;
-        padding: 15px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 12px;
-        text-decoration: none; /* This removes the underline */
-        color: inherit; /* This keeps the text color consistent */
+        gap: 18px;
+        padding: 18px 20px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 20px;
+        text-decoration: none;
+        color: inherit;
         transition: all 0.3s ease;
-        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.05);
       }
 
       .info-item:hover {
-        background: rgba(59, 130, 246, 0.1);
-        transform: translateX(5px);
+        background: rgba(59, 130, 246, 0.12);
+        transform: translateY(-3px);
         border-color: rgba(59, 130, 246, 0.3);
       }
 
       .info-item i {
-        font-size: 1.8rem;
-        color: #3b82f6;
+        font-size: 2rem;
+        background: linear-gradient(135deg, #60a5fa, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         transition: transform 0.3s ease;
       }
 
@@ -381,6 +451,7 @@
 
       .info-item h4 {
         font-size: 1rem;
+        font-weight: 600;
         margin-bottom: 4px;
         color: #e2e8f0;
       }
@@ -393,12 +464,15 @@
       /* Footer */
       footer {
         text-align: center;
-        padding: 30px;
+        padding: 35px;
         margin-top: 60px;
-        background: #030614;
-        border-top: 1px solid rgba(59, 130, 246, 0.1);
-        color: #64748b;
+        background: rgba(5, 8, 18, 0.8);
+        backdrop-filter: blur(8px);
+        border-top: 1px solid rgba(59, 130, 246, 0.15);
+        color: #6b7280;
         font-size: 0.9rem;
+        position: relative;
+        z-index: 1;
       }
 
       /* Animation for cards */
@@ -418,29 +492,17 @@
         opacity: 0;
       }
 
-      .card:nth-child(1) {
-        animation-delay: 0.1s;
-      }
-      .card:nth-child(2) {
-        animation-delay: 0.15s;
-      }
-      .card:nth-child(3) {
-        animation-delay: 0.2s;
-      }
-      .card:nth-child(4) {
-        animation-delay: 0.25s;
-      }
-      .card:nth-child(5) {
-        animation-delay: 0.3s;
-      }
-      .card:nth-child(6) {
-        animation-delay: 0.35s;
-      }
+      .card:nth-child(1) { animation-delay: 0.05s; }
+      .card:nth-child(2) { animation-delay: 0.1s; }
+      .card:nth-child(3) { animation-delay: 0.15s; }
+      .card:nth-child(4) { animation-delay: 0.2s; }
+      .card:nth-child(5) { animation-delay: 0.25s; }
+      .card:nth-child(6) { animation-delay: 0.3s; }
 
       /* Responsive */
       @media (max-width: 768px) {
         header h1 {
-          font-size: 2.2rem;
+          font-size: 2.3rem;
         }
 
         header p {
@@ -448,102 +510,118 @@
         }
 
         .container {
-          padding: 20px;
+          padding: 20px 20px 40px;
         }
 
         .search-box {
           flex-direction: column;
-          padding: 5px;
+          padding: 6px;
+          border-radius: 28px;
         }
 
         .search-box button {
           width: 100%;
           justify-content: center;
+          padding: 12px;
         }
 
         .grid {
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 20px;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 24px;
         }
 
         .card img {
-          width: 100px;
-          height: 100px;
+          width: 90px;
+          height: 90px;
         }
 
         .card h3 {
-          font-size: 1.3rem;
+          font-size: 1.4rem;
         }
 
         .info-banner {
           grid-template-columns: 1fr;
-          padding: 20px;
+          padding: 24px;
+          gap: 16px;
         }
 
         .back-link {
-          margin-left: 20px;
+          margin-left: 0;
         }
       }
 
-      /* Loading animation */
+      @media (max-width: 480px) {
+        header {
+          padding: 50px 20px 40px;
+        }
+        
+        header h1 {
+          font-size: 1.9rem;
+        }
+        
+        .card {
+          padding: 24px 18px 20px;
+        }
+      }
+
+      /* Loading animation placeholder */
       .card img {
         background: linear-gradient(90deg, #1a1f2e, #2d3748, #1a1f2e);
         background-size: 200% 100%;
         animation: loading 1.5s infinite;
-        border-radius: 8px;
+        border-radius: 12px;
       }
 
       @keyframes loading {
-        0% {
-          background-position: 200% 0;
-        }
-        100% {
-          background-position: -200% 0;
-        }
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
       }
 
-      /* Remove animation after load */
       .card img.loaded {
         animation: none;
+        background: none;
       }
 
-      /* Empty state for search */
+      /* Empty state */
       .no-results {
         grid-column: 1 / -1;
         text-align: center;
-        padding: 60px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 20px;
+        padding: 60px 30px;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
         color: #94a3b8;
         font-size: 1.1rem;
         display: none;
+        border: 1px solid rgba(59, 130, 246, 0.2);
       }
 
       .no-results i {
-        font-size: 3rem;
-        margin-bottom: 15px;
-        color: #3b82f6;
-        opacity: 0.5;
+        font-size: 3.5rem;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, #60a5fa, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        opacity: 0.7;
       }
     </style>
   </head>
 
   <body>
-    <!-- Header (preserved original structure) -->
+    <!-- Header -->
     <header>
       <h1>
-        <i class="fas fa-code" style="margin-right: 10px"></i>Programming
-        Languages
+        <i class="fas fa-code" style="margin-right: 12px"></i>Programming Languages
       </h1>
-      <p>Select a language to continue your learning journey</p>
+      <p>Master the languages that drive the tech world</p>
     </header>
 
-    <!-- Search Section (new addition but doesn't affect URLs) -->
+    <!-- Search Section -->
     <div class="search-section">
       <div class="search-box">
         <input
           type="text"
-          placeholder="Search for Python, Java, C++..."
+          placeholder="Search for Python, Java, C++, SQL..."
           id="searchInput"
         />
         <button onclick="searchLanguage()">
@@ -554,19 +632,17 @@
 
     <!-- Main Container -->
     <div class="container">
-      <!-- Back link - using original URL pattern -->
+      <!-- Back link - original URL preserved -->
       <a href="{% url 'index' %}" class="back-link">
         <i class="fas fa-arrow-left"></i> Back to Home
       </a>
 
-      <!-- Languages Grid - preserved all original URLs -->
+      <!-- Languages Grid - All original URLs preserved -->
       <div class="grid" id="languagesGrid">
-        <!-- Python - original URL preserved -->
+        <!-- Python -->
         <a href="{% url 'python_info' %}" class="card-link">
           <div class="card">
-            <span class="popular-badge"
-              ><i class="fas fa-star"></i> Popular</span
-            >
+            <span class="popular-badge"><i class="fas fa-star"></i> Most Popular</span>
             <img
               src="{% static 'image/python.jpg' %}"
               alt="Python"
@@ -574,7 +650,7 @@
             />
             <h3>Python</h3>
             <div class="difficulty">
-              <i class="fas fa-thermometer-half"></i> Beginner Friendly
+              <i class="fas fa-seedling"></i> Beginner Friendly
             </div>
             <div class="stats">
               <span><i class="far fa-file-code"></i> 50+ Topics</span>
@@ -583,7 +659,7 @@
           </div>
         </a>
 
-        <!-- Java - original URL preserved -->
+        <!-- Java -->
         <a href="{% url 'javainfo' %}" class="card-link">
           <div class="card">
             <img
@@ -593,7 +669,7 @@
             />
             <h3>Java</h3>
             <div class="difficulty">
-              <i class="fas fa-thermometer-three-quarters"></i> Intermediate
+              <i class="fas fa-chart-line"></i> Intermediate
             </div>
             <div class="stats">
               <span><i class="far fa-file-code"></i> 45+ Topics</span>
@@ -602,7 +678,7 @@
           </div>
         </a>
 
-        <!-- C++ - original URL preserved -->
+        <!-- C++ -->
         <a href="{% url 'cppinfo' %}" class="card-link">
           <div class="card">
             <img
@@ -612,7 +688,7 @@
             />
             <h3>C++</h3>
             <div class="difficulty">
-              <i class="fas fa-thermometer-full"></i> Advanced
+              <i class="fas fa-bolt"></i> Advanced
             </div>
             <div class="stats">
               <span><i class="far fa-file-code"></i> 40+ Topics</span>
@@ -621,7 +697,7 @@
           </div>
         </a>
 
-        <!-- JavaScript - original URL preserved -->
+        <!-- JavaScript -->
         <a href="{% url 'javasinfo' %}" class="card-link">
           <div class="card">
             <img
@@ -631,7 +707,7 @@
             />
             <h3>JavaScript</h3>
             <div class="difficulty">
-              <i class="fas fa-thermometer-half"></i> Beginner Friendly
+              <i class="fas fa-seedling"></i> Beginner Friendly
             </div>
             <div class="stats">
               <span><i class="far fa-file-code"></i> 35+ Topics</span>
@@ -640,7 +716,7 @@
           </div>
         </a>
 
-        <!-- SQL - original URL preserved -->
+        <!-- SQL -->
         <a href="{% url 'sql_info' %}" class="card-link">
           <div class="card">
             <img
@@ -650,7 +726,7 @@
             />
             <h3>SQL</h3>
             <div class="difficulty">
-              <i class="fas fa-thermometer-quarter"></i> Beginner
+              <i class="fas fa-seedling"></i> Beginner
             </div>
             <div class="stats">
               <span><i class="far fa-file-code"></i> 25+ Topics</span>
@@ -659,20 +735,18 @@
           </div>
         </a>
 
-        <!-- DSA - original URL preserved -->
+        <!-- DSA -->
         <a href="{% url 'dsa_info' %}" class="card-link">
           <div class="card">
-            <span class="popular-badge"
-              ><i class="fas fa-trophy"></i> Interview Focus</span
-            >
+            <span class="popular-badge interview-badge"><i class="fas fa-trophy"></i> Interview Focus</span>
             <img
               src="{% static 'image/dsa.png' %}"
-              alt="DSA"
+              alt="Data Structures"
               onload="this.classList.add('loaded')"
             />
             <h3>Data Structures</h3>
             <div class="difficulty">
-              <i class="fas fa-thermometer-full"></i> Advanced
+              <i class="fas fa-bolt"></i> Advanced
             </div>
             <div class="stats">
               <span><i class="far fa-file-code"></i> 60+ Topics</span>
@@ -681,34 +755,32 @@
           </div>
         </a>
 
-        <!-- No results message (hidden by default) -->
+        <!-- No results message -->
         <div class="no-results" id="noResults">
-          <i class="fas fa-search"></i>
+          <i class="fas fa-code-branch"></i>
           <p>No languages found matching your search</p>
+          <p style="font-size: 0.85rem; margin-top: 8px;">Try a different keyword</p>
         </div>
       </div>
 
-      <!-- Info Banner - FIXED: No underline on links -->
+      <!-- Info Banner - All original URLs preserved -->
       <div class="info-banner">
-        <!-- Expert Talks -->
         <a href="{% url 'expert' %}" class="info-item">
           <i class="fas fa-video"></i>
           <div>
             <h4>Video Tutorials</h4>
-            <p>Learn from experts</p>
+            <p>Learn from industry experts</p>
           </div>
         </a>
 
-        <!-- Aptitude -->
         <a href="{% url 'questions' %}" class="info-item">
-          <i class="fas fa-code"></i>
+          <i class="fas fa-laptop-code"></i>
           <div>
             <h4>Practice Problems</h4>
-            <p>Hands-on coding</p>
+            <p>Hands-on coding challenges</p>
           </div>
         </a>
 
-        <!-- MCQ -->
         <a href="{% url 'questions' %}" class="info-item">
           <i class="fas fa-question-circle"></i>
           <div>
@@ -717,46 +789,48 @@
           </div>
         </a>
 
-        <!-- AI Recommendations -->
         <a href="{% url 'ai_dashboard' %}" class="info-item">
           <i class="fas fa-chart-line"></i>
           <div>
             <h4>AI Recommendations</h4>
-            <p>Monitor improvement</p>
+            <p>Personalized learning path</p>
           </div>
         </a>
       </div>
     </div>
 
-    <!-- Footer - preserved original text -->
-    <footer>© Interview Prep Platform</footer>
+    <!-- Footer -->
+    <footer>
+      <p>© {% now "Y" %} PrepEdge — Master Programming with Confidence</p>
+    </footer>
 
-    <!-- Search functionality - purely frontend, doesn't affect URLs -->
+    <!-- Search functionality -->
     <script>
       function searchLanguage() {
         const input = document.getElementById("searchInput");
-        const filter = input.value.toUpperCase();
+        const filter = input.value.toUpperCase().trim();
         const grid = document.getElementById("languagesGrid");
         const cards = grid.getElementsByClassName("card-link");
         const noResults = document.getElementById("noResults");
         let visibleCount = 0;
 
         for (let i = 0; i < cards.length; i++) {
-          const card = cards[i];
-          const title = card.querySelector("h3");
+          const cardLink = cards[i];
+          const card = cardLink.querySelector(".card");
+          const title = cardLink.querySelector("h3");
           if (title) {
             const txtValue = title.textContent || title.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              card.style.display = "";
+            if (filter === "" || txtValue.toUpperCase().indexOf(filter) > -1) {
+              cardLink.style.display = "";
               visibleCount++;
             } else {
-              card.style.display = "none";
+              cardLink.style.display = "none";
             }
           }
         }
 
         // Show/hide no results message
-        if (visibleCount === 0) {
+        if (visibleCount === 0 && filter !== "") {
           noResults.style.display = "block";
         } else {
           noResults.style.display = "none";
@@ -776,6 +850,10 @@
       document.querySelectorAll(".card img").forEach((img) => {
         if (img.complete) {
           img.classList.add("loaded");
+        } else {
+          img.addEventListener("load", function() {
+            this.classList.add("loaded");
+          });
         }
       });
     </script>
