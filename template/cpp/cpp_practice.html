@@ -3,42 +3,102 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>C++ 15 Minute Test</title>
+<title>C++ 15 Minute Test — PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
+    margin:0;
     background:linear-gradient(135deg,#020617,#0f172a);
     color:#e5e7eb;
-    font-family:Segoe UI;
-    padding:20px;
-}
-
-.card{
-    background:#111827;
+    font-family:Segoe UI, Arial;
     padding:25px;
-    border-radius:14px;
-    margin-bottom:20px;
-    box-shadow:0 10px 30px rgba(0,0,0,.6);
+    line-height:1.6;
 }
 
-h2{color:#60a5fa}
+/* TOP BAR */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
 
 button{
-    padding:12px 18px;
+    padding:10px 14px;
     border:none;
     border-radius:10px;
     background:#2563eb;
     color:white;
     font-weight:600;
     cursor:pointer;
+    transition:0.3s;
 }
 
+button:hover{
+    background:#1d4ed8;
+    transform:translateY(-2px);
+}
+
+/* TIMER */
 .timer{
-    font-size:22px;
+    font-size:20px;
+    font-weight:700;
     color:#f87171;
-    font-weight:bold;
-    margin-bottom:20px;
+}
+
+/* FORM */
+.container{
+    max-width:900px;
+    margin:auto;
+}
+
+.card{
+    background:rgba(17,24,39,0.95);
+    border:1px solid rgba(59,130,246,0.15);
+    padding:22px;
+    border-radius:16px;
+    margin-bottom:16px;
+    transition:0.3s;
+}
+
+.card:hover{
+    border-color:#3b82f6;
+    transform:translateY(-3px);
+}
+
+.question{
+    font-weight:600;
+    margin-bottom:10px;
+}
+
+label{
+    display:block;
+    margin:6px 0;
+    cursor:pointer;
+    color:#cbd5e1;
+}
+
+input[type="radio"]{
+    margin-right:8px;
+}
+
+/* SUBMIT */
+.submit-btn{
+    width:100%;
+    padding:14px;
+    font-size:16px;
+    margin-top:10px;
+}
+
+/* RESULT BOX */
+#result{
+    display:none;
+    padding:20px;
+    border-radius:14px;
+    background:#111827;
+    border:1px solid #3b82f6;
+    margin-top:20px;
 }
 
 .correct{color:#4ade80}
@@ -48,60 +108,77 @@ button{
 
 <body>
 
-<button onclick="history.back()">⬅ Back</button>
-<a href="{% url 'index' %}"><button type="button">🏠 Module Home</button></a>
+<div class="container">
 
-<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
-    {% csrf_token %}
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div>
+            <button onclick="history.back()">Back</button>
+            <a href="{% url 'index' %}">
+                <button type="button">Module Home</button>
+            </a>
+        </div>
 
-    <!-- REQUIRED HIDDEN FIELDS FOR DJANGO -->
-    <input type="hidden" name="total" id="totalField">
-    <input type="hidden" name="correct" id="correctField">
-    <input type="hidden" name="wrong" id="wrongField">
-    <input type="hidden" name="skipped" id="skippedField">
-    <input type="hidden" name="time_taken" id="timeTakenField">
-
-    <div class="timer">Time Left: <span id="time">15:00</span></div>
-
-    <div class="card">
-    Q1. Who developed C++?<br>
-    <label><input type="radio" name="q1" value="a"> Dennis Ritchie</label><br>
-    <label><input type="radio" name="q1" value="b"> Bjarne Stroustrup</label><br>
-    <label><input type="radio" name="q1" value="c"> James Gosling</label>
+        <div class="timer">
+            Time Left: <span id="time">15:00</span>
+        </div>
     </div>
 
-    <div class="card">
-    Q2. Which symbol is used for input in C++?<br>
-    <label><input type="radio" name="q2" value="a"> >></label><br>
-    <label><input type="radio" name="q2" value="b"> <<</label><br>
-    <label><input type="radio" name="q2" value="c"> ::</label>
-    </div>
+    <!-- FORM -->
+    <form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+        {% csrf_token %}
 
-    <div class="card">
-    Q3. Which is dynamic array container?<br>
-    <label><input type="radio" name="q3" value="a"> vector</label><br>
-    <label><input type="radio" name="q3" value="b"> array</label><br>
-    <label><input type="radio" name="q3" value="c"> pointer</label>
-    </div>
+        <input type="hidden" name="total" id="totalField">
+        <input type="hidden" name="correct" id="correctField">
+        <input type="hidden" name="wrong" id="wrongField">
+        <input type="hidden" name="skipped" id="skippedField">
+        <input type="hidden" name="time_taken" id="timeTakenField">
 
-    <div class="card">
-    Q4. OOP stands for?<br>
-    <label><input type="radio" name="q4" value="a"> Object Oriented Programming</label><br>
-    <label><input type="radio" name="q4" value="b"> Object Only Program</label><br>
-    <label><input type="radio" name="q4" value="c"> Order Of Program</label>
-    </div>
+        <!-- QUESTIONS -->
 
-    <div class="card">
-    Q5. Which keyword is used for inheritance?<br>
-    <label><input type="radio" name="q5" value="a"> extends</label><br>
-    <label><input type="radio" name="q5" value="b"> inherits</label><br>
-    <label><input type="radio" name="q5" value="c"> :</label>
-    </div>
+        <div class="card">
+            <div class="question">1. Who developed C++?</div>
+            <label><input type="radio" name="q1" value="a"> Dennis Ritchie</label>
+            <label><input type="radio" name="q1" value="b"> Bjarne Stroustrup</label>
+            <label><input type="radio" name="q1" value="c"> James Gosling</label>
+        </div>
 
-    <button type="button" onclick="submitQuiz()">Submit Test</button>
-</form>
+        <div class="card">
+            <div class="question">2. Which symbol is used for input in C++?</div>
+            <label><input type="radio" name="q2" value="a"> >></label>
+            <label><input type="radio" name="q2" value="b"> <<</label>
+            <label><input type="radio" name="q2" value="c"> ::</label>
+        </div>
 
-<div id="result" class="card" style="display:none"></div>
+        <div class="card">
+            <div class="question">3. Which is dynamic array container?</div>
+            <label><input type="radio" name="q3" value="a"> vector</label>
+            <label><input type="radio" name="q3" value="b"> array</label>
+            <label><input type="radio" name="q3" value="c"> pointer</label>
+        </div>
+
+        <div class="card">
+            <div class="question">4. OOP stands for?</div>
+            <label><input type="radio" name="q4" value="a"> Object Oriented Programming</label>
+            <label><input type="radio" name="q4" value="b"> Object Only Program</label>
+            <label><input type="radio" name="q4" value="c"> Order Of Program</label>
+        </div>
+
+        <div class="card">
+            <div class="question">5. Which keyword is used for inheritance?</div>
+            <label><input type="radio" name="q5" value="a"> extends</label>
+            <label><input type="radio" name="q5" value="b"> inherits</label>
+            <label><input type="radio" name="q5" value="c"> :</label>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="submitQuiz()">Submit Test</button>
+
+    </form>
+
+    <!-- RESULT -->
+    <div id="result"></div>
+
+</div>
 
 <script>
 const answers = {
@@ -112,6 +189,7 @@ const answers = {
     q5:"c"
 };
 
+let totalTime = 15 * 60;
 let startTime = Date.now();
 
 function submitQuiz(){
@@ -135,21 +213,20 @@ function submitQuiz(){
         }
     }
 
+    let timeTaken = Math.floor((Date.now() - startTime) / 1000);
+
     document.getElementById("totalField").value = total;
     document.getElementById("correctField").value = correct;
     document.getElementById("wrongField").value = wrong;
     document.getElementById("skippedField").value = skipped;
+    document.getElementById("timeTakenField").value = timeTaken;
 
-    console.log("Sending:", {total, correct, wrong, skipped});
-
-    setTimeout(() => {
-        document.getElementById("quizForm").requestSubmit();
-    }, 100);
+    document.getElementById("quizForm").requestSubmit();
 }
-// TIMER
-let totalTime = 15 * 60;
 
+/* TIMER */
 function updateTimer(){
+
     let min = Math.floor(totalTime / 60);
     let sec = totalTime % 60;
 

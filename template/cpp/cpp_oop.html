@@ -2,83 +2,284 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>C++ OOP — Detailed</title>
+    <title>C++ OOP — PrepEdge Learning Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
-        body{background:#0f172a; color:#e5e7eb; font-family:Segoe UI; padding:30px;}
-        .card{background:#111827; padding:25px; border-radius:14px; margin-bottom:20px;}
-        pre{background:#020617; padding:15px; border-radius:8px; color:#93c5fd;}
-        h2{color:#60a5fa;}
-        button{padding:8px 12px; border-radius:8px; border:none; background:#2563eb; color:white;}
+        body{
+            background: linear-gradient(135deg,#020617,#0f172a);
+            color:#e5e7eb;
+            font-family:Segoe UI, Arial;
+            margin:0;
+            padding:30px;
+            line-height:1.7;
+        }
+
+        .container{
+            max-width:1000px;
+            margin:auto;
+        }
+
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        button{
+            padding:10px 14px;
+            border-radius:10px;
+            border:none;
+            background:#2563eb;
+            color:white;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+            transform:translateY(-2px);
+        }
+
+        .card{
+            background:rgba(17,24,39,0.9);
+            border:1px solid rgba(59,130,246,0.15);
+            padding:22px;
+            border-radius:16px;
+            margin-bottom:18px;
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+            border-color:#3b82f6;
+        }
+
+        h1{
+            font-size:26px;
+        }
+
+        h2{
+            color:#60a5fa;
+            margin-bottom:10px;
+            font-size:20px;
+        }
+
+        p{
+            color:#cbd5e1;
+        }
+
+        pre{
+            background:#020617;
+            padding:15px;
+            border-radius:10px;
+            color:#93c5fd;
+            overflow-x:auto;
+        }
+
+        ul{
+            padding-left:20px;
+            color:#cbd5e1;
+        }
+
+        .badge{
+            display:inline-block;
+            padding:5px 10px;
+            border-radius:20px;
+            font-size:12px;
+            background:#1e293b;
+            color:#60a5fa;
+            margin-bottom:10px;
+        }
     </style>
 </head>
 
 <body>
 
-<button onclick="history.back()">⬅ Back</button>
+<div class="container">
 
-<div class="card">
-    <h2>Class & Object</h2>
-    <pre>
-class Student{
+    <!-- TOP -->
+    <div class="topbar">
+        <div>
+            <h1>C++ Object-Oriented Programming</h1>
+            <p>Core OOP concepts used in interviews and system design</p>
+        </div>
+
+        <button onclick="history.back()">Back</button>
+    </div>
+
+    <!-- CLASS OBJECT -->
+    <div class="card">
+        <span class="badge">Foundation</span>
+        <h2>Class and Object</h2>
+
+        <p>
+            A class is a blueprint, and an object is an instance of that class.
+            It allows grouping data and functions together.
+        </p>
+
+        <pre>
+class Student {
 public:
     string name;
-    void show(){
-        cout&lt;&lt;name;
+
+    void show() {
+        cout << name;
     }
 };
 
 Student s;
-s.name="Amit";
+s.name = "Amit";
 s.show();
-    </pre>
-</div>
+        </pre>
 
-<div class="card">
-    <h2>Constructor</h2>
-    <pre>
-class A{
+        <ul>
+            <li>Class defines structure</li>
+            <li>Object holds actual data</li>
+            <li>Encapsulates data + behavior</li>
+        </ul>
+    </div>
+
+    <!-- CONSTRUCTOR -->
+    <div class="card">
+        <span class="badge">Initialization</span>
+        <h2>Constructor</h2>
+
+        <p>
+            A constructor is a special function that is automatically called when an object is created.
+        </p>
+
+        <pre>
+class A {
 public:
-    A(){
-        cout&lt;&lt;"Created";
+    A() {
+        cout << "Object Created";
     }
 };
-    </pre>
-</div>
+        </pre>
 
-<div class="card">
-    <h2>Inheritance</h2>
-    <pre>
-class A{};
-class B : public A{};
-    </pre>
-</div>
+        <ul>
+            <li>Same name as class</li>
+            <li>No return type</li>
+            <li>Used for initialization</li>
+        </ul>
+    </div>
 
-<div class="card">
-    <h2>Polymorphism</h2>
-    <p>Function overriding + virtual functions</p>
-    <pre>
-class Base{
+    <!-- INHERITANCE -->
+    <div class="card">
+        <span class="badge">Reusability</span>
+        <h2>Inheritance</h2>
+
+        <p>
+            Inheritance allows one class to acquire properties of another class.
+            It supports code reusability.
+        </p>
+
+        <pre>
+class A {
 public:
-    virtual void show(){
-        cout&lt;&lt;"Base";
+    void showA() {}
+};
+
+class B : public A {
+public:
+    void showB() {}
+};
+        </pre>
+
+        <ul>
+            <li>Base class → Parent class</li>
+            <li>Derived class → Child class</li>
+            <li>Supports reuse of code</li>
+        </ul>
+    </div>
+
+    <!-- POLYMORPHISM -->
+    <div class="card">
+        <span class="badge">Flexibility</span>
+        <h2>Polymorphism</h2>
+
+        <p>
+            Polymorphism means “many forms”.
+            It allows the same function name to behave differently.
+        </p>
+
+        <h3>Runtime Polymorphism (Function Overriding)</h3>
+
+        <pre>
+class Base {
+public:
+    virtual void show() {
+        cout << "Base Class";
     }
 };
-    </pre>
-</div>
 
-<div class="card">
-    <h2>Encapsulation</h2>
-    <p>Private data + public methods</p>
-    <pre>
-class Bank{
+class Derived : public Base {
+public:
+    void show() override {
+        cout << "Derived Class";
+    }
+};
+        </pre>
+
+        <ul>
+            <li>Achieved using virtual functions</li>
+            <li>Supports dynamic behavior</li>
+        </ul>
+    </div>
+
+    <!-- ENCAPSULATION -->
+    <div class="card">
+        <span class="badge">Security</span>
+        <h2>Encapsulation</h2>
+
+        <p>
+            Encapsulation means wrapping data and methods together and restricting direct access.
+        </p>
+
+        <pre>
+class Bank {
 private:
     int balance;
+
 public:
-    void set(int b){balance=b;}
+    void setBalance(int b) {
+        balance = b;
+    }
+
+    int getBalance() {
+        return balance;
+    }
 };
-    </pre>
-    <p>👉 OOP concepts are very common in interviews.</p>
+        </pre>
+
+        <ul>
+            <li>Data hiding using private variables</li>
+            <li>Access via public methods</li>
+            <li>Improves security and control</li>
+        </ul>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <span class="badge">Revision</span>
+        <h2>Key OOP Concepts Summary</h2>
+
+        <ul>
+            <li>Class → blueprint of object</li>
+            <li>Object → instance of class</li>
+            <li>Constructor → initializes object</li>
+            <li>Inheritance → reusability of code</li>
+            <li>Polymorphism → multiple forms of behavior</li>
+            <li>Encapsulation → data protection</li>
+        </ul>
+
+        <p>
+            These concepts are heavily asked in technical interviews and form the foundation of object-oriented design.
+        </p>
+    </div>
+
 </div>
 
 </body>

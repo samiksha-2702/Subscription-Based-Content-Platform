@@ -6,55 +6,160 @@
 <title>C++ Learning Hub</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
 body{
-    margin:0;
-    font-family:Segoe UI, Arial;
-    background:linear-gradient(135deg,#020617,#0f172a);
-    color:#e5e7eb;
+  font-family:'Inter',sans-serif;
+  background: radial-gradient(circle at top,#0a0f1e,#02040c);
+  color:#e5e7eb;
 }
 
+/* HEADER */
 header{
-    text-align:center;
-    padding:30px;
-    background:rgba(2,6,23,.8);
-    backdrop-filter:blur(10px);
+  text-align:center;
+  padding:50px 20px 30px;
+  background:rgba(2,6,23,.6);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(59,130,246,0.15);
 }
 
+header h1{
+  font-size:2.8rem;
+  font-weight:900;
+  background:linear-gradient(135deg,#ffffff,#93c5fd,#a78bfa);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+header p{
+  margin-top:10px;
+  color:#94a3b8;
+  font-size:1rem;
+}
+
+/* BACK BUTTON */
+.top{
+  margin-top:18px;
+}
+
+.top button{
+  padding:10px 16px;
+  border:none;
+  border-radius:10px;
+  background:rgba(255,255,255,0.05);
+  color:#e5e7eb;
+  cursor:pointer;
+  transition:0.3s;
+  border:1px solid rgba(59,130,246,0.2);
+}
+
+.top button:hover{
+  background:#2563eb;
+  transform:translateY(-2px);
+}
+
+/* GRID */
 .grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:20px;
-    padding:30px;
-    max-width:1100px;
-    margin:auto;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:24px;
+  padding:50px 20px;
+  max-width:1100px;
+  margin:auto;
 }
 
+/* CARD */
 .card{
-    background:#111827;
-    padding:20px;
-    border-radius:14px;
-    transition:.3s;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(59,130,246,0.15);
+  backdrop-filter:blur(12px);
+  padding:24px;
+  border-radius:18px;
+  transition:0.4s;
+  position:relative;
+  overflow:hidden;
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(120deg,transparent,rgba(96,165,250,0.08),transparent);
+  transition:0.6s;
+}
+
+.card:hover::before{
+  left:100%;
 }
 
 .card:hover{
-    transform:translateY(-6px);
-    box-shadow:0 0 20px rgba(59,130,246,.3);
+  transform:translateY(-8px);
+  border-color:#60a5fa;
+  box-shadow:0 20px 40px rgba(59,130,246,0.15);
 }
 
+.card h3{
+  font-size:1.3rem;
+  margin-bottom:8px;
+  color:#60a5fa;
+  font-weight:700;
+}
+
+.card p{
+  color:#94a3b8;
+  font-size:0.95rem;
+  line-height:1.5;
+}
+
+/* BUTTON */
 .btn{
-    display:inline-block;
-    margin-top:10px;
-    padding:10px 14px;
-    background:#2563eb;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
+  display:inline-block;
+  margin-top:14px;
+  padding:10px 16px;
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
+  color:white;
+  text-decoration:none;
+  border-radius:10px;
+  font-weight:600;
+  transition:0.3s;
 }
 
-.top{
-    text-align:center;
-    margin-top:10px;
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(59,130,246,0.3);
+}
+
+/* CARD ANIMATION */
+.card{
+  animation:fadeUp 0.6s ease backwards;
+}
+
+.card:nth-child(1){animation-delay:0.05s;}
+.card:nth-child(2){animation-delay:0.1s;}
+.card:nth-child(3){animation-delay:0.15s;}
+.card:nth-child(4){animation-delay:0.2s;}
+.card:nth-child(5){animation-delay:0.25s;}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  header h1{
+    font-size:2rem;
+  }
 }
 </style>
 </head>
@@ -62,44 +167,45 @@ header{
 <body>
 
 <header>
-<h1>C++ Learning Module</h1>
-<p>Core • STL • OOP • Practice • Test</p>
-<div class="top">
-<button onclick="history.back()">⬅ Back</button>
-</div>
+  <h1>C++ Learning Hub</h1>
+  <p>Structured learning path for C++ programming from basics to advanced OOP and problem solving</p>
+
+  <div class="top">
+    <button onclick="history.back()">← Back</button>
+  </div>
 </header>
 
 <div class="grid">
 
-<div class="card">
-<h3>C++ Basics</h3>
-<p>Syntax, variables, operators, I/O</p>
-<a href="{% url 'cpp_basics' %}" class="btn">Open</a>
-</div>
+  <div class="card">
+    <h3>C++ Basics</h3>
+    <p>Learn syntax, variables, data types, operators, input/output and fundamental concepts.</p>
+    <a href="{% url 'cpp_basics' %}" class="btn">Start Learning</a>
+  </div>
 
-<div class="card">
-<h3>Control & STL</h3>
-<p>Loops, conditions, arrays, vectors</p>
-<a href="{% url 'cpp_control' %}" class="btn">Open</a>
-</div>
+  <div class="card">
+    <h3>Control & STL</h3>
+    <p>Understand loops, conditions, arrays, vectors and Standard Template Library concepts.</p>
+    <a href="{% url 'cpp_control' %}" class="btn">Explore</a>
+  </div>
 
-<div class="card">
-<h3>OOP in C++</h3>
-<p>Classes, inheritance, polymorphism</p>
-<a href="{% url 'cpp_oop' %}" class="btn">Open</a>
-</div>
+  <div class="card">
+    <h3>Object Oriented Programming</h3>
+    <p>Master classes, objects, inheritance, polymorphism, encapsulation and abstraction.</p>
+    <a href="{% url 'cpp_oop' %}" class="btn">Learn OOP</a>
+  </div>
 
-<div class="card">
-<h3>Practice Sets</h3>
-<p>Programs & logic building</p>
-<a href="{% url 'cpp_practice' %}" class="btn">Solve</a>
-</div>
+  <div class="card">
+    <h3>Practice Problems</h3>
+    <p>Strengthen logic building with structured coding exercises and real-world problems.</p>
+    <a href="{% url 'cpp_practice' %}" class="btn">Practice</a>
+  </div>
 
-<div class="card">
-<h3>15-Min Test</h3>
-<p>MCQ with instant score</p>
-<a href="{% url 'cpp_test' %}" class="btn">Start</a>
-</div>
+  <div class="card">
+    <h3>Assessment Test</h3>
+    <p>Evaluate your knowledge with timed MCQ tests and instant performance feedback.</p>
+    <a href="{% url 'cpp_test' %}" class="btn">Start Test</a>
+  </div>
 
 </div>
 

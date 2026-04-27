@@ -8,53 +8,126 @@
 
 <style>
 body{
-margin:0;
-font-family:Segoe UI, Arial;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb;
+    margin:0;
+    font-family: 'Segoe UI', Arial;
+    background: radial-gradient(circle at top, #0b1220, #050814);
+    color:#e5e7eb;
 }
 
+/* HEADER */
 header{
-text-align:center;
-padding:30px;
-background:rgba(2,6,23,.8);
-backdrop-filter:blur(10px);
+    text-align:center;
+    padding:35px 20px;
+    background: rgba(17,24,39,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
+header h1{
+    margin:0;
+    font-size:28px;
+    color:#93c5fd;
+}
+
+header p{
+    margin-top:8px;
+    color:#94a3b8;
+}
+
+/* BACK BUTTON */
+.top{
+    margin-top:12px;
+}
+
+button{
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* GRID */
 .grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
-padding:30px;
-max-width:1100px;
-margin:auto;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
+    padding:40px 25px;
+    max-width:1100px;
+    margin:auto;
 }
 
+/* CARD */
 .card{
-background:#111827;
-padding:20px;
-border-radius:14px;
-transition:.3s;
+    background: rgba(17,24,39,0.8);
+    border:1px solid rgba(255,255,255,0.05);
+    padding:22px;
+    border-radius:16px;
+    transition:0.3s;
+    position:relative;
+    overflow:hidden;
 }
 
 .card:hover{
-transform:translateY(-6px);
-box-shadow:0 0 20px rgba(59,130,246,.3);
+    transform:translateY(-8px);
+    border-color:#3b82f6;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
 }
 
+/* top glow line */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:2px;
+    background:linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899);
+    transform:scaleX(0);
+    transition:0.4s;
+}
+
+.card:hover::before{
+    transform:scaleX(1);
+}
+
+.card h3{
+    margin:0;
+    color:#93c5fd;
+    font-size:18px;
+}
+
+.card p{
+    color:#94a3b8;
+    font-size:14px;
+    margin-top:8px;
+    line-height:1.5;
+}
+
+/* BUTTON */
 .btn{
-display:inline-block;
-margin-top:10px;
-padding:10px 14px;
-background:#2563eb;
-color:white;
-text-decoration:none;
-border-radius:8px;
+    display:inline-block;
+    margin-top:14px;
+    padding:10px 14px;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:600;
+    transition:0.3s;
 }
 
-.top{
-text-align:center;
-margin-top:10px;
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(37,99,235,0.3);
 }
 </style>
 </head>
@@ -62,50 +135,51 @@ margin-top:10px;
 <body>
 
 <header>
-<h1>JavaScript Learning Module</h1>
-<p>Basics • DOM • ES6 • Practice • Test</p>
-<div class="top">
-<button onclick="history.back()">⬅ Back</button>
-</div>
+    <h1>JavaScript Learning Hub</h1>
+    <p>Basics • Control Flow • DOM • ES6 • Practice • Assessment</p>
+
+    <div class="top">
+        <button onclick="history.back()">Back</button>
+    </div>
 </header>
 
 <div class="grid">
 
-<div class="card">
-<h3>JavaScript Basics</h3>
-<p>Syntax, variables, data types, operators</p>
-<a href="{% url 'js_basics' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>JavaScript Basics</h3>
+        <p>Learn syntax, variables, data types, and operators with real examples.</p>
+        <a href="{% url 'js_basics' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>Control Flow</h3>
-<p>Conditions, loops, functions</p>
-<a href="{% url 'js_control' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>Control Flow</h3>
+        <p>Understand conditions, loops, functions, and program logic building.</p>
+        <a href="{% url 'js_control' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>DOM & Events</h3>
-<p>DOM manipulation, events, forms</p>
-<a href="{% url 'js_dom' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>DOM & Events</h3>
+        <p>Manipulate web pages using DOM, events, forms, and interactions.</p>
+        <a href="{% url 'js_dom' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>ES6+ Features</h3>
-<p>Arrow functions, promises, modules</p>
-<a href="{% url 'js_es6' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>ES6+ Features</h3>
+        <p>Explore modern JavaScript features like arrow functions, promises, modules.</p>
+        <a href="{% url 'js_es6' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>Practice Sets</h3>
-<p>Programs & logic building</p>
-<a href="{% url 'js_practice' %}" class="btn">Solve</a>
-</div>
+    <div class="card">
+        <h3>Practice Sets</h3>
+        <p>Improve coding skills with logic-based JavaScript problems.</p>
+        <a href="{% url 'js_practice' %}" class="btn">Start Practice</a>
+    </div>
 
-<div class="card">
-<h3>15-Min Test</h3>
-<p>MCQ with instant score</p>
-<a href="{% url 'js_test' %}" class="btn">Start</a>
-</div>
+    <div class="card">
+        <h3>15-Min Test</h3>
+        <p>Evaluate your knowledge with MCQ-based timed assessments.</p>
+        <a href="{% url 'js_test' %}" class="btn">Start Test</a>
+    </div>
 
 </div>
 

@@ -2,32 +2,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>C++ Basics — Detailed</title>
+    <title>C++ Basics — PrepEdge Learning Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
-        body {background:#0f172a; color:#e5e7eb; font-family:Segoe UI; padding:30px; line-height:1.6}
-        .card {background:#111827; padding:25px; border-radius:14px; margin-bottom:20px}
-        pre {background:#020617; padding:15px; border-radius:8px; color:#93c5fd}
-        h2 {color:#60a5fa}
-        button {padding:8px 12px; border-radius:8px; border:none; background:#2563eb; color:white}
+        body{
+            background: linear-gradient(135deg,#020617,#0f172a);
+            color:#e5e7eb;
+            font-family:Segoe UI, Arial;
+            margin:0;
+            padding:30px;
+            line-height:1.7;
+        }
+
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        button{
+            padding:10px 14px;
+            border-radius:10px;
+            border:none;
+            background:#2563eb;
+            color:white;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+            transform:translateY(-2px);
+        }
+
+        .container{
+            max-width:1000px;
+            margin:auto;
+        }
+
+        .card{
+            background:rgba(17,24,39,0.9);
+            border:1px solid rgba(59,130,246,0.15);
+            padding:22px;
+            border-radius:16px;
+            margin-bottom:18px;
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+            border-color:#3b82f6;
+        }
+
+        h1{
+            font-size:28px;
+            margin-bottom:5px;
+        }
+
+        h2{
+            color:#60a5fa;
+            margin-bottom:10px;
+            font-size:20px;
+        }
+
+        p{
+            color:#cbd5e1;
+        }
+
+        ul{
+            padding-left:20px;
+            color:#cbd5e1;
+        }
+
+        pre{
+            background:#020617;
+            padding:15px;
+            border-radius:10px;
+            color:#93c5fd;
+            overflow-x:auto;
+        }
+
+        .badge{
+            display:inline-block;
+            padding:5px 10px;
+            border-radius:20px;
+            font-size:12px;
+            background:#1e293b;
+            color:#60a5fa;
+            margin-bottom:10px;
+        }
     </style>
 </head>
 
 <body>
 
-<button onclick="history.back()">⬅ Back</button>
+<div class="container">
 
-<div class="card">
-    <h2>What is C++?</h2>
-    <p>C++ is a compiled, object-oriented programming language developed by Bjarne Stroustrup.
-    It supports procedural + object-oriented + generic programming.
-    Used in system software, games, compilers, embedded systems.</p>
-</div>
+    <!-- TOP -->
+    <div class="topbar">
+        <div>
+            <h1>C++ Basics</h1>
+            <p>Structured learning module for beginners</p>
+        </div>
+        <button onclick="history.back()">Back</button>
+    </div>
 
-<div class="card">
-    <h2>Basic Structure of C++ Program</h2>
+    <!-- INTRO -->
+    <div class="card">
+        <span class="badge">Overview</span>
+        <h2>What is C++?</h2>
+        <p>
+            C++ is a powerful general-purpose programming language created by Bjarne Stroustrup.
+            It supports procedural, object-oriented, and generic programming.
+            It is widely used in system development, game engines, competitive programming,
+            operating systems, and high-performance applications.
+        </p>
+    </div>
 
-    <pre>
+    <!-- STRUCTURE -->
+    <div class="card">
+        <span class="badge">Fundamentals</span>
+        <h2>Basic Structure of a C++ Program</h2>
+
+        <pre>
 #include &lt;iostream&gt;
 using namespace std;
 
@@ -35,60 +134,90 @@ int main() {
     cout &lt;&lt; "Hello World";
     return 0;
 }
-    </pre>
+        </pre>
 
-    <b>Explanation:</b>
-    <ul>
-        <li>#include — library include</li>
-        <li>namespace std — avoid std:: prefix</li>
-        <li>main() — entry point</li>
-        <li>return 0 — success exit</li>
-    </ul>
-</div>
+        <ul>
+            <li>include iostream → standard input/output library</li>
+            <li>using namespace std → avoids writing std:: repeatedly</li>
+            <li>main() → program execution starts here</li>
+            <li>cout → output statement</li>
+            <li>return 0 → successful execution</li>
+        </ul>
+    </div>
 
-<div class="card">
-    <h2>Variables & Data Types</h2>
-    <p>Common types:</p>
-    <ul>
-        <li>int — integers</li>
-        <li>float — decimal</li>
-        <li>double — large decimal</li>
-        <li>char — single character</li>
-        <li>bool — true/false</li>
-        <li>string — text</li>
-    </ul>
+    <!-- DATA TYPES -->
+    <div class="card">
+        <span class="badge">Core Concepts</span>
+        <h2>Variables and Data Types</h2>
 
-    <pre>
+        <p>C++ provides multiple data types to store different kinds of values.</p>
+
+        <ul>
+            <li>int → integer values (10, 20)</li>
+            <li>float → decimal values (10.5)</li>
+            <li>double → higher precision decimals</li>
+            <li>char → single character ('A')</li>
+            <li>bool → true or false</li>
+            <li>string → text values</li>
+        </ul>
+
+        <pre>
 int age = 20;
 float marks = 88.5;
+char grade = 'A';
 string name = "Ravi";
-    </pre>
-</div>
+bool isPass = true;
+        </pre>
+    </div>
 
-<div class="card">
-    <h2>Input and Output</h2>
+    <!-- INPUT OUTPUT -->
+    <div class="card">
+        <span class="badge">IO System</span>
+        <h2>Input and Output</h2>
 
-    <pre>
+        <p>cin is used for input and cout is used for output.</p>
+
+        <pre>
 int x;
 cin &gt;&gt; x;
 cout &lt;&lt; x;
-    </pre>
+        </pre>
 
-    <p>Multiple input:</p>
-    <pre>
+        <p>Multiple input example:</p>
+
+        <pre>
+int a, b;
 cin &gt;&gt; a &gt;&gt; b;
-    </pre>
-</div>
+cout &lt;&lt; a + b;
+        </pre>
+    </div>
 
-<div class="card">
-    <h2>Operators</h2>
+    <!-- OPERATORS -->
+    <div class="card">
+        <span class="badge">Logic Building</span>
+        <h2>Operators in C++</h2>
 
-    <ul>
-        <li>Arithmetic → + − * / %</li>
-        <li>Relational → == != &gt; &lt;</li>
-        <li>Logical → &amp;&amp; || !</li>
-        <li>Assignment → = += -=</li>
-    </ul>
+        <ul>
+            <li>Arithmetic → +, -, *, /, %</li>
+            <li>Relational → ==, !=, &gt;, &lt;, &gt;=, &lt;=</li>
+            <li>Logical → &&, ||, !</li>
+            <li>Assignment → =, +=, -=, *=</li>
+        </ul>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <span class="badge">Revision</span>
+        <h2>Key Takeaways</h2>
+        <ul>
+            <li>C++ is fast, powerful, and widely used in system-level programming</li>
+            <li>Every program starts from main()</li>
+            <li>Data types define memory and value type</li>
+            <li>cin and cout handle input/output</li>
+            <li>Operators are used for logic and calculations</li>
+        </ul>
+    </div>
+
 </div>
 
 </body>

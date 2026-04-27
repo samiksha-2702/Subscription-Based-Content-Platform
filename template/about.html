@@ -6,7 +6,7 @@
 <title>About PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -18,7 +18,7 @@
 
 body{
   font-family:'Inter',sans-serif;
-  background: linear-gradient(135deg,#0a0f1e,#030614);
+  background: radial-gradient(circle at top,#0a0f1e,#02040c);
   color:#e2e8f0;
 }
 
@@ -27,17 +27,19 @@ body{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:18px 50px;
-  background:rgba(10,15,30,0.85);
-  backdrop-filter: blur(10px);
+  padding:18px 55px;
+  background:rgba(10,15,30,0.7);
+  backdrop-filter: blur(18px);
   border-bottom:1px solid rgba(59,130,246,0.15);
+  position:sticky;
+  top:0;
+  z-index:100;
 }
 
 .brand{
-  font-size:26px;
-  font-weight:800;
-  text-decoration:none;
-  background: linear-gradient(135deg,#3b82f6,#8b5cf6,#ec4899);
+  font-size:28px;
+  font-weight:900;
+  background: linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
@@ -57,119 +59,124 @@ body{
 /* HERO */
 .hero{
   text-align:center;
-  padding:120px 20px 80px;
+  padding:110px 20px 60px;
 }
 
 .hero h1{
-  font-size:3.2rem;
-  font-weight:800;
-  background:linear-gradient(135deg,#fff,#94a3b8);
+  font-size:3.4rem;
+  font-weight:900;
+  background:linear-gradient(135deg,#ffffff,#94a3b8,#60a5fa);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
 }
 
 .hero p{
-  margin-top:20px;
-  font-size:1.1rem;
+  margin-top:18px;
   color:#94a3b8;
-  max-width:650px;
+  max-width:750px;
   margin-left:auto;
   margin-right:auto;
+  font-size:1.1rem;
+  line-height:1.6;
 }
 
 /* SECTION */
 .section{
-  max-width:1100px;
+  max-width:1150px;
   margin:auto;
   padding:60px 20px;
 }
 
 /* CARD */
 .card{
-  background: rgba(255,255,255,0.03);
+  background:rgba(255,255,255,0.03);
   border:1px solid rgba(59,130,246,0.15);
-  backdrop-filter: blur(10px);
-  padding:28px;
-  border-radius:18px;
-  margin-bottom:25px;
+  backdrop-filter: blur(14px);
+  padding:32px;
+  border-radius:22px;
+  margin-bottom:22px;
   transition:0.4s;
 }
 
 .card:hover{
   transform:translateY(-6px);
-  border-color:#3b82f6;
-  box-shadow:0 10px 30px rgba(59,130,246,0.15);
+  border-color:#60a5fa;
+  box-shadow:0 15px 40px rgba(59,130,246,0.15);
 }
 
 .card h2{
+  font-size:1.35rem;
   color:#60a5fa;
   margin-bottom:12px;
-  font-size:1.3rem;
+  font-weight:700;
 }
 
 .card p, .card li{
   color:#94a3b8;
   font-size:0.95rem;
+  line-height:1.7;
 }
 
 ul{
   padding-left:20px;
 }
 
+/* GRID INFO */
+.info-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
 /* CONTACT */
 .contact-container{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:40px;
-  margin-top:30px;
-}
-
-.contact-info{
-  background: rgba(255,255,255,0.03);
-  padding:25px;
-  border-radius:15px;
-  border:1px solid rgba(59,130,246,0.1);
-}
-
-.contact-info h3{
-  color:#60a5fa;
-  margin-bottom:10px;
+  gap:30px;
+  margin-top:15px;
 }
 
 .contact-info p{
+  margin-bottom:12px;
   color:#94a3b8;
-  margin-bottom:10px;
 }
 
-.contact-form{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
+.contact-info i{
+  color:#60a5fa;
+  margin-right:10px;
 }
 
-.contact-form input,
-.contact-form textarea{
-  padding:12px;
-  border-radius:8px;
+/* FORM */
+input, textarea{
+  width:100%;
+  padding:14px;
+  margin-bottom:12px;
+  border-radius:10px;
   border:1px solid rgba(59,130,246,0.2);
-  background:#0a0f1e;
+  background:rgba(10,15,30,0.8);
   color:white;
+  outline:none;
 }
 
-.contact-form button{
-  padding:12px;
+input:focus, textarea:focus{
+  border-color:#60a5fa;
+  box-shadow:0 0 0 3px rgba(96,165,250,0.15);
+}
+
+button{
+  padding:12px 20px;
   border:none;
-  border-radius:8px;
-  background: linear-gradient(135deg,#3b82f6,#2563eb);
+  border-radius:10px;
+  background:linear-gradient(135deg,#3b82f6,#2563eb);
   color:white;
-  font-weight:600;
   cursor:pointer;
+  font-weight:700;
   transition:0.3s;
 }
 
-.contact-form button:hover{
+button:hover{
   transform:translateY(-2px);
-  box-shadow:0 10px 20px rgba(59,130,246,0.3);
+  box-shadow:0 10px 25px rgba(59,130,246,0.3);
 }
 
 /* FOOTER */
@@ -178,13 +185,14 @@ footer{
   padding:30px;
   color:#64748b;
   border-top:1px solid rgba(59,130,246,0.1);
+  margin-top:50px;
 }
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  .contact-container{
-    grid-template-columns:1fr;
-  }
+  .hero h1{font-size:2.3rem;}
+  .contact-container{grid-template-columns:1fr;}
+  .navbar{flex-direction:column;gap:10px;}
 }
 </style>
 </head>
@@ -194,7 +202,6 @@ footer{
 <!-- NAVBAR -->
 <div class="navbar">
   <a href="{% url 'index' %}" class="brand">PrepEdge</a>
-
   <div class="nav-links">
     <a href="{% url 'index' %}">Home</a>
     <a href="{% url 'about' %}">About</a>
@@ -205,8 +212,7 @@ footer{
 <div class="hero">
   <h1>About PrepEdge</h1>
   <p>
-    An AI-powered platform helping students prepare smarter for interviews
-    through personalized learning, practice tests, and intelligent guidance.
+    PrepEdge is an AI-powered interview preparation platform designed to help students and professionals build strong technical and communication skills through structured learning, real practice tests, and intelligent feedback systems.
   </p>
 </div>
 
@@ -214,60 +220,73 @@ footer{
 <div class="section">
 
   <div class="card">
-    <h2>What is PrepEdge?</h2>
+    <h2>Platform Overview</h2>
     <p>
-      PrepEdge is a modern web platform designed to support students in their
-      interview preparation journey with structured learning and practice.
+      PrepEdge is a smart learning ecosystem that combines artificial intelligence with structured educational content.
+      It analyzes user performance, identifies weak areas, and provides a personalized learning path to improve interview readiness efficiently.
     </p>
   </div>
 
   <div class="card">
     <h2>Problem We Solve</h2>
     <p>
-      Students often lack a structured approach and personalized guidance while
-      preparing for interviews.
+      Most students face difficulty in interview preparation due to lack of structured content, proper feedback, and real-world practice.
+      PrepEdge solves this by providing guided preparation instead of random learning.
     </p>
   </div>
 
   <div class="card">
-    <h2>Our Approach</h2>
-    <ul>
-      <li>Practice tests and real interview questions</li>
-      <li>AI-based recommendations</li>
-      <li>Instant doubt solving</li>
-      <li>Progress tracking</li>
-    </ul>
+    <h2>Key Features</h2>
+
+    <div class="info-grid">
+      <div>
+        <p><b>AI Learning System</b><br>Personalized recommendations based on user performance.</p>
+      </div>
+      <div>
+        <p><b>Mock Tests</b><br>Real exam-like environment for practice and evaluation.</p>
+      </div>
+      <div>
+        <p><b>Performance Analytics</b><br>Tracks accuracy, speed, and improvement areas.</p>
+      </div>
+      <div>
+        <p><b>Interview Preparation</b><br>Company-wise questions and coding challenges.</p>
+      </div>
+      <div>
+        <p><b>Skill Tracking</b><br>Identifies weak topics and suggests improvements.</p>
+      </div>
+      <div>
+        <p><b>Smart Dashboard</b><br>Clean analytics view of your preparation journey.</p>
+      </div>
+    </div>
   </div>
 
   <div class="card">
-    <h2>AI Integration</h2>
+    <h2>Our Vision</h2>
     <p>
-      AI analyzes user performance and provides personalized recommendations
-      along with instant doubt solving support.
+      To become a complete AI-driven career preparation platform that helps students confidently transition from learning to employment with structured guidance and real-world preparation tools.
     </p>
   </div>
 
+ 
   <!-- CONTACT -->
   <div class="card">
-    <h2>Contact & Feedback</h2>
+    <h2>Contact Information</h2>
 
     <div class="contact-container">
 
       <div class="contact-info">
-        <h3>Get in Touch</h3>
         <p><i class="fas fa-envelope"></i> prepedge@gmail.com</p>
         <p><i class="fas fa-phone"></i> +91 1234567890</p>
-        <p><i class="fas fa-map-marker-alt"></i> Pune, India</p>
+        <p><i class="fas fa-map-marker-alt"></i> Pune, Maharashtra, India</p>
+        <p><i class="fas fa-globe"></i> www.prepedge.com</p>
       </div>
 
-      <form method="POST" class="contact-form">
+      <form method="POST">
         {% csrf_token %}
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
-        <button type="submit">
-          <i class="fas fa-paper-plane"></i> Send Message
-        </button>
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <textarea name="message" rows="4" placeholder="Write your message..." required></textarea>
+        <button type="submit">Send Message</button>
       </form>
 
     </div>
@@ -277,7 +296,7 @@ footer{
 
 <!-- FOOTER -->
 <footer>
-  © 2026 PrepEdge Platform
+  © 2026 PrepEdge Platform | All Rights Reserved
 </footer>
 
 </body>

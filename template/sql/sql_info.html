@@ -8,61 +8,126 @@
 
 <style>
 body{
-margin:0;
-font-family:Segoe UI, Arial;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb;
+    margin:0;
+    font-family:'Segoe UI', Arial;
+    background: radial-gradient(circle at top, #0b1220, #050814);
+    color:#e5e7eb;
 }
 
+/* HEADER */
 header{
-text-align:center;
-padding:30px;
-background:rgba(2,6,23,.8);
-backdrop-filter:blur(10px);
+    text-align:center;
+    padding:35px 20px;
+    background: rgba(17,24,39,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:20px;
-padding:30px;
-max-width:1100px;
-margin:auto;
+header h1{
+    margin:0;
+    font-size:28px;
+    color:#93c5fd;
 }
 
-.card{
-background:#111827;
-padding:20px;
-border-radius:14px;
-transition:.3s;
+header p{
+    margin-top:8px;
+    color:#94a3b8;
 }
 
-.card:hover{
-transform:translateY(-6px);
-box-shadow:0 0 20px rgba(34,197,94,.3);
-}
-
-.btn{
-display:inline-block;
-margin-top:10px;
-padding:10px 14px;
-background:#165ca3;
-color:white;
-text-decoration:none;
-border-radius:8px;
-}
-
+/* BACK BUTTON */
 .top{
-text-align:center;
-margin-top:10px;
+    margin-top:12px;
 }
 
 button{
-padding:8px 14px;
-border-radius:8px;
-border:none;
-cursor:pointer;
-font-weight:600;
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-weight:600;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:22px;
+    padding:40px 25px;
+    max-width:1100px;
+    margin:auto;
+}
+
+/* CARD */
+.card{
+    background: rgba(17,24,39,0.8);
+    border:1px solid rgba(255,255,255,0.05);
+    padding:22px;
+    border-radius:16px;
+    transition:0.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:#3b82f6;
+    box-shadow:0 20px 40px rgba(0,0,0,0.6);
+}
+
+/* glow line */
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:2px;
+    background:linear-gradient(90deg,#3b82f6,#60a5fa,#8b5cf6);
+    transform:scaleX(0);
+    transition:0.4s;
+}
+
+.card:hover::before{
+    transform:scaleX(1);
+}
+
+.card h3{
+    margin:0;
+    color:#93c5fd;
+    font-size:18px;
+}
+
+.card p{
+    color:#94a3b8;
+    font-size:14px;
+    margin-top:8px;
+    line-height:1.5;
+}
+
+/* BUTTON */
+.btn{
+    display:inline-block;
+    margin-top:14px;
+    padding:10px 14px;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 20px rgba(59,130,246,0.3);
 }
 </style>
 </head>
@@ -70,52 +135,51 @@ font-weight:600;
 <body>
 
 <header>
-<h1>SQL Learning Module</h1>
-<p>Basics • Queries • Joins • Practice • Test</p>
+    <h1>SQL Learning Hub</h1>
+    <p>Database Fundamentals • Queries • Joins • Advanced SQL • Practice</p>
 
-<div class="top">
-<button onclick="history.back()">⬅ Back</button>
-</div>
-
+    <div class="top">
+        <button onclick="history.back()">Back</button>
+    </div>
 </header>
 
 <div class="grid">
 
-<div class="card">
-<h3>SQL Basics</h3>
-<p>DBMS, tables, keys, commands</p>
-<a href="{% url 'sql_basics' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>SQL Basics</h3>
+        <p>Learn DBMS concepts, tables, keys, and SQL fundamentals.</p>
+        <a href="{% url 'sql_basics' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>SQL Queries</h3>
-<p>SELECT, WHERE, ORDER BY</p>
-<a href="{% url 'sql_queries' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>SQL Queries</h3>
+        <p>Master SELECT, WHERE, ORDER BY, filtering and data retrieval.</p>
+        <a href="{% url 'sql_queries' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>Joins & Constraints</h3>
-<p>JOIN types, keys, constraints</p>
-<a href="{% url 'sql_joins' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>Joins & Constraints</h3>
+        <p>INNER JOIN, LEFT JOIN, keys and relational database rules.</p>
+        <a href="{% url 'sql_joins' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>Advanced SQL</h3>
-<p>Group By, Having, Subqueries</p>
-<a href="{% url 'sql_advanced' %}" class="btn">Open</a>
-</div>
+    <div class="card">
+        <h3>Advanced SQL</h3>
+        <p>GROUP BY, HAVING, subqueries and performance optimization.</p>
+        <a href="{% url 'sql_advanced' %}" class="btn">Open Module</a>
+    </div>
 
-<div class="card">
-<h3>Practice Sets</h3>
-<p>Query writing & MCQs</p>
-<a href="{% url 'sql_practice' %}" class="btn">Solve</a>
-</div>
+    <div class="card">
+        <h3>Practice Sets</h3>
+        <p>Improve SQL logic with real-world query challenges.</p>
+        <a href="{% url 'sql_practice' %}" class="btn">Start Practice</a>
+    </div>
 
-<div class="card">
-<h3>15-Min Test</h3>
-<p>MCQ with instant score</p>
-<a href="{% url 'sql_test' %}" class="btn">Start</a>
-</div>
+    <div class="card">
+        <h3>15-Min Test</h3>
+        <p>Evaluate knowledge with timed MCQ assessment.</p>
+        <a href="{% url 'sql_test' %}" class="btn">Start Test</a>
+    </div>
 
 </div>
 

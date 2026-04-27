@@ -7,33 +7,111 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{font-family:Segoe UI;background:#0b1220;color:#e5e7eb;padding:20px}
-.header{background:#111827;padding:20px;border-radius:12px;margin-bottom:20px}
-.question{background:#020617;padding:18px;margin-bottom:15px;border-radius:10px}
-label{display:block;margin:6px 0}
-button{padding:12px 18px;background:#16a34a;border:none;border-radius:8px;color:white;font-weight:600;cursor:pointer;margin-top:10px}
-.timer{font-size:20px;color:#fb7185;font-weight:bold}
-.result{background:#111827;padding:20px;border-radius:12px;margin-top:20px;display:none}
-.correct{color:#4ade80}
-.wrong{color:#f87171}
+body{
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #0b1220, #050814);
+    color: #e5e7eb;
+    padding: 25px;
+}
+
+/* HEADER */
+.header{
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.header h2{
+    margin:0;
+    font-size: 22px;
+    color: #93c5fd;
+}
+
+.timer{
+    margin-top: 8px;
+    font-size: 18px;
+    color: #fb7185;
+    font-weight: 600;
+}
+
+/* BUTTONS */
+button{
+    padding: 10px 14px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 8px;
+    transition: 0.3s;
+}
+
+button:hover{
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+/* QUESTION CARD */
+.question{
+    background: rgba(2, 6, 23, 0.9);
+    border: 1px solid rgba(255,255,255,0.05);
+    padding: 18px;
+    margin-bottom: 14px;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+.question:hover{
+    border-color: #3b82f6;
+}
+
+.question b{
+    color: #93c5fd;
+}
+
+label{
+    display:block;
+    margin:6px 0;
+    cursor:pointer;
+    color:#cbd5e1;
+}
+
+input[type="radio"]{
+    margin-right: 8px;
+}
+
+/* RESULT BOX */
+.result{
+    background:#111827;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+    display:none;
+    border:1px solid rgba(255,255,255,0.05);
+}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-<h2>C++ Practice Test</h2>
-<div class="timer">Time Left: <span id="time">15:00</span></div>
+    <h2>C++ Practice Test</h2>
+    <div class="timer">Time Left: <span id="time">15:00</span></div>
 </div>
 
-<a href="{% url 'index' %}"><button type="button">🏠 Home</button></a>
-<button type="button" onclick="history.back()">⬅ Back</button>
+<button type="button" onclick="history.back()">Back</button>
+<a href="{% url 'index' %}">
+    <button type="button">Home</button>
+</a>
 
 <!-- FORM -->
 <form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
     {% csrf_token %}
 
-    <!-- REQUIRED HIDDEN FIELDS (IMPORTANT FIX) -->
     <input type="hidden" name="total" id="totalField">
     <input type="hidden" name="correct" id="correctField">
     <input type="hidden" name="wrong" id="wrongField">
@@ -43,38 +121,43 @@ button{padding:12px 18px;background:#16a34a;border:none;border-radius:8px;color:
 
     <!-- QUESTIONS -->
     <div class="question">
-        Q1. Who developed C++?<br>
-        <input type="radio" name="q1" value="a"> Dennis Ritchie<br>
-        <input type="radio" name="q1" value="b"> Bjarne Stroustrup<br>
-        <input type="radio" name="q1" value="c"> James Gosling
+        <b>Question 1</b><br>
+        Who developed C++?
+        <label><input type="radio" name="q1" value="a"> Dennis Ritchie</label>
+        <label><input type="radio" name="q1" value="b"> Bjarne Stroustrup</label>
+        <label><input type="radio" name="q1" value="c"> James Gosling</label>
     </div>
 
     <div class="question">
-        Q2. Input operator in C++?<br>
-        <input type="radio" name="q2" value="a"> >><br>
-        <input type="radio" name="q2" value="b"> << <br>
-        <input type="radio" name="q2" value="c"> ::
+        <b>Question 2</b><br>
+        Input operator in C++?
+        <label><input type="radio" name="q2" value="a"> >></label>
+        <label><input type="radio" name="q2" value="b"> <<</label>
+        <label><input type="radio" name="q2" value="c"> ::</label>
     </div>
 
     <div class="question">
-        Q3. Dynamic array?<br>
-        <input type="radio" name="q3" value="a"> vector<br>
-        <input type="radio" name="q3" value="b"> array<br>
-        <input type="radio" name="q3" value="c"> pointer
+        <b>Question 3</b><br>
+        Dynamic array container?
+        <label><input type="radio" name="q3" value="a"> vector</label>
+        <label><input type="radio" name="q3" value="b"> array</label>
+        <label><input type="radio" name="q3" value="c"> pointer</label>
     </div>
 
     <div class="question">
-        Q4. OOP stands for?<br>
-        <input type="radio" name="q4" value="a"> Object Oriented Programming<br>
-        <input type="radio" name="q4" value="b"> Object Only Program<br>
-        <input type="radio" name="q4" value="c"> Order Of Program
+        <b>Question 4</b><br>
+        OOP stands for?
+        <label><input type="radio" name="q4" value="a"> Object Oriented Programming</label>
+        <label><input type="radio" name="q4" value="b"> Object Only Program</label>
+        <label><input type="radio" name="q4" value="c"> Order Of Program</label>
     </div>
 
     <div class="question">
-        Q5. Inheritance symbol?<br>
-        <input type="radio" name="q5" value="a"> extends<br>
-        <input type="radio" name="q5" value="b"> inherits<br>
-        <input type="radio" name="q5" value="c"> :
+        <b>Question 5</b><br>
+        Inheritance symbol?
+        <label><input type="radio" name="q5" value="a"> extends</label>
+        <label><input type="radio" name="q5" value="b"> inherits</label>
+        <label><input type="radio" name="q5" value="c"> :</label>
     </div>
 
     <button type="button" onclick="submitQuiz()">Submit Test</button>
@@ -114,7 +197,6 @@ function submitQuiz(){
 
     let total = Object.keys(answers).length;
 
-    // fill hidden fields (IMPORTANT)
     document.getElementById("totalField").value = total;
     document.getElementById("correctField").value = correct;
     document.getElementById("wrongField").value = wrong;
@@ -128,7 +210,7 @@ function submitQuiz(){
     document.getElementById("quizForm").submit();
 }
 
-// TIMER
+/* TIMER */
 function timer(){
     let m = Math.floor(totalTime/60);
     let s = totalTime % 60;

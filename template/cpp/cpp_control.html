@@ -2,95 +2,259 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>C++ Control & STL — Detailed</title>
+    <title>C++ Control Flow & STL — PrepEdge</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
-        body {background:#0f172a; color:#e5e7eb; font-family:Segoe UI; padding:30px;}
-        .card {background:#111827; padding:25px; border-radius:14px; margin-bottom:20px;}
-        pre {background:#020617; padding:15px; border-radius:8px; color:#93c5fd;}
-        h2 {color:#60a5fa;}
-        button {padding:8px 12px; border-radius:8px; border:none; background:#2563eb; color:white;}
+        body{
+            background: linear-gradient(135deg,#020617,#0f172a);
+            color:#e5e7eb;
+            font-family:Segoe UI, Arial;
+            margin:0;
+            padding:30px;
+            line-height:1.7;
+        }
+
+        .container{
+            max-width:1000px;
+            margin:auto;
+        }
+
+        .topbar{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            margin-bottom:25px;
+        }
+
+        button{
+            padding:10px 14px;
+            border-radius:10px;
+            border:none;
+            background:#2563eb;
+            color:white;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+            transform:translateY(-2px);
+        }
+
+        .card{
+            background:rgba(17,24,39,0.9);
+            border:1px solid rgba(59,130,246,0.15);
+            padding:22px;
+            border-radius:16px;
+            margin-bottom:18px;
+            transition:0.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-5px);
+            border-color:#3b82f6;
+        }
+
+        h1{
+            font-size:26px;
+        }
+
+        h2{
+            color:#60a5fa;
+            margin-bottom:10px;
+            font-size:20px;
+        }
+
+        p{
+            color:#cbd5e1;
+        }
+
+        ul{
+            padding-left:20px;
+            color:#cbd5e1;
+        }
+
+        pre{
+            background:#020617;
+            padding:15px;
+            border-radius:10px;
+            color:#93c5fd;
+            overflow-x:auto;
+        }
+
+        .badge{
+            display:inline-block;
+            padding:5px 10px;
+            border-radius:20px;
+            font-size:12px;
+            background:#1e293b;
+            color:#60a5fa;
+            margin-bottom:10px;
+        }
     </style>
 </head>
 
 <body>
 
-<button onclick="history.back()">⬅ Back</button>
+<div class="container">
 
-<div class="card">
-    <h2>Decision Making</h2>
+    <!-- TOP -->
+    <div class="topbar">
+        <div>
+            <h1>C++ Control Flow & STL</h1>
+            <p>Decision making, loops, arrays and standard template library</p>
+        </div>
 
-    <pre>
-if(x>10){
-    cout<<"Large";
-}else{
-    cout<<"Small";
+        <button onclick="history.back()">Back</button>
+    </div>
+
+    <!-- IF-ELSE -->
+    <div class="card">
+        <span class="badge">Control Statements</span>
+        <h2>Decision Making (if-else)</h2>
+
+        <p>Used to execute code based on conditions.</p>
+
+        <pre>
+if (x > 10) {
+    cout << "Large number";
+} else {
+    cout << "Small number";
 }
-    </pre>
+        </pre>
 
-    <p>Switch example:</p>
+        <p>Nested conditions improve decision complexity in programs.</p>
+    </div>
 
-    <pre>
+    <!-- SWITCH -->
+    <div class="card">
+        <span class="badge">Branching</span>
+        <h2>Switch Case</h2>
+
+        <p>Used when multiple fixed choices are available.</p>
+
+        <pre>
 switch(n){
-    case 1: cout<<"One"; break;
-    default: cout<<"Other";
+    case 1:
+        cout << "One";
+        break;
+
+    case 2:
+        cout << "Two";
+        break;
+
+    default:
+        cout << "Other";
 }
-    </pre>
-</div>
+        </pre>
 
-<div class="card">
-    <h2>Loops</h2>
+        <p>Break prevents fall-through execution.</p>
+    </div>
 
-    <p>For loop:</p>
-    <pre>
-for(int i=0; i&lt;5; i++){
-    cout&lt;&lt;i;
+    <!-- LOOPS -->
+    <div class="card">
+        <span class="badge">Iteration</span>
+        <h2>Loops in C++</h2>
+
+        <p>Loops are used to execute code repeatedly.</p>
+
+        <h3>For Loop</h3>
+        <pre>
+for(int i = 0; i < 5; i++){
+    cout << i;
 }
-    </pre>
+        </pre>
 
-    <p>While loop:</p>
-    <pre>
-while(x&gt;0){
+        <h3>While Loop</h3>
+        <pre>
+while(x > 0){
     x--;
 }
-    </pre>
-</div>
+        </pre>
 
-<div class="card">
-    <h2>Arrays</h2>
+        <h3>Do-While Loop</h3>
+        <pre>
+do {
+    cout << x;
+    x--;
+} while(x > 0);
+        </pre>
 
-    <pre>
-int a[5] = {1,2,3,4,5};
-cout &lt;&lt; a[0];
-    </pre>
-</div>
+        <p>Loops are heavily used in competitive programming and interview coding questions.</p>
+    </div>
 
-<div class="card">
-    <h2>STL — Standard Template Library</h2>
+    <!-- ARRAYS -->
+    <div class="card">
+        <span class="badge">Data Structure</span>
+        <h2>Arrays</h2>
 
-    <p>Important STL Containers:</p>
-    <ul>
-        <li>vector — dynamic array</li>
-        <li>set — unique & sorted</li>
-        <li>map — key value</li>
-        <li>stack / queue</li>
-    </ul>
+        <p>Arrays store multiple values in contiguous memory locations.</p>
 
-    <p>Vector example:</p>
-    <pre>
-#include &lt;vector&gt;
-vector&lt;int&gt; v;
+        <pre>
+int a[5] = {1, 2, 3, 4, 5};
+
+cout << a[0];   // first element
+        </pre>
+
+        <p>Important concept: indexing starts from 0.</p>
+    </div>
+
+    <!-- STL -->
+    <div class="card">
+        <span class="badge">Advanced Concept</span>
+        <h2>STL (Standard Template Library)</h2>
+
+        <p>STL provides ready-made data structures and algorithms.</p>
+
+        <h3>Important Containers</h3>
+        <ul>
+            <li>Vector → dynamic array</li>
+            <li>Set → unique sorted elements</li>
+            <li>Map → key-value pairs</li>
+            <li>Stack → LIFO structure</li>
+            <li>Queue → FIFO structure</li>
+        </ul>
+
+        <h3>Vector Example</h3>
+        <pre>
+#include <vector>
+
+vector<int> v;
+
 v.push_back(10);
 v.push_back(20);
-    </pre>
+v.push_back(30);
+        </pre>
 
-    <p>Sorting:</p>
-    <pre>
-#include &lt;algorithm&gt;
+        <h3>Sorting Example</h3>
+        <pre>
+#include <algorithm>
+
 sort(v.begin(), v.end());
-    </pre>
+        </pre>
 
-    <p>👉 STL is heavily asked in interviews.</p>
+        <h3>Key Interview Point</h3>
+        <p>
+            STL reduces coding complexity and is widely used in technical interviews,
+            especially in DSA-based rounds.
+        </p>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <span class="badge">Revision</span>
+        <h2>Key Takeaways</h2>
+
+        <ul>
+            <li>if-else is used for conditions</li>
+            <li>switch is used for multiple choices</li>
+            <li>loops are used for repetition</li>
+            <li>arrays store fixed-size data</li>
+            <li>STL provides powerful pre-built data structures</li>
+        </ul>
+    </div>
+
 </div>
 
 </body>
