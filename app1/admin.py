@@ -207,9 +207,16 @@ class SubscriptionAdmin(admin.ModelAdmin):
     def days_remaining(self, obj):
         if not obj.expires_at:
             return '∞ Lifetime'
+
         delta = (obj.expires_at - timezone.now()).days
+
         if delta < 0:
-            return format_html('<span style="color:#ef4444;">Expired</span>')
+            return format_html(
+                '<span style="color:{};">{}</span>',
+                '#ef4444',
+                'Expired'
+            )
+
         return f'{delta} days'
     days_remaining.short_description = 'Remaining'
 
