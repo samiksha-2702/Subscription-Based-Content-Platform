@@ -55,17 +55,14 @@ class PaymentInline(admin.TabularInline):
 
 
 class LoginHistoryInline(admin.TabularInline):
-    model               = LoginHistory
-    extra               = 0
-    readonly_fields     = ['logged_in_at', 'ip_address', 'user_agent']
-    fields              = ['logged_in_at', 'ip_address', 'user_agent']
-    can_delete          = False
-    verbose_name_plural = 'Login History (last 10)'
-    max_num             = 0
+    model = LoginHistory
+    extra = 0
+    readonly_fields = ['logged_in_at', 'ip_address', 'user_agent']
+    fields = ['logged_in_at', 'ip_address', 'user_agent']
+    can_delete = False
 
     def get_queryset(self, request):
-        return super().get_queryset(request).order_by('-logged_in_at')[:10]
-
+        return super().get_queryset(request).order_by('-logged_in_at')
 
 # ══════════════════════════════════════════════════════════════════
 # EXTENDED USER ADMIN
