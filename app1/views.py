@@ -424,21 +424,15 @@ def aptitude(request):
         'subscribed': is_subscribed(request.user)
     })
 
-<<<<<<< HEAD
-=======
 
->>>>>>> c2c9bae320f26f84d276bfd65fdf4323baff5f19
 @login_required
 @premium_required
 def ai_recommendation(request):
     return render(request, 'ai/dashboard.html')
-<<<<<<< HEAD
-=======
 
 @login_required
 def plans(request):
     return render(request, 'plans.html')
->>>>>>> c2c9bae320f26f84d276bfd65fdf4323baff5f19
 
 @login_required
 def subscribe(request):
