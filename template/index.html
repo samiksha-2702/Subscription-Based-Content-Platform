@@ -6,7 +6,7 @@
 <title>PrepEdge | AI Interview Prep</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -18,12 +18,28 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at 10% 20%, #0b1120, #030712);
+  background: radial-gradient(ellipse at 20% 30%, #0a0f1c, #020408);
   color: #f1f5f9;
   line-height: 1.5;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+/* Animated background particles */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 25% 40%, rgba(96, 165, 250, 0.08) 0%, transparent 50%),
+    radial-gradient(circle at 75% 60%, rgba(192, 132, 252, 0.08) 0%, transparent 50%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 2px, transparent 2px, transparent 8px);
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* Remove link underline - KEPT ORIGINAL */
@@ -32,64 +48,97 @@ body {
   color: inherit;
 }
 
-/* NAVBAR - Enhanced with better glass morphism */
+/* NAVBAR - Enhanced with better glass morphism + animation */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 40px;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 16px 48px;
+  background: rgba(8, 12, 24, 0.75);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.25);
   position: sticky;
   top: 0;
   z-index: 100;
+  transition: all 0.3s ease;
 }
 
 .brand {
   font-size: 28px;
   font-weight: 800;
-  background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6);
+  background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6, #fb923c);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.5px;
+  position: relative;
+  animation: brandGlow 3s ease-in-out infinite;
+}
+
+@keyframes brandGlow {
+  0%, 100% { filter: drop-shadow(0 0 2px rgba(96,165,250,0.3)); }
+  50% { filter: drop-shadow(0 0 8px rgba(192,132,252,0.5)); }
 }
 
 .nav-links {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
 }
 
 .nav-links a {
   color: #e2e8f0;
   text-decoration: none;
-  padding: 8px 16px;
+  padding: 8px 18px;
   border-radius: 40px;
-  transition: all 0.6s ease;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
   font-weight: 500;
   font-size: 0.95rem;
+  position: relative;
+  backdrop-filter: blur(4px);
 }
 
 .nav-links a:hover {
-  background: rgba(59, 130, 246, 0.25);
+  background: rgba(59, 130, 246, 0.2);
   color: white;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #60a5fa, #c084fc);
+  transition: width 0.3s ease, left 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-links a:hover::after {
+  width: 60%;
+  left: 20%;
 }
 
 .upgrade-btn-nav {
   background: linear-gradient(135deg, #f59e0b, #ea580c);
   color: white !important;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+  border: none !important;
 }
 
 .upgrade-btn-nav:hover {
-  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.55);
   transform: translateY(-2px) !important;
+  background: linear-gradient(135deg, #fbbf24, #f97316);
 }
 
-/* PROFILE - Fixed dropdown interaction */
+.upgrade-btn-nav::after {
+  display: none;
+}
+
+/* PROFILE - Enhanced dropdown */
 .profile {
   position: relative;
   cursor: pointer;
@@ -98,20 +147,23 @@ body {
 .profile > span {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  gap: 10px;
+  padding: 8px 20px 8px 18px;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 40px;
-  transition: all 0.5s;
+  transition: all 0.3s;
   font-weight: 500;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .profile > span:hover {
   background: rgba(59, 130, 246, 0.2);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateY(-1px);
 }
 
 .profile i {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #60a5fa;
 }
 
@@ -119,174 +171,227 @@ body {
   position: absolute;
   top: 120%;
   right: 0;
-  background: #0f172a;
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(59, 130, 246, 0.3);
-  border-radius: 16px;
-  width: 190px;
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 20px;
+  width: 200px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-10px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-  box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.5);
+  transform: translateY(-12px) scale(0.98);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+  box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   z-index: 101;
   pointer-events: none;
 }
 
-/* Show dropdown on hover over profile OR when dropdown itself is hovered */
 .profile:hover .dropdown,
 .dropdown:hover {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
   pointer-events: auto;
 }
 
-/* Ensure dropdown stays open when moving cursor from profile to dropdown */
-.profile {
-  display: inline-block;
-}
-
 .dropdown a {
-  padding: 12px 18px;
+  padding: 12px 20px;
   display: block;
   color: #cbd5e1;
-  transition: all 0.2s;
+  transition: all 0.25s;
   font-size: 0.9rem;
   border-radius: 0;
   text-decoration: none;
   pointer-events: auto;
+  border-left: 2px solid transparent;
 }
 
 .dropdown a:hover {
   background: rgba(59, 130, 246, 0.2);
   color: white;
-  padding-left: 24px;
+  border-left-color: #60a5fa;
+  padding-left: 26px;
 }
 
-/* HERO - Refined typography */
+/* HERO - Refined with floating animation */
 .hero {
   text-align: center;
-  padding: 100px 20px 70px;
+  padding: 100px 20px 80px;
   max-width: 900px;
   margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #ffffff, #94a3b8, #c084fc);
+  background: linear-gradient(135deg, #ffffff, #c4b5fd, #a78bfa, #818cf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.02em;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero p {
   color: #94a3b8;
-  margin: 20px 0;
-  font-size: 1.2rem;
+  margin: 0 auto 32px;
+  font-size: 1.25rem;
   max-width: 550px;
-  margin-left: auto;
-  margin-right: auto;
+  animation: fadeInUp 0.8s ease-out 0.1s backwards;
 }
 
 .btn-primary {
   background: linear-gradient(135deg, #3b82f6, #2563eb, #1d4ed8);
-  padding: 14px 32px;
+  padding: 14px 36px;
   border-radius: 50px;
   color: white;
   text-decoration: none;
   font-weight: 600;
-  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
-  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.45);
+  transition: all 0.35s ease;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 20px 35px -8px #1e3a8a;
-  background: linear-gradient(135deg, #2563eb, #1d4ed8, #1e40af);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 20px 40px -8px #1e3a8a;
+  background: linear-gradient(135deg, #4f93ff, #2e6eff, #265ee8);
 }
 
 .btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(2px) scale(0.98);
 }
 
-/* GRID - Improved spacing and responsiveness */
+/* GRID - Premium enhanced */
 .grid {
   max-width: 1280px;
-  margin: 40px auto 60px;
+  margin: 40px auto 80px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 32px;
   padding: 20px;
   flex: 1;
+  position: relative;
+  z-index: 2;
 }
 
-/* CARD - Premium glass morphism */
+/* CARD - Ultra premium with animated border */
 .card {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 24px;
-  border-radius: 28px;
-  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  padding: 28px 24px 32px;
+  border-radius: 32px;
+  transition: all 0.4s cubic-bezier(0.2, 0.95, 0.4, 1.1);
   position: relative;
   overflow: hidden;
   height: 100%;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6);
-  border-color: rgba(59, 130, 246, 0.4);
-  background: rgba(255, 255, 255, 0.07);
+  transform: translateY(-10px);
+  box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.7);
+  border-color: rgba(96, 165, 250, 0.5);
+  background: rgba(20, 28, 48, 0.7);
 }
 
-/* SHINE EFFECT - Enhanced animation */
+/* Animated gradient border on hover */
 .card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #60a5fa, #c084fc, #f472b6, transparent);
+  transform: scaleX(0);
+  transition: transform 0.5s ease;
+  transform-origin: left;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Shine effect */
+.card::after {
   content: "";
   position: absolute;
   top: 0;
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  transition: 0.7s;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  transition: 0.6s;
   pointer-events: none;
 }
 
-.card:hover::before {
+.card:hover::after {
   left: 100%;
 }
 
-/* Image styling */
+/* Image styling with modern overlay */
 .card img {
   width: 100%;
-  height: 170px;
+  height: 190px;
   object-fit: cover;
-  border-radius: 20px;
-  transition: transform 0.3s ease;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 24px;
+  transition: all 0.4s ease;
+  box-shadow: 0 12px 25px -12px rgba(0, 0, 0, 0.4);
+  filter: brightness(0.95) saturate(1.05);
 }
 
 .card:hover img {
-  transform: scale(0.98);
+  transform: scale(1.02);
+  filter: brightness(1.02) saturate(1.1);
+  box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.5);
 }
 
 .card h3 {
-  margin-top: 20px;
-  font-size: 1.5rem;
+  margin-top: 24px;
+  font-size: 1.65rem;
   font-weight: 700;
   transition: all 0.3s;
   letter-spacing: -0.3px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card h3::before {
+  content: "✦";
+  font-size: 1.2rem;
+  color: #60a5fa;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: all 0.3s;
+}
+
+.card:hover h3::before {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .grid a:hover h3 {
@@ -296,45 +401,31 @@ body {
 
 .card p {
   color: #9ca3af;
-  font-size: 0.9rem;
-  margin-top: 8px;
+  font-size: 0.95rem;
+  margin-top: 12px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 16px;
+  margin-top: 16px;
 }
 
-/* Add subtle icon to card descriptions */
 .card p::before {
-  content: "✨";
+  content: "⚡";
   font-size: 12px;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-/* Bottom glow effect on card hover */
-.card::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 10%;
-  width: 80%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #3b82f6, #a855f7, transparent);
-  border-radius: 2px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.card:hover::after {
-  opacity: 1;
-}
-
-/* ========= FOOTER STYLES ========= */
+/* FOOTER - Modern design */
 .footer {
-  background: rgba(10, 14, 23, 0.95);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(59, 130, 246, 0.2);
+  background: rgba(5, 8, 18, 0.95);
+  backdrop-filter: blur(16px);
+  border-top: 1px solid rgba(59, 130, 246, 0.25);
   margin-top: 60px;
-  padding: 50px 40px 30px;
+  padding: 60px 48px 35px;
+  position: relative;
+  z-index: 2;
 }
 
 .footer-container {
@@ -342,21 +433,22 @@ body {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 40px;
+  gap: 48px;
 }
 
 .footer-section h3 {
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+  margin-bottom: 24px;
+  background: linear-gradient(135deg, #e2e8f0, #a5b4fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: -0.2px;
 }
 
 .footer-section .brand {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+  font-size: 1.6rem;
+  margin-bottom: 16px;
   display: inline-block;
 }
 
@@ -364,31 +456,33 @@ body {
   color: #9ca3af;
   font-size: 0.9rem;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .social-links {
   display: flex;
-  gap: 15px;
+  gap: 14px;
 }
 
 .social-links a {
   color: #9ca3af;
-  background: rgba(255, 255, 255, 0.05);
-  width: 36px;
-  height: 36px;
+  background: rgba(255, 255, 255, 0.06);
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
   transition: all 0.3s;
   text-decoration: none;
+  font-size: 1.1rem;
 }
 
 .social-links a:hover {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
-  transform: translateY(-3px);
+  transform: translateY(-4px);
+  box-shadow: 0 5px 12px rgba(59, 130, 246, 0.4);
 }
 
 .footer-section ul {
@@ -402,64 +496,75 @@ body {
 .footer-section ul li a {
   color: #9ca3af;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: all 0.25s;
   font-size: 0.9rem;
+  display: inline-block;
 }
 
 .footer-section ul li a:hover {
   color: #60a5fa;
-  padding-left: 5px;
+  transform: translateX(5px);
 }
 
 .newsletter-form {
   display: flex;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 16px;
+  flex-wrap: wrap;
 }
 
 .newsletter-form input {
   flex: 1;
-  padding: 12px 15px;
+  padding: 12px 16px;
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 60px;
   color: white;
   font-family: 'Inter', sans-serif;
   outline: none;
   transition: all 0.3s;
+  font-size: 0.9rem;
 }
 
 .newsletter-form input:focus {
-  border-color: #3b82f6;
+  border-color: #60a5fa;
   background: rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
 }
 
 .newsletter-form button {
-  padding: 12px 20px;
+  padding: 12px 26px;
   background: linear-gradient(135deg, #3b82f6, #2563eb);
   border: none;
-  border-radius: 40px;
+  border-radius: 60px;
   color: white;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s;
   font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
 }
 
 .newsletter-form button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+  background: linear-gradient(135deg, #4f93ff, #3a7eff);
 }
 
 .footer-bottom {
   max-width: 1280px;
   margin: 0 auto;
-  padding-top: 30px;
-  margin-top: 30px;
+  padding-top: 35px;
+  margin-top: 40px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
   color: #6b7280;
   font-size: 0.85rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .footer-bottom a {
@@ -471,57 +576,83 @@ body {
   text-decoration: underline;
 }
 
-/* Responsive adjustments */
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .navbar {
-    padding: 15px 20px;
+    padding: 14px 24px;
     flex-wrap: wrap;
   }
   
   .brand {
-    font-size: 22px;
+    font-size: 24px;
   }
   
   .hero h1 {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
   }
   
   .hero p {
     font-size: 1rem;
+    padding: 0 16px;
   }
   
   .hero {
-    padding: 60px 20px 50px;
+    padding: 70px 20px 50px;
   }
   
   .grid {
-    gap: 20px;
-    padding: 15px;
+    gap: 24px;
+    padding: 16px;
   }
   
   .card {
-    padding: 18px;
+    padding: 22px 20px 26px;
   }
   
   .card h3 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
   
   .nav-links {
-    gap: 8px;
+    gap: 6px;
   }
   
   .nav-links a {
-    padding: 6px 12px;
+    padding: 6px 14px;
     font-size: 0.85rem;
   }
   
   .footer {
-    padding: 40px 20px 25px;
+    padding: 45px 24px 30px;
   }
   
   .footer-container {
-    gap: 30px;
+    gap: 35px;
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .btn-primary {
+    padding: 12px 28px;
+    font-size: 0.9rem;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
   }
   
   .newsletter-form {
@@ -533,29 +664,50 @@ body {
   }
 }
 
-@media (max-width: 480px) {
-  .navbar {
-    flex-direction: column;
-    gap: 12px;
+/* Scroll animation for cards */
+@keyframes cardFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .hero h1 {
-    font-size: 1.8rem;
-  }
-  
-  .btn-primary {
-    padding: 10px 24px;
-    font-size: 0.9rem;
-  }
-  
-  .grid {
-    grid-template-columns: 1fr;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* Smooth scrolling for better UX */
+.card {
+  animation: cardFade 0.5s ease-out backwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.3s; }
+
+/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6, #c084fc);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #60a5fa, #d8b4fe);
 }
 </style>
 </head>
@@ -568,22 +720,22 @@ html {
 
   <div class="nav-links">
     {% if not subscription %}
-    <a href="{% url 'plans' %}" class="upgrade-btn-nav">Upgrade</a>
+    <a href="{% url 'plans' %}" class="upgrade-btn-nav"><i class="fas fa-crown" style="font-size: 0.85rem;"></i> Upgrade</a>
     {% endif %}
 
     {% if user.is_authenticated %}
     <div class="profile">
-      <span><i class="fas fa-user-circle"></i> {{ user.username }}</span>
+      <span><i class="fas fa-user-astronaut"></i> {{ user.username }}</span>
       <div class="dropdown">
-        <a href="{% url 'profile' %}">Profile</a>
-        <a href="{% url 'about' %}">About</a>
-        <a href="{% url 'plans' %}">Upgrade</a>
-        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'profile' %}"><i class="fas fa-user" style="width: 20px;"></i> Profile</a>
+        <a href="{% url 'about' %}"><i class="fas fa-info-circle" style="width: 20px;"></i> About</a>
+        <a href="{% url 'plans' %}"><i class="fas fa-gem" style="width: 20px;"></i> Upgrade</a>
+        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt" style="width: 20px;"></i> Logout</a>
       </div>
     </div>
     {% else %}
-      <a href="{% url 'login' %}">Login</a>
-      <a href="{% url 'register' %}">Signup</a>
+      <a href="{% url 'login' %}"><i class="fas fa-key"></i> Login</a>
+      <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Signup</a>
     {% endif %}
   </div>
 </div>
@@ -591,8 +743,8 @@ html {
 <!-- HERO - Text and URL unchanged -->
 <section class="hero">
   <h1>Crack Interviews with AI</h1>
-  <p>Practice, learn and get job-ready faster</p>
-  <a href="#grid" class="btn-primary">Get Started</a>
+  <p>Practice, learn and get job-ready faster with personalized AI coaching</p>
+  <a href="#grid" class="btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
 </section>
 
 <!-- GRID - All URLs exactly as they were -->
@@ -600,49 +752,49 @@ html {
 
 <a href="{% url 'programming' %}">
 <div class="card">
-<img src="{% static 'image/programming.jpg' %}">
+<img src="{% static 'image/programming.jpg' %}" alt="Programming">
 <h3>Programming</h3>
-<p>Practice coding</p>
+<p>Practice coding challenges & algorithms</p>
 </div>
 </a>
 
 <a href="{% url 'company' %}">
 <div class="card">
-<img src="{% static 'image/company.png' %}">
+<img src="{% static 'image/company.png' %}" alt="Company Insights">
 <h3>Company Insights</h3>
-<p>Interview blogs</p>
+<p>Interview blogs & insider tips</p>
 </div>
 </a>
 
 <a href="{% url 'expert' %}">
 <div class="card">
-<img src="{% static 'image/expert_talks.jpg' %}">
+<img src="{% static 'image/expert_talks.jpg' %}" alt="Expert Talks">
 <h3>Expert Talks</h3>
-<p>Industry guidance</p>
+<p>Industry guidance & mentorship</p>
 </div>
 </a>
 
 <a href="{% url 'comm' %}">
 <div class="card">
-<img src="{% static 'image/comm.jpg' %}">
+<img src="{% static 'image/comm.jpg' %}" alt="Communication">
 <h3>Communication</h3>
-<p>Soft skills</p>
+<p>Master soft skills & presentation</p>
 </div>
 </a>
 
 <a href="{% url 'questions' %}">
 <div class="card">
-<img src="{% static 'image/question.jpg' %}">
+<img src="{% static 'image/question.jpg' %}" alt="Aptitude">
 <h3>Aptitude</h3>
-<p>Practice MCQs</p>
+<p>Practice MCQs & logical reasoning</p>
 </div>
 </a>
 
 <a href="{% url 'ai_dashboard' %}">
 <div class="card">
-<img src="{% static 'image/ai.png' %}">
+<img src="{% static 'image/ai.png' %}" alt="AI Recommendations">
 <h3>AI Recommendations</h3>
-<p>Smart learning</p>
+<p>Smart learning & personalized path</p>
 </div>
 </a>
 
@@ -696,13 +848,16 @@ html {
       <form class="newsletter-form" action="#" method="POST">
         {% csrf_token %}
         <input type="email" placeholder="Your email address" required>
-        <button type="submit">Subscribe</button>
+        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
       </form>
     </div>
   </div>
   
   <div class="footer-bottom">
-    <p>&copy; {% now "Y" %} PrepEdge. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    <p>&copy; {% now "Y" %} PrepEdge. All rights reserved.</p>
+    <div>
+      <a href="#">Privacy Policy</a> &nbsp;|&nbsp; <a href="#">Terms of Service</a>
+    </div>
   </div>
 </footer>
 
