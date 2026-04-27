@@ -4,20 +4,13 @@
 <head>
 <meta charset="UTF-8">
 <title>Technical Practice | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
     margin:0;
-    font-family:"Segoe UI",sans-serif;
+    font-family:"Segoe UI";
     background:linear-gradient(135deg,#020617,#0f172a);
     color:white;
-}
-
-header{
-    text-align:center;
-    padding:20px;
-    background:rgba(255,255,255,0.05);
 }
 
 .container{
@@ -26,213 +19,173 @@ header{
     padding:20px;
 }
 
-select{
-    padding:10px;
-    border-radius:6px;
-    border:none;
-    font-size:16px;
-    margin-bottom:20px;
-}
-
 .card{
     background:rgba(255,255,255,0.06);
     padding:20px;
     border-radius:12px;
     margin-bottom:15px;
-    transition:0.3s;
-}
-
-.card:hover{
-    transform:scale(1.02);
-    background:rgba(255,255,255,0.1);
-}
-
-.btn{
-    padding:10px 15px;
-    border:none;
-    border-radius:8px;
-    background:#22c55e;
-    color:white;
-    cursor:pointer;
-    font-weight:bold;
-    margin-right:10px;
-}
-
-.btn:hover{
-    background:#16a34a;
-}
-
-.btn-clear{
-    background:#ef4444;
-}
-
-.btn-clear:hover{
-    background:#dc2626;
 }
 
 textarea{
     width:100%;
-    margin-top:15px;
-    background:#1f2937;
-    color:white;
-    border-radius:8px;
-    padding:12px;
-    border:none;
-    font-family:monospace;
-    font-size:14px;
-}
-
-#output{
+    height:120px;
+    margin-top:10px;
     background:#111827;
-    color:#00ffcc;
-    padding:12px;
+    color:white;
+    border:none;
+    padding:10px;
+    border-radius:8px;
+    font-family:monospace;
+}
+
+.btn{
+    padding:8px 12px;
+    border:none;
+    border-radius:6px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.output{
+    background:#0b1220;
+    padding:10px;
     margin-top:10px;
     border-radius:8px;
-    min-height:60px;
+    color:#00ffcc;
 }
 
-.loader{
-    display:none;
-    margin-top:10px;
+#scoreBox{
+    margin-top:20px;
+    color:#4ade80;
 }
-
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>💻 Technical Practice</h1>
-<p>Select language → Solve → Run Code</p>
-</header>
-
 <div class="container">
 
-<!-- LANGUAGE SELECT -->
-<select id="languageSelect" onchange="showQuestions()">
-    <option value="">--Select Language--</option>
-    <option value="python">Python</option>
-    <option value="cpp">C++</option>
-    <option value="java">Java</option>
-</select>
+<h1>💻 Technical Practice</h1>
 
-<div id="quizForm"></div>
-
-<!-- COMPILER -->
-<h2>🖥️ Compiler</h2>
-
-<form method="POST" action="{% url 'submit_test' test.id %}" id="submitForm">
+<form id="testForm" method="POST" action="{% url 'submit_test' test.id %}">
     {% csrf_token %}
 
-    <textarea id="codeInput" name="code" rows="12" placeholder="Select a question..."></textarea>
+    <!-- REQUIRED FOR DJANGO -->
+    <input type="hidden" name="total" id="total">
+    <input type="hidden" name="correct" id="correct">
+    <input type="hidden" name="wrong" id="wrong">
+    <input type="hidden" name="skipped" id="skipped">
+    <input type="hidden" name="score" id="score">
 
-    <!-- HIDDEN SCORE -->
-    <input type="hidden" name="score" id="scoreInput">
+    <!-- Q1 -->
+    <div class="card">
+        <h3>Q1. Print Hello World</h3>
+        <textarea id="code1"></textarea>
+        <button type="button" class="btn" onclick="run(1,'hello')">Run</button>
+        <div class="output" id="out1"></div>
+    </div>
 
-    <br><br>
+    <!-- Q2 -->
+    <div class="card">
+        <h3>Q2. Square of a number</h3>
+        <textarea id="code2"></textarea>
+        <button type="button" class="btn" onclick="run(2,'square')">Run</button>
+        <div class="output" id="out2"></div>
+    </div>
 
-    <button type="button" class="btn" onclick="runCode()">▶ Run</button>
-    <button type="button" class="btn btn-clear" onclick="clearCode()">🗑 Clear</button>
+    <!-- Q3 -->
+    <div class="card">
+        <h3>Q3. Add two numbers</h3>
+        <textarea id="code3"></textarea>
+        <button type="button" class="btn" onclick="run(3,'add')">Run</button>
+        <div class="output" id="out3"></div>
+    </div>
+
+    <br>
+
     <button type="button" class="btn" onclick="submitTest()">📤 Submit Test</button>
 
 </form>
 
-<div class="loader" id="loader">⏳ Running...</div>
-
-<pre id="output"></pre>
+<h2 id="scoreBox"></h2>
 
 </div>
 
 <script>
 
-// QUESTIONS
-const questions = {
-    python: [
-        { q: "Print Hello World", starter: "print('Hello World')" },
-        { q: "Print square of number", starter: "n=int(input())\nprint(n*n)" }
-    ],
-    cpp: [
-        { q: "Print Hello World", starter: "#include <iostream>\nusing namespace std;\nint main(){ cout<<\"Hello World\"; return 0; }" },
-        { q: "Print square of number", starter: "#include <iostream>\nusing namespace std;\nint main(){ int n; cin>>n; cout<<n*n; return 0; }" }
-    ],
-    java: [
-        { q: "Print Hello World", starter: "public class Main{\n public static void main(String[] args){\n System.out.println(\"Hello World\");\n }\n}" },
-        { q: "Print square of number", starter: "import java.util.*;\npublic class Main{\n public static void main(String[] args){\n Scanner sc=new Scanner(System.in);\n int n=sc.nextInt();\n System.out.println(n*n);\n }\n}" }
-    ]
-};
+let scores = {q1:0,q2:0,q3:0};
 
-// SHOW QUESTIONS
-function showQuestions(){
-    const lang = document.getElementById("languageSelect").value;
-    const container = document.getElementById("quizForm");
-
-    container.innerHTML = "";
-
-    if(!lang) return;
-
-    questions[lang].forEach((qObj, index)=>{
-        let card = document.createElement("div");
-        card.className = "card";
-
-        card.innerHTML = `
-            <h3>Q${index+1}. ${qObj.q}</h3>
-            <button class="btn" onclick="loadCode(${index})">Solve</button>
-        `;
-
-        container.appendChild(card);
-    });
+// SAFE SIMULATION LOGIC
+function normalize(code){
+    return code
+        .replace(/\s/g,'')   // remove spaces
+        .toLowerCase();
 }
 
-// LOAD CODE
-function loadCode(index){
-    const lang = document.getElementById("languageSelect").value;
-    document.getElementById("codeInput").value = questions[lang][index].starter;
-}
+function run(q,type){
 
-// RUN CODE (DEMO)
-function runCode(){
-    const code = document.getElementById("codeInput").value;
-    const output = document.getElementById("output");
-    const loader = document.getElementById("loader");
+    let code = document.getElementById("code"+q).value;
+    let out = document.getElementById("out"+q);
 
-    if(!code){
-        output.textContent = "⚠️ No code entered!";
-        return;
+    let cleaned = normalize(code);
+
+    let result = "";
+    let score = 0;
+
+    if(type==="hello"){
+        if(cleaned.includes("print(\"helloworld\")")){
+            result="✅ Correct Output: Hello World";
+            score=1;
+        } else {
+            result="❌ Wrong Answer";
+        }
+        scores.q1=score;
     }
 
-    loader.style.display = "block";
-    output.textContent = "";
+    if(type==="square"){
+        if(cleaned.includes("n") && cleaned.includes("*n") || cleaned.includes("n*n")){
+            result="✅ Correct Logic (Square)";
+            score=1;
+        } else {
+            result="❌ Wrong Logic";
+        }
+        scores.q2=score;
+    }
 
-    setTimeout(()=>{
-        loader.style.display = "none";
+    if(type==="add"){
+        if(cleaned.includes("+")){
+            result="✅ Addition Logic Detected";
+            score=1;
+        } else {
+            result="❌ Wrong Logic";
+        }
+        scores.q3=score;
+    }
 
-        if(code.includes("Hello")){
-            output.textContent = "Hello World";
-        }
-        else if(code.includes("*")){
-            output.textContent = "Output: (Demo)";
-        }
-        else{
-            output.textContent = "Code executed successfully!";
-        }
-    },1000);
+    out.innerText = result;
 }
-
-// CLEAR
-function clearCode(){
-    document.getElementById("codeInput").value = "";
-    document.getElementById("output").textContent = "";
-}
-
-// SUBMIT TEST (IMPORTANT)
+// FINAL SUBMIT → DJANGO
 function submitTest(){
 
-    // SIMPLE DEMO SCORE (you can enhance later)
-    let score = 1;
+    let total = 3;
+    let correct = scores.q1 + scores.q2 + scores.q3;
+    let wrong = total - correct;
+    let skipped = 0;
+    let finalScore = correct;
 
-    document.getElementById("scoreInput").value = score;
+    // fill hidden inputs
+    document.getElementById("total").value = total;
+    document.getElementById("correct").value = correct;
+    document.getElementById("wrong").value = wrong;
+    document.getElementById("skipped").value = skipped;
+    document.getElementById("score").value = finalScore;
 
-    document.getElementById("submitForm").submit();
+    document.getElementById("scoreBox").innerText =
+        "🎯 Score: " + finalScore + "/" + total;
+
+    document.getElementById("testForm").submit();
 }
 
 </script>

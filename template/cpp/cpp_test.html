@@ -3,89 +3,78 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>C++ Practice Test — Set 2</title>
+<title>C++ Practice Test</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-/* Same styling as before */
 body{font-family:Segoe UI;background:#0b1220;color:#e5e7eb;padding:20px}
-.header{background:#111827;padding:20px;border-radius:12px;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,0,0,.5)}
-.question{background:#020617;padding:18px;margin-bottom:15px;border-radius:10px;border:1px solid #1f2937}
-label{display:block;margin:6px 0;cursor:pointer}
+.header{background:#111827;padding:20px;border-radius:12px;margin-bottom:20px}
+.question{background:#020617;padding:18px;margin-bottom:15px;border-radius:10px}
+label{display:block;margin:6px 0}
 button{padding:12px 18px;background:#16a34a;border:none;border-radius:8px;color:white;font-weight:600;cursor:pointer;margin-top:10px}
 .timer{font-size:20px;color:#fb7185;font-weight:bold}
 .result{background:#111827;padding:20px;border-radius:12px;margin-top:20px;display:none}
 .correct{color:#4ade80}
 .wrong{color:#f87171}
-textarea{width:100%;min-height:120px;background:#111827;color:#60a5fa;border:none;border-radius:8px;padding:10px;font-family:monospace;font-size:14px}
-pre{background:#0b1220;color:#60a5fa;padding:10px;border-radius:8px;min-height:50px;overflow:auto;margin-top:8px}
 </style>
 </head>
 
 <body>
 
 <div class="header">
-<h2>C++ Quick Practice Test — Set 2</h2>
+<h2>C++ Practice Test</h2>
 <div class="timer">Time Left: <span id="time">15:00</span></div>
 </div>
 
-<a href="{% url 'index' %}"><button>🏠 Module Home</button></a>
-<button onclick="history.back()">⬅ Back</button>
+<a href="{% url 'index' %}"><button type="button">🏠 Home</button></a>
+<button type="button" onclick="history.back()">⬅ Back</button>
 
-<!-- FORM now submits to Django view 'submit_test' -->
+<!-- FORM -->
 <form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
     {% csrf_token %}
+
+    <!-- REQUIRED HIDDEN FIELDS (IMPORTANT FIX) -->
+    <input type="hidden" name="total" id="totalField">
+    <input type="hidden" name="correct" id="correctField">
+    <input type="hidden" name="wrong" id="wrongField">
+    <input type="hidden" name="skipped" id="skippedField">
+    <input type="hidden" name="time_taken" id="timeTakenField">
     <input type="hidden" name="score" id="scoreField">
 
-    <!-- MCQs -->
+    <!-- QUESTIONS -->
     <div class="question">
-    Q1. Which file extension is used for C++ source files?<br>
-    <input type="radio" name="q1" value="a"> .java<br>
-    <input type="radio" name="q1" value="b"> .cpp<br>
-    <input type="radio" name="q1" value="c"> .py
+        Q1. Who developed C++?<br>
+        <input type="radio" name="q1" value="a"> Dennis Ritchie<br>
+        <input type="radio" name="q1" value="b"> Bjarne Stroustrup<br>
+        <input type="radio" name="q1" value="c"> James Gosling
     </div>
 
     <div class="question">
-    Q2. Which operator is used for scope resolution?<br>
-    <input type="radio" name="q2" value="a"> ::<br>
-    <input type="radio" name="q2" value="b"> -><br>
-    <input type="radio" name="q2" value="c"> .
+        Q2. Input operator in C++?<br>
+        <input type="radio" name="q2" value="a"> >><br>
+        <input type="radio" name="q2" value="b"> << <br>
+        <input type="radio" name="q2" value="c"> ::
     </div>
 
     <div class="question">
-    Q3. Which loop checks condition after execution?<br>
-    <input type="radio" name="q3" value="a"> for<br>
-    <input type="radio" name="q3" value="b"> while<br>
-    <input type="radio" name="q3" value="c"> do-while
+        Q3. Dynamic array?<br>
+        <input type="radio" name="q3" value="a"> vector<br>
+        <input type="radio" name="q3" value="b"> array<br>
+        <input type="radio" name="q3" value="c"> pointer
     </div>
 
     <div class="question">
-    Q4. Constructor name must be same as?<br>
-    <input type="radio" name="q4" value="a"> Object<br>
-    <input type="radio" name="q4" value="b"> Class<br>
-    <input type="radio" name="q4" value="c"> File
+        Q4. OOP stands for?<br>
+        <input type="radio" name="q4" value="a"> Object Oriented Programming<br>
+        <input type="radio" name="q4" value="b"> Object Only Program<br>
+        <input type="radio" name="q4" value="c"> Order Of Program
     </div>
 
     <div class="question">
-    Q5. Which keyword creates object dynamically?<br>
-    <input type="radio" name="q5" value="a"> create<br>
-    <input type="radio" name="q5" value="b"> new<br>
-    <input type="radio" name="q5" value="c"> malloc
-    </div>
-
-    <!-- Coding Questions -->
-    <div class="question">
-    <h3>Q6. Swap two numbers (C++ code)</h3>
-    <textarea id="code1" placeholder="Write C++ code here..."></textarea>
-    <button type="button" onclick="runCppCode('code1','output1')">Run Code</button>
-    <pre id="output1"></pre>
-    </div>
-
-    <div class="question">
-    <h3>Q7. Print first n Fibonacci numbers</h3>
-    <textarea id="code2" placeholder="Write C++ code here..."></textarea>
-    <button type="button" onclick="runCppCode('code2','output2')">Run Code</button>
-    <pre id="output2"></pre>
+        Q5. Inheritance symbol?<br>
+        <input type="radio" name="q5" value="a"> extends<br>
+        <input type="radio" name="q5" value="b"> inherits<br>
+        <input type="radio" name="q5" value="c"> :
     </div>
 
     <button type="button" onclick="submitQuiz()">Submit Test</button>
@@ -94,52 +83,69 @@ pre{background:#0b1220;color:#60a5fa;padding:10px;border-radius:8px;min-height:5
 <div id="result" class="result"></div>
 
 <script>
-///// ANSWERS /////
-const ans = {q1:"b", q2:"a", q3:"c", q4:"b", q5:"b"};
+
+const answers = {
+    q1:"b",
+    q2:"a",
+    q3:"a",
+    q4:"a",
+    q5:"c"
+};
+
+let totalTime = 15 * 60;
 
 function submitQuiz(){
-    let score=0;
-    let html="<h3>Answer Review</h3>";
 
-    for(let q in ans){
-        let marked = document.querySelector(`input[name=${q}]:checked`);
-        if(marked && marked.value===ans[q]){
-            score++;
-            html += `<p class="correct">${q.toUpperCase()} ✔ Correct</p>`;
-        }else{
-            html += `<p class="wrong">${q.toUpperCase()} ✘ Wrong — Correct: ${ans[q]}</p>`;
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
+
+    for(let q in answers){
+        let selected = document.querySelector(`input[name="${q}"]:checked`);
+
+        if(!selected){
+            skipped++;
+        } else if(selected.value === answers[q]){
+            correct++;
+        } else {
+            wrong++;
         }
     }
 
-    html += `<h2>Final Score: ${score}/5</h2>`;
-    document.getElementById("scoreField").value = score; // Set hidden input
-    document.getElementById("result").innerHTML = html;
-    document.getElementById("result").style.display="block";
+    let total = Object.keys(answers).length;
 
-    // Submit form to Django
+    // fill hidden fields (IMPORTANT)
+    document.getElementById("totalField").value = total;
+    document.getElementById("correctField").value = correct;
+    document.getElementById("wrongField").value = wrong;
+    document.getElementById("skippedField").value = skipped;
+
+    let timeTaken = (15*60) - totalTime;
+    document.getElementById("timeTakenField").value = timeTaken;
+
+    document.getElementById("scoreField").value = correct;
+
     document.getElementById("quizForm").submit();
 }
 
-///// TIMER /////
-let time = 15*60;
-function tick(){
-    let m = Math.floor(time/60);
-    let s = time%60;
-    document.getElementById("time").innerText = m+":"+s.toString().padStart(2,"0");
-    if(time<=0){
-        submitQuiz();
-        alert("Time finished — Auto submitted");
-    }
-    time--;
-}
-setInterval(tick,1000);
+// TIMER
+function timer(){
+    let m = Math.floor(totalTime/60);
+    let s = totalTime % 60;
 
-///// C++ CODE SIMULATION /////
-function runCppCode(codeId, outputId){
-    const code = document.getElementById(codeId).value;
-    const output = document.getElementById(outputId);
-    output.innerText = "⚠️ Simulation: C++ code cannot run in-browser.\nYour code:\n" + code;
+    document.getElementById("time").innerText =
+        m + ":" + s.toString().padStart(2,"0");
+
+    if(totalTime <= 0){
+        submitQuiz();
+        return;
+    }
+
+    totalTime--;
 }
+
+setInterval(timer,1000);
+
 </script>
 
 </body>

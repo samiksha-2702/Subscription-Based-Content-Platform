@@ -49,12 +49,17 @@ button{
 <body>
 
 <button onclick="history.back()">⬅ Back</button>
-<a href="{% url 'index' %}"><button>🏠 Module Home</button></a>
+<a href="{% url 'index' %}"><button type="button">🏠 Module Home</button></a>
 
-<!-- Form submits score to Django -->
 <form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
     {% csrf_token %}
-    <input type="hidden" name="score" id="scoreField">
+
+    <!-- REQUIRED HIDDEN FIELDS FOR DJANGO -->
+    <input type="hidden" name="total" id="totalField">
+    <input type="hidden" name="correct" id="correctField">
+    <input type="hidden" name="wrong" id="wrongField">
+    <input type="hidden" name="skipped" id="skippedField">
+    <input type="hidden" name="time_taken" id="timeTakenField">
 
     <div class="timer">Time Left: <span id="time">15:00</span></div>
 
@@ -94,55 +99,72 @@ button{
     </div>
 
     <button type="button" onclick="submitQuiz()">Submit Test</button>
-
 </form>
 
 <div id="result" class="card" style="display:none"></div>
 
 <script>
-const answers = {q1:"b", q2:"a", q3:"a", q4:"a", q5:"c"};
+const answers = {
+    q1:"b",
+    q2:"a",
+    q3:"a",
+    q4:"a",
+    q5:"c"
+};
+
+let startTime = Date.now();
 
 function submitQuiz(){
-    let score = 0;
-    let output = "<h3>Results</h3>";
+
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
+    let total = Object.keys(answers).length;
 
     for(let q in answers){
-        let user = document.querySelector(`input[name="${q}"]:checked`);
-        if(user && user.value === answers[q]){
-            score++;
-            output += `<p class='correct'>${q.toUpperCase()} Correct</p>`;
-        }else{
-            output += `<p class='wrong'>${q.toUpperCase()} Wrong — Correct: ${answers[q]}</p>`;
+        let selected = document.querySelector(`input[name="${q}"]:checked`);
+
+        if(!selected){
+            skipped++;
+        }
+        else if(selected.value === answers[q]){
+            correct++;
+        }
+        else{
+            wrong++;
         }
     }
 
-    output += `<h2>Score: ${score}/5</h2>`;
-    document.getElementById("result").innerHTML = output;
-    document.getElementById("result").style.display="block";
+    document.getElementById("totalField").value = total;
+    document.getElementById("correctField").value = correct;
+    document.getElementById("wrongField").value = wrong;
+    document.getElementById("skippedField").value = skipped;
 
-    // Set hidden field and submit to Django
-    document.getElementById("scoreField").value = score;
-    document.getElementById("quizForm").submit();
+    console.log("Sending:", {total, correct, wrong, skipped});
+
+    setTimeout(() => {
+        document.getElementById("quizForm").requestSubmit();
+    }, 100);
 }
-
 // TIMER
-let total = 15 * 60;
+let totalTime = 15 * 60;
 
 function updateTimer(){
-    let min = Math.floor(total/60);
-    let sec = total % 60;
+    let min = Math.floor(totalTime / 60);
+    let sec = totalTime % 60;
+
     document.getElementById("time").innerText =
         `${min}:${sec.toString().padStart(2,"0")}`;
 
-    if(total <= 0){
+    if(totalTime <= 0){
         submitQuiz();
-        alert("Time Up!");
+        return;
     }
-    total--;
+
+    totalTime--;
 }
 
-setInterval(updateTimer,1000);
-
+setInterval(updateTimer, 1000);
 </script>
 
 </body>

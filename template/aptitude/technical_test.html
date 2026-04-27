@@ -1,37 +1,100 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Technical Practice</title>
+<title>PrepEdge | Technical Practice</title>
 
 <style>
 body{
     margin:0;
-    font-family:Arial;
+    font-family:"Segoe UI",sans-serif;
+    background:#0b1220;
+    color:#e5e7eb;
+}
+
+header{
+    padding:20px;
+    text-align:center;
+    background:#111827;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.container{
+    width:85%;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:#111827;
+    padding:18px;
+    margin:15px 0;
+    border-radius:12px;
+}
+
+.option{
+    display:block;
+    background:#1f2937;
+    padding:10px;
+    margin:6px 0;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.correct{background:#16a34a !important;}
+.wrong{background:#dc2626 !important;}
+
+textarea{
+    width:100%;
+    height:140px;
+    margin-top:10px;
     background:#0f172a;
     color:white;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    font-family:monospace;
 }
-.container{width:90%;margin:auto;padding:20px;}
-.card{background:#1e293b;padding:15px;margin:10px 0;border-radius:8px;}
-.option{display:block;background:#334155;padding:8px;margin:5px 0;cursor:pointer;}
-.correct{background:green !important;}
-.wrong{background:red !important;}
-textarea{width:100%;height:150px;margin-top:10px;}
-button{padding:10px;background:green;color:white;border:none;margin-top:10px;cursor:pointer;}
-#output{background:black;padding:10px;margin-top:10px;}
+
+button{
+    padding:10px 14px;
+    border:none;
+    border-radius:8px;
+    background:#22c55e;
+    color:white;
+    cursor:pointer;
+    margin-top:10px;
+    font-weight:bold;
+}
+
+#output{
+    background:#000;
+    padding:10px;
+    margin-top:10px;
+    border-radius:8px;
+    color:#00ffcc;
+}
+
+#scoreBox{
+    margin-top:15px;
+    color:#4ade80;
+}
 </style>
 </head>
 
 <body>
 
+<header>💻 Technical Practice Platform</header>
+
 <div class="container">
 
-<h1>Technical Practice</h1>
-
-<form method="POST" action="{% url 'submit_test' test.id %}">
+<form id="testForm" method="POST" action="{% url 'submit_test' test.id %}">
     {% csrf_token %}
 
-    <input type="hidden" name="score" id="score" value="0">
+    <!-- IMPORTANT -->
+    <input type="hidden" name="score" id="score">
 
     <select id="lang" onchange="loadQ()">
         <option value="">Select Language</option>
@@ -42,103 +105,125 @@ button{padding:10px;background:green;color:white;border:none;margin-top:10px;cur
     <div id="mcq"></div>
     <div id="coding"></div>
 
-    <h2>Compiler</h2>
+    <h3>Compiler</h3>
     <textarea id="code"></textarea>
 
     <button type="button" onclick="runCode()">Run Code</button>
 
-    <br><br>
-
-    <!-- ✅ SUBMIT BUTTON -->
-    <button type="submit">Submit Test</button>
-
+    <button type="button" onclick="submitTest()">📤 Submit Test</button>
 </form>
 
 <pre id="output"></pre>
+<h2 id="scoreBox"></h2>
 
 </div>
 
 <script>
 
-let score = 0;
+let scoreData = { mcq:{}, code:0 };
 
-const data={
+const data = {
 python:{
-mcq:[
-{q:"Python is?",o:["Compiled","Interpreted"],a:"Interpreted"}
-],
-code:{q:"Print 1 to 5",expected:"1\n2\n3\n4\n5"}
+    mcq:[
+        {q:"Python is?", o:["Compiled","Interpreted"], a:"Interpreted"}
+    ],
+    code:{q:"Print 1 to 5", expected:"1\n2\n3\n4\n5"}
 },
 cpp:{
-mcq:[
-{q:"C++ is?",o:["OOP","None"],a:"OOP"}
-],
-code:{q:"Print 1 to 5",expected:"1\n2\n3\n4\n5"}
+    mcq:[
+        {q:"C++ is?", o:["OOP","None"], a:"OOP"}
+    ],
+    code:{q:"Print 1 to 5", expected:"1\n2\n3\n4\n5"}
 }
 };
 
 function loadQ(){
-let lang=document.getElementById("lang").value;
-let mcq=document.getElementById("mcq");
-let coding=document.getElementById("coding");
+    let lang = document.getElementById("lang").value;
+    let mcqBox = document.getElementById("mcq");
+    let codeBox = document.getElementById("coding");
 
-mcq.innerHTML="";
-coding.innerHTML="";
+    mcqBox.innerHTML = "";
+    codeBox.innerHTML = "";
 
-if(!lang) return;
+    if(!lang) return;
 
-data[lang].mcq.forEach((q,i)=>{
-let html=`<div class="card"><h3>${q.q}</h3>`;
-q.o.forEach(opt=>{
-html+=`<div class="option" onclick="check(this,'${q.a}')">${opt}</div>`;
-});
-html+=`</div>`;
-mcq.innerHTML+=html;
-});
+    data[lang].mcq.forEach((q,i)=>{
 
-coding.innerHTML=`<div class="card">
-<h3>${data[lang].code.q}</h3>
-<button type="button" onclick="checkOutput('${data[lang].code.expected}')">Check Output</button>
-</div>`;
+        scoreData.mcq[i] = 0;
+
+        let div = document.createElement("div");
+        div.className = "card";
+
+        div.innerHTML = `<h3>${q.q}</h3>`;
+
+        q.o.forEach(opt=>{
+            let o = document.createElement("div");
+            o.className = "option";
+            o.innerText = opt;
+
+            o.onclick = function(){
+                if(opt === q.a){
+                    o.classList.add("correct");
+                    scoreData.mcq[i] = 1;
+                } else {
+                    o.classList.add("wrong");
+                }
+            };
+
+            div.appendChild(o);
+        });
+
+        mcqBox.appendChild(div);
+    });
+
+    codeBox.innerHTML = `
+        <div class="card">
+            <h3>${data[lang].code.q}</h3>
+            <button type="button" onclick="checkOutput('${data[lang].code.expected}')">
+                Check Output
+            </button>
+        </div>
+    `;
 }
 
-function check(el,ans){
-if(el.innerText==ans){
-el.classList.add("correct");
-score += 1;
-}else{
-el.classList.add("wrong");
-score -= 1;
-}
-document.getElementById("score").value = score;
-}
-
-// SIMPLE COMPILER
 function runCode(){
-let code=document.getElementById("code").value;
-let output=document.getElementById("output");
+    let code = document.getElementById("code").value;
+    let out = document.getElementById("output");
 
-if(code.includes("range") && code.includes("print")){
-output.innerText="1\n2\n3\n4\n5";
-}
-else{
-output.innerText="⚠️ Write correct logic";
-}
-}
-
-// CHECK OUTPUT
-function checkOutput(exp){
-let out=document.getElementById("output").innerText.trim();
-
-if(out==exp){
-alert("Correct");
-score += 2;
-}else{
-alert("Wrong");
-score -= 1;
+    if(code.includes("print") || code.includes("cout")){
+        out.innerText = "1\n2\n3\n4\n5";
+    } else {
+        out.innerText = "⚠️ Wrong Logic";
+    }
 }
 
-document.getElementById("score").value = score;
+function checkOutput(expected){
+    let out = document.getElementById("output").innerText.trim();
+
+    if(out === expected){
+        alert("Correct Output");
+        scoreData.code = 2;
+    } else {
+        alert("Wrong Output");
+        scoreData.code = 0;
+    }
+}
+
+function submitTest(){
+
+    let mcqScore = Object.values(scoreData.mcq).reduce((a,b)=>a+b,0);
+    let total = mcqScore + scoreData.code;
+
+    // IMPORTANT FIX
+    document.getElementById("score").value = total;
+
+    document.getElementById("scoreBox").innerText =
+        "🎯 Final Score: " + total;
+
+    // ensure score is set BEFORE submit
+    setTimeout(()=>{
+        document.getElementById("testForm").submit();
+    },100);
 }
 
 </script>

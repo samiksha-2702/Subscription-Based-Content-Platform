@@ -4,64 +4,63 @@
 <head>
 <meta charset="UTF-8">
 <title>Aptitude Test | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 body{
     margin:0;
-    font-family:"Segoe UI",sans-serif;
+    font-family:Segoe UI;
     background:linear-gradient(135deg,#020617,#0f172a);
     color:white;
 }
-header{
-    text-align:center;
-    padding:20px;
-    background:rgba(255,255,255,0.05);
-}
+
 .container{
     max-width:900px;
     margin:auto;
     padding:20px;
 }
+
 .card{
     background:rgba(255,255,255,0.05);
     padding:20px;
     border-radius:10px;
     margin-bottom:15px;
 }
+
 .option{
     display:block;
     background:#1f2937;
     padding:10px;
     margin:8px 0;
     border-radius:6px;
-    cursor:pointer;
 }
-.option:hover{
-    background:#374151;
-}
+
 .btn{
     padding:12px 20px;
+    background:#22c55e;
     border:none;
     border-radius:8px;
-    background:#22c55e;
     color:white;
-    cursor:pointer;
     font-weight:bold;
+    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1>🧠 Aptitude Test (25 Questions)</h1>
-</header>
-
 <div class="container">
 
-<form method="POST" action="{% url 'submit_test' test.id %}">
+<h2>🧠 Aptitude Test (25 Questions)</h2>
+
+<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
 {% csrf_token %}
+
+<!-- ✅ IMPORTANT HIDDEN FIELDS -->
+<input type="hidden" name="total" id="totalField">
+<input type="hidden" name="correct" id="correctField">
+<input type="hidden" name="wrong" id="wrongField">
+<input type="hidden" name="skipped" id="skippedField">
+<input type="hidden" name="time_taken" id="timeField">
 
 <!-- Q1 -->
 <div class="card">
@@ -102,21 +101,82 @@ header{
 <!-- Q5 -->
 <div class="card">
 <h3>5. 100 ÷ 4?</h3>
-<label class="option"><input type="radio" name="q4" value="20">20</label>
 <label class="option"><input type="radio" name="q4" value="25">25</label>
+<label class="option"><input type="radio" name="q4" value="20">20</label>
 <label class="option"><input type="radio" name="q4" value="30">30</label>
 <label class="option"><input type="radio" name="q4" value="40">40</label>
 </div>
 
-<!-- Add Q6 to Q25 same way -->
-
 <div style="text-align:center;">
-    <button type="submit" class="btn">Submit Test</button>
+    <button type="button" class="btn" onclick="submitQuiz()">Submit Test</button>
 </div>
 
 </form>
 
 </div>
+
+<script>
+
+const answers = {
+    q0:"27",
+    q1:"72",
+    q2:"49",
+    q3:"27",
+    q4:"25"
+};
+
+let timeLeft = 15*60;
+
+function submitQuiz(){
+
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
+
+    for(let q in answers){
+        let selected = document.querySelector(`input[name="${q}"]:checked`);
+
+        if(!selected){
+            skipped++;
+        } else if(selected.value === answers[q]){
+            correct++;
+        } else {
+            wrong++;
+        }
+    }
+
+    let total = Object.keys(answers).length;
+
+    document.getElementById("totalField").value = total;
+    document.getElementById("correctField").value = correct;
+    document.getElementById("wrongField").value = wrong;
+    document.getElementById("skippedField").value = skipped;
+
+    let timeTaken = (15*60) - timeLeft;
+    document.getElementById("timeField").value = timeTaken;
+
+    document.getElementById("quizForm").submit();
+}
+
+// TIMER
+function timer(){
+    let m = Math.floor(timeLeft/60);
+    let s = timeLeft%60;
+
+    if(document.getElementById("time"))
+        document.getElementById("time").innerText = m+":"+s.toString().padStart(2,"0");
+
+    if(timeLeft <= 0){
+        submitQuiz();
+        return;
+    }
+
+    timeLeft--;
+}
+
+setInterval(timer,1000);
+
+</script>
 
 </body>
 </html>

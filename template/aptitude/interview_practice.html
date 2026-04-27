@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Interview Practice</title>
+<title>Interview Practice | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
@@ -35,6 +35,8 @@ padding:10px;
 border-radius:6px;
 border:none;
 outline:none;
+background:#111827;
+color:white;
 }
 
 button{
@@ -46,6 +48,17 @@ border-radius:6px;
 cursor:pointer;
 margin-top:10px;
 }
+
+.result{
+margin-top:20px;
+padding:20px;
+background:#111827;
+border-radius:10px;
+display:none;
+}
+
+.good{color:#4ade80}
+.bad{color:#f87171}
 </style>
 </head>
 
@@ -55,39 +68,90 @@ margin-top:10px;
 
 <h1>🤝 Interview Practice Test</h1>
 
-<form method="POST" action="{% url 'submit_test' test.id %}">
+<!-- FIXED FORM -->
+<form id="interviewForm" method="POST" action="{% url 'submit_test' test.id %}">
 {% csrf_token %}
+
+<input type="hidden" name="total" value="5">
+<input type="hidden" name="correct" id="correctField" value="0">
+<input type="hidden" name="wrong" value="0">
+<input type="hidden" name="skipped" value="0">
+<input type="hidden" name="time_taken" value="0">
 
 <div class="card">
 <h3>1. Tell me about yourself?</h3>
-<textarea name="q1" placeholder="Write your answer..."></textarea>
+<textarea id="q1" name="q1"></textarea>
 </div>
 
 <div class="card">
-<h3>2. What are your strengths and weaknesses?</h3>
-<textarea name="q2" placeholder="Write your answer..."></textarea>
+<h3>2. Strengths and weaknesses?</h3>
+<textarea id="q2" name="q2"></textarea>
 </div>
 
 <div class="card">
-<h3>3. Why do you want to work for this company?</h3>
-<textarea name="q3" placeholder="Write your answer..."></textarea>
+<h3>3. Why this company?</h3>
+<textarea id="q3" name="q3"></textarea>
 </div>
 
 <div class="card">
-<h3>4. Explain a challenging project you worked on.</h3>
-<textarea name="q4" placeholder="Write your answer..."></textarea>
+<h3>4. Challenging project?</h3>
+<textarea id="q4" name="q4"></textarea>
 </div>
 
 <div class="card">
-<h3>5. Where do you see yourself in 5 years?</h3>
-<textarea name="q5" placeholder="Write your answer..."></textarea>
+<h3>5. 5-year goal?</h3>
+<textarea id="q5" name="q5"></textarea>
 </div>
 
-<button type="submit">Submit Test</button>
+<button type="button" onclick="submitInterview()">Submit Test</button>
 
 </form>
 
+<div class="result" id="resultBox"></div>
+
 </div>
+
+<script>
+function scoreAnswer(text, keywords){
+    text = text.toLowerCase();
+    let score = 0;
+
+    keywords.forEach(k=>{
+        if(text.includes(k)) score++;
+    });
+
+    return score;
+}
+
+function submitInterview(){
+
+    let r1 = scoreAnswer(q1.value, ["student","developer","learning","mca"]);
+    let r2 = scoreAnswer(q2.value, ["hardworking","team","strength","weakness"]);
+    let r3 = scoreAnswer(q3.value, ["growth","company","career","opportunity"]);
+    let r4 = scoreAnswer(q4.value, ["project","django","python","challenge"]);
+    let r5 = scoreAnswer(q5.value, ["future","goal","career","developer"]);
+
+    let total = r1+r2+r3+r4+r5;
+
+    document.getElementById("correctField").value = total;
+
+    let output = `
+        <h2>Interview Result</h2>
+        <p class="${r1>0?'good':'bad'}">Q1 Score: ${r1}/4</p>
+        <p class="${r2>0?'good':'bad'}">Q2 Score: ${r2}/4</p>
+        <p class="${r3>0?'good':'bad'}">Q3 Score: ${r3}/4</p>
+        <p class="${r4>0?'good':'bad'}">Q4 Score: ${r4}/4</p>
+        <p class="${r5>0?'good':'bad'}">Q5 Score: ${r5}/4</p>
+        <h2>Total Score: ${total}/20</h2>
+    `;
+
+    document.getElementById("resultBox").innerHTML = output;
+    document.getElementById("resultBox").style.display = "block";
+
+    // Submit to Django
+    document.getElementById("interviewForm").submit();
+}
+</script>
 
 </body>
 </html>
