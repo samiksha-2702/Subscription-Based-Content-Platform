@@ -12,6 +12,7 @@ from .models import (
 from .models import Test
 from .models import Feedback
 
+
 admin.site.register(Feedback)
 admin.site.register(Test)
 # ══════════════════════════════════════════════════════════════════
@@ -55,20 +56,24 @@ class PaymentInline(admin.TabularInline):
 
 
 class LoginHistoryInline(admin.TabularInline):
-    model = LoginHistory
-    extra = 0
-    readonly_fields = ['logged_in_at', 'ip_address', 'user_agent']
-    fields = ['logged_in_at', 'ip_address', 'user_agent']
-    can_delete = False
+    model               = LoginHistory
+    extra               = 0
+    readonly_fields     = ['logged_in_at', 'ip_address', 'user_agent']
+    fields              = ['logged_in_at', 'ip_address', 'user_agent']
+    can_delete          = False
+    verbose_name_plural = 'Login History (last 10)'
+    max_num             = 0
 
     def get_queryset(self, request):
-        return super().get_queryset(request).order_by('-logged_in_at')
+        return super().get_queryset(request).order_by('-logged_in_at')[:10]
+
 
 # ══════════════════════════════════════════════════════════════════
 # EXTENDED USER ADMIN
 # Shows profile + subscription + payments + login history
 # all on the same User page
 # ══════════════════════════════════════════════════════════════════
+
 
 class ExtendedUserAdmin(BaseUserAdmin):
     inlines     = [UserProfileInline, SubscriptionInline,
@@ -87,21 +92,19 @@ class ExtendedUserAdmin(BaseUserAdmin):
     full_name.short_description = 'Name'
 
     def plan_badge(self, obj):
-        try:
-            plan = obj.subscription.plan
-            if plan == 'premium':
-                return format_html(
-    '<span style="background:#6b7280;color:#fff;padding:2px 10px;'
-    'border-radius:6px;font-size:11px;">{}</span>',
-    'FREE'
-)
-        except Exception:
-            pass
+        plan = getattr(getattr(obj, 'subscription', None), 'plan', 'free')
+
+        if plan == "premium":
+          color, label = "#f59e0b", "⭐ PREMIUM"
+        else:
+          color, label = "#6b7280", "FREE"
+
         return format_html(
-    '<span style="background:#6b7280;color:#fff;padding:2px 10px;'
-    'border-radius:6px;font-size:11px;">{}</span>',
-    'FREE'
-)
+        '<span style="background:{};color:#fff;padding:2px 10px;'
+        'border-radius:6px;font-size:11px;">{}</span>',
+        color,
+        label
+    )
         
     plan_badge.short_description = 'Plan'
 
@@ -171,52 +174,73 @@ class LoginHistoryAdmin(admin.ModelAdmin):
 
 @admin.register(Subscription)
 class SubscriptionAdmin(admin.ModelAdmin):
-    list_display  = ['user', 'email', 'plan_badge', 'status_badge',
-                     'started_at', 'expires_at', 'days_remaining']
-    list_filter   = ['plan', 'status']
+    list_display = [
+        'user',
+        'plan_badge',
+        'status_badge',
+        'started_at',
+        'expires_at',
+        'days_remaining'
+    ]
+
+    list_filter = ['plan', 'status']
     search_fields = ['user__username', 'user__email']
     readonly_fields = ['started_at']
-    fields        = ['user', 'plan', 'status', 'started_at', 'expires_at', 'notes']
+    fields = ['user', 'plan', 'status', 'started_at', 'expires_at', 'notes']
 
-    actions = ['activate_premium', 'revert_to_free', 'mark_expired', 'mark_cancelled']
-
+    # ✅ EMAIL
     def email(self, obj):
-        return obj.user.email
-    email.short_description = 'Email'
-
+     return getattr(obj.user, "email", "—")
+    email.short_description = "Email"
+    # ✅ PLAN BADGE
     def plan_badge(self, obj):
         try:
-            if obj.subscription.plan == 'premium':
-             return "⭐ PREMIUM"
-        except:
-            pass
-        return "FREE"
+            plan = obj.plan  # IMPORTANT FIX (see below)
 
+            if plan == 'premium':
+                return format_html(
+                    '<span style="background:#f59e0b;color:#fff;padding:2px 10px;'
+                    'border-radius:6px;font-size:11px;">⭐ PREMIUM</span>'
+                )
+        except Exception:
+            pass
+
+        return format_html(
+            '<span style="background:#6b7280;color:#fff;padding:2px 10px;'
+            'border-radius:6px;font-size:11px;">FREE</span>'
+    )
+
+    # ✅ STATUS BADGE
     def status_badge(self, obj):
-        colours = {'active': '#22c55e', 'expired': '#ef4444', 'cancelled': '#6b7280'}
+        colours = {
+            'active': '#22c55e',
+            'expired': '#ef4444',
+            'cancelled': '#6b7280'
+        }
         colour = colours.get(obj.status, '#6b7280')
+
         return format_html(
             '<span style="color:{}; font-weight:600;">{}</span>',
-            colour, obj.status.capitalize()
+            colour,
+            obj.status.capitalize()
         )
-    status_badge.short_description = 'Status'
+    status_badge.short_description = "Status"
 
+    # ✅ DAYS REMAINING
     def days_remaining(self, obj):
         if not obj.expires_at:
-            return '∞ Lifetime'
+            return "∞ Lifetime"
 
         delta = (obj.expires_at - timezone.now()).days
 
         if delta < 0:
             return format_html(
-                '<span style="color:{};">{}</span>',
-                '#ef4444',
-                'Expired'
+                '<span style="color:#ef4444;font-weight:600;">Expired</span>'
             )
 
-        return f'{delta} days'
-    days_remaining.short_description = 'Remaining'
-
+        return f"{delta} days"
+    days_remaining.short_description = "Remaining"
+    
     @admin.action(description='⭐ Activate Premium for selected')
     def activate_premium(self, request, queryset):
         queryset.update(plan='premium', status='active')

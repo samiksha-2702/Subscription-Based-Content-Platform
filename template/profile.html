@@ -6,31 +6,35 @@
 <title>Profile | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 
 body{
     font-family:'Inter',sans-serif;
-    background:#0b1220;
+    background:radial-gradient(circle at top,#0f172a,#020617);
     color:#fff;
 }
 
-/* NAV */
+/* REMOVE UNDERLINE */
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* NAVBAR */
 .navbar{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    padding:18px 40px;
-    background:rgba(255,255,255,0.04);
-    backdrop-filter:blur(14px);
+    padding:20px 50px;
     border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .brand{
-    font-size:24px;
+    font-size:26px;
     font-weight:800;
     background:linear-gradient(135deg,#4f8cff,#a855f7);
     -webkit-background-clip:text;
@@ -39,17 +43,32 @@ body{
 
 /* BUTTONS */
 .btn{
-    padding:10px 16px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
+    padding:11px 18px;
+    border-radius:12px;
     font-weight:600;
-    transition:0.25s;
-    text-decoration:none;
-    display:inline-block;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:all 0.3s ease;
+    position:relative;
+    overflow:hidden;
 }
 
-.btn:hover{transform:translateY(-2px);}
+/* Glow effect */
+.btn::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.2),transparent);
+    opacity:0;
+    transition:0.4s;
+}
+
+.btn:hover::after{opacity:1;}
+
+.btn:hover{
+    transform:translateY(-2px) scale(1.03);
+}
 
 .btn-primary{
     background:linear-gradient(135deg,#4f8cff,#2563eb);
@@ -57,65 +76,66 @@ body{
 }
 
 .btn-danger{
-    background:#ef4444;
+    background:linear-gradient(135deg,#ef4444,#dc2626);
     color:#fff;
 }
 
-/* CONTAINER */
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:40px 20px;
+.btn-ghost{
+    border:1px solid rgba(255,255,255,0.1);
+    color:#cbd5f5;
 }
 
-/* PROFILE HEADER */
-.profile-card{
+/* AI BUTTON */
+.btn-ai{
+    background:linear-gradient(135deg,#a855f7,#6366f1);
+    color:#fff;
+}
+
+/* MAIN GRID */
+.dashboard{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 20px;
+    display:grid;
+    grid-template-columns:320px 1fr;
+    gap:25px;
+}
+
+/* CARD */
+.card{
+    background:rgba(255,255,255,0.05);
+    border-radius:18px;
+    padding:25px;
+    backdrop-filter:blur(10px);
+}
+
+/* PROFILE */
+.profile{
     text-align:center;
-    padding:30px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:20px;
-    backdrop-filter:blur(12px);
 }
 
 .profile-avatar{
-    width:110px;
-    height:110px;
+    width:100px;height:100px;
     margin:auto;
     border-radius:50%;
     overflow:hidden;
-    border:3px solid rgba(79,140,255,0.6);
+    border:3px solid #4f8cff;
 }
 
 .profile-avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
+    width:100%;height:100%;object-fit:cover;
 }
 
-.profile-card h1{
-    margin-top:12px;
-    font-size:22px;
-}
-
-.profile-card p{
-    color:#9ca3af;
-    font-size:14px;
-}
-
-/* BADGE */
 .badge{
-    display:inline-block;
     margin-top:10px;
     padding:6px 14px;
     border-radius:999px;
-    font-size:12px;
+    font-size:13px;
 }
 
 .badge-premium{
     background:linear-gradient(135deg,#fbbf24,#f59e0b);
     color:#000;
-    font-weight:700;
 }
 
 .badge-free{
@@ -123,75 +143,67 @@ body{
     color:#9ca3af;
 }
 
-/* ACTIONS */
 .actions{
-    margin-top:15px;
+    margin-top:18px;
     display:flex;
-    justify-content:center;
+    flex-direction:column;
     gap:12px;
-    flex-wrap:wrap;
+}
+
+/* RIGHT */
+.right{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
 }
 
 /* STATS */
 .stats{
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-    gap:18px;
-    margin-top:30px;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
 }
 
 .stat-box{
-    padding:22px;
-    border-radius:16px;
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
     text-align:center;
+    padding:20px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.05);
 }
 
 .stat-box h2{
-    font-size:28px;
     color:#4f8cff;
 }
 
+/* BOTTOM GRID */
+.bottom{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
 /* ACTIVITY */
-.section{
-    margin-top:35px;
-}
-
-.section h2{
-    font-size:18px;
-    margin-bottom:15px;
-    border-left:4px solid #4f8cff;
-    padding-left:10px;
-}
-
 .activity{
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    padding:15px;
-    border-radius:14px;
-    margin-bottom:12px;
+    padding:12px;
+    border-radius:10px;
+    background:rgba(255,255,255,0.05);
+    margin-bottom:10px;
 }
 
 .progress{
     height:6px;
     background:#1f2937;
     border-radius:10px;
-    margin-top:8px;
-    overflow:hidden;
+    margin-top:6px;
 }
 
 .fill{
     height:100%;
-    background:linear-gradient(135deg,#4f8cff,#22c55e);
     width:0;
-    transition:0.6s;
 }
 
-.pass{color:#22c55e;font-weight:600;}
-.fail{color:#ef4444;font-weight:600;}
-
-small{color:#9ca3af;}
+.pass{color:#22c55e;}
+.fail{color:#ef4444;}
 </style>
 </head>
 
@@ -200,104 +212,173 @@ small{color:#9ca3af;}
 <div class="navbar">
     <div class="brand">PrepEdge</div>
     <div>
-        <a href="{% url 'index' %}" class="btn btn-primary">Home</a>
+        <a href="{% url 'index' %}" class="btn btn-ghost">Home</a>
         <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
     </div>
 </div>
 
-<div class="container">
+<div class="dashboard">
 
 <!-- PROFILE -->
-<div class="profile-card">
+<div class="card profile">
 
     <div class="profile-avatar">
         {% if user.profile.avatar_url %}
             <img src="{{ user.profile.avatar_url }}">
         {% else %}
-            <i class="fas fa-user" style="font-size:40px;line-height:110px;"></i>
+            <i class="fas fa-user" style="font-size:40px;line-height:100px;"></i>
         {% endif %}
     </div>
 
-    <h1>{{ user.username }}</h1>
+    <h3>{{ user.username }}</h3>
     <p>{{ user.email }}</p>
 
-    {% if is_premium %}
-        <div class="badge badge-premium"><i class="fas fa-crown"></i> Premium Active</div>
+    {% if subscription and subscription.is_premium %}
+        <div class="badge badge-premium">👑 Premium</div>
     {% else %}
-        <div class="badge badge-free">Free Plan</div><br><br>
+        <div class="badge badge-free">Free Plan</div>
         <a href="/plans/" class="btn btn-primary">Upgrade</a>
     {% endif %}
 
     <div class="actions">
-        <a href="{% url 'edit_profile' %}" class="btn btn-primary">Edit Profile</a>
-        <a href="{% url 'change_password' %}" class="btn btn-danger">Change Password</a>
+        <a href="{% url 'edit_profile' %}" class="btn btn-primary">
+            <i class="fas fa-user-edit"></i> Edit Profile
+        </a>
+
+        <a href="{% url 'change_password' %}" class="btn btn-danger">
+            <i class="fas fa-lock"></i> Change Password
+        </a>
+
+        <!-- 🤖 AI BUTTON -->
+        <a href="{% url 'ai_dashboard' %}" class="btn btn-ai">
+            <i class="fas fa-robot"></i> AI Recommendations
+        </a>
     </div>
 
 </div>
 
-<!-- STATS -->
-<div class="stats">
+<!-- RIGHT -->
+<div class="right">
 
-    <div class="stat-box">
-        <h2>{{ total_tests }}</h2>
-        <p>Total Tests</p>
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-box">
+            <h2>{{ total_tests }}</h2>
+            <p>Tests</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>{{ avg_score }}%</h2>
+            <p>Average</p>
+        </div>
+
+        <div class="stat-box">
+            <h2>{% if last_active %}{{ last_active|timesince }}{% else %}-{% endif %}</h2>
+            <p>Last Active</p>
+        </div>
     </div>
 
-    <div class="stat-box">
-        <h2>{{ avg_score }}%</h2>
-        <p>Average Score</p>
+    <!-- CHART -->
+    <div class="card">
+        <h3>📊 Performance</h3>
+        <canvas id="chart"></canvas>
     </div>
 
-    <div class="stat-box">
-        <h2>
-            {% if last_active %}
-                {{ last_active|timesince }} ago
-            {% else %}
-                -
-            {% endif %}
-        </h2>
-        <p>Last Active</p>
+    <!-- BOTTOM -->
+    <div class="bottom">
+
+        <!-- LEADERBOARD -->
+        <div class="card">
+            <h3>🏆 Leaderboard</h3>
+
+            {% for u in leaderboard %}
+            <div class="activity" style="display:flex;justify-content:space-between;">
+                <span>#{{ forloop.counter }} {{ u.user__username }}</span>
+                <strong>{{ u.avg_score|floatformat:1 }}%</strong>
+            </div>
+            {% endfor %}
+
+            <p>Your Rank: #{{ rank_position }}</p>
+        </div>
+
+        <!-- ACTIVITY -->
+        <div class="card">
+            <h3>Recent Activity</h3>
+
+            {% for r in results|slice:":5" %}
+            <div class="activity">
+                <strong>{{ r.test.name }}</strong>
+                <div>Score: {{ r.score }}%</div>
+
+                <div class="progress">
+                    <div class="fill" data-score="{{ r.score }}"></div>
+                </div>
+
+                <form method="POST" action="{% url 'delete_result' r.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" style="margin-top:6px;">Delete</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+
     </div>
-
-</div>
-
-<!-- ACTIVITY -->
-<div class="section">
-<h2>Recent Activity</h2>
-
-{% for r in results|slice:":5" %}
-<div class="activity">
-
-    <strong>{{ r.test.name }}</strong><br>
-    Score: {{ r.score|default:0 }}%
-
-    <div class="progress">
-        <div class="fill" data-width="{{ r.score|default:'0' }}"></div>
-    </div>
-
-    {% if r.passed %}
-        <span class="pass">Passed</span>
-    {% else %}
-        <span class="fail">Failed</span>
-    {% endif %}
-
-    <br>
-    <small>{{ r.date_attempted|date:"M d, Y - H:i" }}</small>
-
-</div>
-{% empty %}
-<p style="color:#9ca3af;text-align:center;">No activity yet 🚀</p>
-{% endfor %}
 
 </div>
 
 </div>
 
 <script>
+// Progress animation
 document.querySelectorAll('.fill').forEach(el=>{
-    let w = el.getAttribute('data-width') || 0;
-    setTimeout(()=> el.style.width = w + "%", 200);
+    let s = el.dataset.score;
+    el.style.width = s + "%";
+    el.style.transition = "1s ease";
+
+    el.style.background =
+        s>=70 ? "#22c55e" :
+        s>=40 ? "#facc15" :
+                "#ef4444";
 });
+
+// Chart
+const labels = JSON.parse('{{ chart_labels|escapejs }}' || '[]');
+const scores = JSON.parse('{{ chart_scores|escapejs }}' || '[]');
+
+if(labels.length){
+    const ctx = document.getElementById("chart").getContext("2d");
+
+    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+    gradient.addColorStop(0, "rgba(79,140,255,0.8)");
+    gradient.addColorStop(1, "rgba(79,140,255,0)");
+
+    new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: labels,
+            datasets: [{
+                label: "Performance %",
+                data: scores,
+                borderColor: "#4f8cff",
+                backgroundColor: gradient,
+                fill: true,
+                tension: 0.4,
+                pointRadius: 5,
+                pointHoverRadius: 8,
+                pointBackgroundColor: "#fff",
+                pointBorderColor: "#4f8cff",
+            }]
+        },
+        options: {
+            animation: { duration:1500 },
+            plugins:{ legend:{ labels:{ color:"#fff"} } },
+            scales:{
+                x:{ ticks:{ color:"#9ca3af"}, grid:{ color:"rgba(255,255,255,0.05)"} },
+                y:{ ticks:{ color:"#9ca3af"}, grid:{ color:"rgba(255,255,255,0.05)"} }
+            }
+        }
+    });
+}
 </script>
 
 </body>

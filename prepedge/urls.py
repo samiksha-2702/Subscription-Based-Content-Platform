@@ -137,4 +137,5 @@ path('cpp-test/', views.cpp_test, name='cpp_test'),
      path('activate-free/', views.activate_free, name='activate_free'),
      path("edit-profile/", views.edit_profile, name="edit_profile"),
 path("change-password/", views.change_password, name="change_password"),
+path('delete-result/<int:id>/', views.delete_test_result, name='delete_result'),
 ]

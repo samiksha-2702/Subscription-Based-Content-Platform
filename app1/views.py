@@ -130,23 +130,91 @@ def premium_required(view_func):
 @login_required
 def profile_view(request):
     user = request.user
+
+    # USER RESULTS
     results = TestResult.objects.filter(user=user).order_by('-date_attempted')
 
     total_tests = results.count()
     avg_score = results.aggregate(avg=Avg('score'))['avg'] or 0
-    last_active = results.first()
+    last_result = results.first()
 
+    # SUBSCRIPTION
     subscription = get_active_subscription(user)
 
+    # 📊 CHART DATA (last 10 tests)
+    recent_results = results[:10][::-1]
+
+    chart_labels = json.dumps([
+    r.test.name if r.test else "Test"
+    for r in recent_results
+])
+
+    chart_scores = json.dumps([
+    float(r.score) for r in recent_results
+])
+
+    # 🏆 LEADERBOARD (Top 5 users)
+    leaderboard = (
+        TestResult.objects
+        .values('user__id', 'user__username')
+        .annotate(avg_score=Avg('score'))
+        .order_by('-avg_score')[:5]
+    )
+
+    # 🏆 USER RANK
+    all_users = list(
+        TestResult.objects
+        .values('user__id')
+        .annotate(avg_score=Avg('score'))
+        .order_by('-avg_score')
+    )
+
+    rank_position = None
+    for i, u in enumerate(all_users):
+        if u['user__id'] == user.id:
+            rank_position = i + 1
+            break
+
+    # CONTEXT
     context = {
         'results': results,
         'total_tests': total_tests,
         'avg_score': round(avg_score, 2),
-        'last_active': last_active.date_attempted if last_active else None,
+        'last_active': last_result.date_attempted if last_result else None,
+
+        # subscription
         'subscription': subscription,
-        'is_premium': has_active_subscription(user)    }
+        'is_premium': has_active_subscription(user),
+
+        # chart
+        'chart_labels': chart_labels,
+        'chart_scores': chart_scores,
+
+        # leaderboard
+        'leaderboard': leaderboard,
+        'rank_position': rank_position,
+    }
 
     return render(request, 'profile.html', context)
+
+from ai_recommendations.models import UserQuizAttempt
+from ai_recommendations.views import _refresh_weak_areas, _generate_recommendations
+
+def delete_test_result(request, id):
+    result = TestResult.objects.get(id=id)
+
+    UserQuizAttempt.objects.filter(
+        user=request.user,
+        topic__name=result.test.name
+    ).delete()
+
+    result.delete()
+
+    # 🔥 refresh AI
+    _refresh_weak_areas(request.user)
+    _generate_recommendations(request.user)
+
+    return redirect('profile')
 
 def activate_subscription(user):
     subscription, created = Subscription.objects.get_or_create(user=user)
@@ -420,19 +488,16 @@ def communication(request):
 
 @login_required
 def aptitude(request):
+    sub = _get_subscription(request.user)
+
     return render(request, 'questions.html', {
-        'subscribed': is_subscribed(request.user)
+        'subscribed': sub.is_premium if sub else False
     })
-
-
+    
 @login_required
 @premium_required
 def ai_recommendation(request):
-    return render(request, 'ai/dashboard.html')
-
-@login_required
-def plans(request):
-    return render(request, 'plans.html')
+  return render(request, 'ai/dashboard.html')
 
 @login_required
 def subscribe(request):
@@ -661,7 +726,7 @@ def cpp_info(request):
     return render(request, 'cpp/cppinfo.html')
 
 def cpp_basics(request):
-    _mark_progress(request.user, 'cpp', 'C++ Basics')
+    _mark_progress(request.user, 'cpp', 'Cpp Basics')
     return render(request, 'cpp/cpp_basics.html')
 
 def cpp_control(request):
@@ -672,15 +737,20 @@ def cpp_oop(request):
     _mark_progress(request.user, 'cpp', 'C++ OOP')
     return render(request, 'cpp/cpp_oop.html')
 
-def cpp_practice(request):
-    # Get the C++ test object
-    test = Test.objects.filter(name="C++ Practice").first()
-    
-    # Mark practice progress
-    _mark_progress(request.user, 'cpp', 'C++ Practice', 'practice')
-    
-    # Pass test to template
-    return render(request, 'cpp/cpp_practice.html', {"test": test})
+def cpp_practice(request, test_id):
+    test = get_object_or_404(Test, id=test_id)
+
+    if request.method == "POST":
+        score = float(request.POST.get("score", 0))
+
+        TestResult.objects.create(
+            user=request.user,
+            test=test,
+            score=score
+        )
+
+    return render(request, "cpp/cpp_practice.html", {"test": test})
+
 @premium_required
 def cpp_test(request):
     # This will raise a 404 if no test exists
@@ -1153,23 +1223,29 @@ def payment_verify(request):
         return JsonResponse({'status': 'error'})    
 @login_required
 def create_order(request):
-    data = json.loads(request.body)
-    plan = data.get("plan")
+    try:
+        data = json.loads(request.body)
+        plan = data.get("plan")
 
-    if plan not in PLANS:
-        return JsonResponse({"error": "Invalid plan"}, status=400)
+        if plan not in PLANS:
+            return JsonResponse({"error": "Invalid plan"}, status=400)
 
-    amount = PLANS[plan]["price"] * 100  # in paise
+        amount = PLANS[plan]["price"] * 100  # in paise
 
-    client = razorpay.Client(auth=(
-        settings.RAZORPAY_KEY_ID,
-        settings.RAZORPAY_KEY_SECRET
-    ))
+        client = razorpay.Client(auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET
+        ))
 
-    order = client.order.create({
-        "amount": amount,
-        "currency": "INR",
-        "payment_capture": "1"
-    })
+        order = client.order.create({
+            "amount": amount,
+            "currency": "INR",
+            "payment_capture": "1"
+        })
 
-    return JsonResponse(order)
+        print("🟢 ORDER CREATED:", order["id"])
+        return JsonResponse(order)
+
+    except Exception as e:
+        print("❌ CREATE ORDER ERROR:", str(e))
+        return JsonResponse({"error": "Server error"})
