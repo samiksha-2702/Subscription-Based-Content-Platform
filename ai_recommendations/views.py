@@ -334,11 +334,19 @@ def ai_dashboard(request):
         for wa in weak_areas_qs
     ]
 
-    recommendations = UserRecommendation.objects.filter(
-        user=user,
-        is_dismissed=False
-    ).select_related('topic')
+    recommendations_qs = UserRecommendation.objects.filter(
+    user=user,
+    is_dismissed=False
+   ).select_related('topic')
 
+    recommendations = [
+    {
+        "title": getattr(rec.topic, "name", "General Recommendation"),
+        "description": getattr(rec, "message", "") or "Keep practicing to improve your performance."
+    }
+    for rec in recommendations_qs
+
+]
     smart_insights = []
 
     if overall_accuracy < 50:
@@ -366,9 +374,13 @@ def ai_dashboard(request):
         'recommendations': recommendations,
         'smart_insights': smart_insights,
         'recent_attempts': attempts.order_by('-attempted_at')[:5],
+        "streak_days": 5,
+        "chart_labels": ["Mon", "Tue", "Wed"],
+        "chart_data": [60, 75, 68],
     }
 
     return render(request, 'ai/dashboard.html', context)
+
 @login_required
 @require_POST
 def refresh_recommendations(request):

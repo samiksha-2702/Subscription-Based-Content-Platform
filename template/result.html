@@ -1,69 +1,189 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Result | PrepEdge</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>Result | PrepEdge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+    background:linear-gradient(135deg,#0f172a,#020617);
+    color:white;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  background: rgba(8, 12, 24, 0.75);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+.brand {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6, #fb923c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+  position: relative;
+
+  /* smoother animation */
+  animation: brandGlow 4s ease-in-out infinite;
+}
+
+/* smoother + less aggressive glow */
+@keyframes brandGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 3px rgba(96,165,250,0.25));
+    transform: translateY(0px);
+  }
+  50% {
+    filter: drop-shadow(0 0 10px rgba(192,132,252,0.45));
+    transform: translateY(-1px);
+  }
+}
+/* NAV LINKS */
+.navbar a{
+    color:white;
+    text-decoration:none;
+    margin-left:15px;
+    font-weight:500;
+    opacity:0.85;
+}
+
+.navbar a:hover{
+    opacity:1;
+}
+
+/* GLASS CARD */
+.glass{
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:20px;
+    padding:25px;
+    backdrop-filter:blur(12px);
+    box-shadow:0 20px 40px rgba(0,0,0,0.5);
+}
+
+/* SMALL CHART CONTAINER */
+.chart-box{
+    width:260px;
+    height:260px;
+    margin:30px auto 0;
+}
+
+canvas{
+    width:100% !important;
+    height:100% !important;
+}
+</style>
 </head>
 
-<body class="bg-dark text-light">
+<body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-black px-4">
-    <a class="navbar-brand fw-bold" href="/">PrepEdge</a>
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark px-4 d-flex justify-content-between align-items-center">
 
-   
+    <span class="navbar-brand fw-bold"> PrepEdge</span>
+
+    <div>
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'ai_dashboard' %}">Dashboard</a>
+        <a href="{% url 'profile' %}">Profile</a>
+    </div>
+
 </nav>
 
 <div class="container py-5">
 
     <div class="text-center mb-4">
-        <h1 class="fw-bold">🎯 Test Result</h1>
-        <p class="text-secondary">Here is your performance summary</p>
+        <h2>Test Result</h2>
+        <p class="text-secondary">Performance Summary</p>
     </div>
 
-    <div class="card bg-dark border-light shadow-lg rounded-4">
-        <div class="card-body p-4">
+    <div class="glass">
 
-            <div class="row text-center mb-4">
+        <!-- STATS -->
+        <div class="row text-center">
 
-                <div class="col-md-3">
-                    <h5 class="text-white">Total Score</h5>
-                    <h2 class="fw-bold text-warning">{{ result.score }}</h2>
-                </div>
-
-                <div class="col-md-3">
-                    <h5 class="text-white">Correct</h5>
-                    <h3 class="fw-bold text-success">{{ result.correct_answers }}</h3>
-                </div>
-
-                <div class="col-md-3">
-                    <h5 class="text-white">Wrong</h5>
-                    <h3 class="fw-bold text-danger">{{ result.wrong_answers }}</h3>
-                </div>
-
-                <div class="col-md-3">
-                    <h5 class="text-white">Skipped</h5>
-                    <h3 class="fw-bold text-info">{{ result.skipped_questions }}</h3>
-                </div>
-
+            <div class="col-md-3">
+                <h5>Score</h5>
+                <h2 class="text-warning">{{ result.score }}</h2>
             </div>
 
-            <hr class="border-light">
+            <div class="col-md-3">
+                <h5>Correct</h5>
+                <h2 class="text-success">{{ result.correct_answers }}</h2>
+            </div>
 
-            <div class="text-center">
-                <h5 class="text-white">⏱ Time Taken</h5>
-                <h4 class="text-light">{{ result.time_taken }} seconds</h4>
+            <div class="col-md-3">
+                <h5>Wrong</h5>
+                <h2 class="text-danger">{{ result.wrong_answers }}</h2>
+            </div>
+
+            <div class="col-md-3">
+                <h5>Skipped</h5>
+                <h2 class="text-info">{{ result.skipped_questions }}</h2>
             </div>
 
         </div>
-    </div>
 
-    <div class="text-center mt-4">
-        <a href="/" class="btn btn-primary px-4 me-2">Go to Home</a>
-        <a href="/logout/" class="btn btn-outline-danger px-4">Logout</a>
-    </div>
+        <hr>
 
+        <!-- CHART -->
+        <div class="chart-box">
+            <canvas id="resultChart"></canvas>
+        </div>
+
+    </div>
 </div>
+
+<!-- SAFE DATA -->
+{{ result.correct_answers|default:0|json_script:"correct" }}
+{{ result.wrong_answers|default:0|json_script:"wrong" }}
+{{ result.skipped_questions|default:0|json_script:"skipped" }}
+
+<script>
+const correct = JSON.parse(document.getElementById("correct").textContent);
+const wrong = JSON.parse(document.getElementById("wrong").textContent);
+const skipped = JSON.parse(document.getElementById("skipped").textContent);
+
+new Chart(document.getElementById('resultChart'), {
+    type: 'doughnut',
+    data: {
+        labels: ['Correct', 'Wrong', 'Skipped'],
+        datasets: [{
+            data: [correct, wrong, skipped],
+            backgroundColor: ['#22c55e','#ef4444','#3b82f6'],
+            borderWidth: 2,
+            borderColor: '#0f172a'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    color: 'white'
+                }
+            }
+        }
+    }
+});
+</script>
 
 </body>
 </html>

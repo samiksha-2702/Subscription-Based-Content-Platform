@@ -6,7 +6,7 @@
 <title>Edit Profile | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
@@ -14,7 +14,7 @@
 
 body{
     font-family:'Inter',sans-serif;
-    background: radial-gradient(circle at top,#0f172a,#020617);
+    background: radial-gradient(circle at 20% 20%, #0f172a, #020617);
     color:white;
 }
 
@@ -23,112 +23,172 @@ body{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:20px 40px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(12px);
-    border-bottom:1px solid rgba(255,255,255,0.1);
+    padding:18px 40px;
+    background:rgba(10,15,30,0.7);
+    backdrop-filter:blur(16px);
+    border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 .brand{
-    font-size:24px;
+    font-size:26px;
     font-weight:800;
-    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
-    background-clip:text;
+    background:linear-gradient(135deg,#60a5fa,#a78bfa,#f472b6);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-}
-
-.navbar a{
-    text-decoration:none;
 }
 
 /* BUTTONS */
 .btn{
     padding:10px 18px;
-    border-radius:8px;
+    border-radius:10px;
     font-weight:600;
     border:none;
     cursor:pointer;
     transition:0.3s;
-}
-
-.btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 10px 20px rgba(0,0,0,0.4);
+    text-decoration:none;
+    display:inline-block;
 }
 
 .btn-primary{
-    background:linear-gradient(135deg,#3b82f6,#2563eb);
+    background:linear-gradient(135deg,#3b82f6,#6366f1);
     color:white;
 }
 
 .btn-secondary{
-    background:#374151;
+    background:rgba(255,255,255,0.08);
     color:white;
 }
 
-/* CONTAINER */
+.btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+}
+
+/* MAIN LAYOUT */
 .container{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:calc(100vh - 80px);
+    max-width:1100px;
+    margin:auto;
+    padding:50px 20px;
 }
 
-/* FORM BOX */
-.box{
-    width:420px;
+.card{
+    display:grid;
+    grid-template-columns:300px 1fr;
+    background:rgba(255,255,255,0.04);
+    backdrop-filter:blur(18px);
+    border-radius:20px;
+    border:1px solid rgba(255,255,255,0.08);
+    overflow:hidden;
+    box-shadow:0 30px 60px rgba(0,0,0,0.6);
+}
+
+/* LEFT PROFILE PANEL */
+.profile-side{
     padding:30px;
-    background:rgba(255,255,255,0.05);
-    backdrop-filter:blur(12px);
-    border-radius:16px;
-    border:1px solid rgba(255,255,255,0.1);
-    box-shadow:0 20px 40px rgba(0,0,0,0.5);
-    animation:fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn{
-    from{opacity:0;transform:translateY(20px);}
-    to{opacity:1;transform:translateY(0);}
-}
-
-h2{
+    background:linear-gradient(135deg,#1e293b,#020617);
     text-align:center;
-    margin-bottom:20px;
+    border-right:1px solid rgba(255,255,255,0.08);
 }
 
-/* INPUTS */
-label{
-    font-size:14px;
+.avatar{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#3b82f6,#8b5cf6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:40px;
+    font-weight:700;
+    margin:auto;
+    margin-bottom:15px;
+}
+
+.profile-side h3{
+    margin-bottom:5px;
+}
+
+.profile-side p{
+    font-size:13px;
     color:#9ca3af;
 }
 
-input{
-    width:100%;
-    padding:10px;
-    margin:8px 0 15px;
-    border-radius:8px;
-    border:none;
-    background:#111827;
-    color:white;
+/* RIGHT FORM */
+.form-side{
+    padding:40px;
 }
 
-input:focus{
+.form-title{
+    font-size:22px;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+/* FLOATING INPUT */
+.input-group{
+    position:relative;
+    margin-bottom:20px;
+}
+
+.input-group input{
+    width:100%;
+    padding:14px 12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.1);
+    background:#020617;
+    color:white;
     outline:none;
-    box-shadow:0 0 0 2px #3b82f6;
+    transition:0.3s;
+}
+
+.input-group label{
+    position:absolute;
+    left:12px;
+    top:14px;
+    font-size:13px;
+    color:#9ca3af;
+    transition:0.3s;
+    pointer-events:none;
+    background:#020617;
+    padding:0 5px;
+}
+
+.input-group input:focus,
+.input-group input:not(:placeholder-shown){
+    border-color:#3b82f6;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label{
+    top:-8px;
+    font-size:11px;
+    color:#60a5fa;
 }
 
 /* MESSAGE */
 .msg{
-    margin-bottom:10px;
-    color:#facc15;
+    margin-bottom:15px;
     text-align:center;
+    color:#facc15;
 }
 
 /* BUTTON GROUP */
-.btn-group{
+.actions{
     display:flex;
-    gap:10px;
+    gap:12px;
+    margin-top:10px;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .card{
+        grid-template-columns:1fr;
+    }
+
+    .profile-side{
+        border-right:none;
+        border-bottom:1px solid rgba(255,255,255,0.08);
+    }
 }
 </style>
 </head>
@@ -146,41 +206,60 @@ input:focus{
 
 <div class="container">
 
-<div class="box">
+<div class="card">
 
-<h2><i class="fas fa-user-edit"></i> Edit Profile</h2>
+    <!-- LEFT SIDE -->
+    <div class="profile-side">
+        <div class="avatar">
+            {{ user.username|first|upper }}
+        </div>
+        <h3>{{ user.username }}</h3>
+        <p>{{ user.email }}</p>
+    </div>
 
-{% if messages %}
-    {% for message in messages %}
-        <p class="msg">{{ message }}</p>
-    {% endfor %}
-{% endif %}
+    <!-- RIGHT SIDE -->
+    <div class="form-side">
 
-<form method="POST">
-{% csrf_token %}
+        <div class="form-title">
+            <i class="fas fa-user-edit"></i> Edit Profile
+        </div>
 
-<label>Username</label>
-<input type="text" name="username" value="{{ user.username }}" required>
+        {% if messages %}
+            {% for message in messages %}
+                <p class="msg">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
 
-<label>Email</label>
-<input type="email" name="email" value="{{ user.email }}" required>
+        <form method="POST">
+        {% csrf_token %}
 
-<label>Phone</label>
-<input type="text" name="phone" value="{{ profile.phone }}">
+        <div class="input-group">
+            <input type="text" name="username" value="{{ user.username }}" placeholder=" " required>
+            <label>Username</label>
+        </div>
 
-<div class="btn-group">
-    <button type="submit" class="btn btn-primary">
-        <i class="fas fa-save"></i> Save
-    </button>
+        <div class="input-group">
+            <input type="email" name="email" value="{{ user.email }}" placeholder=" " required>
+            <label>Email</label>
+        </div>
 
-    <a href="{% url 'profile' %}" class="btn btn-secondary">
-        Cancel
-    </a>
+    
+        <div class="actions">
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Changes
+            </button>
+
+            <a href="{% url 'profile' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+
+        </form>
+
+    </div>
+
 </div>
 
-</form>
-
-</div>
 </div>
 
 </body>

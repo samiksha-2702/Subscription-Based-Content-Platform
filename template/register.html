@@ -4,132 +4,244 @@
 <meta charset="UTF-8">
 <title>Register | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
   min-height:100vh;
   background:linear-gradient(-45deg,#0f172a,#020617,#1e293b,#020617);
   background-size:400% 400%;
   animation:bgMove 12s ease infinite;
-  display:flex;align-items:center;justify-content:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
   color:white;
+  font-family:Segoe UI, sans-serif;
 }
+
 @keyframes bgMove{
   0%{background-position:0% 50%}
   50%{background-position:100% 50%}
   100%{background-position:0% 50%}
 }
+
+/* GLASS CARD */
 .glass{
-  width:400px;padding:40px;border-radius:22px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(18px);
-  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+  width:420px;
+  padding:40px;
+  border-radius:24px;
+  background:rgba(255,255,255,0.06);
+  backdrop-filter:blur(20px);
+  box-shadow:0 25px 80px rgba(0,0,0,0.8);
+  position:relative;
+  overflow:hidden;
 }
-.form-control{background:rgba(255,255,255,0.15);border:none;color:white;}
-.form-control:focus{background:rgba(255,255,255,0.2);color:white;box-shadow:none;border-color:#3b82f6;}
-.form-control::placeholder{color:rgba(255,255,255,0.5);}
-.btn-modern{
+
+/* Glow Effect */
+.glass::before{
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle,#3b82f6,transparent);
+  top:-100px;
+  right:-100px;
+  opacity:0.2;
+}
+
+/* BRAND */
+.brand{
+  font-size:28px;
+  font-weight:800;
+  text-align:center;
   background:linear-gradient(90deg,#3b82f6,#06b6d4);
-  border:none;border-radius:12px;font-weight:bold;
-  padding:12px;transition:opacity 0.2s;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-.btn-modern:hover{opacity:0.9;}
-.brand{color:#3b82f6;font-weight:bold;font-size:26px;text-align:center;}
-.back{display:block;text-align:center;margin-top:15px;color:#93c5fd;text-decoration:none;}
-.back:hover{color:#60a5fa;}
+
+/* INPUT */
+.form-control{
+  background:rgba(255,255,255,0.12);
+  border:none;
+  color:white;
+  border-radius:10px;
+}
+
+.form-control:focus{
+  background:rgba(255,255,255,0.18);
+  color:white;
+  box-shadow:0 0 0 2px #3b82f6;
+}
+
+.form-control::placeholder{
+  color:rgba(255,255,255,0.5);
+}
+
+/* BUTTON */
+.btn-modern{
+  background:linear-gradient(90deg,#3b82f6,#6366f1);
+  border:none;
+  border-radius:12px;
+  font-weight:600;
+  padding:12px;
+  transition:0.3s;
+}
+
+.btn-modern:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(59,130,246,0.5);
+}
+
+/* ALERT */
 .alert-error{
-  background:rgba(239,68,68,0.2);border:1px solid rgba(239,68,68,0.4);
-  color:#fca5a5;border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:14px;
+  background:rgba(239,68,68,0.2);
+  border:1px solid rgba(239,68,68,0.4);
+  color:#fca5a5;
+  border-radius:10px;
+  padding:10px;
+  margin-bottom:15px;
 }
-.alert-success{
-  background:rgba(34,197,94,0.2);border:1px solid rgba(34,197,94,0.4);
-  color:#86efac;border-radius:10px;padding:10px 14px;margin-bottom:16px;font-size:14px;
+
+.hint{
+  font-size:11px;
+  color:#9ca3af;
+  margin-top:-8px;
+  margin-bottom:10px;
 }
-.label-white label{color:rgba(255,255,255,0.7);}
-.hint{font-size:11px;color:rgba(255,255,255,0.4);margin-top:3px;}
+
+/* PASSWORD STRENGTH */
+.strength{
+  font-size:12px;
+  margin-top:-5px;
+  margin-bottom:10px;
+}
+
+.weak{color:#ef4444;}
+.medium{color:#f59e0b;}
+.strong{color:#22c55e;}
+
+/* SHOW PASSWORD */
+.password-wrapper{
+  position:relative;
+}
+
+.toggle-pass{
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  cursor:pointer;
+  color:#9ca3af;
+}
+
+/* FOOT LINKS */
+.back{
+  display:block;
+  text-align:center;
+  margin-top:15px;
+  color:#93c5fd;
+  text-decoration:none;
+}
+
+.back:hover{
+  color:#60a5fa;
+}
 </style>
 </head>
 
 <body>
+
 <div class="glass">
-  <div class="brand">🎯 PrepEdge</div>
-  <h5 class="text-center mb-4" style="color:rgba(255,255,255,0.8);">Create Account</h5>
+
+  <div class="brand"> PrepEdge</div>
+  <h5 class="text-center mb-4 text-secondary">Create your account</h5>
 
   {% if error %}
   <div class="alert-error">❌ {{ error }}</div>
   {% endif %}
 
-  <!-- FIXED: Real Django form — method POST, CSRF token, redirects to index on success -->
-  <form method="POST" action="">
+  <form method="POST">
     {% csrf_token %}
 
-    <div class="form-floating mb-3 label-white">
-      <input
-        type="text"
-        name="username"
-        id="id_username"
-        class="form-control"
-        placeholder="Username"
-        value="{{ username|default:'' }}"
-        required
-        autofocus>
-      <label for="id_username">Username</label>
+    <!-- Username -->
+    <div class="mb-3">
+      <input type="text" name="username" class="form-control" placeholder="Username"
+             value="{{ username|default:'' }}" required autofocus>
     </div>
 
-    <div class="form-floating mb-3 label-white">
-      <input
-        type="text"
-        name="full_name"
-        id="id_full_name"
-        class="form-control"
-        placeholder="Full Name"
-        value="{{ full_name|default:'' }}">
-      <label for="id_full_name">Full Name (optional)</label>
+    <!-- Full Name -->
+    <div class="mb-3">
+      <input type="text" name="full_name" class="form-control" placeholder="Full Name "
+             value="{{ full_name|default:'' }}">
     </div>
 
-    <div class="form-floating mb-3 label-white">
-      <input
-        type="email"
-        name="email"
-        id="id_email"
-        class="form-control"
-        placeholder="Email"
-        value="{{ email|default:'' }}">
-      <label for="id_email">Email (optional)</label>
+    <!-- Email -->
+    <div class="mb-3">
+      <input type="email" name="email" class="form-control" placeholder="Email "
+             value="{{ email|default:'' }}">
     </div>
 
-    <div class="form-floating mb-3 label-white">
-      <input
-        type="password"
-        name="password"
-        id="id_password"
-        class="form-control"
-        placeholder="Password"
-        required
-        minlength="6">
-      <label for="id_password">Password</label>
+    <!-- Password -->
+    <div class="mb-3 password-wrapper">
+      <input type="password" id="password" name="password" class="form-control"
+             placeholder="Password" required minlength="6">
+      <span class="toggle-pass" onclick="togglePass()">👁</span>
     </div>
+
+    <div id="strength" class="strength"></div>
     <p class="hint">Minimum 6 characters</p>
 
-    <div class="form-floating mb-4 label-white">
-      <input
-        type="password"
-        name="password2"
-        id="id_password2"
-        class="form-control"
-        placeholder="Confirm Password"
-        required>
-      <label for="id_password2">Confirm Password</label>
+    <!-- Confirm -->
+    <div class="mb-4">
+      <input type="password" name="password2" class="form-control"
+             placeholder="Confirm Password" required>
     </div>
 
-    <button type="submit" class="btn btn-modern w-100 text-white">Create Account →</button>
+    <button class="btn btn-modern w-100 text-white">
+      Create Account →
+    </button>
+
   </form>
 
-  <div class="text-center mt-3" style="font-size:14px;">
-    Already registered? <a href="{% url 'login' %}" class="text-info">Login</a>
+  <div class="text-center mt-3">
+    Already registered?
+    <a href="{% url 'login' %}" class="text-info">Login</a>
   </div>
 
   <a href="{% url 'index' %}" class="back">← Back to Home</a>
+
 </div>
+
+<script>
+const password = document.getElementById("password");
+const strength = document.getElementById("strength");
+
+password.addEventListener("input", () => {
+  const val = password.value;
+
+  if(val.length < 6){
+    strength.textContent = "Weak password";
+    strength.className = "strength weak";
+  } 
+  else if(/[A-Z]/.test(val) && /[0-9]/.test(val)){
+    strength.textContent = "Strong password";
+    strength.className = "strength strong";
+  } 
+  else{
+    strength.textContent = "Medium strength";
+    strength.className = "strength medium";
+  }
+});
+
+/* SHOW/HIDE PASSWORD */
+function togglePass(){
+  const field = document.getElementById("password");
+  field.type = field.type === "password" ? "text" : "password";
+}
+</script>
+
 </body>
 </html>
