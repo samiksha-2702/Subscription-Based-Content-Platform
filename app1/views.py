@@ -272,19 +272,19 @@ def get_active_subscription(user):
 def plans(request):
     subscription = get_active_subscription(request.user)
 
-    if has_active_subscription(request.user):    
-        return redirect("profile")   
-
     return render(request, "plans.html", {
         "subscription": subscription,
         "is_premium": subscription.is_premium if subscription else False
     })
+    
 @login_required
 def upgrade_view(request):
     subscription = get_active_subscription(request.user)
 
     if has_active_subscription(request.user):
-      return redirect("profile")
+        # ✅ Show message instead of redirect confusion
+        return redirect("plans")  
+
     return render(request, "plans.html")
 
 @login_required
