@@ -6,378 +6,993 @@
 <title>Profile | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-    font-family:'Inter',sans-serif;
-    background:radial-gradient(circle at top,#0f172a,#020617);
-    color:#fff;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* REMOVE UNDERLINE */
-a{
-    text-decoration:none;
-    color:inherit;
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at 10% 20%, #0a0f1e, #020617);
+  color: #e2e8f0;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* NAVBAR */
-.navbar{
-    display:flex;
-    justify-content:space-between;
-    padding:20px 50px;
-    border-bottom:1px solid rgba(255,255,255,0.08);
+/* Animated background particles */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(96, 165, 250, 0.08) 1px, transparent 1px);
+  background-size: 45px 45px;
+  pointer-events: none;
+  z-index: -1;
 }
 
-.brand{
-    font-size:26px;
-    font-weight:800;
-    background:linear-gradient(135deg,#4f8cff,#a855f7);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* BUTTONS */
-.btn{
-    padding:11px 18px;
-    border-radius:12px;
-    font-weight:600;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    transition:all 0.3s ease;
-    position:relative;
-    overflow:hidden;
+/* NAVBAR - Modern Glassmorphic */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 48px;
+  background: rgba(8, 12, 24, 0.75);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(59, 130, 246, 0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
-/* Glow effect */
-.btn::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:linear-gradient(120deg,transparent,rgba(255,255,255,0.2),transparent);
-    opacity:0;
-    transition:0.4s;
+.brand {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6, #fb923c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
+  animation: brandGlow 4s ease-in-out infinite;
 }
 
-.btn:hover::after{opacity:1;}
-
-.btn:hover{
-    transform:translateY(-2px) scale(1.03);
+@keyframes brandGlow {
+  0%, 100% { filter: drop-shadow(0 0 3px rgba(96,165,250,0.2)); }
+  50% { filter: drop-shadow(0 0 12px rgba(192,132,252,0.4)); }
 }
 
-.btn-primary{
-    background:linear-gradient(135deg,#4f8cff,#2563eb);
-    color:#fff;
+.nav-links {
+  display: flex;
+  gap: 16px;
 }
 
-.btn-danger{
-    background:linear-gradient(135deg,#ef4444,#dc2626);
-    color:#fff;
+/* BUTTONS - Modern */
+.btn {
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  cursor: pointer;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  position: relative;
+  overflow: hidden;
 }
 
-.btn-ghost{
-    border:1px solid rgba(255,255,255,0.1);
-    color:#cbd5f5;
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.15), transparent);
+  opacity: 0;
+  transition: 0.4s;
 }
 
-/* AI BUTTON */
-.btn-ai{
-    background:linear-gradient(135deg,#a855f7,#6366f1);
-    color:#fff;
+.btn:hover::after {
+  opacity: 1;
 }
 
-/* MAIN GRID */
-.dashboard{
-    max-width:1200px;
-    margin:auto;
-    padding:40px 20px;
-    display:grid;
-    grid-template-columns:320px 1fr;
-    gap:25px;
+.btn:hover {
+  transform: translateY(-2px) scale(1.02);
 }
 
-/* CARD */
-.card{
-    background:rgba(255,255,255,0.05);
-    border-radius:18px;
-    padding:25px;
-    backdrop-filter:blur(10px);
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
 }
 
-/* PROFILE */
-.profile{
-    text-align:center;
+.btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
 }
 
-.profile-avatar{
-    width:100px;height:100px;
-    margin:auto;
-    border-radius:50%;
-    overflow:hidden;
-    border:3px solid #4f8cff;
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
 }
 
-.profile-avatar img{
-    width:100%;height:100%;object-fit:cover;
+.btn-ghost:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #3b82f6;
 }
 
-.badge{
-    margin-top:10px;
-    padding:6px 14px;
-    border-radius:999px;
-    font-size:13px;
+.btn-ai {
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(139, 92, 246, 0.3);
 }
 
-.badge-premium{
-    background:linear-gradient(135deg,#fbbf24,#f59e0b);
-    color:#000;
+.btn-sm {
+  padding: 6px 14px;
+  font-size: 0.75rem;
 }
 
-.badge-free{
-    background:#1f2937;
-    color:#9ca3af;
+/* MAIN DASHBOARD GRID */
+.dashboard {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 28px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 28px;
 }
 
-.actions{
-    margin-top:18px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+/* CARD STYLES */
+.card {
+  background: rgba(15, 25, 45, 0.65);
+  backdrop-filter: blur(16px);
+  border-radius: 28px;
+  padding: 28px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  transition: all 0.3s ease;
+  box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.3);
 }
 
-/* RIGHT */
-.right{
-    display:flex;
-    flex-direction:column;
-    gap:20px;
+.card:hover {
+  border-color: rgba(96, 165, 250, 0.4);
+  box-shadow: 0 25px 40px -18px rgba(0, 0, 0, 0.4);
 }
 
-/* STATS */
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:15px;
+/* PROFILE SECTION */
+.profile {
+  text-align: center;
+  position: relative;
 }
 
-.stat-box{
-    text-align:center;
-    padding:20px;
-    border-radius:14px;
-    background:rgba(255,255,255,0.05);
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid transparent;
+  background: linear-gradient(135deg, #60a5fa, #c084fc) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.stat-box h2{
-    color:#4f8cff;
+.profile-avatar i {
+  font-size: 48px;
+  line-height: 120px;
+  color: #60a5fa;
+  background: rgba(15, 23, 42, 0.6);
+  display: block;
+}
+
+.profile-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+  background: linear-gradient(135deg, #fff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.profile p {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  margin-bottom: 12px;
+}
+
+/* Badges */
+.badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.badge-premium {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #0a0a0a;
+  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
+}
+
+.badge-free {
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
+}
+
+/* Subscription info styling */
+.subscription-info {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+  border: 1px solid rgba(251, 191, 36, 0.2);
+}
+
+.subscription-info p {
+  margin-bottom: 0;
+  font-size: 0.75rem;
+  color: #fbbf24;
+}
+
+.validity-text {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  margin: 8px 0;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.actions .btn {
+  justify-content: center;
+}
+
+/* Cancel subscription modal styling */
+.cancel-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.cancel-modal-content {
+  background: linear-gradient(145deg, #111827, #030617);
+  border-radius: 32px;
+  padding: 32px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.cancel-modal-content i {
+  font-size: 56px;
+  color: #f87171;
+  margin-bottom: 16px;
+}
+
+.cancel-modal-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+}
+
+.cancel-modal-content p {
+  color: #94a3b8;
+  margin-bottom: 24px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* STATS BOXES */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  text-align: center;
+  padding: 20px 12px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+  transition: all 0.25s;
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  border-color: rgba(59, 130, 246, 0.4);
+  background: rgba(59, 130, 246, 0.08);
+}
+
+.stat-box h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat-box p {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* CHART CONTAINER */
+.chart-container {
+  margin-top: 8px;
+}
+
+canvas {
+  max-height: 280px;
+  width: 100%;
 }
 
 /* BOTTOM GRID */
-.bottom{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
+.bottom {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 20px;
+  margin-top: 0;
 }
 
-/* ACTIVITY */
-.activity{
-    padding:12px;
-    border-radius:10px;
-    background:rgba(255,255,255,0.05);
-    margin-bottom:10px;
+/* LEADERBOARD */
+.leaderboard-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 14px;
+  margin-bottom: 8px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
 }
 
-.progress{
-    height:6px;
-    background:#1f2937;
-    border-radius:10px;
-    margin-top:6px;
+.leaderboard-item:hover {
+  background: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+  transform: translateX(4px);
 }
 
-.fill{
-    height:100%;
-    width:0;
+.rank-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-right: 12px;
 }
 
-.pass{color:#22c55e;}
-.fail{color:#ef4444;}
+.rank-name {
+  font-weight: 500;
+}
+
+.rank-score {
+  font-weight: 700;
+  color: #fbbf24;
+}
+
+.rank-badge {
+  font-size: 0.7rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.your-rank {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(59, 130, 246, 0.15);
+  border-radius: 14px;
+  text-align: center;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  font-weight: 600;
+}
+
+.your-rank i {
+  margin-right: 8px;
+  color: #fbbf24;
+}
+
+/* ACTIVITY ITEMS */
+.activity-item {
+  padding: 14px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 16px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.activity-item:hover {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+.activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.activity-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.activity-score {
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+}
+
+.score-high { background: #22c55e20; color: #4ade80; border: 1px solid #22c55e40; }
+.score-mid { background: #f59e0b20; color: #fbbf24; border: 1px solid #f59e0b40; }
+.score-low { background: #ef444420; color: #f87171; border: 1px solid #ef444440; }
+
+.progress-bar {
+  height: 6px;
+  background: #1e293b;
+  border-radius: 10px;
+  margin: 10px 0;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 10px;
+  transition: width 1s ease-out;
+}
+
+.delete-btn {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+  padding: 5px 12px;
+  border-radius: 30px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.delete-btn:hover {
+  background: #ef4444;
+  color: white;
+  border-color: #ef4444;
+}
+
+.activity-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #64748b;
+}
+
+.empty-state i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px;
+  }
+  
+  .navbar {
+    padding: 14px 24px;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .bottom {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats {
+    gap: 12px;
+  }
+  
+  .stat-box h2 {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 560px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.75rem;
+  }
+  
+  .profile-avatar {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .profile-avatar i {
+    line-height: 90px;
+    font-size: 36px;
+  }
+}
+
+/* Card header */
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-left: 3px solid #60a5fa;
+  padding-left: 14px;
+}
+
+.card-header i {
+  color: #60a5fa;
+}
+
+/* Tooltip styles */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #cbd5e1;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+  z-index: 10;
+}
+
+[data-tooltip]:hover:before {
+  opacity: 1;
+  bottom: calc(100% + 5px);
+}
 </style>
 </head>
 
 <body>
 
 <div class="navbar">
-    <div class="brand">PrepEdge</div>
-    <div>
-        <a href="{% url 'index' %}" class="btn btn-ghost">Home</a>
-        <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
-    </div>
+  <div class="brand"><i class="fas fa-brain"></i> PrepEdge</div>
+  <div class="nav-links">
+    <a href="{% url 'index' %}" class="btn btn-ghost"><i class="fas fa-home"></i> Home</a>
+    <a href="{% url 'logout' %}" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
 </div>
 
 <div class="dashboard">
 
-<!-- PROFILE -->
-<div class="card profile">
-
+  <!-- LEFT: PROFILE CARD -->
+  <div class="card profile">
     <div class="profile-avatar">
-        {% if user.profile.avatar_url %}
-            <img src="{{ user.profile.avatar_url }}">
-        {% else %}
-            <i class="fas fa-user" style="font-size:40px;line-height:100px;"></i>
-        {% endif %}
+      {% if user.profile.avatar_url %}
+        <img src="{{ user.profile.avatar_url }}" alt="avatar">
+      {% else %}
+        <i class="fas fa-user-astronaut"></i>
+      {% endif %}
     </div>
-
+    
     <h3>{{ user.username }}</h3>
-    <p>{{ user.email }}</p>
+    <p><i class="fas fa-envelope"></i> {{ user.email }}</p>
 
+    <!-- SUBSCRIPTION SECTION - Integrated -->
     {% if subscription and subscription.is_premium %}
-        <div class="badge badge-premium">👑 Premium</div>
+      <div class="badge badge-premium">
+        <i class="fas fa-crown"></i> Premium ({{ subscription.plan|title }})
+      </div>
+
+      <div class="subscription-info">
+        <p><i class="fas fa-calendar-check"></i> Valid till: {{ subscription.expires_at|date:"d M Y" }}</p>
+      </div>
+
+      <form method="POST" action="{% url 'cancel_subscription' %}" id="cancelSubscriptionForm">
+        {% csrf_token %}
+        <button type="button" class="btn btn-danger" onclick="openCancelModal()">
+          <i class="fas fa-times"></i> Cancel Subscription
+        </button>
+      </form>
+
     {% else %}
-        <div class="badge badge-free">Free Plan</div>
-        <a href="/plans/" class="btn btn-primary">Upgrade</a>
+      <div class="badge badge-free">
+        <i class="fas fa-star"></i> Free Plan
+      </div>
+
+      <a href="/plans/" class="btn btn-primary">
+        <i class="fas fa-gem"></i> Upgrade to Premium
+      </a>
     {% endif %}
 
     <div class="actions">
-        <a href="{% url 'edit_profile' %}" class="btn btn-primary">
-            <i class="fas fa-user-edit"></i> Edit Profile
-        </a>
-
-        <a href="{% url 'change_password' %}" class="btn btn-danger">
-            <i class="fas fa-lock"></i> Change Password
-        </a>
-
-        <!-- 🤖 AI BUTTON -->
-        <a href="{% url 'ai_dashboard' %}" class="btn btn-ai">
-            <i class="fas fa-robot"></i> AI Recommendations
-        </a>
+      <a href="{% url 'edit_profile' %}" class="btn btn-primary">
+        <i class="fas fa-user-edit"></i> Edit Profile
+      </a>
+      <a href="{% url 'change_password' %}" class="btn btn-danger">
+        <i class="fas fa-lock"></i> Change Password
+      </a>
+      <a href="{% url 'ai_dashboard' %}" class="btn btn-ai">
+        <i class="fas fa-robot"></i> AI Recommendations
+      </a>
     </div>
+  </div>
 
-</div>
+  <!-- RIGHT SIDE -->
+  <div class="right">
 
-<!-- RIGHT -->
-<div class="right">
-
-    <!-- STATS -->
+    <!-- STATS ROW -->
     <div class="stats">
-        <div class="stat-box">
-            <h2>{{ total_tests }}</h2>
-            <p>Tests</p>
-        </div>
-
-        <div class="stat-box">
-            <h2>{{ avg_score }}%</h2>
-            <p>Average</p>
-        </div>
-
-        <div class="stat-box">
-            <h2>{% if last_active %}{{ last_active|timesince }}{% else %}-{% endif %}</h2>
-            <p>Last Active</p>
-        </div>
+      <div class="stat-box">
+        <i class="fas fa-clipboard-list" style="color:#60a5fa; margin-bottom:8px; display:inline-block;"></i>
+        <h2>{{ total_tests }}</h2>
+        <p>Tests Taken</p>
+      </div>
+      <div class="stat-box">
+        <i class="fas fa-chart-line" style="color:#c084fc; margin-bottom:8px; display:inline-block;"></i>
+        <h2>{{ avg_score }}%</h2>
+        <p>Average Score</p>
+      </div>
+      <div class="stat-box">
+        <i class="fas fa-calendar-day" style="color:#f472b6; margin-bottom:8px; display:inline-block;"></i>
+        <h2>{% if last_active %}{{ last_active|timesince }}{% else %}—{% endif %}</h2>
+        <p>Last Active</p>
+      </div>
     </div>
 
-    <!-- CHART -->
+    <!-- PERFORMANCE CHART -->
     <div class="card">
-        <h3>📊 Performance</h3>
-        <canvas id="chart"></canvas>
+      <div class="card-header">
+        <i class="fas fa-chart-scatter"></i> Performance Trend
+      </div>
+      <div class="chart-container">
+        <canvas id="performanceChart"></canvas>
+      </div>
     </div>
 
-    <!-- BOTTOM -->
+    <!-- BOTTOM: LEADERBOARD + RECENT ACTIVITY -->
     <div class="bottom">
 
-        <!-- LEADERBOARD -->
-        <div class="card">
-            <h3>🏆 Leaderboard</h3>
-
-            {% for u in leaderboard %}
-            <div class="activity" style="display:flex;justify-content:space-between;">
-                <span>#{{ forloop.counter }} {{ u.user__username }}</span>
-                <strong>{{ u.avg_score|floatformat:1 }}%</strong>
-            </div>
-            {% endfor %}
-
-            <p>Your Rank: #{{ rank_position }}</p>
+      <!-- LEADERBOARD -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-trophy" style="color:#fbbf24;"></i> Leaderboard
         </div>
-
-        <!-- ACTIVITY -->
-        <div class="card">
-            <h3>Recent Activity</h3>
-
-            {% for r in results|slice:":5" %}
-            <div class="activity">
-                <strong>{{ r.test.name }}</strong>
-                <div>Score: {{ r.score }}%</div>
-
-                <div class="progress">
-                    <div class="fill" data-score="{{ r.score }}"></div>
-                </div>
-
-                <form method="POST" action="{% url 'delete_result' r.id %}">
-                    {% csrf_token %}
-                    <button class="btn btn-danger" style="margin-top:6px;">Delete</button>
-                </form>
+        
+        {% if leaderboard %}
+          {% for u in leaderboard %}
+          <div class="leaderboard-item">
+            <div style="display: flex; align-items: center;">
+              <span class="rank-number">{{ forloop.counter }}</span>
+              <span class="rank-name">{{ u.user__username }}</span>
             </div>
-            {% endfor %}
+            <span class="rank-score">{{ u.avg_score|floatformat:1 }}%</span>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">
+            <i class="fas fa-chart-simple"></i>
+            <p>No rankings yet</p>
+          </div>
+        {% endif %}
+        
+        <div class="your-rank">
+          <i class="fas fa-medal"></i> Your Rank: <strong>#{{ rank_position }}</strong>
         </div>
+      </div>
+
+      <!-- RECENT ACTIVITY -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-history"></i> Recent Activity
+        </div>
+        
+        {% if results %}
+          {% for r in results|slice:":5" %}
+          <div class="activity-item">
+            <div class="activity-header">
+              <span class="activity-title"><i class="fas fa-question-circle"></i> {{ r.test.name }}</span>
+              <span class="activity-score 
+                {% if r.score >= 70 %}score-high
+                {% elif r.score >= 40 %}score-mid
+                {% else %}score-low{% endif %}">
+                {{ r.score }}%
+              </span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill" data-score="{{ r.score }}"></div>
+            </div>
+            <div class="activity-footer">
+              <form method="POST" action="{% url 'delete_result' r.id %}" style="margin:0;" onsubmit="return confirm('Delete this result?')">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-state">
+            <i class="fas fa-folder-open"></i>
+            <p>No recent activity</p>
+            <a href="/" class="btn btn-primary btn-sm" style="margin-top:12px;">Start Practice</a>
+          </div>
+        {% endif %}
+      </div>
 
     </div>
-
+  </div>
 </div>
 
+<!-- Cancel Subscription Confirmation Modal -->
+<div id="cancelModal" class="cancel-modal">
+  <div class="cancel-modal-content">
+    <i class="fas fa-exclamation-triangle"></i>
+    <h3>Cancel Premium Subscription?</h3>
+    <p>You will lose access to premium features immediately. Your subscription benefits will end on <strong>{% if subscription %}{{ subscription.expires_at|date:"d M Y" }}{% endif %}</strong>.</p>
+    <div class="modal-buttons">
+      <button class="btn btn-ghost" onclick="closeCancelModal()">
+        <i class="fas fa-arrow-left"></i> Keep Premium
+      </button>
+      <button class="btn btn-danger" onclick="submitCancelForm()">
+        <i class="fas fa-check"></i> Yes, Cancel
+      </button>
+    </div>
+  </div>
 </div>
 
 <script>
-// Progress animation
-document.querySelectorAll('.fill').forEach(el=>{
-    let s = el.dataset.score;
-    el.style.width = s + "%";
-    el.style.transition = "1s ease";
-
-    el.style.background =
-        s>=70 ? "#22c55e" :
-        s>=40 ? "#facc15" :
-                "#ef4444";
+// Progress bar animation
+document.querySelectorAll('.progress-fill').forEach(el => {
+  let score = parseFloat(el.dataset.score) || 0;
+  el.style.width = score + "%";
+  
+  // Color based on score
+  if (score >= 70) {
+    el.style.background = "linear-gradient(90deg, #22c55e, #16a34a)";
+  } else if (score >= 40) {
+    el.style.background = "linear-gradient(90deg, #f59e0b, #d97706)";
+  } else {
+    el.style.background = "linear-gradient(90deg, #ef4444, #dc2626)";
+  }
 });
 
-// Chart
-const labels = JSON.parse('{{ chart_labels|escapejs }}' || '[]');
-const scores = JSON.parse('{{ chart_scores|escapejs }}' || '[]');
+// Chart rendering
+const chartLabels = JSON.parse('{{ chart_labels|escapejs }}' || '[]');
+const chartScores = JSON.parse('{{ chart_scores|escapejs }}' || '[]');
 
-if(labels.length){
-    const ctx = document.getElementById("chart").getContext("2d");
-
-    const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-    gradient.addColorStop(0, "rgba(79,140,255,0.8)");
-    gradient.addColorStop(1, "rgba(79,140,255,0)");
-
-    new Chart(ctx, {
-        type: "line",
-        data: {
-            labels: labels,
-            datasets: [{
-                label: "Performance %",
-                data: scores,
-                borderColor: "#4f8cff",
-                backgroundColor: gradient,
-                fill: true,
-                tension: 0.4,
-                pointRadius: 5,
-                pointHoverRadius: 8,
-                pointBackgroundColor: "#fff",
-                pointBorderColor: "#4f8cff",
-            }]
+if (chartLabels.length > 0) {
+  const ctx = document.getElementById("performanceChart").getContext("2d");
+  
+  // Create gradient
+  const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+  gradient.addColorStop(0, "rgba(96, 165, 250, 0.7)");
+  gradient.addColorStop(0.5, "rgba(139, 92, 246, 0.3)");
+  gradient.addColorStop(1, "rgba(139, 92, 246, 0)");
+  
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: "Score %",
+        data: chartScores,
+        borderColor: "#60a5fa",
+        backgroundColor: gradient,
+        fill: true,
+        tension: 0.3,
+        pointRadius: 5,
+        pointHoverRadius: 8,
+        pointBackgroundColor: "#fff",
+        pointBorderColor: "#8b5cf6",
+        pointBorderWidth: 2,
+        borderWidth: 2.5,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      animation: {
+        duration: 1200,
+        easing: 'easeOutQuart'
+      },
+      plugins: {
+        legend: {
+          labels: {
+            color: "#cbd5e1",
+            font: { size: 11, weight: '500' },
+            usePointStyle: true,
+          },
+          position: 'top',
         },
-        options: {
-            animation: { duration:1500 },
-            plugins:{ legend:{ labels:{ color:"#fff"} } },
-            scales:{
-                x:{ ticks:{ color:"#9ca3af"}, grid:{ color:"rgba(255,255,255,0.05)"} },
-                y:{ ticks:{ color:"#9ca3af"}, grid:{ color:"rgba(255,255,255,0.05)"} }
-            }
+        tooltip: {
+          backgroundColor: "#0f172a",
+          titleColor: "#f1f5f9",
+          bodyColor: "#94a3b8",
+          borderColor: "#3b82f6",
+          borderWidth: 1,
+          callbacks: {
+            label: (context) => `Score: ${context.raw}%`
+          }
         }
-    });
+      },
+      scales: {
+        x: {
+          ticks: { color: "#94a3b8", font: { size: 10 } },
+          grid: { color: "rgba(255,255,255,0.05)" },
+          title: { display: true, text: 'Tests', color: "#64748b", font: { size: 10 } }
+        },
+        y: {
+          ticks: { color: "#94a3b8", callback: (val) => val + "%" },
+          grid: { color: "rgba(255,255,255,0.05)" },
+          title: { display: true, text: 'Performance (%)', color: "#64748b", font: { size: 10 } },
+          min: 0,
+          max: 100
+        }
+      },
+      elements: {
+        line: {
+          borderJoin: 'round'
+        }
+      }
+    }
+  });
+} else {
+  // Show empty state in chart
+  const ctx = document.getElementById("performanceChart").getContext("2d");
+  ctx.fillStyle = "#1e293b";
+  ctx.fillRect(0, 0, 400, 200);
+  ctx.fillStyle = "#64748b";
+  ctx.font = "12px Inter";
+  ctx.textAlign = "center";
+  ctx.fillText("Complete tests to see your progress", 200, 100);
+}
+
+// Cancel Subscription Modal Functions
+function openCancelModal() {
+  const modal = document.getElementById('cancelModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeCancelModal() {
+  const modal = document.getElementById('cancelModal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+function submitCancelForm() {
+  const form = document.getElementById('cancelSubscriptionForm');
+  if (form) {
+    form.submit();
+  }
+}
+
+// Close modal on escape key
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeCancelModal();
+  }
+});
+
+// Close modal on background click
+window.onclick = function(e) {
+  const modal = document.getElementById('cancelModal');
+  if (e.target === modal) {
+    closeCancelModal();
+  }
 }
 </script>
 

@@ -292,12 +292,13 @@ def cancel_subscription(request):
     sub = Subscription.objects.filter(user=request.user).first()
 
     if sub:
-        sub.plan = 'free'   # ✅ downgrade to free
-        sub.status = 'active'
+        sub.plan = 'free'
+        sub.status = 'cancelled'
         sub.expires_at = None
         sub.save()
 
     return redirect('profile')
+
 from .models import Feedback
 @login_required
 def about(request):
@@ -1210,7 +1211,7 @@ def payment_verify(request):
 
         sub, _ = Subscription.objects.get_or_create(user=request.user)
 
-        sub.plan = 'premium'
+        sub.plan = plan
         sub.status = 'active'
         sub.expires_at = timezone.now() + timedelta(days=duration)
         sub.save()

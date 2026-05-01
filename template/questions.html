@@ -6,295 +6,705 @@
 <title>Practice Hub | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-body{
-font-family:'Segoe UI',sans-serif;
-background:linear-gradient(135deg,#0a0f1e,#020617);
-color:white;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* HEADER */
-header{
-padding:25px;
-text-align:center;
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
-border-bottom:1px solid rgba(255,255,255,0.08);
+body {
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at 20% 30%, #0a0f1e, #020617);
+  color: #e2e8f0;
+  min-height: 100vh;
+  display: flex;
+  overflow-x: hidden;
 }
 
-header h1{
-font-size:36px;
-font-weight:800;
-background:linear-gradient(90deg,#3b82f6,#8b5cf6,#ec4899);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
+/* Animated background particles */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(rgba(96, 165, 250, 0.08) 1px, transparent 1px);
+  background-size: 45px 45px;
+  pointer-events: none;
+  z-index: -1;
 }
 
-/* CONTAINER */
-.container{
-max-width:1200px;
-margin:auto;
-padding:50px 20px;
+/* SIDEBAR - Modern Glassmorphic */
+.sidebar {
+  width: 280px;
+  background: rgba(8, 12, 24, 0.85);
+  backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(59, 130, 246, 0.25);
+  padding: 28px 20px;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  z-index: 100;
 }
 
-/* GRID */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:30px;
+.sidebar h2 {
+  font-size: 26px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 32px;
+  letter-spacing: -0.5px;
+  padding-left: 8px;
 }
 
-/* CARD */
-.card{
-background:linear-gradient(145deg,#111827,#020617);
-padding:30px;
-border-radius:18px;
-text-align:center;
-transition:0.4s;
-position:relative;
-border:1px solid rgba(59,130,246,0.1);
+.sidebar a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  margin: 6px 0;
+  color: #94a3b8;
+  text-decoration: none;
+  border-radius: 14px;
+  transition: all 0.25s ease;
+  font-weight: 500;
+  font-size: 0.9rem;
 }
 
-.card:hover{
-transform:translateY(-10px) scale(1.02);
-box-shadow:0 25px 50px rgba(0,0,0,.7),
-0 0 25px rgba(59,130,246,.3);
+.sidebar a i {
+  width: 24px;
+  font-size: 1.1rem;
 }
 
-/* LOCK BADGE */
-.lock-badge{
-position:absolute;
-top:15px;
-right:15px;
-background:#f59e0b;
-color:black;
-padding:5px 12px;
-border-radius:20px;
-font-size:12px;
-font-weight:600;
+.sidebar a:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.1));
+  color: #60a5fa;
+  transform: translateX(4px);
 }
 
-/* BUTTONS */
-.btn{
-padding:12px 20px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-margin:8px;
-font-weight:600;
-transition:0.3s;
+.sidebar a.active {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
-.practice{background:#22c55e;color:white;}
-.test{background:#6366f1;color:white;}
-
-.btn:hover{
-transform:translateY(-2px);
-opacity:0.9;
+/* MAIN CONTENT */
+.main {
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  padding: 32px 40px;
+  min-height: 100vh;
 }
 
-/* PREMIUM SECTION - Only shown for non-premium users */
-.premium{
-margin-top:80px;
-background:linear-gradient(135deg,#4f46e5,#9333ea);
-padding:50px;
-border-radius:25px;
-text-align:center;
-box-shadow:0 20px 50px rgba(0,0,0,.6);
+/* HEADER SECTION */
+.header {
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-.unlock{
-background:white;
-color:#4f46e5;
-padding:14px 30px;
-border-radius:30px;
-border:none;
-cursor:pointer;
-font-weight:600;
+.header h1 {
+  font-size: 32px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ffffff, #a5b4fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.3px;
 }
 
-/* POPUP */
-#premiumModal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.75);
-z-index:2000;
-justify-content:center;
-align-items:center;
+.header p {
+  color: #94a3b8;
+  margin-top: 8px;
+  font-size: 0.95rem;
 }
 
-.modal-box{
-background:#111827;
-padding:30px;
-border-radius:20px;
-text-align:center;
-width:90%;
-max-width:400px;
+/* GRID - Modern cards */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 28px;
+  margin-bottom: 40px;
+}
+
+/* CARD - Premium Glassmorphism */
+.card {
+  background: rgba(15, 25, 45, 0.7);
+  backdrop-filter: blur(16px);
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6);
+  transition: left 0.45s ease;
+}
+
+.card:hover::before {
+  left: 0;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(96, 165, 250, 0.5);
+  box-shadow: 0 25px 40px -18px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(96, 165, 250, 0.15);
+}
+
+/* Card header with icon */
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.card p {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+/* TAGS - Enhanced styling */
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 30px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  margin-bottom: 12px;
+}
+
+.easy { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
+.medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+.hard { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+.premium-tag { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+/* LOCK badge - premium indicator */
+.lock {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(245, 158, 11, 0.15);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+  font-size: 14px;
+}
+
+/* BUTTONS - Modern gradient */
+.btn {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  margin-top: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 48%;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.practice {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: white;
+  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+}
+
+.test {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Locked button style */
+.btn-locked {
+  background: rgba(75, 85, 99, 0.5);
+  cursor: pointer;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #fcd34d;
+  box-shadow: none;
+}
+
+.btn-locked:hover {
+  background: rgba(245, 158, 11, 0.2);
+  transform: translateY(-2px);
+}
+
+/* PREMIUM BANNER - Eye-catching */
+.premium-banner {
+  margin-top: 20px;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(147, 51, 234, 0.2));
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(139, 92, 246, 0.5);
+  padding: 32px 28px;
+  border-radius: 32px;
+  text-align: center;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-banner::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.1), transparent 70%);
+  pointer-events: none;
+}
+
+.premium-banner h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+
+.premium-banner p {
+  color: #cbd5e1;
+  margin-bottom: 20px;
+}
+
+.premium-features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.feature-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 16px;
+  border-radius: 40px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.feature-chip i {
+  color: #fbbf24;
+}
+
+.upgrade {
+  background: linear-gradient(135deg, #f59e0b, #ea580c);
+  color: #0a0a0a;
+  padding: 12px 32px;
+  border-radius: 40px;
+  border: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.4);
+}
+
+.upgrade:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.05);
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.5);
+}
+
+/* MODAL - Premium Popup */
+#premiumModal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(12px);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: all 0.3s;
+}
+
+.modal-box {
+  background: linear-gradient(145deg, #111827, #030617);
+  padding: 36px 32px;
+  border-radius: 32px;
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 40px 60px -20px black;
+  animation: modalPop 0.3s ease-out;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.modal-box i {
+  font-size: 56px;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 16px;
+}
+
+.modal-box h3 {
+  font-size: 1.6rem;
+  margin: 16px 0 8px;
+  font-weight: 700;
+}
+
+.modal-box p {
+  color: #94a3b8;
+  margin-bottom: 28px;
+}
+
+.modal-btn {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+  padding: 12px 28px;
+  border-radius: 40px;
+  text-decoration: none;
+  color: #0a0a0a;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  color: #64748b;
+  margin-top: 16px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+/* Stats row on cards */
+.card-stats {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin: 12px 0 8px;
+  font-size: 0.7rem;
+  color: #64748b;
+}
+
+.card-stats span i {
+  margin-right: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+  .sidebar.open {
+    transform: translateX(0);
+  }
+  .main {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+  .btn-group {
+    flex-direction: column;
+  }
+  .btn {
+    width: 100%;
+  }
+  .grid {
+    gap: 20px;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 10px;
 }
 </style>
-
 </head>
-
 <body>
 
-<header>
-<h1>Practice Hub</h1>
-<p>Boost Your Interview Preparation 🚀</p>
-</header>
-
-<div class="container">
-
-<div class="grid">
-
-<!-- ✅ APTITUDE (FREE) -->
-<div class="card">
-<h2>📊 Aptitude Practice</h2>
-<p>Master quantitative, reasoning, and verbal ability.</p>
-
-<button class="btn practice" onclick="location.href='/aptitude/practice/'">
-Start Practice
-</button>
-
-<button class="btn test" onclick="location.href='/aptitude/test/'">
-Take Test
-</button>
+<!-- SIDEBAR - Enhanced -->
+<div class="sidebar">
+  <h2><i class="fas fa-brain"></i> PrepEdge</h2>
+  <a href="{% url 'ai_dashboard' %}" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+  <a href="{% url 'programming' %}"><i class="fas fa-code"></i> Practice</a>
+  <a href="{% url 'questions' %}"><i class="fas fa-clipboard-list"></i> Tests</a>
+  <a href="{% url 'profile' %}"><i class="fas fa-chart-line"></i> Progress</a>
+  <a href="{% url 'plans' %}"><i class="fas fa-crown"></i> Premium</a>
+  <!-- <div style="margin-top: 40px; padding: 12px; border-top: 1px solid rgba(255,255,255,0.05);">
+    <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+  </div> -->
 </div>
 
-<!-- 🔒 TECHNICAL (FULL LOCK) -->
-<div class="card">
-{% if not subscribed %}
-<div class="lock-badge">⭐ Premium</div>
-{% endif %}
+<!-- MAIN CONTENT -->
+<div class="main">
 
-<h2>💻 Technical MCQs</h2>
-<p>Programming, DBMS, OS, and CS subjects.</p>
+  <div class="header">
+    <h1><i class="fas fa-microphone-alt me-2"></i> Practice Dashboard</h1>
+    <p>Master coding interviews with structured, AI-powered practice modules</p>
+  </div>
 
-{% if subscribed %}
-<button class="btn practice" onclick="location.href='/technical/practice/'">
-Start Practice
-</button>
+  <div class="grid">
 
-<button class="btn test" onclick="location.href='/technical/test/'">
-Take Test
-</button>
-{% else %}
-<button class="btn practice" onclick="openModal()">
-🔒 Start Practice
-</button>
+    <!-- APTITUDE (FREE) - Enhanced Card -->
+    <div class="card">
+      <div class="card-icon">📊</div>
+      <div>
+        <span class="tag easy"><i class="fas fa-unlock-alt"></i> FREE ACCESS</span>
+      </div>
+      <h3>Aptitude Mastery</h3>
+      <p>Quantitative aptitude, logical reasoning & verbal ability — complete foundation for all aptitude tests.</p>
+      <div class="card-stats">
+        <span><i class="fas fa-check-circle text-success"></i> 550+ MCQs</span>
+        <span><i class="fas fa-clock"></i> Timed Practice</span>
+      </div>
+      <div class="btn-group">
+        <button class="btn practice" onclick="location.href='/aptitude/practice/'">
+          <i class="fas fa-play"></i> Practice
+        </button>
+        <button class="btn test" onclick="location.href='/aptitude/test/'">
+          <i class="fas fa-trophy"></i> Take Test
+        </button>
+      </div>
+    </div>
 
-<button class="btn test" onclick="openModal()">
-🔒 Take Test
-</button>
+    <!-- TECHNICAL (Premium) -->
+    <div class="card">
+      {% if not subscribed %}
+      <div class="lock"><i class="fas fa-gem"></i></div>
+      {% endif %}
+      <div class="card-icon">💻</div>
+      <div>
+        <span class="tag medium"><i class="fas fa-code"></i> TECHNICAL</span>
+      </div>
+      <h3>Technical MCQs</h3>
+      <p>Programming, DSA, DBMS, Operating Systems, Computer Networks — essential for tech interviews.</p>
+      <div class="card-stats">
+        <span><i class="fas fa-database"></i> 800+ Qs</span>
+        <span><i class="fas fa-chart-simple"></i> Company Patterns</span>
+      </div>
+      <div class="btn-group">
+        {% if subscribed %}
+        <button class="btn practice" onclick="location.href='/technical/practice/'">
+          <i class="fas fa-play"></i> Practice
+        </button>
+        <button class="btn test" onclick="location.href='/technical/test/'">
+          <i class="fas fa-trophy"></i> Take Test
+        </button>
+        {% else %}
+        <button class="btn practice btn-locked" onclick="openModal()">
+          <i class="fas fa-lock"></i> Practice
+        </button>
+        <button class="btn test btn-locked" onclick="openModal()">
+          <i class="fas fa-lock"></i> Take Test
+        </button>
+        <div style="font-size: 0.7rem; color: #fbbf24; margin-top: 8px; text-align: center;">
+          <i class="fas fa-star-of-life"></i> Premium Feature
+        </div>
+        {% endif %}
+      </div>
+    </div>
 
-<p style="font-size:12px;color:#9ca3af;">Premium required</p>
-{% endif %}
+    <!-- INTERVIEW (Premium) -->
+    <div class="card">
+      {% if not subscribed %}
+      <div class="lock"><i class="fas fa-gem"></i></div>
+      {% endif %}
+      <div class="card-icon">🎯</div>
+      <div>
+        <span class="tag hard"><i class="fas fa-users"></i> INTERVIEW</span>
+      </div>
+      <h3>Interview Prep</h3>
+      <p>Real company-specific questions, HR behavioral rounds, and situational interview practice.</p>
+      <div class="card-stats">
+        <span><i class="fas fa-building"></i> FAANG + Top MNCs</span>
+        <span><i class="fas fa-brain"></i> AI Feedback</span>
+      </div>
+      <div class="btn-group">
+        {% if subscribed %}
+        <button class="btn practice" onclick="location.href='/interview/practice/'">
+          <i class="fas fa-play"></i> Practice
+        </button>
+        <button class="btn test" onclick="location.href='/interview/test/'">
+          <i class="fas fa-trophy"></i> Take Test
+        </button>
+        {% else %}
+        <button class="btn practice btn-locked" onclick="openModal()">
+          <i class="fas fa-lock"></i> Practice
+        </button>
+        <button class="btn test btn-locked" onclick="openModal()">
+          <i class="fas fa-lock"></i> Take Test
+        </button>
+        <div style="font-size: 0.7rem; color: #fbbf24; margin-top: 8px; text-align: center;">
+          <i class="fas fa-crown"></i> Unlock with Premium
+        </div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PREMIUM UPGRADE BANNER - Only for non-premium users -->
+  {% if not subscribed %}
+  <div class="premium-banner">
+    <h2><i class="fas fa-rocket"></i> Accelerate Your Career</h2>
+    <p>Get unlimited access to Technical MCQs, Interview Q-banks, and AI-driven performance insights</p>
+    <div class="premium-features">
+      <div class="feature-chip"><i class="fas fa-check-circle"></i> 2000+ Premium Questions</div>
+      <div class="feature-chip"><i class="fas fa-chart-line"></i> AI Performance Analytics</div>
+      <div class="feature-chip"><i class="fas fa-infinity"></i> Unlimited Mock Tests</div>
+      <div class="feature-chip"><i class="fas fa-calendar-alt"></i> Smart Study Planner</div>
+    </div>
+    <button class="upgrade" onclick="location.href='/plans/'">
+      <i class="fas fa-unlock-alt"></i> Upgrade to Premium
+    </button>
+    <p style="font-size: 0.7rem; margin-top: 18px; opacity: 0.6;">⭐ Trusted by 15,000+ job seekers</p>
+  </div>
+  {% endif %}
+
 </div>
 
-<!-- 🔒 INTERVIEW (FULL LOCK) -->
-<div class="card">
-{% if not subscribed %}
-<div class="lock-badge">⭐ Premium</div>
-{% endif %}
-
-<h2>🎯 Interview Questions</h2>
-<p>Real company interview questions.</p>
-
-{% if subscribed %}
-<button class="btn practice" onclick="location.href='/interview/practice/'">
-Start Practice
-</button>
-
-<button class="btn test" onclick="location.href='/interview/test/'">
-Take Test
-</button>
-{% else %}
-<button class="btn practice" onclick="openModal()">
-🔒 Start Practice
-</button>
-
-<button class="btn test" onclick="openModal()">
-🔒 Take Test
-</button>
-
-<p style="font-size:12px;color:#9ca3af;">Premium required</p>
-{% endif %}
-</div>
-
-</div>
-
-<!-- PREMIUM SECTION - ONLY SHOW IF NOT SUBSCRIBED -->
-{% if not subscribed %}
-<div class="premium">
-<h2>✨ Unlock Premium Access ✨</h2>
-
-<p>✔ Company-specific questions</p>
-<p>✔ AI performance analysis</p>
-<p>✔ Unlimited mock tests</p>
-<p>✔ Smart study planner</p>
-
-<br>
-
-<button class="unlock" onclick="location.href='/plans/'">
-Upgrade Now 🚀
-</button>
-</div>
-{% endif %}
-
-</div>
-
-<!-- 🔥 POPUP -->
+<!-- MODAL - Premium Lock Popup -->
 <div id="premiumModal">
-<div class="modal-box">
-
-<i class="fas fa-lock" style="font-size:40px;color:#f59e0b;"></i>
-
-<h2>Premium Feature</h2>
-
-<p style="color:#9ca3af;">Upgrade to unlock this module ⭐</p>
-
-<br>
-
-<a href="{% url 'plans' %}" 
-style="background:#f59e0b;padding:10px 20px;border-radius:8px;text-decoration:none;color:black;font-weight:600;display:inline-block;">
-Upgrade Now
-</a>
-
-</div>
+  <div class="modal-box">
+    <i class="fas fa-crown"></i>
+    <h3>Premium Access Required</h3>
+    <p>Unlock technical MCQs, interview Q-banks, and AI-powered analytics to ace your interviews.</p>
+    <a href="{% url 'plans' %}" class="modal-btn">
+      <i class="fas fa-gem"></i> Upgrade Now
+    </a>
+    <div>
+      <button class="close-modal-btn" onclick="closeModal()">
+        <i class="fas fa-times"></i> Maybe later
+      </button>
+    </div>
+  </div>
 </div>
 
-<!-- JS -->
 <script>
-function openModal(){
-    var isPremium = "{{ subscribed|yesno:'true,false' }}";
-    if(isPremium === "true") {
-        return;
-    }
-    document.getElementById("premiumModal").style.display="flex";
+function openModal() {
+  var isPremium = "{{ subscribed|yesno:'true,false' }}";
+  if (isPremium === "true") {
+    return;
+  }
+  var modal = document.getElementById("premiumModal");
+  modal.style.display = "flex";
+  document.body.style.overflow = "hidden";
 }
 
-window.onclick = function(e){
+function closeModal() {
+  var modal = document.getElementById("premiumModal");
+  modal.style.display = "none";
+  document.body.style.overflow = "";
+}
+
+window.onclick = function(e) {
+  var modal = document.getElementById("premiumModal");
+  if (e.target === modal) {
+    closeModal();
+  }
+}
+
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
     var modal = document.getElementById("premiumModal");
-    if(e.target === modal) {
-        modal.style.display = "none";
+    if (modal.style.display === "flex") {
+      closeModal();
     }
-}
+  }
+});
 
-// Close modal with Escape key
-document.addEventListener('keydown', function(e) {
-    if(e.key === 'Escape') {
-        var modal = document.getElementById("premiumModal");
-        if(modal.style.display === "flex") {
-            modal.style.display = "none";
-        }
-    }
+// Add subtle hover effect on cards
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    card.style.transition = 'all 0.35s ease';
+  });
 });
 </script>
-
-<!-- Font Awesome for icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 </body>
 </html>

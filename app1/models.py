@@ -42,9 +42,11 @@ class LoginHistory(models.Model):
 class Subscription(models.Model):
 
     PLAN_CHOICES = [
-        ('free', 'Free'),
-        ('premium', 'Premium'),
-    ]
+    ('free', 'Free'),
+    ('monthly', 'Monthly'),
+    ('yearly', 'Yearly'),
+]
+
 
     STATUS_CHOICES = [
         ('active', 'Active'),
@@ -69,6 +71,7 @@ class Subscription(models.Model):
         choices=STATUS_CHOICES,
         default='expired'
     )
+
 
     started_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField(null=True, blank=True)
@@ -102,9 +105,13 @@ class Subscription(models.Model):
 
     @property
     def is_premium(self):
-      if self.expires_at and self.expires_at < timezone.now():
-        return False
-      return self.plan == 'premium' and self.status == "active"
+        if self.status != "active":
+            return False
+
+        if self.expires_at and self.expires_at < timezone.now():
+            return False
+
+        return self.plan in ["monthly", "yearly"]
 # ══════════════════════════════════════════════════════════════════
 # 4. PAYMENT RECORD
 #    Every payment attempt (success or fail) is stored here
