@@ -738,14 +738,15 @@ def cpp_oop(request):
     return render(request, 'cpp/cpp_oop.html')
 
 def cpp_practice(request, test_id):
-    test = get_object_or_404(Test, id=test_id)
+    test = Test.objects.filter(name="C++ Practice").first()
 
     if request.method == "POST":
         score = float(request.POST.get("score", 0))
 
         TestResult.objects.create(
-            user=request.user,
-            test=test,
+            request.user,
+            'cpp',
+            test.name,
             score=score
         )
 
