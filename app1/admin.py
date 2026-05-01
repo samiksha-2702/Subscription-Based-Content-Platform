@@ -94,7 +94,7 @@ class ExtendedUserAdmin(BaseUserAdmin):
     def plan_badge(self, obj):
         plan = getattr(getattr(obj, 'subscription', None), 'plan', 'free')
 
-        if plan == "premium":
+        if plan in ['monthly', 'yearly']:
           color, label = "#f59e0b", "⭐ PREMIUM"
         else:
           color, label = "#6b7280", "FREE"
@@ -194,21 +194,22 @@ class SubscriptionAdmin(admin.ModelAdmin):
     email.short_description = "Email"
     # ✅ PLAN BADGE
     def plan_badge(self, obj):
-        try:
-            plan = obj.plan  # IMPORTANT FIX (see below)
+        plan = obj.plan
 
-            if plan == 'premium':
-                return format_html(
-                    '<span style="background:#f59e0b;color:#fff;padding:2px 10px;'
-                    'border-radius:6px;font-size:11px;">⭐ PREMIUM</span>'
-                )
-        except Exception:
-            pass
+        if plan in ['monthly', 'yearly']:
+            return format_html(
+                '<span style="background:{};color:#fff;padding:2px 10px;'
+                'border-radius:6px;font-size:11px;">{}</span>',
+                '#f59e0b',
+                '⭐ PREMIUM'
+            )
 
         return format_html(
-            '<span style="background:#6b7280;color:#fff;padding:2px 10px;'
-            'border-radius:6px;font-size:11px;">FREE</span>'
-    )
+            '<span style="background:{};color:#fff;padding:2px 10px;'
+            'border-radius:6px;font-size:11px;">{}</span>',
+            '#6b7280',
+            'FREE'
+        )
 
     # ✅ STATUS BADGE
     def status_badge(self, obj):
@@ -234,9 +235,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
         delta = (obj.expires_at - timezone.now()).days
 
         if delta < 0:
-            return format_html(
-                '<span style="color:#ef4444;font-weight:600;">Expired</span>'
-            )
+            return '<span style="color:#ef4444;font-weight:600;">Expired</span>'
 
         return f"{delta} days"
     days_remaining.short_description = "Remaining"
