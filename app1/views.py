@@ -1,3 +1,5 @@
+from re import sub
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -79,7 +81,7 @@ def user_login(request):
             # ✅ CHECK SUBSCRIPTION
             subscription = get_active_subscription(user)
 
-            if subscription and has_active_subscription(user):
+            if has_active_subscription(user):
               return redirect("index")
             else:
               return redirect("plans")
@@ -102,15 +104,14 @@ def has_active_subscription(user):
     if not sub:
         return False
 
-    # ❌ EXPIRED → mark and block
+    # expire check
     if sub.expires_at and sub.expires_at < timezone.now():
-        if sub.status != 'expired':
-            sub.status = 'expired'
-            sub.save()
+        sub.status = 'expired'
+        sub.save()
         return False
 
-    # ✅ ONLY premium + active allowed
-    return sub.plan == 'premium' and sub.status == 'active'
+    # ✅ FIXED LOGIC
+    return sub.status == 'active' and sub.plan in ['monthly', 'yearly', 'premium']
 
 @login_required
 def user_logout(request):
@@ -122,6 +123,9 @@ from functools import wraps
 def premium_required(view_func):
     @wraps(view_func)
     def wrapper(request, *args, **kwargs):
+        sub = Subscription.objects.filter(user=request.user).first()
+        # print("DEBUG SUB:", sub.plan if sub else None, sub.status if sub else None)
+
         if not has_active_subscription(request.user):
             return redirect('plans')
         return view_func(request, *args, **kwargs)
@@ -1211,7 +1215,8 @@ def payment_verify(request):
 
         sub, _ = Subscription.objects.get_or_create(user=request.user)
 
-        sub.plan = plan
+        sub.plan = 'premium'
+        # sub.plan_type = plan   # add new field if possible
         sub.status = 'active'
         sub.expires_at = timezone.now() + timedelta(days=duration)
         sub.save()
