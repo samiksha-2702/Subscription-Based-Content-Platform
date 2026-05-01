@@ -13,6 +13,9 @@ urlpatterns = [
     path('ai/', include('ai_recommendations.urls')),
     # path('ai-home/', views.ai_recommendation, name='ai'),
 
+    # ai coach
+    path('ai-coach/', include('ai_coach.urls')), 
+
     # Main modules
     path('programming/', views.programming, name='programming'),
     path('company/', views.company, name='company'),

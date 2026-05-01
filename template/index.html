@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>PrepEdge | AI Interview Prep</title>
+<title>PrepEdge | AI Interview Copilot</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -18,10 +18,24 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color: #fff;
+  background: #0a0a0a;
+  color: #e2e8f0;
   line-height: 1.5;
-  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated gradient background */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(79, 140, 255, 0.08), transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(168, 85, 247, 0.08), transparent 50%);
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Remove link underline */
@@ -30,26 +44,27 @@ a {
   color: inherit;
 }
 
-/* NAVBAR - Matching profile page */
+/* NAVBAR - Sleek & modern */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 50px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(2, 6, 23, 0.8);
-  backdrop-filter: blur(10px);
+  padding: 18px 48px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
   z-index: 100;
 }
 
 .brand {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 800;
-  background: linear-gradient(135deg, #4f8cff, #a855f7);
+  background: linear-gradient(135deg, #60a5fa, #c084fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  letter-spacing: -0.5px;
 }
 
 .nav-links {
@@ -58,55 +73,41 @@ a {
   align-items: center;
 }
 
-/* Button styles matching profile page */
+/* Button styles */
 .btn {
-  padding: 11px 18px;
-  border-radius: 12px;
+  padding: 10px 20px;
+  border-radius: 40px;
   font-weight: 600;
+  font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.2), transparent);
-  opacity: 0;
-  transition: 0.4s;
-}
-
-.btn:hover::after {
-  opacity: 1;
-}
-
-.btn:hover {
-  transform: translateY(-2px) scale(1.03);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  font-family: 'Inter', sans-serif;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #4f8cff, #2563eb);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: #fff;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
-.btn-danger {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  color: #fff;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.4);
 }
 
 .btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #cbd5f5;
-  background: transparent;
+  color: #cbd5e1;
 }
 
 .btn-ghost:hover {
-  background: rgba(79, 140, 255, 0.1);
-  border-color: #4f8cff;
+  background: rgba(59, 130, 246, 0.15);
+  border-color: #3b82f6;
 }
 
 .upgrade-btn-nav {
@@ -115,12 +116,11 @@ a {
 }
 
 .upgrade-btn-nav:hover {
-  background: linear-gradient(135deg, #fcd34d, #fbbf24);
   transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(251, 191, 36, 0.3);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
 }
 
-/* Profile dropdown - matching profile page style */
+/* Profile dropdown */
 .profile {
   position: relative;
   cursor: pointer;
@@ -130,23 +130,21 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 18px;
+  padding: 8px 16px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  transition: all 0.3s;
+  border-radius: 40px;
+  transition: all 0.2s;
   font-weight: 500;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .profile > span:hover {
-  background: rgba(79, 140, 255, 0.15);
-  border-color: rgba(79, 140, 255, 0.3);
-  transform: translateY(-1px);
+  background: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.3);
 }
 
 .profile i {
-  font-size: 1rem;
-  color: #4f8cff;
+  color: #60a5fa;
 }
 
 .dropdown {
@@ -155,120 +153,636 @@ a {
   right: 0;
   background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(79, 140, 255, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 16px;
   width: 200px;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(-12px) scale(0.98);
-  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
-  box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.6);
-  overflow: hidden;
+  transform: translateY(-10px);
+  transition: all 0.2s;
   z-index: 101;
-  pointer-events: none;
 }
 
-.profile:hover .dropdown,
-.dropdown:hover {
+.profile:hover .dropdown {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
-  pointer-events: auto;
+  transform: translateY(0);
 }
 
 .dropdown a {
   padding: 12px 20px;
   display: block;
   color: #cbd5e1;
-  transition: all 0.25s;
+  transition: all 0.2s;
   font-size: 0.9rem;
-  border-left: 2px solid transparent;
 }
 
 .dropdown a:hover {
-  background: rgba(79, 140, 255, 0.15);
+  background: rgba(59, 130, 246, 0.15);
   color: white;
-  border-left-color: #4f8cff;
   padding-left: 26px;
 }
 
 /* HERO SECTION */
 .hero {
   text-align: center;
-  padding: 80px 20px 60px;
-  max-width: 900px;
+  padding: 60px 20px 40px;
+  max-width: 1200px;
   margin: 0 auto;
-  position: relative;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #60a5fa;
+  margin-bottom: 24px;
+  backdrop-filter: blur(4px);
 }
 
 .hero h1 {
   font-size: 3.5rem;
   font-weight: 800;
-  background: linear-gradient(135deg, #fff, #a855f7, #4f8cff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
   letter-spacing: -0.02em;
   margin-bottom: 20px;
+  background: linear-gradient(135deg, #ffffff 30%, #c084fc 70%, #60a5fa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-gradient-text {
+  background: linear-gradient(135deg, #60a5fa, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero p {
+  font-size: 1.1rem;
   color: #94a3b8;
+  max-width: 600px;
   margin: 0 auto 32px;
-  font-size: 1.2rem;
-  max-width: 550px;
 }
 
-/* GRID Layout */
-.grid {
-  max-width: 1280px;
-  margin: 40px auto 80px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 25px;
-  padding: 20px;
+/* AI Coach Section */
+.ai-coach-section {
+  max-width: 1200px;
+  margin: 20px auto 60px;
+  padding: 0 20px;
 }
 
-/* CARD - Matching profile page card style */
-.card {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 18px;
-  padding: 0;
+.ai-coach-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.ai-coach-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #60a5fa, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.new-chat-btn, .chat-history-btn {
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 40px;
+  padding: 8px 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #60a5fa;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.new-chat-btn:hover, .chat-history-btn:hover {
+  background: rgba(59, 130, 246, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Demo Box */
+.demo-box {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 28px;
   overflow: hidden;
   transition: all 0.3s ease;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  height: 550px;
+}
+
+.demo-box:hover {
+  border-color: rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Chat Container */
+.chat-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scroll-behavior: smooth;
+  min-height: 0;
+}
+
+.chat-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #60a5fa, #c084fc);
+  border-radius: 10px;
+}
+
+/* Message Bubbles - Eye-friendly colors */
+.message {
+  display: flex;
+  gap: 12px;
+  animation: fadeInUp 0.3s ease-out;
+}
+
+.message-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-message .message-avatar {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+}
+
+.ai-message .message-avatar {
+  background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+}
+
+.message-avatar i {
+  font-size: 14px;
+  color: white;
+}
+
+.message-content {
+  flex: 1;
+  padding: 10px 0;
+}
+
+.message-bubble {
+  padding: 12px 16px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* User message - softer blue */
+.user-message .message-bubble {
+  background: linear-gradient(135deg, #1e40af, #1e3a8a);
+  color: #e2e8f0;
+  border-bottom-right-radius: 4px;
+}
+
+/* AI message - dark theme friendly */
+.ai-message .message-bubble {
+  background: rgba(30, 41, 59, 0.8);
+  border: 1px solid rgba(96, 165, 250, 0.15);
+  color: #cbd5e1;
+  border-bottom-left-radius: 4px;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: #64748b;
+  margin-top: 4px;
+  padding-left: 8px;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 12px 16px;
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 20px;
+  width: fit-content;
+  border: 1px solid rgba(96, 165, 250, 0.15);
+}
+
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.typing-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #60a5fa;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(1) { animation-delay: 0s; }
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+}
+
+/* Input Area */
+.demo-input-group {
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 16px;
+  gap: 12px;
+}
+
+.demo-input {
+  flex: 1;
+  padding: 14px 18px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid rgba(96, 165, 250, 0.15);
+  border-radius: 30px;
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.demo-input:focus {
+  border-color: #60a5fa;
+  background: rgba(30, 41, 59, 0.8);
+}
+
+.demo-input::placeholder {
+  color: #64748b;
+}
+
+.demo-button {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  padding: 0 28px;
+  border-radius: 30px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+}
+
+.demo-button:hover {
+  transform: scale(1.02);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+}
+
+.demo-note {
+  font-size: 0.7rem;
+  color: #64748b;
+  padding: 12px 16px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Chat History Overlay */
+.chat-history-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.chat-history-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* History Modal */
+.history-modal {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 32px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow: hidden;
+  animation: fadeInUp 0.3s ease;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.history-header h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.history-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.clear-history-btn {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 40px;
+  padding: 6px 14px;
+  font-size: 0.75rem;
+  color: #f87171;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.clear-history-btn:hover {
+  background: rgba(239, 68, 68, 0.3);
+}
+
+.close-overlay {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.close-overlay:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.history-list {
+  padding: 20px;
+  overflow-y: auto;
+  max-height: calc(80vh - 80px);
+}
+
+.history-item {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(96, 165, 250, 0.1);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.history-item:hover {
+  background: rgba(30, 41, 59, 0.6);
+  border-color: rgba(96, 165, 250, 0.3);
+  transform: translateX(4px);
+}
+
+.history-preview {
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.history-type {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.history-type.user {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+}
+
+.history-type.ai {
+  background: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
+}
+
+.history-text {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.history-time {
+  font-size: 0.7rem;
+  color: #64748b;
+  margin-top: 8px;
+}
+
+.empty-history {
+  text-align: center;
+  padding: 48px;
+  color: #64748b;
+}
+
+.empty-history i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+/* Signup Prompt Modal */
+.signup-prompt {
+  background: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 32px;
+  padding: 48px;
+  text-align: center;
+  max-width: 450px;
+  margin: 20px;
+  animation: fadeInUp 0.3s ease;
+}
+
+.signup-prompt i {
+  font-size: 64px;
+  background: linear-gradient(135deg, #60a5fa, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.signup-prompt h3 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.signup-prompt p {
+  color: #94a3b8;
+  margin-bottom: 28px;
+}
+
+.signup-buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+/* Trust Badges */
+.trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+}
+
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #94a3b8;
+  font-size: 0.85rem;
+}
+
+.trust-badge i {
+  font-size: 1.2rem;
+  color: #60a5fa;
+}
+
+/* Features Grid */
+.features-grid {
+  max-width: 1280px;
+  margin: 60px auto 60px;
+  padding: 0 20px;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #fff, #cbd5e1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.section-header p {
+  color: #94a3b8;
+  font-size: 1.1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+/* Card */
+.card {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  transition: all 0.3s ease;
   cursor: pointer;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(79, 140, 255, 0.3);
-  box-shadow: 0 20px 30px -15px rgba(0, 0, 0, 0.5);
+  transform: translateY(-6px);
+  border-color: rgba(59, 130, 246, 0.4);
+  background: rgba(59, 130, 246, 0.05);
+  box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.4);
 }
 
 .card img {
   width: 100%;
   height: 200px;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s ease;
 }
 
 .card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .card-content {
-  padding: 22px 24px 26px;
+  padding: 24px;
 }
 
 .card h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #fff, #cbd5f5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #e2e8f0;
 }
 
 .card p {
@@ -279,18 +793,51 @@ a {
   gap: 8px;
 }
 
-.card p i {
-  color: #4f8cff;
-  font-size: 0.8rem;
+.card-icon {
+  width: 32px;
+  height: 32px;
+  background: rgba(59, 130, 246, 0.15);
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* FOOTER - Matching profile page aesthetic */
+/* CTA Section */
+.cta-section {
+  text-align: center;
+  margin: 60px auto;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+  border-radius: 48px;
+  max-width: 900px;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.cta-section h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.cta-section p {
+  color: #94a3b8;
+  margin-bottom: 32px;
+}
+
+.btn-large {
+  padding: 14px 36px;
+  font-size: 1rem;
+  border-radius: 40px;
+}
+
+/* Footer */
 .footer {
-  background: rgba(2, 6, 23, 0.9);
+  background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
   margin-top: 60px;
-  padding: 60px 50px 35px;
+  padding: 60px 48px 35px;
 }
 
 .footer-container {
@@ -305,8 +852,7 @@ a {
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 20px;
-  color: #e2e8f0;
-  letter-spacing: -0.2px;
+  color: #cbd5e1;
 }
 
 .footer-section .brand {
@@ -340,7 +886,7 @@ a {
 }
 
 .social-links a:hover {
-  background: linear-gradient(135deg, #4f8cff, #2563eb);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   color: white;
   transform: translateY(-3px);
 }
@@ -361,7 +907,7 @@ a {
 }
 
 .footer-section ul li a:hover {
-  color: #4f8cff;
+  color: #60a5fa;
   transform: translateX(5px);
 }
 
@@ -386,13 +932,13 @@ a {
 }
 
 .newsletter-form input:focus {
-  border-color: #4f8cff;
-  background: rgba(79, 140, 255, 0.1);
+  border-color: #60a5fa;
+  background: rgba(59, 130, 246, 0.1);
 }
 
 .newsletter-form button {
   padding: 12px 24px;
-  background: linear-gradient(135deg, #4f8cff, #2563eb);
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   border: none;
   border-radius: 12px;
   color: white;
@@ -405,7 +951,7 @@ a {
 
 .newsletter-form button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(79, 140, 255, 0.3);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
 }
 
 .footer-bottom {
@@ -425,18 +971,18 @@ a {
 }
 
 .footer-bottom a {
-  color: #4f8cff;
+  color: #60a5fa;
 }
 
 .footer-bottom a:hover {
   text-decoration: underline;
 }
 
-/* Animation for cards */
+/* Animations */
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -455,9 +1001,9 @@ a {
 .card:nth-child(5) { animation-delay: 0.25s; }
 .card:nth-child(6) { animation-delay: 0.3s; }
 
-/* Custom scrollbar matching profile page */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -465,42 +1011,40 @@ a {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4f8cff, #a855f7);
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
   border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #60a5fa, #c084fc);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
   .navbar {
-    padding: 15px 24px;
+    padding: 16px 24px;
     flex-direction: column;
-    gap: 15px;
-  }
-  
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 12px;
   }
   
   .hero h1 {
-    font-size: 2.2rem;
-  }
-  
-  .hero p {
-    font-size: 1rem;
+    font-size: 2.5rem;
   }
   
   .hero {
-    padding: 50px 20px 40px;
+    padding: 40px 20px;
   }
   
-  .grid {
-    gap: 20px;
-    padding: 16px;
+  .demo-box {
+    height: 450px;
+  }
+  
+  .ai-coach-header h2 {
+    font-size: 1.4rem;
+  }
+  
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .cta-section h3 {
+    font-size: 1.5rem;
   }
   
   .footer {
@@ -515,6 +1059,16 @@ a {
     flex-direction: column;
     text-align: center;
   }
+  
+  .header-buttons {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
+  .history-modal {
+    width: 95%;
+    margin: 16px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -523,8 +1077,12 @@ a {
   }
   
   .btn {
-    padding: 8px 14px;
-    font-size: 0.85rem;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+  
+  .trust-badges {
+    gap: 16px;
   }
   
   .card h3 {
@@ -538,21 +1096,77 @@ a {
   .newsletter-form button {
     width: 100%;
   }
+  
+  .message-bubble {
+    font-size: 0.85rem;
+  }
+  
+  .demo-input-group {
+    padding: 12px;
+  }
+  
+  .demo-button {
+    padding: 0 20px;
+  }
+  
+  .signup-buttons {
+    flex-direction: column;
+  }
+  
+  .history-preview {
+    flex-wrap: wrap;
+  }
 }
 
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
+/* Markdown-style formatting */
+.message-bubble strong, .message-bubble b {
+  color: #60a5fa;
+}
+
+.message-bubble ul, .message-bubble ol {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+
+.message-bubble li {
+  margin: 4px 0;
+}
+
+.message-bubble code {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.85em;
+}
+
+.message-bubble pre {
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin: 8px 0;
+}
+
+.message-bubble p {
+  margin: 8px 0;
+}
+
+.message-bubble p:first-child {
+  margin-top: 0;
+}
+
+.message-bubble p:last-child {
+  margin-bottom: 0;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAVBAR - All URLs preserved -->
+<!-- NAVBAR -->
 <div class="navbar">
   <div class="brand">PrepEdge</div>
-
   <div class="nav-links">
     {% if not subscription %}
     <a href="{% url 'plans' %}" class="btn upgrade-btn-nav"><i class="fas fa-crown"></i> Upgrade</a>
@@ -562,10 +1176,10 @@ html {
     <div class="profile">
       <span><i class="fas fa-user-astronaut"></i> {{ user.username }}</span>
       <div class="dropdown">
-        <a href="{% url 'profile' %}"><i class="fas fa-user" style="width: 20px;"></i> Profile</a>
-        <a href="{% url 'about' %}"><i class="fas fa-info-circle" style="width: 20px;"></i> About</a>
-        <a href="{% url 'plans' %}"><i class="fas fa-gem" style="width: 20px;"></i> Upgrade</a>
-        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt" style="width: 20px;"></i> Logout</a>
+        <a href="{% url 'profile' %}"><i class="fas fa-user"></i> Profile</a>
+        <a href="{% url 'about' %}"><i class="fas fa-info-circle"></i> About</a>
+        <a href="{% url 'plans' %}"><i class="fas fa-gem"></i> Upgrade</a>
+        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
       </div>
     </div>
     {% else %}
@@ -577,80 +1191,201 @@ html {
 
 <!-- HERO SECTION -->
 <section class="hero">
-  <h1>Crack Interviews with AI</h1>
-  <p>Practice, learn and get job-ready faster with personalized AI coaching</p>
-  <a href="#grid" class="btn btn-primary">Get Started <i class="fas fa-arrow-right"></i></a>
+  <div class="hero-badge">
+    <i class="fas fa-robot"></i> AI-Powered Interview Copilot
+  </div>
+
+  <h1>
+    Master Interviews with<br>
+    <span class="hero-gradient-text">AI-Driven Practice</span>
+  </h1>
+
+  <p>Get real-time feedback, personalized questions, and insider tips.</p>
+
+  <!-- <div class="trust-badges">
+    <div class="trust-badge"><i class="fas fa-check-circle"></i> 10k+ Interviews Coached</div>
+    <div class="trust-badge"><i class="fas fa-star"></i> 4.9/5 from 500+ Reviews</div>
+    <div class="trust-badge"><i class="fas fa-shield-alt"></i> Used by Top Tech Companies</div>
+  </div> -->
 </section>
 
-<!-- GRID - All URLs exactly preserved -->
-<div class="grid" id="grid">
+<!-- AI COACH SECTION -->
+<div class="ai-coach-section">
+  <div class="ai-coach-header">
+    <h2>
+      <i class="fas fa-robot"></i>
+      AI Interview Coach
+    </h2>
+    <div class="header-buttons">
+      <button class="new-chat-btn" id="newChatBtn">
+        <i class="fas fa-plus"></i> New Chat
+      </button>
+      <button class="chat-history-btn" id="chatHistoryBtn">
+        <i class="fas fa-history"></i> Chat History
+      </button>
+    </div>
+  </div>
 
-<a href="{% url 'programming' %}">
-<div class="card">
-  <img src="{% static 'image/programming.jpg' %}" alt="Programming">
-  <div class="card-content">
-    <h3>Programming</h3>
-    <p><i class="fas fa-code"></i> Practice coding challenges & algorithms</p>
+  <div class="demo-box">
+    <!-- ChatGPT-like Chat Area -->
+    <div id="chatContainer" class="chat-container">
+      <!-- Welcome Message -->
+      <div class="message ai-message">
+        <div class="message-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="message-content">
+          <div class="message-bubble">
+            👋 Hi there! I'm your AI interview coach. Ask me anything about:<br><br>
+            • 📝 Interview questions & answers<br>
+            • 💼 Career advice & tips<br>
+            • 💻 Technical concepts<br>
+            • 📄 Resume review<br>
+            • 🏢 Company insights
+          </div>
+          <div class="message-time">Just now</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input Area -->
+    <div class="demo-input-group">
+      <input type="text" class="demo-input" id="demoPrompt"
+        placeholder="Ask me anything... (e.g., How to answer 'Tell me about yourself?')">
+      <button class="demo-button" id="demoBtn">
+        <i class="fas fa-paper-plane"></i> Send
+      </button>
+    </div>
+
+    <div class="demo-note">
+      <i class="fas fa-lock"></i> Free demo • Powered by AI • 
+      {% if user.is_authenticated %}
+      Your conversations are saved
+      {% else %}
+      <a href="{% url 'register' %}" style="color: #60a5fa;">Sign up</a> to save chat history
+      {% endif %}
+    </div>
   </div>
 </div>
-</a>
 
-<a href="{% url 'company' %}">
-<div class="card">
-  <img src="{% static 'image/company.png' %}" alt="Company Insights">
-  <div class="card-content">
-    <h3>Company Insights</h3>
-    <p><i class="fas fa-building"></i> Interview blogs & insider tips</p>
+<!-- Chat History Modal -->
+<div id="chatHistoryOverlay" class="chat-history-overlay">
+  <div class="history-modal">
+    <div class="history-header">
+      <h3><i class="fas fa-history"></i> Chat History</h3>
+      <div class="history-actions">
+        {% if user.is_authenticated %}
+        <button class="clear-history-btn" id="clearHistoryBtn">
+          <i class="fas fa-trash-alt"></i> Clear All
+        </button>
+        {% endif %}
+        <button class="close-overlay" onclick="closeHistoryOverlay()">✕</button>
+      </div>
+    </div>
+    <div id="historyList" class="history-list">
+      <!-- History items will be loaded here -->
+    </div>
   </div>
 </div>
-</a>
 
-<a href="{% url 'expert' %}">
-<div class="card">
-  <img src="{% static 'image/expert_talks.jpg' %}" alt="Expert Talks">
-  <div class="card-content">
-    <h3>Expert Talks</h3>
-    <p><i class="fas fa-chalkboard-user"></i> Industry guidance & mentorship</p>
+<!-- Signup Prompt Modal (for non-authenticated users) -->
+<div id="signupOverlay" class="chat-history-overlay">
+  <div class="signup-prompt">
+    <button class="close-overlay" style="position: absolute; top: 20px; right: 20px;" onclick="closeSignupOverlay()">✕</button>
+    <i class="fas fa-lock"></i>
+    <h3>Sign Up Required</h3>
+    <p>Create a free account to save your chat history and never lose your interview practice conversations.</p>
+    <div class="signup-buttons">
+      <a href="{% url 'login' %}" class="btn btn-ghost">Login</a>
+      <a href="{% url 'register' %}" class="btn btn-primary">Sign Up Free</a>
+    </div>
   </div>
 </div>
-</a>
 
-<a href="{% url 'comm' %}">
-<div class="card">
-  <img src="{% static 'image/comm.jpg' %}" alt="Communication">
-  <div class="card-content">
-    <h3>Communication</h3>
-    <p><i class="fas fa-comments"></i> Master soft skills & presentation</p>
+<!-- FEATURES GRID -->
+<div class="features-grid">
+  <div class="section-header">
+    <h2>Everything You Need to Succeed</h2>
+    <p>Comprehensive preparation tools powered by cutting-edge AI</p>
+  </div>
+  
+  <div class="grid" id="grid">
+    <a href="{% url 'programming' %}">
+      <div class="card">
+        <img src="{% static 'image/programming.jpg' %}" alt="Programming" class="card-img">
+        <div class="card-content">
+          <h3><span class="card-icon"><i class="fas fa-code"></i></span> Programming</h3>
+          <p><i class="fas fa-chevron-right"></i> Practice coding challenges & algorithms</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="{% url 'company' %}">
+      <div class="card">
+        <img src="{% static 'image/company.png' %}" alt="Company Insights" class="card-img">
+        <div class="card-content">
+          <h3><span class="card-icon"><i class="fas fa-building"></i></span> Company Insights</h3>
+          <p><i class="fas fa-chevron-right"></i> Interview blogs & insider tips</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="{% url 'expert' %}">
+      <div class="card">
+        <img src="{% static 'image/expert_talks.jpg' %}" alt="Expert Talks" class="card-img">
+        <div class="card-content">
+          <h3><span class="card-icon"><i class="fas fa-chalkboard-user"></i></span> Expert Talks</h3>
+          <p><i class="fas fa-chevron-right"></i> Industry guidance & mentorship</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="{% url 'comm' %}">
+      <div class="card">
+        <img src="{% static 'image/comm.jpg' %}" alt="Communication" class="card-img">
+        <div class="card-content">
+          <h3><span class="card-icon"><i class="fas fa-comments"></i></span> Communication</h3>
+          <p><i class="fas fa-chevron-right"></i> Master soft skills & presentation</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="{% url 'questions' %}">
+      <div class="card">
+        <img src="{% static 'image/question.jpg' %}" alt="Aptitude" class="card-img">
+        <div class="card-content">
+          <h3><span class="card-icon"><i class="fas fa-brain"></i></span> Aptitude</h3>
+          <p><i class="fas fa-chevron-right"></i> Practice MCQs & logical reasoning</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="{% url 'ai_dashboard' %}">
+      <div class="card">
+        <img src="{% static 'image/ai.png' %}" alt="AI Recommendations" class="card-img">
+        <div class="card-content">
+          <h3><span class="card-icon"><i class="fas fa-robot"></i></span> AI Recommendations</h3>
+          <p><i class="fas fa-chevron-right"></i> Smart learning & personalized path</p>
+        </div>
+      </div>
+    </a>
   </div>
 </div>
-</a>
 
-<a href="{% url 'questions' %}">
-<div class="card">
-  <img src="{% static 'image/question.jpg' %}" alt="Aptitude">
-  <div class="card-content">
-    <h3>Aptitude</h3>
-    <p><i class="fas fa-brain"></i> Practice MCQs & logical reasoning</p>
-  </div>
-</div>
-</a>
-
-<a href="{% url 'ai_dashboard' %}">
-<div class="card">
-  <img src="{% static 'image/ai.png' %}" alt="AI Recommendations">
-  <div class="card-content">
-    <h3>AI Recommendations</h3>
-    <p><i class="fas fa-robot"></i> Smart learning & personalized path</p>
-  </div>
-</div>
-</a>
-
+<!-- CTA SECTION -->
+<div class="cta-section">
+  <h3>Ready to Ace Your Interview?</h3>
+  <p>Join thousands of successful candidates who landed their dream jobs with PrepEdge.</p>
+  {% if not user.is_authenticated %}
+  <a href="{% url 'register' %}" class="btn btn-primary btn-large">Start Free <i class="fas fa-arrow-right"></i></a>
+  {% else %}
+  <a href="{% url 'profile' %}" class="btn btn-primary btn-large">Go to Dashboard <i class="fas fa-arrow-right"></i></a>
+  {% endif %}
 </div>
 
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
-    
     <div class="footer-section">
       <div class="brand">PrepEdge</div>
       <p>AI-powered interview preparation platform helping you land your dream job with confidence.</p>
@@ -702,6 +1437,355 @@ html {
     </div>
   </div>
 </footer>
+
+<!-- JAVASCRIPT -->
+<script>
+// DOM Elements
+const chatContainer = document.getElementById('chatContainer');
+const input = document.getElementById('demoPrompt');
+const btn = document.getElementById('demoBtn');
+const newChatBtn = document.getElementById('newChatBtn');
+const chatHistoryBtn = document.getElementById('chatHistoryBtn');
+const historyOverlay = document.getElementById('chatHistoryOverlay');
+const signupOverlay = document.getElementById('signupOverlay');
+const historyListDiv = document.getElementById('historyList');
+
+// User authentication status from Django
+const isAuthenticated = {{ user.is_authenticated|lower }};
+const username = '{{ user.username }}';
+
+// Storage key
+const getStorageKey = () => `chatHistory_${username}`;
+
+// Auto-scroll to bottom
+function scrollToBottom() {
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+}
+
+// Add message to chat
+function addMessage(text, type, isHTML = false, timestamp = null, saveToHistory = true) {
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${type}-message`;
+  
+  const time = timestamp || new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  
+  const avatarIcon = type === 'user' ? 'fas fa-user' : 'fas fa-robot';
+  
+  messageDiv.innerHTML = `
+    <div class="message-avatar">
+      <i class="${avatarIcon}"></i>
+    </div>
+    <div class="message-content">
+      <div class="message-bubble">
+        ${isHTML ? text : escapeHtml(text)}
+      </div>
+      <div class="message-time">${time}</div>
+    </div>
+  `;
+  
+  chatContainer.appendChild(messageDiv);
+  scrollToBottom();
+  
+  // Save to localStorage if user is authenticated and saveToHistory is true
+  if (isAuthenticated && saveToHistory) {
+    saveMessageToHistory(text, type, isHTML, time);
+  }
+  
+  return messageDiv;
+}
+
+// Save message to localStorage
+function saveMessageToHistory(text, type, isHTML, time) {
+  const key = getStorageKey();
+  const history = JSON.parse(localStorage.getItem(key) || '[]');
+  history.push({
+    text: text,
+    type: type,
+    isHTML: isHTML,
+    time: time,
+    timestamp: Date.now()
+  });
+  // Keep only last 500 messages
+  while (history.length > 500) history.shift();
+  localStorage.setItem(key, JSON.stringify(history));
+}
+
+// Load chat history from localStorage
+function loadChatHistory() {
+  if (!isAuthenticated) return;
+  
+  const key = getStorageKey();
+  const history = JSON.parse(localStorage.getItem(key) || '[]');
+  if (history.length > 0) {
+    // Clear chat container
+    chatContainer.innerHTML = '';
+    // Load all history
+    history.forEach(msg => {
+      addMessage(msg.text, msg.type, msg.isHTML, msg.time, false);
+    });
+  } else {
+    // Add welcome message if no history
+    addWelcomeMessage();
+  }
+}
+
+// Start new chat
+function startNewChat() {
+  chatContainer.innerHTML = '';
+  addWelcomeMessage();
+  scrollToBottom();
+}
+
+// Clear all chat history
+function clearAllHistory() {
+  if (confirm('Are you sure you want to delete ALL your chat history? This cannot be undone.')) {
+    const key = getStorageKey();
+    localStorage.removeItem(key);
+    chatContainer.innerHTML = '';
+    addWelcomeMessage();
+    closeHistoryOverlay();
+    scrollToBottom();
+  }
+}
+
+// Add welcome message
+function addWelcomeMessage() {
+  const welcomeDiv = document.createElement('div');
+  welcomeDiv.className = 'message ai-message';
+  welcomeDiv.innerHTML = `
+    <div class="message-avatar">
+      <i class="fas fa-robot"></i>
+    </div>
+    <div class="message-content">
+      <div class="message-bubble">
+        👋 Hi there! I'm your AI interview coach. Ask me anything about:<br><br>
+        • 📝 Interview questions & answers<br>
+        • 💼 Career advice & tips<br>
+        • 💻 Technical concepts<br>
+        • 📄 Resume review<br>
+        • 🏢 Company insights
+      </div>
+      <div class="message-time">Just now</div>
+    </div>
+  `;
+  chatContainer.appendChild(welcomeDiv);
+}
+
+// Load history modal content
+function loadHistoryModal() {
+  if (!isAuthenticated) {
+    historyOverlay.classList.remove('active');
+    signupOverlay.classList.add('active');
+    return;
+  }
+  
+  const key = getStorageKey();
+  const history = JSON.parse(localStorage.getItem(key) || '[]');
+  
+  if (history.length === 0) {
+    historyListDiv.innerHTML = `
+      <div class="empty-history">
+        <i class="fas fa-comment-dots"></i>
+        <p>No chat history yet. Start a conversation with the AI coach!</p>
+      </div>
+    `;
+    return;
+  }
+  
+  // Reverse to show newest first
+  const reversedHistory = [...history].reverse();
+  
+  historyListDiv.innerHTML = reversedHistory.map((msg, idx) => `
+    <div class="history-item" data-index="${history.length - 1 - idx}">
+      <div class="history-preview">
+        <span class="history-type ${msg.type}">${msg.type === 'user' ? 'You' : 'AI Coach'}</span>
+        <span class="history-time">${msg.time}</span>
+      </div>
+      <div class="history-text">${escapeHtml(msg.text.substring(0, 100))}${msg.text.length > 100 ? '...' : ''}</div>
+    </div>
+  `).join('');
+  
+  // Add click handlers to history items
+  document.querySelectorAll('.history-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const index = parseInt(item.dataset.index);
+      loadConversationFromIndex(index);
+      closeHistoryOverlay();
+    });
+  });
+}
+
+// Load conversation from specific index
+function loadConversationFromIndex(index) {
+  const key = getStorageKey();
+  const history = JSON.parse(localStorage.getItem(key) || '[]');
+  const conversation = history.slice(0, index + 1);
+  
+  chatContainer.innerHTML = '';
+  conversation.forEach(msg => {
+    addMessage(msg.text, msg.type, msg.isHTML, msg.time, false);
+  });
+  scrollToBottom();
+}
+
+// Add typing indicator
+function addTypingIndicator() {
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'message ai-message';
+  typingDiv.id = 'typingIndicator';
+  typingDiv.innerHTML = `
+    <div class="message-avatar">
+      <i class="fas fa-robot"></i>
+    </div>
+    <div class="message-content">
+      <div class="typing-indicator">
+        <div class="typing-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span style="margin-left: 8px; color: #94a3b8;">AI is thinking...</span>
+      </div>
+    </div>
+  `;
+  chatContainer.appendChild(typingDiv);
+  scrollToBottom();
+  return typingDiv;
+}
+
+// Remove typing indicator
+function removeTypingIndicator() {
+  const indicator = document.getElementById('typingIndicator');
+  if (indicator) indicator.remove();
+}
+
+// Escape HTML
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// Format AI response
+function formatAIResponse(text) {
+  if (!text) return '';
+  
+  let formatted = text;
+  
+  formatted = formatted.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  formatted = formatted.replace(/\*(.*?)\*/g, '<strong>$1</strong>');
+  formatted = formatted.replace(/\n/g, '<br>');
+  formatted = formatted.replace(/^[•\-]\s+(.+)$/gm, '<li>$1</li>');
+  formatted = formatted.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+  formatted = formatted.replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>');
+  formatted = formatted.replace(/`(.*?)`/g, '<code>$1</code>');
+  formatted = '<p>' + formatted + '</p>';
+  formatted = formatted.replace(/<p><br><\/p>/g, '');
+  
+  return formatted;
+}
+
+// Send message to AI
+async function sendMessage() {
+  const prompt = input.value.trim();
+  if (!prompt) return;
+  
+  addMessage(prompt, 'user', false);
+  input.value = '';
+  
+  const typingIndicator = addTypingIndicator();
+  
+  try {
+    const response = await fetch('/ai-coach/ask/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCSRFToken()
+      },
+      body: JSON.stringify({ prompt: prompt })
+    });
+    
+    const data = await response.json();
+    
+    removeTypingIndicator();
+    
+    const formattedResponse = formatAIResponse(data.response || 'Thanks for your question! Upgrade to Premium for more detailed AI coaching.');
+    addMessage(formattedResponse, 'ai', true);
+    
+  } catch (error) {
+    console.error('AI Error:', error);
+    removeTypingIndicator();
+    addMessage('⚠️ Sorry, I\'m having trouble connecting. Please try again in a moment.', 'ai', false);
+  }
+}
+
+// CSRF token helper
+function getCSRFToken() {
+  let cookieValue = null;
+  const cookies = document.cookie.split(';');
+  
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith('csrftoken=')) {
+      cookieValue = cookie.substring('csrftoken='.length);
+      break;
+    }
+  }
+  return cookieValue;
+}
+
+// Show history overlay
+function showHistoryOverlay() {
+  loadHistoryModal();
+  historyOverlay.classList.add('active');
+}
+
+// Close history overlay
+function closeHistoryOverlay() {
+  historyOverlay.classList.remove('active');
+}
+
+// Close signup overlay
+function closeSignupOverlay() {
+  signupOverlay.classList.remove('active');
+}
+
+// Event listeners
+btn.addEventListener('click', sendMessage);
+input.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+newChatBtn.addEventListener('click', startNewChat);
+chatHistoryBtn.addEventListener('click', showHistoryOverlay);
+
+// Always start fresh chat on page load
+startNewChat();
+
+// Auto-resize input
+input.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+// Close overlay on escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (historyOverlay.classList.contains('active')) closeHistoryOverlay();
+    if (signupOverlay.classList.contains('active')) closeSignupOverlay();
+  }
+});
+
+// Clear history button
+const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+if (clearHistoryBtn) {
+  clearHistoryBtn.addEventListener('click', clearAllHistory);
+}
+
+// Make close functions global for inline onclick
+window.closeHistoryOverlay = closeHistoryOverlay;
+window.closeSignupOverlay = closeSignupOverlay;
+</script>
 
 </body>
 </html>
