@@ -3,57 +3,272 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Python Functions & OOP Cheat Sheet</title>
+<title>Python Functions & OOP Cheat Sheet | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg,#020617,#0f172a);
-    color: #e5e7eb;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-header {
-    padding: 25px 20px;
-    text-align: center;
-    background: rgba(2,6,23,0.8);
+body{
+    font-family:'Inter',sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:#e5e7eb;
+    line-height:1.7;
+    overflow-x:hidden;
 }
 
-header h1 { margin: 0; font-size: 28px; }
-header p { opacity: .7; }
+/* BACKGROUND */
 
-.container { max-width: 1000px; margin: auto; padding: 30px 20px; }
-
-.card {
-    background: linear-gradient(145deg,#111827,#0b1220);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 20px;
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top left, rgba(59,130,246,.15), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 35%);
+    z-index:-1;
 }
 
-.card h3 { margin-top: 0; color: #93c5fd; }
-.card ul { padding-left: 18px; line-height: 1.6; }
+/* HEADER */
 
-.card code {
-    background: rgba(59,130,246,0.2);
-    padding: 2px 6px;
-    border-radius: 4px;
+header{
+    padding:35px 20px;
+    text-align:center;
+    background:rgba(2,6,23,.8);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    box-shadow:0 10px 40px rgba(0,0,0,.45);
 }
 
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: linear-gradient(135deg,#2563eb,#1d4ed8);
-    color: white;
-    text-decoration: none;
+header h1{
+    font-size:38px;
+    font-weight:800;
+    background:linear-gradient(135deg,#60a5fa,#c084fc);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:10px;
 }
 
-footer { text-align: center; padding: 25px; opacity: .6; }
+header p{
+    color:#94a3b8;
+    font-size:15px;
+}
+
+/* NAVIGATION */
+
+.top-nav{
+    margin-top:22px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.nav-btn{
+    padding:12px 18px;
+    border-radius:12px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.nav-btn:hover{
+    transform:translateY(-3px);
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    box-shadow:0 10px 24px rgba(37,99,235,.35);
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:45px 20px;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+    margin-bottom:24px;
+    font-size:26px;
+    font-weight:700;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.section-title::before{
+    content:'';
+    width:6px;
+    height:28px;
+    border-radius:20px;
+    background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* CARD */
+
+.card{
+    background:rgba(15,23,42,.8);
+    backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:22px;
+    padding:28px;
+    margin-bottom:24px;
+    box-shadow:0 10px 30px rgba(0,0,0,.45);
+    transition:.35s;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::before{
+    content:'';
+    position:absolute;
+    top:-40%;
+    right:-15%;
+    width:180px;
+    height:180px;
+    background:radial-gradient(circle,rgba(59,130,246,.15),transparent 70%);
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(96,165,250,.3);
+    box-shadow:
+    0 18px 40px rgba(0,0,0,.65),
+    0 0 20px rgba(59,130,246,.15);
+}
+
+.card h3{
+    color:#93c5fd;
+    margin-bottom:18px;
+    font-size:24px;
+    position:relative;
+    z-index:1;
+}
+
+.card p,
+.card ul,
+.card pre{
+    position:relative;
+    z-index:1;
+}
+
+.card ul{
+    padding-left:20px;
+}
+
+.card ul li{
+    margin-bottom:10px;
+    color:#cbd5e1;
+}
+
+/* CODE */
+
+code{
+    background:rgba(59,130,246,.18);
+    color:#bfdbfe;
+    padding:3px 7px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+pre{
+    margin-top:14px;
+    background:#020617;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:14px;
+    padding:18px;
+    overflow-x:auto;
+}
+
+pre code{
+    background:none;
+    padding:0;
+    color:#e2e8f0;
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+/* BUTTON */
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:12px;
+    padding:12px 18px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px) scale(1.03);
+    box-shadow:0 10px 25px rgba(37,99,235,.45);
+}
+
+/* INFO BOX */
+
+.info-box{
+    background:rgba(37,99,235,.12);
+    border:1px solid rgba(96,165,250,.2);
+    padding:18px;
+    border-radius:16px;
+    margin-top:16px;
+}
+
+.info-box h4{
+    margin-bottom:10px;
+    color:#93c5fd;
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:50px;
+    text-align:center;
+    padding:28px;
+    color:#94a3b8;
+    border-top:1px solid rgba(255,255,255,.06);
+    background:rgba(0,0,0,.2);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    header h1{
+        font-size:28px;
+    }
+
+    .section-title{
+        font-size:22px;
+    }
+
+    .card{
+        padding:22px;
+    }
+
+}
 
 </style>
 </head>
@@ -61,65 +276,355 @@ footer { text-align: center; padding: 25px; opacity: .6; }
 <body>
 
 <header>
+
 <h1>Python Functions & OOP Cheat Sheet</h1>
-<p>Quick reference for functions, lambda, classes, inheritance</p>
+
+<p>
+Quick reference for Functions, Lambda Expressions, Classes & Inheritance
+</p>
+
+<div class="top-nav">
+
+<a href="{% url 'python_info' %}" class="nav-btn">
+🐍 Python Module
+</a>
+
+<a href="{% url 'programming' %}" class="nav-btn">
+💻 Programming Page
+</a>
+
+<a href="{% url 'index' %}" class="nav-btn">
+🏠 Home
+</a>
+
+</div>
+
 </header>
 
 <div class="container">
 
+<h2 class="section-title">
+Functions & OOP Concepts
+</h2>
+
+<!-- FUNCTIONS -->
+
 <div class="card">
+
 <h3>Functions</h3>
-<ul>
-<li>Define: <code>def greet(name): return f"Hello {name}"</code></li>
-<li>Call: <code>greet("Alice")</code></li>
-<li>Default arguments: <code>def add(a, b=5)</code></li>
-<li>Variable arguments: <code>def sum(*args)</code></li>
-<li>Keyword arguments: <code>def person(**kwargs)</code></li>
-</ul>
-</div>
 
-<div class="card">
-<h3>Lambda Functions</h3>
 <ul>
-<li>Syntax: <code>lambda x, y: x + y</code></li>
-<li>Example: <code>add = lambda a,b: a+b</code></li>
-<li>Used with <code>map, filter, reduce</code></li>
-</ul>
-</div>
+<li>Define a function using <code>def</code></li>
 
-<div class="card">
-<h3>Classes</h3>
-<ul>
-<li>Define: <code>class Person:</code></li>
-<li>Constructor: <code>def __init__(self, name): self.name=name</code></li>
-<li>Methods: <code>def greet(self): print(f"Hello {self.name}")</code></li>
-<li>Create object: <code>p = Person("Alice")</code></li>
-<li>Call method: <code>p.greet()</code></li>
-</ul>
-</div>
+<li>Functions help reuse code and improve readability</li>
 
-<div class="card">
-<h3>Inheritance</h3>
+<li>Return values using <code>return</code></li>
+
+<li>Use parameters to pass data into functions</li>
+
+<li>Functions can return multiple values</li>
+
+<li>Nested functions are also supported in Python</li>
+</ul>
+
 <pre><code>
+def greet(name):
+    return f"Hello {name}"
+
+print(greet("Alice"))
+</code></pre>
+
+<div class="info-box">
+
+<h4>Important Interview Point</h4>
+
+<p>
+Python supports first-class functions, meaning functions can be assigned to variables,
+passed as arguments, and returned from other functions.
+</p>
+
+</div>
+
+</div>
+
+<!-- ARGUMENT TYPES -->
+
+<div class="card">
+
+<h3>Types of Function Arguments</h3>
+
+<div class="grid">
+
+<div>
+
+<ul>
+<li>Positional Arguments</li>
+<li>Default Arguments</li>
+<li>Keyword Arguments</li>
+<li>Variable Length Arguments</li>
+</ul>
+
+</div>
+
+<div>
+
+<ul>
+<li><code>*args</code> → multiple positional arguments</li>
+<li><code>**kwargs</code> → multiple keyword arguments</li>
+<li>Optional parameters supported</li>
+<li>Argument unpacking supported</li>
+</ul>
+
+</div>
+
+</div>
+
+<pre><code>
+def student(name, age=20):
+    print(name, age)
+
+student("Harshali")
+</code></pre>
+
+<pre><code>
+def total(*nums):
+    return sum(nums)
+
+print(total(10,20,30))
+</code></pre>
+
+</div>
+
+<!-- LAMBDA -->
+
+<div class="card">
+
+<h3>Lambda Functions</h3>
+
+<ul>
+<li>Anonymous single-line functions</li>
+
+<li>Useful for short operations</li>
+
+<li>Mostly used with <code>map()</code>, <code>filter()</code>, and <code>sorted()</code></li>
+
+<li>Improves concise coding style</li>
+</ul>
+
+<pre><code>
+square = lambda x: x * x
+
+print(square(5))
+</code></pre>
+
+<pre><code>
+nums = [1,2,3,4]
+
+result = list(map(lambda x: x*2, nums))
+
+print(result)
+</code></pre>
+
+<div class="info-box">
+
+<h4>Interview Question</h4>
+
+<p>
+Difference between normal functions and lambda functions is commonly asked in interviews.
+</p>
+
+</div>
+
+</div>
+
+<!-- OOP -->
+
+<div class="card">
+
+<h3>Object Oriented Programming (OOP)</h3>
+
+<ul>
+<li>Class → Blueprint for objects</li>
+
+<li>Object → Instance of class</li>
+
+<li>Encapsulation → Binding data & methods together</li>
+
+<li>Inheritance → Reusing parent class properties</li>
+
+<li>Polymorphism → Same method behaves differently</li>
+
+<li>Abstraction → Hiding internal implementation</li>
+</ul>
+
+<pre><code>
+class Person:
+
+    def __init__(self, name):
+        self.name = name
+
+    def greet(self):
+        print(f"Hello {self.name}")
+
+p = Person("Alice")
+p.greet()
+</code></pre>
+
+</div>
+
+<!-- CONSTRUCTORS -->
+
+<div class="card">
+
+<h3>Constructors & Self Keyword</h3>
+
+<ul>
+<li><code>__init__()</code> is constructor method</li>
+
+<li>Automatically called when object is created</li>
+
+<li><code>self</code> refers to current object instance</li>
+
+<li>Used to access class variables and methods</li>
+</ul>
+
+<pre><code>
+class Car:
+
+    def __init__(self, brand):
+        self.brand = brand
+
+c = Car("BMW")
+
+print(c.brand)
+</code></pre>
+
+</div>
+
+<!-- INHERITANCE -->
+
+<div class="card">
+
+<h3>Inheritance</h3>
+
+<ul>
+<li>Single Inheritance</li>
+<li>Multiple Inheritance</li>
+<li>Multilevel Inheritance</li>
+<li>Hierarchical Inheritance</li>
+</ul>
+
+<pre><code>
+class Person:
+
+    def __init__(self, name):
+        self.name = name
+
 class Student(Person):
+
     def __init__(self, name, roll):
         super().__init__(name)
         self.roll = roll
-</code></pre>
 
-<pre><code>
-class C(A, B):
-    pass
+s = Student("Rahul",101)
+
+print(s.name)
+print(s.roll)
 </code></pre>
 
 </div>
 
-<a href="{% url 'index' %}" class="btn">Back to Main Page</a>
+<!-- POLYMORPHISM -->
+
+<div class="card">
+
+<h3>Polymorphism</h3>
+
+<ul>
+<li>Method Overriding supported in Python</li>
+
+<li>Operator overloading available</li>
+
+<li>Same method name behaves differently</li>
+</ul>
+
+<pre><code>
+class Bird:
+
+    def sound(self):
+        print("Bird Sound")
+
+class Dog(Bird):
+
+    def sound(self):
+        print("Bark")
+
+d = Dog()
+d.sound()
+</code></pre>
+
+</div>
+
+<!-- INTERVIEW QUESTIONS -->
+
+<div class="card">
+
+<h3>Frequently Asked Interview Questions</h3>
+
+<ul>
+<li>What is the difference between class and object?</li>
+
+<li>Explain inheritance with example.</li>
+
+<li>What is polymorphism in Python?</li>
+
+<li>Difference between list and tuple?</li>
+
+<li>What are decorators?</li>
+
+<li>What is recursion?</li>
+
+<li>Difference between shallow copy and deep copy?</li>
+
+<li>Explain mutable and immutable objects.</li>
+
+<li>What is method overriding?</li>
+
+<li>What is the purpose of <code>self</code> keyword?</li>
+</ul>
+
+</div>
+
+<!-- BEST PRACTICES -->
+
+<div class="card">
+
+<h3>Best Practices</h3>
+
+<ul>
+<li>Use meaningful function and variable names</li>
+
+<li>Write reusable and modular code</li>
+
+<li>Follow PEP 8 coding style guidelines</li>
+
+<li>Add comments where required</li>
+
+<li>Avoid writing overly long functions</li>
+
+<li>Use exception handling properly</li>
+</ul>
+
+</div>
+
+<a href="{% url 'python_info' %}" class="btn">
+⬅ Back to Python Module
+</a>
 
 </div>
 
 <footer>
-© Interview Prep Platform — Python Module
+© PrepEdge — Python Learning Module
 </footer>
 
 </body>

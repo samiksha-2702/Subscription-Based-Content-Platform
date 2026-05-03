@@ -7,155 +7,338 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
-    font-family:Segoe UI;
-    background:linear-gradient(135deg,#020617,#0f172a);
+    font-family:Segoe UI,Arial,sans-serif;
+    background:
+    radial-gradient(circle at top left,#1e3a8a 0%,#020617 35%),
+    linear-gradient(135deg,#020617,#0f172a);
     color:white;
     padding:20px;
+    margin:0;
+    min-height:100vh;
 }
+
+/* Main Card */
 
 .card{
     max-width:1000px;
     margin:auto;
-    background:rgba(255,255,255,.08);
-    backdrop-filter:blur(14px);
-    padding:30px;
-    border-radius:18px;
-    box-shadow:0 10px 40px rgba(0,0,0,.7);
+    background:rgba(255,255,255,.07);
+    backdrop-filter:blur(16px);
+    -webkit-backdrop-filter:blur(16px);
+    padding:35px;
+    border-radius:24px;
+    border:1px solid rgba(255,255,255,.08);
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.7),
+    inset 0 0 0 1px rgba(255,255,255,.03);
 }
 
-.q{
-    margin:18px 0;
-    padding:16px;
-    background:#020617;
-    border-radius:12px;
+/* Heading */
+
+h2{
+    margin-top:0;
+    font-size:34px;
+    color:#93c5fd;
+    text-align:center;
+    margin-bottom:10px;
+    letter-spacing:.5px;
 }
 
-label{display:block;margin:6px 0;cursor:pointer}
-
-button{
-    padding:14px 20px;
-    border:none;
-    border-radius:12px;
-    background:#2563eb;
-    color:white;
-    font-weight:600;
-    cursor:pointer;
-    margin-top:10px;
-}
+/* Timer */
 
 .timer{
-    font-size:22px;
-    font-weight:bold;
+    font-size:24px;
+    font-weight:700;
     color:#22c55e;
-    margin-bottom:10px;
+    margin-bottom:25px;
+    text-align:center;
+    background:#052e16;
+    padding:14px;
+    border-radius:14px;
+    border:1px solid rgba(34,197,94,.3);
+    box-shadow:0 0 25px rgba(34,197,94,.15);
 }
 
-.result{
-    margin-top:20px;
-    padding:18px;
-    background:#111827;
-    border-radius:12px;
+/* Question Card */
+
+.q{
+    margin:22px 0;
+    padding:22px;
+    background:
+    linear-gradient(145deg,#020617,#0b1220);
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.05);
+    transition:.3s;
+    box-shadow:0 8px 25px rgba(0,0,0,.45);
 }
+
+.q:hover{
+    transform:translateY(-3px);
+    border-color:rgba(59,130,246,.25);
+    box-shadow:
+    0 12px 30px rgba(0,0,0,.6),
+    0 0 18px rgba(59,130,246,.08);
+}
+
+/* Labels */
+
+label{
+    display:block;
+    margin:10px 0;
+    cursor:pointer;
+    padding:10px 12px;
+    border-radius:10px;
+    transition:.25s;
+    font-size:15px;
+}
+
+label:hover{
+    background:rgba(59,130,246,.12);
+    transform:translateX(3px);
+}
+
+/* Radio */
+
+input[type="radio"]{
+    margin-right:10px;
+    accent-color:#3b82f6;
+    transform:scale(1.1);
+}
+
+/* Buttons */
+
+button{
+    padding:14px 22px;
+    border:none;
+    border-radius:14px;
+    background:
+    linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:12px;
+    transition:.3s;
+    box-shadow:0 6px 20px rgba(37,99,235,.35);
+}
+
+button:hover{
+    transform:translateY(-2px) scale(1.02);
+    box-shadow:0 10px 25px rgba(37,99,235,.5);
+}
+
+/* Result */
+
+.result{
+    margin-top:28px;
+    padding:22px;
+    background:
+    linear-gradient(145deg,#111827,#0b1220);
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.06);
+    box-shadow:0 8px 30px rgba(0,0,0,.55);
+}
+
+/* Textarea */
 
 textarea{
     width:100%;
-    min-height:120px;
+    min-height:140px;
     background:#111827;
     color:#93c5fd;
-    border:none;
-    border-radius:10px;
-    padding:10px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:14px;
+    padding:14px;
     font-family:monospace;
     font-size:14px;
+    resize:vertical;
+    transition:.3s;
 }
 
-pre{
-    background:#0b1220;
-    color:#60a5fa;
-    padding:10px;
-    border-radius:8px;
-    min-height:50px;
-    overflow:auto;
+textarea:focus{
+    outline:none;
+    border-color:#3b82f6;
+    box-shadow:0 0 0 4px rgba(59,130,246,.15);
 }
+
+/* Code Output */
+
+pre{
+    background:#020617;
+    color:#60a5fa;
+    padding:14px;
+    border-radius:12px;
+    min-height:60px;
+    overflow:auto;
+    border:1px solid rgba(255,255,255,.05);
+    margin-top:12px;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#1e3a8a;
+    border-radius:10px;
+}
+
+::-webkit-scrollbar-track{
+    background:#020617;
+}
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    body{
+        padding:12px;
+    }
+
+    .card{
+        padding:22px;
+        border-radius:18px;
+    }
+
+    h2{
+        font-size:26px;
+    }
+
+    .q{
+        padding:18px;
+    }
+
+    button{
+        width:100%;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
 <div class="card">
-<h2>Java 15-Minute Quick Test</h2>
-<div class="timer">Time Left: <span id="time">15:00</span></div>
 
-<form id="quiz">
+<h2>Java 15-Minute Quick Test</h2>
+
+<div class="timer">
+Time Left: <span id="time">15:00</span>
+</div>
+
+<!-- DJANGO FORM -->
+<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+{% csrf_token %}
+
+<!-- Hidden Fields -->
+<input type="hidden" name="total" id="total">
+<input type="hidden" name="correct" id="correct">
+<input type="hidden" name="wrong" id="wrong">
+<input type="hidden" name="skipped" id="skipped">
+<input type="hidden" name="score" id="score">
+<input type="hidden" name="time_taken" id="time_taken">
 
 <!-- MCQs -->
-<div class="q">1️⃣ Java is platform ___ ?
+
+<div class="q">
+1️⃣ Java is platform ___ ?
 <label><input type="radio" name="q1" value="a"> Dependent</label>
 <label><input type="radio" name="q1" value="b"> Independent</label>
 </div>
 
-<div class="q">2️⃣ JVM stands for?
+<div class="q">
+2️⃣ JVM stands for?
 <label><input type="radio" name="q2" value="a"> Java Virtual Machine</label>
 <label><input type="radio" name="q2" value="b"> Java Verified Mode</label>
 </div>
 
-<div class="q">3️⃣ int size?
+<div class="q">
+3️⃣ int size?
 <label><input type="radio" name="q3" value="a"> 2 bytes</label>
 <label><input type="radio" name="q3" value="b"> 4 bytes</label>
 </div>
 
-<div class="q">4️⃣ Loop with condition at end?
+<div class="q">
+4️⃣ Loop with condition at end?
 <label><input type="radio" name="q4" value="a"> while</label>
 <label><input type="radio" name="q4" value="b"> do-while</label>
 </div>
 
-<div class="q">5️⃣ OOP pillar?
+<div class="q">
+5️⃣ OOP pillar?
 <label><input type="radio" name="q5" value="a"> Encapsulation</label>
 <label><input type="radio" name="q5" value="b"> Compilation</label>
 </div>
 
-<div class="q">6️⃣ Inheritance keyword?
+<div class="q">
+6️⃣ Inheritance keyword?
 <label><input type="radio" name="q6" value="a"> extends</label>
 <label><input type="radio" name="q6" value="b"> inherit</label>
 </div>
 
-<div class="q">7️⃣ Method overloading is ___ polymorphism
+<div class="q">
+7️⃣ Method overloading is ___ polymorphism
 <label><input type="radio" name="q7" value="a"> Compile time</label>
 <label><input type="radio" name="q7" value="b"> Runtime</label>
 </div>
 
-<div class="q">8️⃣ Break statement does?
+<div class="q">
+8️⃣ Break statement does?
 <label><input type="radio" name="q8" value="a"> Skip iteration</label>
 <label><input type="radio" name="q8" value="b"> Exit loop</label>
 </div>
 
-<div class="q">9️⃣ Class is ___ of object
+<div class="q">
+9️⃣ Class is ___ of object
 <label><input type="radio" name="q9" value="a"> Blueprint</label>
 <label><input type="radio" name="q9" value="b"> Instance</label>
 </div>
 
-<div class="q">🔟 Spring Boot is used for?
+<div class="q">
+🔟 Spring Boot is used for?
 <label><input type="radio" name="q10" value="a"> Web Apps</label>
 <label><input type="radio" name="q10" value="b"> Games</label>
 </div>
 
 <!-- Coding Questions -->
+
 <div class="q">
 <h3>11️⃣ Swap two numbers (Java code)</h3>
-<textarea id="code1" placeholder="Write Java code here..."></textarea>
-<button type="button" onclick="runJavaCode('code1','output1')">Run Code</button>
+<textarea id="code1" name="code1" placeholder="Write Java code here..."></textarea>
+
+<button type="button"
+onclick="runJavaCode('code1','output1')">
+Run Code
+</button>
+
 <pre id="output1"></pre>
 </div>
 
 <div class="q">
 <h3>12️⃣ Print first n Fibonacci numbers</h3>
-<textarea id="code2" placeholder="Write Java code here..."></textarea>
-<button type="button" onclick="runJavaCode('code2','output2')">Run Code</button>
+
+<textarea id="code2" name="code2"
+placeholder="Write Java code here..."></textarea>
+
+<button type="button"
+onclick="runJavaCode('code2','output2')">
+Run Code
+</button>
+
 <pre id="output2"></pre>
 </div>
 
-<button type="button" onclick="submitTest()">Submit Test</button>
+<button type="button" onclick="submitTest()">
+Submit Test
+</button>
 
 </form>
 
@@ -164,56 +347,148 @@ pre{
 </div>
 
 <script>
+
 /* ===== TIMER ===== */
-let time = 900; // 15 min in seconds
+
+let totalTime = 900;
+let time = totalTime;
+
 let timer = setInterval(()=>{
-    time--;
-    let m=Math.floor(time/60);
-    let s=time%60;
-    document.getElementById("time").innerText = m + ":" + (s<10?"0":"")+s;
-    if(time<=0){
+
+    let m = Math.floor(time/60);
+    let s = time%60;
+
+    document.getElementById("time").innerText =
+    `${m}:${s<10?"0":""}${s}`;
+
+    if(time <= 0){
         clearInterval(timer);
         submitTest();
         alert("Time Up — Test Submitted");
     }
+
+    time--;
+
 },1000);
 
-/* ===== ANSWERS ===== */
+
+/* ===== SUBMIT TEST ===== */
+
 function submitTest(){
+
     clearInterval(timer);
-    const ans={
-        q1:"b", q2:"a", q3:"b", q4:"b", q5:"a",
-        q6:"a", q7:"a", q8:"b", q9:"a", q10:"a"
+
+    const ans = {
+        q1:"b",
+        q2:"a",
+        q3:"b",
+        q4:"b",
+        q5:"a",
+        q6:"a",
+        q7:"a",
+        q8:"b",
+        q9:"a",
+        q10:"a"
     };
-    let score=0;
-    let html="";
+
+    let score = 0;
+    let correct = 0;
+    let wrong = 0;
+    let skipped = 0;
+
+    let html = "";
+
     for(let k in ans){
-        let v=document.querySelector(`input[name=${k}]:checked`);
-        if(v && v.value===ans[k]){
+
+        let v = document.querySelector(`input[name=${k}]:checked`);
+
+        if(!v){
+
+            skipped++;
+
+            html += `${k.toUpperCase()} ⚠️ Skipped<br>`;
+
+        }
+        else if(v.value === ans[k]){
+
             score++;
-            html+=`${k.toUpperCase()} ✅ Correct<br>`;
-        }else{
-            html+=`${k.toUpperCase()} ❌ Correct Answer: ${ans[k].toUpperCase()}<br>`;
+            correct++;
+
+            html += `${k.toUpperCase()} ✅ Correct<br>`;
+        }
+        else{
+
+            wrong++;
+
+            html += `${k.toUpperCase()} ❌ Wrong<br>`;
         }
     }
-    let percent = score*10;
-    document.getElementById("result").innerHTML=`
+
+    let total = Object.keys(ans).length;
+    let percent = (score / total) * 100;
+
+    // Hidden field values
+    document.getElementById("total").value = total;
+    document.getElementById("correct").value = correct;
+    document.getElementById("wrong").value = wrong;
+    document.getElementById("skipped").value = skipped;
+    document.getElementById("score").value = percent.toFixed(2);
+    document.getElementById("time_taken").value =
+    totalTime - time;
+
+    // Show result
+    document.getElementById("result").innerHTML = `
     <div class="result">
-    <h3>Final Score: ${score}/10 (${percent}%)</h3>
+
+    <h3>
+    Final Score: ${score}/${total}
+    (${percent.toFixed(2)}%)
+    </h3>
+
+    <p>
+    ✅ Correct: ${correct} <br>
+    ❌ Wrong: ${wrong} <br>
+    ⚠️ Skipped: ${skipped}
+    </p>
+
     ${html}
+
     <br>
-    <button onclick="location.reload()">Retry Test</button>
-    <a href="{% url 'javainfo' %}"><button>Back</button></a>
+
+    <button onclick="location.reload()">
+    Retry Test
+    </button>
+
+    <a href="{% url 'javainfo' %}">
+    <button type="button">Back</button>
+    </a>
+
     </div>
     `;
+
+    // Submit to Django
+    setTimeout(()=>{
+        document.getElementById("quizForm").submit();
+    },1500);
 }
 
+
 /* ===== JAVA CODE SIMULATION ===== */
+
 function runJavaCode(codeId, outputId){
-    const code = document.getElementById(codeId).value;
-    const output = document.getElementById(outputId);
-    output.innerText = "⚠️ This is a simulation.\nTo run Java code, connect to JDoodle or server-side compiler.\n\nYour Code:\n" + code;
+
+    const code =
+    document.getElementById(codeId).value;
+
+    const output =
+    document.getElementById(outputId);
+
+    output.innerText =
+    "⚠️ This is a simulation.\n" +
+    "To run Java code, connect JDoodle/API/server compiler.\n\n" +
+    "Your Code:\n\n" + code;
 }
+
 </script>
 
 </body>

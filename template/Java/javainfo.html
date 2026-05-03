@@ -3,180 +3,534 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Java Learning Hub</title>
+<title>Java Learning Hub | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-* { box-sizing: border-box; }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-body {
+<style>
+
+*{
 margin:0;
-font-family:"Segoe UI",Arial,sans-serif;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb;
+padding:0;
+box-sizing:border-box;
 }
+
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
+line-height:1.5;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.15), transparent 35%);
+z-index:-1;
+}
+
+/* HEADER */
 
 header{
-padding:30px 20px;
+padding:40px 20px;
 text-align:center;
-background:rgba(2,6,23,0.8);
-box-shadow:0 4px 30px rgba(0,0,0,0.6);
+background:rgba(2,6,23,.7);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(255,255,255,.06);
+box-shadow:0 10px 40px rgba(0,0,0,.5);
+position:sticky;
+top:0;
+z-index:100;
 }
 
-header h1{margin:0;font-size:30px;}
+header h1{
+font-size:42px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:12px;
+}
+
+header p{
+font-size:16px;
+color:#94a3b8;
+}
+
+/* TOP NAV */
+
+.top-nav{
+margin-top:22px;
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.nav-btn{
+padding:12px 18px;
+border:none;
+border-radius:14px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+color:white;
+cursor:pointer;
+font-weight:600;
+font-size:14px;
+transition:.3s;
+backdrop-filter:blur(10px);
+text-decoration:none;
+display:inline-flex;
+align-items:center;
+gap:8px;
+}
+
+.nav-btn:hover{
+transform:translateY(-3px);
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+box-shadow:0 12px 24px rgba(37,99,235,.35);
+}
+
+/* CONTAINER */
 
 .container{
-max-width:1200px;
+max-width:1300px;
 margin:auto;
-padding:30px 20px;
+padding:50px 24px;
 }
 
+/* SECTION TITLE */
+
 .section-title{
-margin:40px 0 20px;
-font-size:22px;
-border-left:4px solid #3b82f6;
-padding-left:12px;
+font-size:28px;
+font-weight:700;
+margin-bottom:28px;
+margin-top:50px;
+display:flex;
+align-items:center;
+gap:12px;
+color:#f8fafc;
 }
+
+.section-title::before{
+content:'';
+width:6px;
+height:30px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* GRID */
 
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:22px;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:26px;
 }
 
+/* CARD */
+
 .card{
-background:linear-gradient(145deg,#111827,#0b1220);
-border-radius:14px;
-padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.6);
-transition:.3s;
+position:relative;
+background:rgba(15,23,42,.75);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:28px;
+overflow:hidden;
+transition:.35s ease;
+box-shadow:
+0 12px 30px rgba(0,0,0,.45);
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:-40%;
+right:-20%;
+width:180px;
+height:180px;
+background:radial-gradient(circle,rgba(59,130,246,.2),transparent 70%);
 }
 
 .card:hover{
-transform:translateY(-6px);
+transform:translateY(-8px);
+border-color:rgba(96,165,250,.35);
+box-shadow:
+0 20px 45px rgba(0,0,0,.65),
+0 0 20px rgba(59,130,246,.15);
 }
 
-.card h3{color:#93c5fd;}
+.card h3{
+font-size:22px;
+margin-bottom:18px;
+color:#93c5fd;
+font-weight:700;
+position:relative;
+z-index:1;
+}
+
+.card p{
+color:#cbd5e1;
+font-size:14px;
+margin-bottom:18px;
+position:relative;
+z-index:1;
+}
+
+.card ul{
+padding-left:18px;
+line-height:1.9;
+color:#cbd5e1;
+position:relative;
+z-index:1;
+}
+
+.card ul li{
+margin-bottom:4px;
+}
+
+/* BUTTON */
 
 .btn{
-display:inline-block;
-margin-top:10px;
-padding:10px 16px;
-border-radius:8px;
+display:inline-flex;
+align-items:center;
+gap:8px;
+margin-top:18px;
+padding:12px 18px;
+border-radius:14px;
 background:linear-gradient(135deg,#2563eb,#1d4ed8);
 color:white;
 text-decoration:none;
 font-weight:600;
+font-size:14px;
+transition:.3s;
+position:relative;
+z-index:1;
 }
 
-footer{
-text-align:center;
-padding:25px;
-opacity:.6;
+.btn:hover{
+transform:translateY(-2px) scale(1.03);
+box-shadow:0 10px 25px rgba(37,99,235,.45);
 }
+
+/* QUICK TEST CARD */
+
+.quick-test{
+margin-top:20px;
+}
+
+/* FLOATING HOME */
+
+.floating-home{
+position:fixed;
+bottom:24px;
+left:24px;
+width:56px;
+height:56px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+border-radius:50%;
+text-decoration:none;
+color:white;
+font-size:22px;
+box-shadow:0 12px 30px rgba(0,0,0,.55);
+transition:.3s;
+z-index:100;
+}
+
+.floating-home:hover{
+transform:translateY(-4px) scale(1.08);
+}
+
+/* FOOTER */
+
+footer{
+margin-top:70px;
+padding:28px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+color:#94a3b8;
+font-size:14px;
+background:rgba(0,0,0,.2);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:30px;
+}
+
+.section-title{
+font-size:22px;
+}
+
+.container{
+padding:35px 18px;
+}
+
+.card{
+padding:22px;
+}
+
+}
+
+@media(max-width:480px){
+
+.top-nav{
+flex-direction:column;
+align-items:center;
+}
+
+.nav-btn{
+width:100%;
+max-width:260px;
+justify-content:center;
+}
+
+header h1{
+font-size:26px;
+}
+
+.card h3{
+font-size:20px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>Java Learning Module</h1>
-<p>Cheat Sheets • Articles • Practice • Quick Test</p>
+
+<p>
+Cheat Sheets • Articles • Practice • Quick Test
+</p>
+
+<div class="top-nav">
+
+<a href="{% url 'programming' %}" class="nav-btn">
+💻 Programming Page
+</a>
+
+<a href="{% url 'index' %}" class="nav-btn">
+🏠 Home
+</a>
+
+</div>
+
 </header>
 
 <div class="container">
+
+<!-- CHEAT SHEETS -->
 
 <h2 class="section-title">Java Cheat Sheets</h2>
 
 <div class="grid">
 
 <div class="card">
+
 <h3>Java Basics</h3>
+
 <ul>
-<li>JVM, JDK, JRE</li>
-<li>Variables</li>
-<li>Operators</li>
+<li>JVM, JDK & JRE</li>
+<li>Variables & Data Types</li>
+<li>Operators & Type Casting</li>
+<li>Input / Output</li>
 </ul>
-<a href="{% url 'java_basics' %}" class="btn">Open</a>
+
+<a href="{% url 'java_basics' %}" class="btn">
+Open →
+</a>
+
 </div>
 
 <div class="card">
+
 <h3>Control Statements</h3>
+
 <ul>
-<li>if / switch</li>
-<li>loops</li>
+<li>if / else & switch</li>
+<li>for / while loops</li>
+<li>break & continue</li>
+<li>Nested loops</li>
 </ul>
-<a href="{% url 'java_control' %}" class="btn">Open</a>
+
+<a href="{% url 'java_control' %}" class="btn">
+Open →
+</a>
+
 </div>
 
 <div class="card">
+
 <h3>OOP in Java</h3>
+
 <ul>
-<li>Classes</li>
+<li>Classes & Objects</li>
 <li>Inheritance</li>
 <li>Polymorphism</li>
+<li>Encapsulation</li>
 </ul>
-<a href="{% url 'java_oop' %}" class="btn">Open</a>
+
+<a href="{% url 'java_oop' %}" class="btn">
+Open →
+</a>
+
 </div>
 
 </div>
+
+<!-- ARTICLES -->
 
 <h2 class="section-title">Java Articles</h2>
 
 <div class="grid">
 
 <div class="card">
+
 <h3>Java for Interviews</h3>
-<p>Important concepts asked in interviews.</p>
-<a href="{% url 'java_interview' %}" class="btn">Read</a>
+
+<p>
+Important Java concepts frequently asked in technical interviews and coding rounds.
+</p>
+
+<a href="{% url 'java_interview' %}" class="btn">
+Read →
+</a>
+
 </div>
 
 <div class="card">
+
 <h3>Java vs Python</h3>
-<p>Comparison between languages.</p>
-<a href="{% url 'java_vs_languages' %}" class="btn">Read</a>
+
+<p>
+Understand syntax, performance, use cases, and differences between Java and Python.
+</p>
+
+<a href="{% url 'java_vs_languages' %}" class="btn">
+Read →
+</a>
+
 </div>
 
 <div class="card">
+
 <h3>Spring Boot</h3>
-<p>Java backend development.</p>
-<a href="{% url 'springboot' %}" class="btn">Read</a>
-</div>
+
+<p>
+Learn modern Java backend development with Spring Boot framework.
+</p>
+
+<a href="{% url 'springboot' %}" class="btn">
+Read →
+</a>
 
 </div>
 
-<h2 class="section-title">Practice</h2>
+</div>
+
+<!-- PRACTICE -->
+
+<h2 class="section-title">Practice Questions</h2>
 
 <div class="grid">
 
 <div class="card">
+
 <h3>Basics Practice</h3>
-<a href="{% url 'java_basic_practice' %}" class="btn">Solve</a>
+
+<ul>
+<li>Variables & operators</li>
+<li>Scanner input programs</li>
+<li>Simple calculations</li>
+</ul>
+
+<a href="{% url 'java_basic_practice' %}" class="btn">
+Solve →
+</a>
+
 </div>
 
 <div class="card">
+
 <h3>Loops Practice</h3>
-<a href="{% url 'java_loop_practice' %}" class="btn">Solve</a>
+
+<ul>
+<li>Pattern printing</li>
+<li>Factorial programs</li>
+<li>Prime number logic</li>
+</ul>
+
+<a href="{% url 'java_loop_practice' %}" class="btn">
+Solve →
+</a>
+
 </div>
 
 <div class="card">
+
 <h3>OOP Practice</h3>
-<a href="{% url 'java_oop_practice' %}" class="btn">Solve</a>
+
+<ul>
+<li>Create classes</li>
+<li>Inheritance tasks</li>
+<li>Method overriding</li>
+</ul>
+
+<a href="{% url 'java_oop_practice' %}" class="btn">
+Solve →
+</a>
+
 </div>
 
 </div>
+
+<!-- QUICK TEST -->
 
 <h2 class="section-title">Quick Test</h2>
 
-<div class="card">
+<div class="card quick-test">
+
 <h3>Java 15-Minute Quick Test</h3>
-<a href="{% url 'java_test' %}" class="btn">Start Test</a>
+
+<p>
+Timed MCQ + coding questions with instant score and performance tracking.
+</p>
+
+<a href="{% url 'java_test' %}" class="btn">
+Start Test →
+</a>
+
 </div>
 
 </div>
+
+<!-- FLOATING HOME -->
+
+<a href="{% url 'index' %}" class="floating-home">
+🏠
+</a>
 
 <footer>
-© Interview Prep Platform — Java Module
+© PrepEdge — Java Module
 </footer>
 
 </body>

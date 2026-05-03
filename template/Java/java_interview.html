@@ -3,77 +3,569 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Java for Interviews</title>
+<title>Java for Interviews | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-body{
+
+*{
 margin:0;
-font-family:Segoe UI,Arial;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
 background:linear-gradient(135deg,#020617,#0f172a);
 color:#e5e7eb;
-padding:30px;
+overflow-x:hidden;
+line-height:1.7;
 }
 
-.card{
-max-width:900px;
+/* BACKGROUND EFFECT */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.14), transparent 35%);
+z-index:-1;
+}
+
+/* CONTAINER */
+
+.container{
+max-width:1100px;
 margin:auto;
-background:#0b1220;
-padding:30px;
-border-radius:14px;
-box-shadow:0 10px 30px rgba(0,0,0,.6);
+padding:40px 20px;
 }
 
-h1{color:#93c5fd}
-h2{color:#60a5fa}
+/* CARD */
+
+.main-card{
+background:rgba(11,18,32,.82);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.06);
+padding:35px;
+border-radius:24px;
+box-shadow:0 20px 50px rgba(0,0,0,.55);
+}
+
+/* HEADER */
+
+.hero{
+text-align:center;
+margin-bottom:40px;
+}
+
+.hero h1{
+font-size:42px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#a78bfa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:12px;
+}
+
+.hero p{
+color:#94a3b8;
+font-size:16px;
+max-width:700px;
+margin:auto;
+}
+
+/* SECTION */
+
+.section{
+margin-top:35px;
+}
+
+.section h2{
+font-size:24px;
+margin-bottom:18px;
+color:#93c5fd;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.section h2::before{
+content:'';
+width:5px;
+height:24px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+/* INFO CARD */
+
+.info-card{
+background:linear-gradient(145deg,#111827,#0b1220);
+border-radius:18px;
+padding:22px;
+border:1px solid rgba(255,255,255,.05);
+transition:.3s;
+}
+
+.info-card:hover{
+transform:translateY(-6px);
+border-color:rgba(96,165,250,.35);
+box-shadow:0 12px 30px rgba(0,0,0,.5);
+}
+
+.info-card h3{
+margin-bottom:14px;
+color:#60a5fa;
+font-size:20px;
+}
+
+.info-card ul{
+padding-left:18px;
+color:#cbd5e1;
+}
+
+.info-card ul li{
+margin-bottom:10px;
+}
+
+/* CODE */
+
+pre{
+background:#020617;
+padding:16px;
+border-radius:12px;
+overflow:auto;
+margin-top:15px;
+border:1px solid rgba(255,255,255,.06);
+}
+
+code{
+font-family:Consolas,monospace;
+color:#cbd5e1;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+overflow:hidden;
+border-radius:14px;
+}
+
+table th{
+background:#1e293b;
+padding:14px;
+text-align:left;
+color:#93c5fd;
+}
+
+table td{
+padding:14px;
+border-top:1px solid rgba(255,255,255,.06);
+background:#0f172a;
+color:#cbd5e1;
+}
+
+/* TAGS */
+
+.tags{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:15px;
+}
+
+.tag{
+padding:8px 14px;
+border-radius:999px;
+background:rgba(59,130,246,.15);
+border:1px solid rgba(59,130,246,.25);
+font-size:14px;
+color:#93c5fd;
+}
+
+/* BUTTON */
 
 .back-btn{
-display:inline-block;
-margin-top:20px;
-color:#93c5fd;
+display:inline-flex;
+align-items:center;
+gap:10px;
+margin-top:35px;
+padding:14px 22px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
 text-decoration:none;
+border-radius:14px;
 font-weight:600;
+transition:.3s;
 }
+
+.back-btn:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(37,99,235,.4);
+}
+
+/* FOOTER */
+
+footer{
+text-align:center;
+padding:30px;
+color:#94a3b8;
+opacity:.8;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero h1{
+font-size:32px;
+}
+
+.main-card{
+padding:25px;
+}
+
+.section h2{
+font-size:22px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
+
+<div class="main-card">
+
+<div class="hero">
 
 <h1>Java for Technical Interviews</h1>
 
-<h2>Core Topics Frequently Asked</h2>
-<ul>
-<li>OOP concepts (Encapsulation, Inheritance, Polymorphism, Abstraction)</li>
-<li>Difference between JDK, JRE, JVM</li>
-<li>String vs StringBuilder vs StringBuffer</li>
-<li>Exception Handling</li>
-<li>Collections Framework</li>
-<li>Multithreading basics</li>
-<li>Garbage Collection</li>
-</ul>
-
-<h2>Common Coding Questions</h2>
-<ul>
-<li>Reverse a String</li>
-<li>Find duplicates in array</li>
-<li>Check palindrome</li>
-<li>Sort objects using Comparator</li>
-<li>Count frequency of characters</li>
-</ul>
-
-<h2>Important Tips</h2>
-<ul>
-<li>Always explain OOP with real-life examples</li>
-<li>Write clean class structure</li>
-<li>Know difference between interface & abstract class</li>
-<li>Practice Java collections coding</li>
-</ul>
-
-<a href="{% url 'javainfo' %}" class="back-btn">⬅ Back to Java Module</a>
+<p>
+Master the most important Java interview concepts, coding questions,
+OOP principles, collections, multithreading, and backend fundamentals
+commonly asked in software development interviews.
+</p>
 
 </div>
+
+<!-- CORE TOPICS -->
+
+<div class="section">
+
+<h2>Core Topics Frequently Asked</h2>
+
+<div class="grid">
+
+<div class="info-card">
+
+<h3>Java Fundamentals</h3>
+
+<ul>
+<li>JDK, JRE, JVM architecture</li>
+<li>Primitive vs Non-Primitive data types</li>
+<li>Variables, Operators & Type Casting</li>
+<li>Control Statements & Loops</li>
+<li>Arrays and Strings</li>
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>OOP Concepts</h3>
+
+<ul>
+<li>Encapsulation</li>
+<li>Inheritance</li>
+<li>Polymorphism</li>
+<li>Abstraction</li>
+<li>Method Overloading & Overriding</li>
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>Advanced Java</h3>
+
+<ul>
+<li>Collections Framework</li>
+<li>Exception Handling</li>
+<li>Multithreading</li>
+<li>Garbage Collection</li>
+<li>Java 8 Features (Lambda, Stream API)</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- IMPORTANT DIFFERENCES -->
+
+<div class="section">
+
+<h2>Important Interview Differences</h2>
+
+<table>
+
+<tr>
+<th>Concept</th>
+<th>Difference</th>
+</tr>
+
+<tr>
+<td>JDK vs JRE</td>
+<td>JDK contains development tools while JRE only runs Java programs.</td>
+</tr>
+
+<tr>
+<td>String vs StringBuilder</td>
+<td>String is immutable while StringBuilder is mutable and faster.</td>
+</tr>
+
+<tr>
+<td>Array vs ArrayList</td>
+<td>Array has fixed size while ArrayList is dynamic.</td>
+</tr>
+
+<tr>
+<td>Interface vs Abstract Class</td>
+<td>Interface supports full abstraction while abstract class allows partial abstraction.</td>
+</tr>
+
+<tr>
+<td>Method Overloading vs Overriding</td>
+<td>Overloading changes parameters, overriding changes implementation.</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- COLLECTIONS -->
+
+<div class="section">
+
+<h2>Collections Framework</h2>
+
+<div class="grid">
+
+<div class="info-card">
+
+<h3>List</h3>
+
+<ul>
+<li>Ordered collection</li>
+<li>Allows duplicates</li>
+<li>Examples: ArrayList, LinkedList</li>
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>Set</h3>
+
+<ul>
+<li>No duplicate values</li>
+<li>Unordered collection</li>
+<li>Examples: HashSet, TreeSet</li>
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>Map</h3>
+
+<ul>
+<li>Stores key-value pairs</li>
+<li>Keys are unique</li>
+<li>Examples: HashMap, TreeMap</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CODING QUESTIONS -->
+
+<div class="section">
+
+<h2>Common Coding Questions</h2>
+
+<div class="grid">
+
+<div class="info-card">
+
+<h3>String Programs</h3>
+
+<ul>
+<li>Reverse a String</li>
+<li>Check palindrome</li>
+<li>Count vowels</li>
+<li>Remove duplicate characters</li>
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>Array Programs</h3>
+
+<ul>
+<li>Find largest element</li>
+<li>Sort array</li>
+<li>Find duplicates</li>
+<li>Second highest number</li>
+</ul>
+
+</div>
+
+<div class="info-card">
+
+<h3>Logic Building</h3>
+
+<ul>
+<li>Factorial program</li>
+<li>Prime number</li>
+<li>Fibonacci series</li>
+<li>Pattern printing</li>
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- MULTITHREADING -->
+
+<div class="section">
+
+<h2>Multithreading Example</h2>
+
+<pre><code>
+class MyThread extends Thread{
+
+    public void run(){
+        System.out.println("Thread Running");
+    }
+
+    public static void main(String[] args){
+
+        MyThread t1 = new MyThread();
+        t1.start();
+
+    }
+}
+</code></pre>
+
+</div>
+
+<!-- EXCEPTION HANDLING -->
+
+<div class="section">
+
+<h2>Exception Handling Example</h2>
+
+<pre><code>
+try{
+    int x = 10 / 0;
+}
+catch(Exception e){
+    System.out.println(e);
+}
+finally{
+    System.out.println("Finished");
+}
+</code></pre>
+
+</div>
+
+<!-- INTERVIEW TIPS -->
+
+<div class="section">
+
+<h2>Important Interview Tips</h2>
+
+<div class="info-card">
+
+<ul>
+<li>Explain OOP concepts with real-life examples</li>
+<li>Write clean and readable code</li>
+<li>Practice Java collections coding problems</li>
+<li>Learn basic SQL and DBMS concepts</li>
+<li>Know time complexity of common operations</li>
+<li>Prepare mini project explanation clearly</li>
+<li>Be confident while explaining your logic</li>
+<li>Revise Java 8 Stream API and Lambda expressions</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- HOT TOPICS -->
+
+<div class="section">
+
+<h2>Most Asked Java Interview Keywords</h2>
+
+<div class="tags">
+
+<div class="tag">OOP</div>
+<div class="tag">Collections</div>
+<div class="tag">Exception Handling</div>
+<div class="tag">Streams API</div>
+<div class="tag">Multithreading</div>
+<div class="tag">JDBC</div>
+<div class="tag">Spring Boot</div>
+<div class="tag">Garbage Collection</div>
+<div class="tag">ArrayList</div>
+<div class="tag">HashMap</div>
+<div class="tag">Polymorphism</div>
+<div class="tag">Abstraction</div>
+
+</div>
+
+</div>
+
+<a href="{% url 'javainfo' %}" class="back-btn">
+⬅ Back to Java Module
+</a>
+
+</div>
+
+</div>
+
+<footer>
+© PrepEdge — Java Interview Preparation Module
+</footer>
 
 </body>
 </html>

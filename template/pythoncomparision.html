@@ -3,113 +3,522 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Python vs Other Languages</title>
+<title>Python vs Other Languages | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg,#020617,#0f172a);
-    color: #e5e7eb;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-header {
-    padding: 25px 20px;
-    text-align: center;
-    background: rgba(2,6,23,0.8);
+body{
+    font-family:'Inter',sans-serif;
+    background:linear-gradient(135deg,#020617,#0f172a);
+    color:#e5e7eb;
+    overflow-x:hidden;
+    line-height:1.7;
 }
 
-header h1 { margin: 0; font-size: 28px; }
-header p { opacity: .7; }
+/* BACKGROUND EFFECT */
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 30px 20px;
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 35%);
+    z-index:-1;
 }
 
-.card {
-    background: linear-gradient(145deg,#111827,#0b1220);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 20px;
+/* HEADER */
+
+header{
+    padding:40px 20px;
+    text-align:center;
+    background:rgba(2,6,23,.8);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+    box-shadow:0 10px 40px rgba(0,0,0,.45);
 }
 
-.card h3 {
-    margin-top: 0;
-    color: #93c5fd;
+header h1{
+    font-size:40px;
+    font-weight:800;
+    background:linear-gradient(135deg,#60a5fa,#c084fc);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    margin-bottom:12px;
 }
 
-.card ul {
-    line-height: 1.6;
+header p{
+    color:#94a3b8;
+    font-size:16px;
 }
 
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: linear-gradient(135deg,#2563eb,#1d4ed8);
-    color: white;
-    text-decoration: none;
+/* NAVIGATION */
+
+.top-nav{
+    margin-top:24px;
+    display:flex;
+    justify-content:center;
+    gap:14px;
+    flex-wrap:wrap;
 }
 
-footer {
-    text-align: center;
-    padding: 25px;
-    opacity: .6;
+.nav-btn{
+    padding:12px 18px;
+    border-radius:14px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
 }
+
+.nav-btn:hover{
+    transform:translateY(-3px);
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    box-shadow:0 12px 24px rgba(37,99,235,.35);
+}
+
+/* CONTAINER */
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:50px 22px;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+    font-size:28px;
+    font-weight:700;
+    margin-bottom:28px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.section-title::before{
+    content:'';
+    width:6px;
+    height:30px;
+    border-radius:20px;
+    background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* GRID */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:24px;
+}
+
+/* CARD */
+
+.card{
+    position:relative;
+    background:rgba(15,23,42,.78);
+    backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:24px;
+    padding:28px;
+    overflow:hidden;
+    transition:.35s ease;
+    box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+.card::before{
+    content:'';
+    position:absolute;
+    top:-40%;
+    right:-20%;
+    width:180px;
+    height:180px;
+    background:radial-gradient(circle,rgba(59,130,246,.18),transparent 70%);
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(96,165,250,.35);
+    box-shadow:
+    0 20px 45px rgba(0,0,0,.65),
+    0 0 20px rgba(59,130,246,.15);
+}
+
+.card h3{
+    font-size:24px;
+    margin-bottom:18px;
+    color:#93c5fd;
+    position:relative;
+    z-index:1;
+}
+
+.card ul{
+    padding-left:18px;
+    position:relative;
+    z-index:1;
+}
+
+.card ul li{
+    margin-bottom:12px;
+    color:#cbd5e1;
+}
+
+/* TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+    margin-top:24px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(15,23,42,.75);
+    border-radius:18px;
+    overflow:hidden;
+}
+
+th{
+    background:#1d4ed8;
+    color:white;
+    padding:14px;
+    text-align:left;
+    font-size:15px;
+}
+
+td{
+    padding:14px;
+    border-bottom:1px solid rgba(255,255,255,.06);
+    color:#cbd5e1;
+}
+
+tr:hover{
+    background:rgba(59,130,246,.08);
+}
+
+/* INFO BOX */
+
+.info-box{
+    margin-top:28px;
+    background:rgba(37,99,235,.12);
+    border:1px solid rgba(96,165,250,.2);
+    padding:22px;
+    border-radius:18px;
+}
+
+.info-box h4{
+    margin-bottom:12px;
+    color:#93c5fd;
+    font-size:20px;
+}
+
+/* BUTTON */
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:30px;
+    padding:13px 18px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn:hover{
+    transform:translateY(-2px) scale(1.03);
+    box-shadow:0 10px 25px rgba(37,99,235,.45);
+}
+
+/* FOOTER */
+
+footer{
+    margin-top:60px;
+    text-align:center;
+    padding:28px;
+    border-top:1px solid rgba(255,255,255,.06);
+    background:rgba(0,0,0,.2);
+    color:#94a3b8;
+    font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+    header h1{
+        font-size:30px;
+    }
+
+    .section-title{
+        font-size:22px;
+    }
+
+    .container{
+        padding:35px 18px;
+    }
+
+    .card{
+        padding:22px;
+    }
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>Python vs Other Languages</h1>
-<p>Comparison of Python with Java, C++, and JavaScript</p>
+
+<p>
+Comparison of Python with Java, C++, and JavaScript
+</p>
+
+<div class="top-nav">
+
+<a href="{% url 'python_info' %}" class="nav-btn">
+🐍 Python Module
+</a>
+
+<a href="{% url 'programming' %}" class="nav-btn">
+💻 Programming Page
+</a>
+
+<a href="{% url 'index' %}" class="nav-btn">
+🏠 Home
+</a>
+
+</div>
+
 </header>
 
 <div class="container">
 
+<h2 class="section-title">
+Language Comparison
+</h2>
+
+<div class="grid">
+
+<!-- PYTHON VS JAVA -->
+
 <div class="card">
+
 <h3>Python vs Java</h3>
+
 <ul>
-<li>Python is dynamically typed; Java is statically typed</li>
-<li>Python uses indentation; Java uses braces { }</li>
-<li>Python has simpler syntax and less boilerplate</li>
-<li>Java is faster for large-scale applications</li>
+<li>Python is dynamically typed while Java is statically typed.</li>
+
+<li>Python syntax is simpler and shorter.</li>
+
+<li>Java requires compilation; Python is interpreted.</li>
+
+<li>Python uses indentation while Java uses braces <strong>{ }</strong>.</li>
+
+<li>Java provides better performance for enterprise applications.</li>
+
+<li>Python is preferred for AI, automation, and scripting.</li>
+
+<li>Java has stronger type safety and portability.</li>
+
+<li>Python development is faster due to less boilerplate code.</li>
 </ul>
+
 </div>
 
+<!-- PYTHON VS C++ -->
+
 <div class="card">
+
 <h3>Python vs C++</h3>
+
 <ul>
-<li>Python has automatic memory management; C++ uses manual memory allocation</li>
-<li>C++ is faster and closer to hardware</li>
-<li>Python has simpler syntax and easy learning curve</li>
-<li>C++ supports multiple inheritance more strictly</li>
+<li>C++ is much faster and closer to hardware.</li>
+
+<li>Python provides automatic memory management.</li>
+
+<li>C++ is commonly used in game engines and system programming.</li>
+
+<li>Python is easier for beginners to learn.</li>
+
+<li>C++ supports pointers and manual memory allocation.</li>
+
+<li>Python is widely used in machine learning and data science.</li>
+
+<li>C++ programs are generally more performance optimized.</li>
+
+<li>Python has simpler debugging and readability.</li>
 </ul>
+
 </div>
+
+<!-- PYTHON VS JAVASCRIPT -->
 
 <div class="card">
+
 <h3>Python vs JavaScript</h3>
+
 <ul>
-<li>Python mainly used for backend, scripting, AI/ML; JavaScript for web frontend</li>
-<li>Python uses indentation, JavaScript uses braces</li>
-<li>Both are dynamically typed</li>
-<li>Python has richer libraries for data science; JS for web interactivity</li>
+<li>Python is mainly backend-focused while JavaScript dominates frontend web development.</li>
+
+<li>Both languages are dynamically typed.</li>
+
+<li>JavaScript runs directly in browsers.</li>
+
+<li>Python is highly popular for AI and automation.</li>
+
+<li>JavaScript is event-driven and asynchronous.</li>
+
+<li>Python syntax is generally easier to read.</li>
+
+<li>Node.js allows JavaScript backend development.</li>
+
+<li>Python has stronger scientific computing libraries.</li>
 </ul>
+
 </div>
 
-<a href="{% url 'index' %}" class="btn">Back to Main Page</a>
+</div>
+
+<!-- COMPARISON TABLE -->
+
+<div class="table-wrapper">
+
+<table>
+
+<tr>
+<th>Feature</th>
+<th>Python</th>
+<th>Java</th>
+<th>C++</th>
+<th>JavaScript</th>
+</tr>
+
+<tr>
+<td>Typing</td>
+<td>Dynamic</td>
+<td>Static</td>
+<td>Static</td>
+<td>Dynamic</td>
+</tr>
+
+<tr>
+<td>Execution</td>
+<td>Interpreted</td>
+<td>Compiled + JVM</td>
+<td>Compiled</td>
+<td>Interpreted</td>
+</tr>
+
+<tr>
+<td>Speed</td>
+<td>Moderate</td>
+<td>Fast</td>
+<td>Very Fast</td>
+<td>Fast</td>
+</tr>
+
+<tr>
+<td>Best Use</td>
+<td>AI, Automation</td>
+<td>Enterprise Apps</td>
+<td>System Programming</td>
+<td>Web Development</td>
+</tr>
+
+<tr>
+<td>Learning Curve</td>
+<td>Easy</td>
+<td>Moderate</td>
+<td>Hard</td>
+<td>Moderate</td>
+</tr>
+
+<tr>
+<td>Memory Management</td>
+<td>Automatic</td>
+<td>Automatic</td>
+<td>Manual</td>
+<td>Automatic</td>
+</tr>
+
+</table>
+
+</div>
+
+<!-- WHY PYTHON -->
+
+<div class="info-box">
+
+<h4>Why Python is Popular</h4>
+
+<ul>
+<li>Simple and readable syntax</li>
+
+<li>Huge community support</li>
+
+<li>Excellent libraries and frameworks</li>
+
+<li>Used in AI, Machine Learning, Web Development, Cyber Security, and Automation</li>
+
+<li>Cross-platform compatibility</li>
+
+<li>Fast development and prototyping</li>
+</ul>
+
+</div>
+
+<!-- INTERVIEW QUESTIONS -->
+
+<div class="card" style="margin-top:30px;">
+
+<h3>Frequently Asked Interview Questions</h3>
+
+<ul>
+<li>Why is Python slower than C++?</li>
+
+<li>Difference between compiled and interpreted languages?</li>
+
+<li>Why is Python preferred for AI/ML?</li>
+
+<li>What are the advantages of Java over Python?</li>
+
+<li>Difference between JavaScript and Python?</li>
+
+<li>What is dynamic typing?</li>
+
+<li>Which language is better for web development?</li>
+
+<li>Which language is easiest for beginners?</li>
+</ul>
+
+</div>
+
+<a href="{% url 'python_info' %}" class="btn">
+⬅ Back to Python Module
+</a>
 
 </div>
 
 <footer>
-© Interview Prep Platform — Python Module
+© PrepEdge — Python Learning Module
 </footer>
 
 </body>

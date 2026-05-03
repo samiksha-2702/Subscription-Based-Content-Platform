@@ -6,113 +6,250 @@
 <title>{{ test.name }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
-margin:0;
-font-family:"Segoe UI",Arial,sans-serif;
-background:linear-gradient(135deg,#020617,#0f172a);
+font-family:'Inter',sans-serif;
+background:#020617;
 color:#e5e7eb;
+overflow-x:hidden;
 }
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.15), transparent 35%);
+z-index:-1;
+}
+
+/* HEADER */
 
 header{
-padding:25px 20px;
+padding:40px 20px;
 text-align:center;
-background:rgba(2,6,23,0.8);
-backdrop-filter:blur(10px);
-box-shadow:0 4px 30px rgba(0,0,0,0.6);
+background:rgba(2,6,23,.75);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(255,255,255,.06);
+box-shadow:0 10px 40px rgba(0,0,0,.5);
+position:sticky;
+top:0;
+z-index:100;
 }
 
-header h1{margin:0;font-size:28px}
-header p{opacity:.7}
+header h1{
+font-size:40px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:10px;
+}
+
+header p{
+color:#94a3b8;
+font-size:15px;
+}
+
+/* CONTAINER */
 
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
-padding:30px 20px;
+padding:40px 20px;
 }
 
-.card{
-background:linear-gradient(145deg,#111827,#0b1220);
-border-radius:14px;
-padding:20px;
-box-shadow:0 10px 25px rgba(0,0,0,0.6),
-inset 0 0 0 1px rgba(255,255,255,0.05);
-margin-bottom:20px;
+/* TOP INFO */
+
+.top-info{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:30px;
 }
 
-.card h3{
-margin-top:0;
-color:#93c5fd;
-}
-
-label{
-display:block;
-margin:6px 0;
-cursor:pointer;
-}
-
-textarea{
-width:100%;
-height:120px;
-background:#1f2937;
-color:#e5e7eb;
-border-radius:8px;
-border:none;
-padding:10px;
-font-family:monospace;
-}
-
-.btn{
-display:inline-block;
-margin-top:10px;
-padding:10px 16px;
-border-radius:8px;
-background:linear-gradient(135deg,#2563eb,#1d4ed8);
-color:white;
+.info-box{
+background:rgba(15,23,42,.8);
+border:1px solid rgba(255,255,255,.06);
+padding:14px 18px;
+border-radius:16px;
+font-size:15px;
 font-weight:600;
-border:none;
-cursor:pointer;
-transition:.3s;
-}
-
-.btn:hover{
-transform:scale(1.05);
-box-shadow:0 8px 20px rgba(37,99,235,.5);
+color:#cbd5e1;
+backdrop-filter:blur(12px);
 }
 
 #timer{
-font-size:22px;
-font-weight:bold;
-color:#60a5fa;
-text-align:center;
-margin-bottom:20px;
+font-size:18px;
+font-weight:700;
+color:#facc15;
 }
 
-footer{
-text-align:center;
-padding:25px;
-opacity:.6;
+/* CARD */
+
+.card{
+background:rgba(15,23,42,.8);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:28px;
+margin-bottom:24px;
+transition:.35s;
+box-shadow:
+0 12px 30px rgba(0,0,0,.45);
 }
+
+.card:hover{
+transform:translateY(-4px);
+border-color:rgba(96,165,250,.25);
+box-shadow:
+0 18px 40px rgba(0,0,0,.6),
+0 0 20px rgba(59,130,246,.12);
+}
+
+.card h3{
+margin-bottom:20px;
+font-size:22px;
+font-weight:700;
+color:#93c5fd;
+line-height:1.5;
+}
+
+/* OPTIONS */
+
+label{
+display:block;
+padding:14px 16px;
+margin-bottom:12px;
+border-radius:16px;
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.05);
+cursor:pointer;
+transition:.3s;
+font-size:15px;
+}
+
+label:hover{
+background:rgba(59,130,246,.12);
+border-color:rgba(96,165,250,.25);
+transform:translateX(4px);
+}
+
+input[type="radio"]{
+margin-right:10px;
+transform:scale(1.1);
+accent-color:#3b82f6;
+}
+
+/* BUTTON */
+
+.actions{
+display:flex;
+justify-content:center;
+margin-top:35px;
+}
+
+.btn{
+padding:14px 30px;
+border-radius:16px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+font-weight:700;
+font-size:15px;
+border:none;
+cursor:pointer;
+transition:.35s;
+box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
+
+.btn:hover{
+transform:translateY(-3px) scale(1.03);
+box-shadow:0 18px 35px rgba(37,99,235,.45);
+}
+
+/* FOOTER */
+
+footer{
+margin-top:60px;
+padding:25px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+color:#94a3b8;
+font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:30px;
+}
+
+.card{
+padding:22px;
+}
+
+.card h3{
+font-size:19px;
+}
+
+.top-info{
+flex-direction:column;
+align-items:flex-start;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>{{ test.name }}</h1>
-<p>Answer the questions before time runs out</p>
+
+<p>
+Answer all questions before the timer ends
+</p>
+
 </header>
 
 <div class="container">
 
-<div id="timer">15:00</div>
+<div class="top-info">
+
+<div class="info-box">
+📘 Total Questions: 4
+</div>
+
+<div class="info-box" id="timer">
+⏳ 15:00
+</div>
+
+</div>
 
 <form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+
 {% csrf_token %}
 
 <!-- Hidden fields -->
+
 <input type="hidden" name="total" id="total">
 <input type="hidden" name="correct" id="correct">
 <input type="hidden" name="wrong" id="wrong">
@@ -120,77 +257,164 @@ opacity:.6;
 <input type="hidden" name="score" id="score">
 <input type="hidden" name="time_taken" id="time_taken">
 
-<!-- QUESTIONS -->
+<!-- QUESTION 1 -->
 
 <div class="card">
-<h3>1. Which of these is mutable?</h3>
-<label><input type="radio" name="q1" value="a"> Tuple</label>
-<label><input type="radio" name="q1" value="b"> List</label>
-<label><input type="radio" name="q1" value="c"> String</label>
+
+<h3>
+1. Which of these Python data types is mutable?
+</h3>
+
+<label>
+<input type="radio" name="q1" value="a">
+Tuple
+</label>
+
+<label>
+<input type="radio" name="q1" value="b">
+List
+</label>
+
+<label>
+<input type="radio" name="q1" value="c">
+String
+</label>
+
 </div>
+
+<!-- QUESTION 2 -->
 
 <div class="card">
-<h3>2. Output of 2**3 ?</h3>
-<label><input type="radio" name="q2" value="a"> 6</label>
-<label><input type="radio" name="q2" value="b"> 8</label>
-<label><input type="radio" name="q2" value="c"> 9</label>
+
+<h3>
+2. What is the output of 2**3 in Python?
+</h3>
+
+<label>
+<input type="radio" name="q2" value="a">
+6
+</label>
+
+<label>
+<input type="radio" name="q2" value="b">
+8
+</label>
+
+<label>
+<input type="radio" name="q2" value="c">
+9
+</label>
+
 </div>
+
+<!-- QUESTION 3 -->
 
 <div class="card">
-<h3>3. Keyword used to define a function?</h3>
-<label><input type="radio" name="q3" value="a"> func</label>
-<label><input type="radio" name="q3" value="b"> define</label>
-<label><input type="radio" name="q3" value="c"> def</label>
+
+<h3>
+3. Which keyword is used to define a function in Python?
+</h3>
+
+<label>
+<input type="radio" name="q3" value="a">
+func
+</label>
+
+<label>
+<input type="radio" name="q3" value="b">
+define
+</label>
+
+<label>
+<input type="radio" name="q3" value="c">
+def
+</label>
+
 </div>
+
+<!-- QUESTION 4 -->
 
 <div class="card">
-<h3>4. Output of print(type([]) is list)?</h3>
-<label><input type="radio" name="q4" value="a"> True</label>
-<label><input type="radio" name="q4" value="b"> False</label>
-<label><input type="radio" name="q4" value="c"> Error</label>
+
+<h3>
+4. What is the output of:
+print(type([]) is list)
+</h3>
+
+<label>
+<input type="radio" name="q4" value="a">
+True
+</label>
+
+<label>
+<input type="radio" name="q4" value="b">
+False
+</label>
+
+<label>
+<input type="radio" name="q4" value="c">
+Error
+</label>
+
 </div>
 
-<button type="button" class="btn" onclick="submitQuiz()">Submit Test</button>
+<div class="actions">
+
+<button type="button" class="btn" onclick="submitQuiz()">
+🚀 Submit Test
+</button>
+
+</div>
 
 </form>
 
 </div>
 
 <footer>
-© PrepEdge — Python Module
+© PrepEdge — Python Assessment Module
 </footer>
 
 <script>
+
+/* TIMER */
 
 let time = 900;
 
 const timerDisplay = document.getElementById("timer");
 
 const countdown = setInterval(()=>{
-let min=Math.floor(time/60);
-let sec=time%60;
 
-timerDisplay.textContent =
-`${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+let min = Math.floor(time / 60);
+let sec = time % 60;
 
-if(time<=0){
+timerDisplay.innerHTML =
+`⏳ ${String(min).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;
+
+if(time <= 0){
+
 clearInterval(countdown);
+
 submitQuiz();
+
 alert("Time is up!");
+
 }
 
 time--;
 
 },1000);
 
+/* SUBMIT QUIZ */
 
 function submitQuiz(){
 
 const answers = {
+
 q1:"b",
 q2:"b",
 q3:"c",
 q4:"a"
+
 };
 
 let score = 0;
@@ -202,21 +426,30 @@ let total = Object.keys(answers).length;
 
 for(let q in answers){
 
-const selected = document.querySelector(`input[name=${q}]:checked`);
+const selected =
+document.querySelector(`input[name=${q}]:checked`);
 
 if(!selected){
+
 skipped++;
+
 }
 else if(selected.value === answers[q]){
+
 score++;
 correct++;
+
 }
 else{
+
 wrong++;
-}
+
 }
 
-// fill hidden fields
+}
+
+/* FILL HIDDEN FIELDS */
+
 document.getElementById("total").value = total;
 document.getElementById("correct").value = correct;
 document.getElementById("wrong").value = wrong;
@@ -224,7 +457,8 @@ document.getElementById("skipped").value = skipped;
 document.getElementById("score").value = score;
 document.getElementById("time_taken").value = 900 - time;
 
-// submit form to Django
+/* SUBMIT FORM */
+
 document.getElementById("quizForm").submit();
 
 }

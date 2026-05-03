@@ -6,46 +6,213 @@
 <title>Java Basics | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-body{
-font-family:Segoe UI,Arial;
+
+*{
 margin:0;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb;
-padding:30px;
+padding:0;
+box-sizing:border-box;
 }
+
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
+line-height:1.7;
+padding:40px 20px;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.15), transparent 35%);
+z-index:-1;
+}
+
+/* MAIN CARD */
 
 .card{
-background:#0b1220;
-padding:25px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,.6);
-max-width:900px;
+position:relative;
+background:rgba(15,23,42,.78);
+backdrop-filter:blur(18px);
+padding:40px;
+border-radius:28px;
+border:1px solid rgba(255,255,255,.06);
+box-shadow:
+0 20px 50px rgba(0,0,0,.6);
+max-width:1000px;
 margin:auto;
+overflow:hidden;
 }
 
-h1{color:#93c5fd}
+.card::before{
+content:'';
+position:absolute;
+top:-40%;
+right:-10%;
+width:240px;
+height:240px;
+background:radial-gradient(circle,rgba(59,130,246,.18),transparent 70%);
+}
+
+/* HEADINGS */
+
+.main-title{
+font-size:42px;
+font-weight:800;
+margin-bottom:10px;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+position:relative;
+z-index:1;
+}
+
+.subtitle{
+color:#94a3b8;
+margin-bottom:35px;
+font-size:15px;
+position:relative;
+z-index:1;
+}
+
+.section{
+margin-bottom:35px;
+position:relative;
+z-index:1;
+}
+
+.section h2{
+font-size:24px;
+margin-bottom:18px;
+color:#93c5fd;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.section h2::before{
+content:'';
+width:5px;
+height:24px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* TEXT */
+
+ul{
+padding-left:20px;
+color:#cbd5e1;
+}
+
+ul li{
+margin-bottom:10px;
+}
+
+p{
+color:#cbd5e1;
+margin-bottom:12px;
+}
+
+/* CODE BLOCK */
 
 pre{
 background:#020617;
-padding:12px;
-border-radius:8px;
+padding:18px;
+border-radius:16px;
 overflow:auto;
+font-size:14px;
+line-height:1.6;
+border:1px solid rgba(255,255,255,.05);
+color:#e2e8f0;
+margin-top:12px;
+box-shadow:inset 0 0 15px rgba(0,0,0,.4);
+}
+
+code{
+font-family:Consolas,monospace;
+}
+
+/* INFO BOX */
+
+.info-box{
+background:rgba(37,99,235,.12);
+border:1px solid rgba(96,165,250,.2);
+padding:18px;
+border-radius:16px;
+margin-top:15px;
+color:#dbeafe;
+}
+
+/* BUTTONS */
+
+.button-group{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-top:35px;
 }
 
 .back-btn{
-display:inline-block;
-margin-top:20px;
-padding:10px 18px;
-background:#2563eb;
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:12px 20px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
 color:white;
 text-decoration:none;
-border-radius:6px;
+border-radius:14px;
+font-weight:600;
+transition:.3s;
+box-shadow:0 10px 25px rgba(37,99,235,.3);
 }
 
 .back-btn:hover{
-background:#1d4ed8;
+transform:translateY(-3px) scale(1.03);
+box-shadow:0 15px 35px rgba(37,99,235,.45);
 }
+
+.secondary-btn{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+body{
+padding:20px 14px;
+}
+
+.card{
+padding:26px;
+border-radius:22px;
+}
+
+.main-title{
+font-size:30px;
+}
+
+.section h2{
+font-size:20px;
+}
+
+pre{
+font-size:13px;
+}
+
+}
+
 </style>
 </head>
 
@@ -53,47 +220,194 @@ background:#1d4ed8;
 
 <div class="card">
 
-<h1>Java Basics Cheat Sheet</h1>
+<h1 class="main-title">
+Java Basics Cheat Sheet
+</h1>
+
+<p class="subtitle">
+Learn core Java fundamentals including JVM, variables, input handling, type casting, and syntax basics.
+</p>
+
+<!-- JDK JRE JVM -->
+
+<div class="section">
 
 <h2>JDK vs JRE vs JVM</h2>
+
 <ul>
-<li><b>JVM</b> — Runs Java bytecode</li>
-<li><b>JRE</b> — JVM + libraries</li>
-<li><b>JDK</b> — JRE + development tools</li>
+<li><b>JVM (Java Virtual Machine)</b> — Executes Java bytecode and makes Java platform independent.</li>
+
+<li><b>JRE (Java Runtime Environment)</b> — Contains JVM + libraries required to run Java applications.</li>
+
+<li><b>JDK (Java Development Kit)</b> — Includes JRE + compiler + debugging and development tools.</li>
 </ul>
 
-<h2>Hello World</h2>
-<pre>
-class Main {
- public static void main(String[] args){
-  System.out.println("Hello Java");
- }
-}
-</pre>
+<div class="info-box">
+💡 JDK is used for developing Java applications, while JRE is mainly used for running them.
+</div>
 
-<h2>Variables</h2>
-<pre>
+</div>
+
+<!-- HELLO WORLD -->
+
+<div class="section">
+
+<h2>Hello World Program</h2>
+
+<p>
+Basic structure of a Java program:
+</p>
+
+<pre><code>
+class Main {
+
+    public static void main(String[] args){
+
+        System.out.println("Hello Java");
+
+    }
+
+}
+</code></pre>
+
+<ul>
+<li><b>class Main</b> → Defines the class name.</li>
+<li><b>main()</b> → Entry point of the program.</li>
+<li><b>System.out.println()</b> → Prints output to the console.</li>
+</ul>
+
+</div>
+
+<!-- VARIABLES -->
+
+<div class="section">
+
+<h2>Variables & Data Types</h2>
+
+<p>
+Java is a statically typed language, so every variable must have a data type.
+</p>
+
+<pre><code>
 int a = 10;
 double price = 99.5;
 char grade = 'A';
 boolean flag = true;
 String name = "Java";
-</pre>
+</code></pre>
+
+<ul>
+<li><b>int</b> → Stores integers</li>
+<li><b>double</b> → Stores decimal numbers</li>
+<li><b>char</b> → Stores single characters</li>
+<li><b>boolean</b> → Stores true or false</li>
+<li><b>String</b> → Stores text</li>
+</ul>
+
+</div>
+
+<!-- OPERATORS -->
+
+<div class="section">
+
+<h2>Operators</h2>
+
+<pre><code>
+int a = 10;
+int b = 5;
+
+System.out.println(a + b); // 15
+System.out.println(a - b); // 5
+System.out.println(a * b); // 50
+System.out.println(a / b); // 2
+</code></pre>
+
+<ul>
+<li>Arithmetic → <b>+ - * / %</b></li>
+<li>Comparison → <b>== != &gt; &lt; &gt;= &lt;=</b></li>
+<li>Logical → <b>&& || !</b></li>
+</ul>
+
+</div>
+
+<!-- TYPE CASTING -->
+
+<div class="section">
 
 <h2>Type Casting</h2>
-<pre>
-int x = (int) 9.8;   // explicit
-double y = x;        // implicit
-</pre>
 
-<h2>User Input</h2>
-<pre>
+<p>
+Type casting converts one data type into another.
+</p>
+
+<pre><code>
+int x = (int) 9.8;   // explicit casting
+double y = x;        // implicit casting
+</code></pre>
+
+<ul>
+<li><b>Implicit Casting</b> → Automatic conversion (small → large)</li>
+<li><b>Explicit Casting</b> → Manual conversion (large → small)</li>
+</ul>
+
+</div>
+
+<!-- USER INPUT -->
+
+<div class="section">
+
+<h2>User Input using Scanner</h2>
+
+<pre><code>
 import java.util.Scanner;
-Scanner sc = new Scanner(System.in);
-int n = sc.nextInt();
-</pre>
 
-<a href="{% url 'programming' %}" class="back-btn">⬅ Back to Programming</a>
+Scanner sc = new Scanner(System.in);
+
+System.out.print("Enter number: ");
+
+int n = sc.nextInt();
+
+System.out.println(n);
+</code></pre>
+
+<ul>
+<li><b>Scanner</b> class is used to take input from the user.</li>
+<li><b>nextInt()</b> → Reads integer input</li>
+<li><b>nextLine()</b> → Reads string input</li>
+</ul>
+
+</div>
+
+<!-- IMPORTANT POINTS -->
+
+<div class="section">
+
+<h2>Important Java Features</h2>
+
+<ul>
+<li>Platform Independent</li>
+<li>Object-Oriented Programming</li>
+<li>Secure & Robust</li>
+<li>Automatic Garbage Collection</li>
+<li>Multithreading Support</li>
+<li>Large Standard Library</li>
+</ul>
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="button-group">
+
+<a href="{% url 'programming' %}" class="back-btn">
+⬅ Back to Programming
+</a>
+
+<a href="{% url 'index' %}" class="back-btn secondary-btn">
+🏠 Home
+</a>
+
+</div>
 
 </div>
 

@@ -3,60 +3,311 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Python for Interviews</title>
+<title>Python for Interviews | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg,#020617,#0f172a);
-    color: #e5e7eb;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-header {
-    padding: 25px 20px;
-    text-align: center;
-    background: rgba(2,6,23,0.8);
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e2e8f0;
+overflow-x:hidden;
+line-height:1.7;
 }
 
-header h1 { margin: 0; font-size: 28px; }
-header p { opacity: .7; }
+/* BACKGROUND */
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 30px 20px;
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.15), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 35%);
+z-index:-1;
 }
 
-.card {
-    background: linear-gradient(145deg,#111827,#0b1220);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 20px;
+/* HEADER */
+
+header{
+padding:50px 20px;
+text-align:center;
+background:rgba(2,6,23,.75);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.06);
+position:sticky;
+top:0;
+z-index:100;
 }
 
-.card h3 { margin-top: 0; color: #93c5fd; }
-.card ul { line-height: 1.6; }
-
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: linear-gradient(135deg,#2563eb,#1d4ed8);
-    color: white;
-    text-decoration: none;
+header h1{
+font-size:42px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#a855f7);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:12px;
 }
 
-footer { text-align: center; padding: 25px; opacity: .6; }
+header p{
+color:#94a3b8;
+font-size:16px;
+max-width:700px;
+margin:auto;
+}
 
-code {
-    background: rgba(59,130,246,0.2);
-    padding: 2px 6px;
-    border-radius: 4px;
+/* NAV */
+
+.top-nav{
+margin-top:25px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.nav-btn{
+padding:12px 20px;
+border-radius:14px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.nav-btn:hover{
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
+
+/* CONTAINER */
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:50px 22px;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+font-size:28px;
+font-weight:700;
+margin-bottom:24px;
+margin-top:45px;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.section-title::before{
+content:'';
+width:6px;
+height:30px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:25px;
+}
+
+/* CARD */
+
+.card{
+background:rgba(15,23,42,.75);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:22px;
+padding:28px;
+position:relative;
+overflow:hidden;
+transition:.35s;
+box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:-50px;
+right:-50px;
+width:160px;
+height:160px;
+background:radial-gradient(circle,rgba(59,130,246,.18),transparent 70%);
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:rgba(96,165,250,.3);
+box-shadow:
+0 20px 40px rgba(0,0,0,.6),
+0 0 20px rgba(59,130,246,.12);
+}
+
+.card h3{
+color:#93c5fd;
+font-size:22px;
+margin-bottom:18px;
+position:relative;
+z-index:1;
+}
+
+.card p{
+color:#cbd5e1;
+font-size:15px;
+margin-bottom:16px;
+position:relative;
+z-index:1;
+}
+
+.card ul{
+padding-left:20px;
+position:relative;
+z-index:1;
+}
+
+.card ul li{
+margin-bottom:10px;
+color:#dbeafe;
+}
+
+/* CODE */
+
+code{
+background:rgba(59,130,246,.18);
+padding:4px 8px;
+border-radius:6px;
+color:#93c5fd;
+font-size:14px;
+}
+
+/* BUTTON */
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+margin-top:18px;
+}
+
+.btn:hover{
+transform:translateY(-2px) scale(1.03);
+box-shadow:0 10px 25px rgba(37,99,235,.4);
+}
+
+/* INFO BOX */
+
+.info-box{
+margin-top:25px;
+padding:20px;
+border-radius:18px;
+background:rgba(37,99,235,.08);
+border:1px solid rgba(96,165,250,.15);
+}
+
+.info-box h4{
+margin-bottom:12px;
+color:#93c5fd;
+font-size:18px;
+}
+
+/* FLOATING HOME */
+
+.floating-home{
+position:fixed;
+bottom:24px;
+left:24px;
+width:58px;
+height:58px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-size:22px;
+box-shadow:0 12px 30px rgba(0,0,0,.55);
+transition:.3s;
+}
+
+.floating-home:hover{
+transform:translateY(-4px) scale(1.08);
+}
+
+/* FOOTER */
+
+footer{
+margin-top:60px;
+padding:30px;
+text-align:center;
+color:#94a3b8;
+border-top:1px solid rgba(255,255,255,.06);
+background:rgba(0,0,0,.2);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:30px;
+}
+
+.section-title{
+font-size:24px;
+}
+
+.container{
+padding:35px 18px;
+}
+
+.card{
+padding:22px;
+}
+
+}
+
+@media(max-width:480px){
+
+.top-nav{
+flex-direction:column;
+align-items:center;
+}
+
+.nav-btn{
+width:100%;
+max-width:260px;
+text-align:center;
+}
+
+header h1{
+font-size:26px;
+}
+
 }
 
 </style>
@@ -65,50 +316,269 @@ code {
 <body>
 
 <header>
+
 <h1>Python for Interviews</h1>
-<p>Important concepts frequently asked in technical interviews.</p>
+
+<p>
+Master important Python concepts, coding patterns, and interview topics frequently asked in technical interviews for internships and software developer roles.
+</p>
+
+<div class="top-nav">
+
+<a href="{% url 'python_info' %}" class="nav-btn">
+📘 Python Module
+</a>
+
+<a href="{% url 'programming' %}" class="nav-btn">
+💻 Programming Page
+</a>
+
+<a href="{% url 'index' %}" class="nav-btn">
+🏠 Home
+</a>
+
+</div>
+
 </header>
 
 <div class="container">
 
-<div class="card">
-<h3>Core Python Concepts</h3>
-<ul>
-<li>Data types & typecasting</li>
-<li>Loops & conditional statements</li>
-<li>Functions, Lambda, Recursion</li>
-<li>OOP: Classes, Objects, Inheritance</li>
-<li>Exception Handling</li>
-</ul>
-</div>
+<!-- CORE CONCEPTS -->
+
+<h2 class="section-title">Core Python Concepts</h2>
+
+<div class="grid">
 
 <div class="card">
-<h3>Important Topics</h3>
+
+<h3>Python Basics</h3>
+
 <ul>
-<li>List, Tuple, Dictionary & Set operations</li>
-<li>Comprehensions (list/dict/set)</li>
-<li>File handling & context managers</li>
-<li>Modules & Standard Libraries</li>
-<li>Decorators & Generators</li>
+<li>Variables and data types</li>
+<li>Input and output functions</li>
+<li>Operators and expressions</li>
+<li>Conditional statements</li>
+<li>Loops and iteration</li>
+<li>Type casting</li>
 </ul>
+
+<p>
+Interviewers often ask basic syntax questions to check your fundamentals.
+</p>
+
 </div>
 
 <div class="card">
-<h3>Tips for Interviews</h3>
+
+<h3>Functions & Recursion</h3>
+
 <ul>
-<li>Practice coding problems on platforms like LeetCode, HackerRank</li>
-<li>Explain your thought process clearly</li>
-<li>Focus on clean, readable code</li>
-<li>Be ready to discuss Python internals (mutable vs immutable, GIL, etc.)</li>
+<li>Function arguments</li>
+<li>Default and keyword parameters</li>
+<li>Lambda functions</li>
+<li>Recursive functions</li>
+<li>Variable scope</li>
+<li>Return statements</li>
 </ul>
+
+<p>
+Understand how functions improve code reusability and modularity.
+</p>
+
 </div>
 
-<a href="{% url 'index' %}" class="btn">Back to Main Page</a>
+<div class="card">
+
+<h3>Object Oriented Programming</h3>
+
+<ul>
+<li>Classes and objects</li>
+<li>Constructors</li>
+<li>Inheritance</li>
+<li>Polymorphism</li>
+<li>Encapsulation</li>
+<li>Abstraction</li>
+</ul>
+
+<p>
+OOP concepts are frequently asked in developer interviews.
+</p>
 
 </div>
+
+</div>
+
+<!-- IMPORTANT TOPICS -->
+
+<h2 class="section-title">Important Interview Topics</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Data Structures</h3>
+
+<ul>
+<li>List operations</li>
+<li>Tuple vs List</li>
+<li>Dictionary methods</li>
+<li>Set operations</li>
+<li>Stack and Queue basics</li>
+</ul>
+
+<p>
+Questions about time complexity and data handling are common.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Advanced Python</h3>
+
+<ul>
+<li>Decorators</li>
+<li>Generators</li>
+<li>Iterators</li>
+<li>Comprehensions</li>
+<li>Context managers</li>
+<li>Exception handling</li>
+</ul>
+
+<p>
+Advanced topics help you stand out during interviews.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>File Handling & Modules</h3>
+
+<ul>
+<li>Reading and writing files</li>
+<li><code>with open()</code> usage</li>
+<li>Importing modules</li>
+<li>Standard libraries</li>
+<li>OS and datetime modules</li>
+</ul>
+
+<p>
+Practical coding rounds often include file handling tasks.
+</p>
+
+</div>
+
+</div>
+
+<!-- FREQUENT QUESTIONS -->
+
+<h2 class="section-title">Frequently Asked Questions</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Popular Theory Questions</h3>
+
+<ul>
+<li>Difference between List and Tuple</li>
+<li>What is mutable and immutable?</li>
+<li>Explain Python GIL</li>
+<li>Difference between <code>==</code> and <code>is</code></li>
+<li>What are decorators?</li>
+<li>Explain shallow copy and deep copy</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Coding Questions</h3>
+
+<ul>
+<li>Palindrome checker</li>
+<li>Prime number program</li>
+<li>Factorial using recursion</li>
+<li>Reverse a string</li>
+<li>Find duplicate elements</li>
+<li>Fibonacci series</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Technical Round Tips</h3>
+
+<ul>
+<li>Practice writing clean code</li>
+<li>Explain your logic step-by-step</li>
+<li>Focus on problem solving</li>
+<li>Revise OOP concepts properly</li>
+<li>Practice coding daily</li>
+<li>Learn basic SQL and DBMS</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- INTERVIEW PREPARATION -->
+
+<h2 class="section-title">Preparation Strategy</h2>
+
+<div class="card">
+
+<h3>Best Way to Prepare</h3>
+
+<p>
+To crack Python interviews for internships and software developer roles, focus on both theory and coding practice.
+</p>
+
+<div class="info-box">
+
+<h4>Recommended Practice Platforms</h4>
+
+<ul>
+<li>LeetCode</li>
+<li>HackerRank</li>
+<li>CodeChef</li>
+<li>GeeksforGeeks</li>
+<li>InterviewBit</li>
+</ul>
+
+</div>
+
+<div class="info-box">
+
+<h4>Topics You Should Revise Daily</h4>
+
+<ul>
+<li>Python syntax and built-in functions</li>
+<li>Data structures and algorithms</li>
+<li>OOP concepts</li>
+<li>Exception handling</li>
+<li>File handling</li>
+<li>SQL basics</li>
+</ul>
+
+</div>
+
+<a href="{% url 'python_info' %}" class="btn">
+🚀 Continue Learning
+</a>
+
+</div>
+
+</div>
+
+<a href="{% url 'index' %}" class="floating-home">
+🏠
+</a>
 
 <footer>
-© Interview Prep Platform — Python Module
+© PrepEdge — Python Interview Preparation Module
 </footer>
 
 </body>

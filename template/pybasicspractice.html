@@ -2,79 +2,290 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Python MCQ Test</title>
+<title>Python MCQ Test | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; }
 
-body {
-margin: 0;
-font-family: "Segoe UI", Arial, sans-serif;
-background: linear-gradient(135deg,#020617,#0f172a);
-color: #e5e7eb;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-header {
-padding: 25px 20px;
-text-align: center;
-background: rgba(2,6,23,0.8);
-backdrop-filter: blur(10px);
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
 }
 
-.container {
-max-width: 900px;
-margin: auto;
-padding: 30px 20px;
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 35%);
+z-index:-1;
 }
 
-.card {
-background: #111827;
-border-radius: 14px;
-padding: 20px;
-margin-bottom: 20px;
+/* HEADER */
+
+header{
+padding:35px 20px;
+text-align:center;
+background:rgba(2,6,23,.75);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.06);
+position:sticky;
+top:0;
+z-index:100;
 }
 
-label {
-display: block;
-margin: 6px 0;
-cursor: pointer;
+header h1{
+font-size:40px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:10px;
 }
 
-.btn {
-padding: 10px 16px;
-border-radius: 8px;
-background: #2563eb;
-color: white;
-border: none;
-cursor: pointer;
+header p{
+color:#94a3b8;
+font-size:15px;
 }
 
-.result {
-background: rgba(59,130,246,0.2);
-padding: 15px;
-border-radius: 10px;
-margin-top: 20px;
+/* CONTAINER */
+
+.container{
+max-width:950px;
+margin:auto;
+padding:40px 20px;
 }
+
+/* TEST INFO */
+
+.test-info{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+gap:15px;
+margin-bottom:30px;
+padding:18px 22px;
+background:rgba(15,23,42,.75);
+border:1px solid rgba(255,255,255,.06);
+border-radius:18px;
+backdrop-filter:blur(12px);
+}
+
+.info-box{
+font-size:15px;
+color:#cbd5e1;
+}
+
+.timer{
+font-size:18px;
+font-weight:700;
+color:#facc15;
+}
+
+/* CARD */
+
+.card{
+background:rgba(15,23,42,.82);
+border:1px solid rgba(255,255,255,.06);
+border-radius:22px;
+padding:26px;
+margin-bottom:24px;
+backdrop-filter:blur(14px);
+transition:.3s;
+box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+.card:hover{
+transform:translateY(-4px);
+border-color:rgba(96,165,250,.25);
+}
+
+.card h3{
+font-size:22px;
+margin-bottom:20px;
+color:#93c5fd;
+}
+
+/* OPTIONS */
+
+.option{
+display:flex;
+align-items:center;
+gap:12px;
+padding:14px 16px;
+margin-bottom:12px;
+border-radius:14px;
+background:rgba(255,255,255,.04);
+border:1px solid rgba(255,255,255,.05);
+cursor:pointer;
+transition:.25s;
+}
+
+.option:hover{
+background:rgba(59,130,246,.12);
+border-color:rgba(59,130,246,.25);
+}
+
+.option input{
+accent-color:#2563eb;
+transform:scale(1.1);
+cursor:pointer;
+}
+
+.option span{
+font-size:15px;
+color:#e2e8f0;
+}
+
+/* BUTTON */
+
+.btn{
+padding:14px 22px;
+border:none;
+border-radius:14px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+font-size:15px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+box-shadow:0 10px 20px rgba(37,99,235,.25);
+}
+
+.btn:hover{
+transform:translateY(-3px);
+box-shadow:0 14px 28px rgba(37,99,235,.4);
+}
+
+/* RESULT */
+
+.result{
+display:none;
+margin-top:30px;
+padding:28px;
+border-radius:22px;
+background:rgba(15,23,42,.85);
+border:1px solid rgba(255,255,255,.06);
+box-shadow:0 12px 30px rgba(0,0,0,.45);
+text-align:center;
+animation:fadeIn .5s ease;
+}
+
+.result h2{
+font-size:34px;
+margin-bottom:10px;
+color:#60a5fa;
+}
+
+.result p{
+color:#cbd5e1;
+margin-bottom:8px;
+font-size:16px;
+}
+
+/* FOOTER */
+
+footer{
+margin-top:60px;
+padding:24px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+color:#94a3b8;
+font-size:14px;
+}
+
+/* ANIMATION */
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:30px;
+}
+
+.card{
+padding:20px;
+}
+
+.card h3{
+font-size:18px;
+}
+
+.option{
+padding:12px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>Python MCQ Test</h1>
+
+<p>
+Test your Python knowledge with quick multiple choice questions
+</p>
+
 </header>
 
 <div class="container">
+
+<div class="test-info">
+
+<div class="info-box">
+📘 Total Questions: <strong>5</strong>
+</div>
+
+<div class="info-box">
+🎯 Passing Score: <strong>3/5</strong>
+</div>
+
+<div class="timer" id="timer">
+⏳ 01:00
+</div>
+
+</div>
 
 {% if test.id %}
 <form id="mcqForm" method="POST" action="{% url 'submit_test' test.id %}">
 {% else %}
 <p>Error: Test ID not found</p>
 {% endif %}
+
 {% csrf_token %}
 
 <!-- hidden fields -->
+
 <input type="hidden" name="score" id="score">
 <input type="hidden" name="correct" id="correct">
 <input type="hidden" name="wrong" id="wrong">
@@ -82,57 +293,164 @@ margin-top: 20px;
 <input type="hidden" name="total" value="5">
 <input type="hidden" name="time_taken" value="60">
 
-<!-- QUESTIONS -->
+<!-- QUESTION 1 -->
 
 <div class="card">
-<h3>1. Which is mutable?</h3>
-<label><input type="radio" name="q1" value="a"> Tuple</label>
-<label><input type="radio" name="q1" value="b"> List</label>
-<label><input type="radio" name="q1" value="c"> String</label>
-<label><input type="radio" name="q1" value="d"> int</label>
+
+<h3>1. Which Python data type is mutable?</h3>
+
+<label class="option">
+<input type="radio" name="q1" value="a">
+<span>Tuple</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q1" value="b">
+<span>List</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q1" value="c">
+<span>String</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q1" value="d">
+<span>int</span>
+</label>
+
 </div>
+
+<!-- QUESTION 2 -->
 
 <div class="card">
-<h3>2. 2**3 = ?</h3>
-<label><input type="radio" name="q2" value="a"> 6</label>
-<label><input type="radio" name="q2" value="b"> 8</label>
-<label><input type="radio" name="q2" value="c"> 9</label>
-<label><input type="radio" name="q2" value="d"> 5</label>
+
+<h3>2. What is the output of 2**3 ?</h3>
+
+<label class="option">
+<input type="radio" name="q2" value="a">
+<span>6</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q2" value="b">
+<span>8</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q2" value="c">
+<span>9</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q2" value="d">
+<span>5</span>
+</label>
+
 </div>
+
+<!-- QUESTION 3 -->
 
 <div class="card">
-<h3>3. Function keyword?</h3>
-<label><input type="radio" name="q3" value="a"> func</label>
-<label><input type="radio" name="q3" value="b"> define</label>
-<label><input type="radio" name="q3" value="c"> def</label>
-<label><input type="radio" name="q3" value="d"> function</label>
+
+<h3>3. Which keyword is used to define a function?</h3>
+
+<label class="option">
+<input type="radio" name="q3" value="a">
+<span>func</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q3" value="b">
+<span>define</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q3" value="c">
+<span>def</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q3" value="d">
+<span>function</span>
+</label>
+
 </div>
+
+<!-- QUESTION 4 -->
 
 <div class="card">
-<h3>4. len([1,2,3]) = ?</h3>
-<label><input type="radio" name="q4" value="a"> 2</label>
-<label><input type="radio" name="q4" value="b"> 3</label>
-<label><input type="radio" name="q4" value="c"> 4</label>
-<label><input type="radio" name="q4" value="d"> None</label>
+
+<h3>4. What is the output of len([1,2,3]) ?</h3>
+
+<label class="option">
+<input type="radio" name="q4" value="a">
+<span>2</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q4" value="b">
+<span>3</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q4" value="c">
+<span>4</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q4" value="d">
+<span>None</span>
+</label>
+
 </div>
+
+<!-- QUESTION 5 -->
 
 <div class="card">
-<h3>5. Inheritance syntax?</h3>
-<label><input type="radio" name="q5" value="a"> class B(A):</label>
-<label><input type="radio" name="q5" value="b"> class B - A:</label>
-<label><input type="radio" name="q5" value="c"> class B extends A:</label>
-<label><input type="radio" name="q5" value="d"> class B inherits A:</label>
+
+<h3>5. Which syntax is correct for inheritance in Python?</h3>
+
+<label class="option">
+<input type="radio" name="q5" value="a">
+<span>class B(A):</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q5" value="b">
+<span>class B - A:</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q5" value="c">
+<span>class B extends A:</span>
+</label>
+
+<label class="option">
+<input type="radio" name="q5" value="d">
+<span>class B inherits A:</span>
+</label>
+
 </div>
 
-<button type="button" class="btn" onclick="submitMCQ()">Submit</button>
+<button type="button" class="btn" onclick="submitMCQ()">
+🚀 Submit Test
+</button>
 
 </form>
 
-<div id="result" class="result" style="display:none;"></div>
+<!-- RESULT -->
+
+<div id="result" class="result"></div>
 
 </div>
 
+<footer>
+© PrepEdge — Python Learning Module
+</footer>
+
 <script>
+
 function submitMCQ() {
 
 const answers = {
@@ -153,34 +471,73 @@ for (let q in answers) {
 const selected = document.querySelector(`input[name=${q}]:checked`);
 
 if (!selected) {
-    skipped++;
-} 
+skipped++;
+}
 else if (selected.value === answers[q]) {
-    correct++;
-    score++;
-} 
+correct++;
+score++;
+}
 else {
-    wrong++;
+wrong++;
 }
 }
 
-// set hidden values
+// hidden values
+
 document.getElementById("score").value = score;
 document.getElementById("correct").value = correct;
 document.getElementById("wrong").value = wrong;
 document.getElementById("skipped").value = skipped;
 
 // show result
-document.getElementById("result").style.display = "block";
-document.getElementById("result").innerHTML =
-`<h3>Score: ${score}/5</h3>`;
 
-// submit form
+document.getElementById("result").style.display = "block";
+
+document.getElementById("result").innerHTML = `
+<h2>${score}/5</h2>
+
+<p>✅ Correct Answers: ${correct}</p>
+
+<p>❌ Wrong Answers: ${wrong}</p>
+
+<p>⏭️ Skipped Questions: ${skipped}</p>
+
+<p>
+${score >= 3 ? "🎉 Great Job! You Passed." : "📚 Keep Practicing and Try Again."}
+</p>
+`;
+
+// auto submit
+
 setTimeout(() => {
-    document.getElementById("mcqForm").submit();
-}, 1000);
+document.getElementById("mcqForm").submit();
+}, 2500);
 
 }
+
+/* TIMER */
+
+let timeLeft = 60;
+
+const timer = document.getElementById("timer");
+
+const countdown = setInterval(() => {
+
+let minutes = Math.floor(timeLeft / 60);
+let seconds = timeLeft % 60;
+
+timer.innerHTML =
+`⏳ ${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
+
+timeLeft--;
+
+if(timeLeft < 0){
+clearInterval(countdown);
+submitMCQ();
+}
+
+},1000);
+
 </script>
 
 </body>

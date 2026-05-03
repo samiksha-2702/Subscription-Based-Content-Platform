@@ -3,50 +3,218 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Java Control Statements</title>
+<title>Java Control Statements | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-body{
-font-family:Segoe UI,Arial;
+
+*{
 margin:0;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb;
-padding:30px;
+padding:0;
+box-sizing:border-box;
 }
+
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
+line-height:1.7;
+padding:40px 20px;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.15), transparent 35%);
+z-index:-1;
+}
+
+/* MAIN CARD */
 
 .card{
-background:#0b1220;
-padding:25px;
-border-radius:12px;
-max-width:900px;
+position:relative;
+background:rgba(15,23,42,.78);
+backdrop-filter:blur(18px);
+padding:40px;
+border-radius:28px;
+border:1px solid rgba(255,255,255,.06);
+box-shadow:
+0 20px 50px rgba(0,0,0,.6);
+max-width:1000px;
 margin:auto;
-box-shadow:0 10px 30px rgba(0,0,0,.6);
+overflow:hidden;
 }
 
-h1{color:#93c5fd}
+.card::before{
+content:'';
+position:absolute;
+top:-40%;
+right:-10%;
+width:240px;
+height:240px;
+background:radial-gradient(circle,rgba(59,130,246,.18),transparent 70%);
+}
+
+/* TITLES */
+
+.main-title{
+font-size:42px;
+font-weight:800;
+margin-bottom:10px;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+position:relative;
+z-index:1;
+}
+
+.subtitle{
+color:#94a3b8;
+margin-bottom:35px;
+font-size:15px;
+position:relative;
+z-index:1;
+}
+
+/* SECTION */
+
+.section{
+margin-bottom:35px;
+position:relative;
+z-index:1;
+}
+
+.section h2{
+font-size:24px;
+margin-bottom:18px;
+color:#93c5fd;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.section h2::before{
+content:'';
+width:5px;
+height:24px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* TEXT */
+
+ul{
+padding-left:20px;
+color:#cbd5e1;
+}
+
+ul li{
+margin-bottom:10px;
+}
+
+p{
+color:#cbd5e1;
+margin-bottom:12px;
+}
+
+/* CODE */
 
 pre{
 background:#020617;
-padding:12px;
-border-radius:8px;
+padding:18px;
+border-radius:16px;
 overflow:auto;
+font-size:14px;
+line-height:1.6;
+border:1px solid rgba(255,255,255,.05);
+color:#e2e8f0;
+margin-top:12px;
+box-shadow:inset 0 0 15px rgba(0,0,0,.4);
+}
+
+code{
+font-family:Consolas,monospace;
+}
+
+/* INFO BOX */
+
+.info-box{
+background:rgba(37,99,235,.12);
+border:1px solid rgba(96,165,250,.2);
+padding:18px;
+border-radius:16px;
+margin-top:15px;
+color:#dbeafe;
+}
+
+/* BUTTONS */
+
+.button-group{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-top:35px;
 }
 
 .back-btn{
-display:inline-block;
-margin-top:20px;
-padding:10px 18px;
-background:#2563eb;
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:12px 20px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
 color:white;
 text-decoration:none;
-border-radius:6px;
+border-radius:14px;
 font-weight:600;
+transition:.3s;
+box-shadow:0 10px 25px rgba(37,99,235,.3);
 }
 
 .back-btn:hover{
-background:#1d4ed8;
+transform:translateY(-3px) scale(1.03);
+box-shadow:0 15px 35px rgba(37,99,235,.45);
 }
+
+.secondary-btn{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+body{
+padding:20px 14px;
+}
+
+.card{
+padding:26px;
+border-radius:22px;
+}
+
+.main-title{
+font-size:30px;
+}
+
+.section h2{
+font-size:20px;
+}
+
+pre{
+font-size:13px;
+}
+
+}
+
 </style>
 </head>
 
@@ -54,53 +222,249 @@ background:#1d4ed8;
 
 <div class="card">
 
-<h1>Java Control Flow</h1>
+<h1 class="main-title">
+Java Control Statements
+</h1>
 
-<h2>If Else</h2>
-<pre>
+<p class="subtitle">
+Learn Java decision making, loops, switch statements, and flow control concepts with examples.
+</p>
+
+<!-- IF ELSE -->
+
+<div class="section">
+
+<h2>If Else Statement</h2>
+
+<p>
+The <b>if-else</b> statement is used to execute different blocks of code based on conditions.
+</p>
+
+<pre><code>
 int age = 18;
-if(age >= 18){
- System.out.println("Adult");
-}else{
- System.out.println("Minor");
-}
-</pre>
 
-<h2>Switch</h2>
-<pre>
-int day = 2;
-switch(day){
- case 1: System.out.println("Mon"); break;
- case 2: System.out.println("Tue"); break;
- default: System.out.println("Invalid");
+if(age >= 18){
+
+    System.out.println("Adult");
+
+}else{
+
+    System.out.println("Minor");
+
 }
-</pre>
+</code></pre>
+
+<ul>
+<li><b>if</b> checks the condition.</li>
+<li><b>else</b> executes when the condition becomes false.</li>
+</ul>
+
+<div class="info-box">
+💡 Use if-else when your program needs decision making.
+</div>
+
+</div>
+
+<!-- SWITCH -->
+
+<div class="section">
+
+<h2>Switch Statement</h2>
+
+<p>
+The <b>switch</b> statement is used to select one block among multiple options.
+</p>
+
+<pre><code>
+int day = 2;
+
+switch(day){
+
+    case 1:
+        System.out.println("Mon");
+        break;
+
+    case 2:
+        System.out.println("Tue");
+        break;
+
+    default:
+        System.out.println("Invalid");
+
+}
+</code></pre>
+
+<ul>
+<li><b>case</b> defines different choices.</li>
+<li><b>break</b> stops execution after matching.</li>
+<li><b>default</b> runs if no case matches.</li>
+</ul>
+
+</div>
+
+<!-- FOR LOOP -->
+
+<div class="section">
 
 <h2>For Loop</h2>
-<pre>
-for(int i=1;i<=5;i++){
- System.out.println(i);
+
+<p>
+The <b>for loop</b> is mainly used when the number of iterations is known.
+</p>
+
+<pre><code>
+for(int i = 1; i <= 5; i++){
+
+    System.out.println(i);
+
 }
-</pre>
+</code></pre>
+
+<ul>
+<li>Initialization → <b>int i = 1</b></li>
+<li>Condition → <b>i &lt;= 5</b></li>
+<li>Increment → <b>i++</b></li>
+</ul>
+
+</div>
+
+<!-- WHILE LOOP -->
+
+<div class="section">
 
 <h2>While Loop</h2>
-<pre>
-int i=1;
-while(i<=5){
- System.out.println(i);
- i++;
+
+<p>
+The <b>while loop</b> executes as long as the condition is true.
+</p>
+
+<pre><code>
+int i = 1;
+
+while(i <= 5){
+
+    System.out.println(i);
+
+    i++;
+
 }
-</pre>
+</code></pre>
+
+<ul>
+<li>Condition is checked before execution.</li>
+<li>Useful when iteration count is unknown.</li>
+</ul>
+
+</div>
+
+<!-- DO WHILE -->
+
+<div class="section">
+
+<h2>Do While Loop</h2>
+
+<p>
+The <b>do-while loop</b> executes at least once even if the condition is false.
+</p>
+
+<pre><code>
+int i = 1;
+
+do{
+
+    System.out.println(i);
+
+    i++;
+
+}while(i <= 5);
+</code></pre>
+
+</div>
+
+<!-- BREAK CONTINUE -->
+
+<div class="section">
 
 <h2>Break & Continue</h2>
-<pre>
-for(int i=1;i<=10;i++){
- if(i==5) break;
- if(i==2) continue;
-}
-</pre>
 
-<a href="{% url 'javainfo' %}" class="back-btn">⬅ Back to Java Module</a>
+<p>
+These statements control loop execution.
+</p>
+
+<pre><code>
+for(int i = 1; i <= 10; i++){
+
+    if(i == 5)
+        break;
+
+    if(i == 2)
+        continue;
+
+    System.out.println(i);
+
+}
+</code></pre>
+
+<ul>
+<li><b>break</b> exits the loop immediately.</li>
+<li><b>continue</b> skips the current iteration.</li>
+</ul>
+
+</div>
+
+<!-- NESTED LOOP -->
+
+<div class="section">
+
+<h2>Nested Loop</h2>
+
+<p>
+A loop inside another loop is called a nested loop.
+</p>
+
+<pre><code>
+for(int i = 1; i <= 3; i++){
+
+    for(int j = 1; j <= 2; j++){
+
+        System.out.println(i + " " + j);
+
+    }
+
+}
+</code></pre>
+
+</div>
+
+<!-- IMPORTANT POINTS -->
+
+<div class="section">
+
+<h2>Important Interview Points</h2>
+
+<ul>
+<li>Difference between while and do-while loop</li>
+<li>Use of break and continue</li>
+<li>Nested loop logic</li>
+<li>Switch statement flow</li>
+<li>Infinite loops in Java</li>
+</ul>
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="button-group">
+
+<a href="{% url 'javainfo' %}" class="back-btn">
+⬅ Back to Java Module
+</a>
+
+<a href="{% url 'index' %}" class="back-btn secondary-btn">
+🏠 Home
+</a>
+
+</div>
 
 </div>
 

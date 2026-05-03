@@ -3,50 +3,218 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Java OOP Cheat Sheet</title>
+<title>Java OOP Cheat Sheet | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-body{
-font-family:Segoe UI,Arial;
+
+*{
 margin:0;
-background:linear-gradient(135deg,#020617,#0f172a);
-color:#e5e7eb;
-padding:30px;
+padding:0;
+box-sizing:border-box;
 }
+
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
+line-height:1.7;
+padding:40px 20px;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.15), transparent 35%);
+z-index:-1;
+}
+
+/* MAIN CARD */
 
 .card{
-background:#0b1220;
-padding:25px;
-border-radius:12px;
-max-width:900px;
+position:relative;
+background:rgba(15,23,42,.78);
+backdrop-filter:blur(18px);
+padding:40px;
+border-radius:28px;
+border:1px solid rgba(255,255,255,.06);
+box-shadow:
+0 20px 50px rgba(0,0,0,.6);
+max-width:1000px;
 margin:auto;
-box-shadow:0 10px 30px rgba(0,0,0,.6);
+overflow:hidden;
 }
 
-h1{color:#93c5fd}
+.card::before{
+content:'';
+position:absolute;
+top:-40%;
+right:-10%;
+width:240px;
+height:240px;
+background:radial-gradient(circle,rgba(59,130,246,.18),transparent 70%);
+}
+
+/* TITLES */
+
+.main-title{
+font-size:42px;
+font-weight:800;
+margin-bottom:10px;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+position:relative;
+z-index:1;
+}
+
+.subtitle{
+color:#94a3b8;
+margin-bottom:35px;
+font-size:15px;
+position:relative;
+z-index:1;
+}
+
+/* SECTION */
+
+.section{
+margin-bottom:35px;
+position:relative;
+z-index:1;
+}
+
+.section h2{
+font-size:24px;
+margin-bottom:18px;
+color:#93c5fd;
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.section h2::before{
+content:'';
+width:5px;
+height:24px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* TEXT */
+
+ul{
+padding-left:20px;
+color:#cbd5e1;
+}
+
+ul li{
+margin-bottom:10px;
+}
+
+p{
+color:#cbd5e1;
+margin-bottom:12px;
+}
+
+/* CODE */
 
 pre{
 background:#020617;
-padding:12px;
-border-radius:8px;
+padding:18px;
+border-radius:16px;
 overflow:auto;
+font-size:14px;
+line-height:1.6;
+border:1px solid rgba(255,255,255,.05);
+color:#e2e8f0;
+margin-top:12px;
+box-shadow:inset 0 0 15px rgba(0,0,0,.4);
+}
+
+code{
+font-family:Consolas,monospace;
+}
+
+/* INFO BOX */
+
+.info-box{
+background:rgba(37,99,235,.12);
+border:1px solid rgba(96,165,250,.2);
+padding:18px;
+border-radius:16px;
+margin-top:15px;
+color:#dbeafe;
+}
+
+/* BUTTONS */
+
+.button-group{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+margin-top:35px;
 }
 
 .back-btn{
-display:inline-block;
-margin-top:20px;
-padding:10px 18px;
-background:#2563eb;
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:12px 20px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
 color:white;
 text-decoration:none;
-border-radius:6px;
+border-radius:14px;
 font-weight:600;
+transition:.3s;
+box-shadow:0 10px 25px rgba(37,99,235,.3);
 }
 
 .back-btn:hover{
-background:#1d4ed8;
+transform:translateY(-3px) scale(1.03);
+box-shadow:0 15px 35px rgba(37,99,235,.45);
 }
+
+.secondary-btn{
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+body{
+padding:20px 14px;
+}
+
+.card{
+padding:26px;
+border-radius:22px;
+}
+
+.main-title{
+font-size:30px;
+}
+
+.section h2{
+font-size:20px;
+}
+
+pre{
+font-size:13px;
+}
+
+}
+
 </style>
 </head>
 
@@ -54,60 +222,297 @@ background:#1d4ed8;
 
 <div class="card">
 
-<h1>Java OOP Concepts</h1>
+<h1 class="main-title">
+Java OOP Concepts
+</h1>
+
+<p class="subtitle">
+Learn Object-Oriented Programming concepts in Java including classes, inheritance, polymorphism, interfaces, and encapsulation.
+</p>
+
+<!-- CLASS OBJECT -->
+
+<div class="section">
 
 <h2>Class & Object</h2>
-<pre>
+
+<p>
+A <b>class</b> is a blueprint for creating objects, while an <b>object</b> is an instance of a class.
+</p>
+
+<pre><code>
 class Student{
- String name;
- int marks;
+
+    String name;
+    int marks;
+
 }
+
 Student s = new Student();
-</pre>
+</code></pre>
+
+<ul>
+<li><b>Class</b> defines properties and methods.</li>
+<li><b>Object</b> accesses the class data and behavior.</li>
+</ul>
+
+<div class="info-box">
+💡 Objects are created using the <b>new</b> keyword.
+</div>
+
+</div>
+
+<!-- CONSTRUCTOR -->
+
+<div class="section">
 
 <h2>Constructor</h2>
-<pre>
+
+<p>
+A constructor initializes objects automatically when they are created.
+</p>
+
+<pre><code>
 class A{
- A(){
-  System.out.println("Constructor");
- }
+
+    A(){
+
+        System.out.println("Constructor");
+
+    }
+
 }
-</pre>
+</code></pre>
+
+<ul>
+<li>Constructor name must match the class name.</li>
+<li>Constructors do not have a return type.</li>
+<li>Used for object initialization.</li>
+</ul>
+
+</div>
+
+<!-- INHERITANCE -->
+
+<div class="section">
 
 <h2>Inheritance</h2>
-<pre>
-class A{ void show(){} }
-class B extends A{}
-</pre>
+
+<p>
+Inheritance allows one class to acquire properties and methods of another class.
+</p>
+
+<pre><code>
+class A{
+
+    void show(){}
+
+}
+
+class B extends A{
+
+}
+</code></pre>
+
+<ul>
+<li><b>extends</b> keyword is used for inheritance.</li>
+<li>Promotes code reusability.</li>
+<li>Java supports single, multilevel, and hierarchical inheritance.</li>
+</ul>
+
+</div>
+
+<!-- POLYMORPHISM -->
+
+<div class="section">
+
+<h2>Polymorphism</h2>
+
+<p>
+Polymorphism allows methods to perform different behaviors.
+</p>
+
+<div class="info-box">
+Two main types:
+<ul>
+<li>Compile-Time Polymorphism → Method Overloading</li>
+<li>Run-Time Polymorphism → Method Overriding</li>
+</ul>
+</div>
+
+</div>
+
+<!-- METHOD OVERLOADING -->
+
+<div class="section">
 
 <h2>Method Overloading</h2>
-<pre>
-int add(int a,int b){}
-double add(double a,double b){}
-</pre>
+
+<p>
+Method overloading means multiple methods with the same name but different parameters.
+</p>
+
+<pre><code>
+int add(int a, int b){
+
+    return a + b;
+
+}
+
+double add(double a, double b){
+
+    return a + b;
+
+}
+</code></pre>
+
+<ul>
+<li>Achieved at compile time.</li>
+<li>Improves method flexibility.</li>
+</ul>
+
+</div>
+
+<!-- METHOD OVERRIDING -->
+
+<div class="section">
 
 <h2>Method Overriding</h2>
-<pre>
-class A{ void show(){} }
-class B extends A{
- void show(){}
+
+<p>
+Method overriding allows a subclass to provide its own implementation of a parent method.
+</p>
+
+<pre><code>
+class A{
+
+    void show(){}
+
 }
-</pre>
+
+class B extends A{
+
+    void show(){}
+
+}
+</code></pre>
+
+<ul>
+<li>Occurs in inheritance.</li>
+<li>Supports runtime polymorphism.</li>
+</ul>
+
+</div>
+
+<!-- INTERFACE -->
+
+<div class="section">
 
 <h2>Interface</h2>
-<pre>
+
+<p>
+An interface contains abstract methods that classes must implement.
+</p>
+
+<pre><code>
 interface Shape{
- void draw();
+
+    void draw();
+
 }
-</pre>
+</code></pre>
+
+<ul>
+<li>Used for abstraction.</li>
+<li>Supports multiple inheritance in Java.</li>
+<li>Methods are public and abstract by default.</li>
+</ul>
+
+</div>
+
+<!-- ENCAPSULATION -->
+
+<div class="section">
 
 <h2>Encapsulation</h2>
-<pre>
-private int data;
-public int getData(){ return data; }
-</pre>
 
-<a href="{% url 'javainfo' %}" class="back-btn">⬅ Back to Java Module</a>
+<p>
+Encapsulation hides data using private variables and provides controlled access using methods.
+</p>
+
+<pre><code>
+private int data;
+
+public int getData(){
+
+    return data;
+
+}
+</code></pre>
+
+<ul>
+<li>Improves data security.</li>
+<li>Achieved using getters and setters.</li>
+</ul>
+
+</div>
+
+<!-- ABSTRACTION -->
+
+<div class="section">
+
+<h2>Abstraction</h2>
+
+<p>
+Abstraction hides implementation details and shows only important features.
+</p>
+
+<pre><code>
+abstract class Animal{
+
+    abstract void sound();
+
+}
+</code></pre>
+
+<ul>
+<li>Achieved using abstract classes and interfaces.</li>
+<li>Helps reduce complexity.</li>
+</ul>
+
+</div>
+
+<!-- IMPORTANT INTERVIEW QUESTIONS -->
+
+<div class="section">
+
+<h2>Important Interview Topics</h2>
+
+<ul>
+<li>Difference between class and object</li>
+<li>Constructor vs method</li>
+<li>Overloading vs overriding</li>
+<li>Abstract class vs interface</li>
+<li>Inheritance types in Java</li>
+<li>Encapsulation advantages</li>
+<li>Runtime polymorphism</li>
+</ul>
+
+</div>
+
+<!-- BUTTONS -->
+
+<div class="button-group">
+
+<a href="{% url 'javainfo' %}" class="back-btn">
+⬅ Back to Java Module
+</a>
+
+<a href="{% url 'index' %}" class="back-btn secondary-btn">
+🏠 Home
+</a>
+
+</div>
 
 </div>
 

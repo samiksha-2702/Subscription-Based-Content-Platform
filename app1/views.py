@@ -95,6 +95,8 @@ def user_login(request):
 
 from django.utils import timezone
 
+from django.utils import timezone
+
 def has_active_subscription(user):
     if not user.is_authenticated:
         return False
@@ -104,13 +106,13 @@ def has_active_subscription(user):
     if not sub:
         return False
 
-    # expire check
+    # Expire check
     if sub.expires_at and sub.expires_at < timezone.now():
         sub.status = 'expired'
+        sub.plan = 'free'
         sub.save()
         return False
 
-    # ✅ FIXED LOGIC
     return sub.status == 'active' and sub.plan in ['monthly', 'yearly', 'premium']
 
 @login_required

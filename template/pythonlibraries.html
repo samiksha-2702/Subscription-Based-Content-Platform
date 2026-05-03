@@ -3,112 +3,489 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Best Python Libraries</title>
+<title>Best Python Libraries | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-* { box-sizing: border-box; }
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg,#020617,#0f172a);
-    color: #e5e7eb;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-header {
-    padding: 25px 20px;
-    text-align: center;
-    background: rgba(2,6,23,0.8);
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
+line-height:1.7;
 }
 
-header h1 { margin: 0; font-size: 28px; }
-header p { opacity: .7; }
+/* BACKGROUND */
 
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 30px 20px;
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 35%);
+z-index:-1;
 }
 
-.card {
-    background: linear-gradient(145deg,#111827,#0b1220);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 20px;
+/* HEADER */
+
+header{
+padding:40px 20px;
+text-align:center;
+background:rgba(2,6,23,.75);
+backdrop-filter:blur(14px);
+border-bottom:1px solid rgba(255,255,255,.06);
+position:sticky;
+top:0;
+z-index:100;
 }
 
-.card h3 { color: #93c5fd; }
-
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: linear-gradient(135deg,#2563eb,#1d4ed8);
-    color: white;
-    text-decoration: none;
+header h1{
+font-size:42px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:12px;
 }
 
-footer {
-    text-align: center;
-    padding: 25px;
-    opacity: .6;
+header p{
+color:#94a3b8;
+font-size:16px;
+max-width:700px;
+margin:auto;
 }
 
-code {
-    background: rgba(59,130,246,0.2);
-    padding: 2px 6px;
-    border-radius: 4px;
+/* CONTAINER */
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:50px 22px;
 }
+
+/* SECTION */
+
+.section-title{
+font-size:28px;
+font-weight:700;
+margin-bottom:25px;
+display:flex;
+align-items:center;
+gap:12px;
+color:#f8fafc;
+}
+
+.section-title::before{
+content:'';
+width:6px;
+height:30px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:26px;
+}
+
+/* CARD */
+
+.card{
+position:relative;
+background:rgba(15,23,42,.8);
+backdrop-filter:blur(18px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:28px;
+overflow:hidden;
+transition:.35s ease;
+box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:-40%;
+right:-20%;
+width:180px;
+height:180px;
+background:radial-gradient(circle,rgba(59,130,246,.18),transparent 70%);
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:rgba(96,165,250,.35);
+box-shadow:
+0 20px 45px rgba(0,0,0,.65),
+0 0 20px rgba(59,130,246,.15);
+}
+
+.card h3{
+font-size:24px;
+margin-bottom:18px;
+color:#93c5fd;
+font-weight:700;
+position:relative;
+z-index:1;
+}
+
+.card p{
+color:#cbd5e1;
+font-size:15px;
+margin-bottom:18px;
+position:relative;
+z-index:1;
+}
+
+.card ul{
+padding-left:20px;
+color:#cbd5e1;
+position:relative;
+z-index:1;
+}
+
+.card ul li{
+margin-bottom:12px;
+}
+
+/* CODE */
+
+code{
+background:rgba(59,130,246,0.18);
+padding:4px 8px;
+border-radius:8px;
+font-size:14px;
+color:#bfdbfe;
+}
+
+/* TAGS */
+
+.tags{
+margin-top:18px;
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+position:relative;
+z-index:1;
+}
+
+.tag{
+padding:8px 14px;
+border-radius:999px;
+background:rgba(255,255,255,.06);
+border:1px solid rgba(255,255,255,.08);
+font-size:13px;
+color:#cbd5e1;
+}
+
+/* BUTTON */
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:8px;
+margin-top:20px;
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-weight:600;
+font-size:14px;
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px) scale(1.03);
+box-shadow:0 10px 25px rgba(37,99,235,.45);
+}
+
+/* INFO BOX */
+
+.info-box{
+margin-top:45px;
+background:rgba(15,23,42,.75);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:28px;
+box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+.info-box h2{
+margin-bottom:18px;
+font-size:24px;
+color:#93c5fd;
+}
+
+.info-box ul{
+padding-left:20px;
+color:#cbd5e1;
+}
+
+.info-box li{
+margin-bottom:12px;
+}
+
+/* FOOTER */
+
+footer{
+margin-top:60px;
+padding:28px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+color:#94a3b8;
+font-size:14px;
+background:rgba(0,0,0,.2);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:30px;
+}
+
+.container{
+padding:35px 18px;
+}
+
+.card{
+padding:22px;
+}
+
+.section-title{
+font-size:22px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>Best Python Libraries</h1>
-<p>Top libraries for AI, Web, and Automation</p>
+
+<p>
+Explore the most popular Python libraries used in Artificial Intelligence,
+Web Development, Automation, Data Science, and Cyber Security.
+</p>
+
 </header>
 
 <div class="container">
 
-<div class="card">
-<h3>For AI & ML</h3>
-<ul>
-<li><code>NumPy</code> – Numerical computations</li>
-<li><code>Pandas</code> – Data manipulation</li>
-<li><code>Scikit-learn</code> – Machine learning</li>
-<li><code>TensorFlow / PyTorch</code> – Deep learning</li>
-</ul>
-</div>
+<h2 class="section-title">Popular Python Libraries</h2>
+
+<div class="grid">
+
+<!-- AI & ML -->
 
 <div class="card">
-<h3>For Web Development</h3>
+
+<h3>AI & Machine Learning</h3>
+
+<p>
+Python is the leading language for Artificial Intelligence and Data Science
+because of its powerful ecosystem of libraries.
+</p>
+
 <ul>
-<li><code>Django</code> – Full-stack web framework</li>
-<li><code>Flask</code> – Lightweight web framework</li>
-<li><code>FastAPI</code> – High-performance APIs</li>
-<li><code>Requests</code> – HTTP requests</li>
+<li><code>NumPy</code> — Fast numerical and matrix operations</li>
+<li><code>Pandas</code> — Data analysis and dataframes</li>
+<li><code>Scikit-learn</code> — Machine learning algorithms</li>
+<li><code>TensorFlow</code> — Deep learning by Google</li>
+<li><code>PyTorch</code> — Research-focused deep learning framework</li>
+<li><code>Matplotlib</code> — Data visualization and plotting</li>
 </ul>
+
+<div class="tags">
+<span class="tag">AI</span>
+<span class="tag">Machine Learning</span>
+<span class="tag">Deep Learning</span>
+<span class="tag">Data Science</span>
 </div>
+
+</div>
+
+<!-- WEB -->
 
 <div class="card">
-<h3>For Automation & Utilities</h3>
+
+<h3>Web Development</h3>
+
+<p>
+Python provides modern frameworks for building websites,
+REST APIs, dashboards, and enterprise applications.
+</p>
+
 <ul>
-<li><code>BeautifulSoup</code> – Web scraping</li>
-<li><code>Selenium</code> – Browser automation</li>
-<li><code>OpenCV</code> – Image/video processing</li>
-<li><code>PyAutoGUI</code> – GUI automation</li>
+<li><code>Django</code> — Full-stack web framework</li>
+<li><code>Flask</code> — Lightweight and beginner friendly</li>
+<li><code>FastAPI</code> — Fast API development framework</li>
+<li><code>Requests</code> — Sending HTTP requests</li>
+<li><code>Jinja2</code> — HTML template engine</li>
+<li><code>SQLAlchemy</code> — Database ORM toolkit</li>
 </ul>
+
+<div class="tags">
+<span class="tag">Backend</span>
+<span class="tag">REST API</span>
+<span class="tag">Web Apps</span>
+<span class="tag">Django</span>
 </div>
 
-<a href="{% url 'index' %}" class="btn">Back to Main Page</a>
+</div>
+
+<!-- AUTOMATION -->
+
+<div class="card">
+
+<h3>Automation & Utilities</h3>
+
+<p>
+Python is widely used for browser automation, scripting,
+system administration, and productivity tools.
+</p>
+
+<ul>
+<li><code>Selenium</code> — Browser automation testing</li>
+<li><code>BeautifulSoup</code> — Web scraping library</li>
+<li><code>PyAutoGUI</code> — Desktop GUI automation</li>
+<li><code>OpenCV</code> — Computer vision and image processing</li>
+<li><code>Schedule</code> — Task scheduling</li>
+<li><code>os & shutil</code> — File and system operations</li>
+</ul>
+
+<div class="tags">
+<span class="tag">Automation</span>
+<span class="tag">Web Scraping</span>
+<span class="tag">Testing</span>
+<span class="tag">Computer Vision</span>
+</div>
+
+</div>
+
+<!-- CYBER SECURITY -->
+
+<div class="card">
+
+<h3>Cyber Security & Networking</h3>
+
+<p>
+Python is also popular in cyber security, penetration testing,
+network analysis, and ethical hacking tools.
+</p>
+
+<ul>
+<li><code>Scapy</code> — Packet analysis and network scanning</li>
+<li><code>Socket</code> — Network communication</li>
+<li><code>Paramiko</code> — SSH connections and automation</li>
+<li><code>Cryptography</code> — Encryption and hashing</li>
+<li><code>Nmap</code> — Network mapping integration</li>
+</ul>
+
+<div class="tags">
+<span class="tag">Cyber Security</span>
+<span class="tag">Networking</span>
+<span class="tag">Ethical Hacking</span>
+</div>
+
+</div>
+
+<!-- GAME DEVELOPMENT -->
+
+<div class="card">
+
+<h3>Game Development</h3>
+
+<p>
+Python also supports 2D game development and multimedia projects.
+</p>
+
+<ul>
+<li><code>Pygame</code> — 2D game engine</li>
+<li><code>Pyglet</code> — Multimedia and animations</li>
+<li><code>Arcade</code> — Modern game framework</li>
+</ul>
+
+<div class="tags">
+<span class="tag">Games</span>
+<span class="tag">Graphics</span>
+<span class="tag">Animations</span>
+</div>
+
+</div>
+
+<!-- DATA VISUALIZATION -->
+
+<div class="card">
+
+<h3>Data Visualization</h3>
+
+<p>
+Visualization libraries help create charts, dashboards,
+graphs, and analytics reports.
+</p>
+
+<ul>
+<li><code>Matplotlib</code> — Basic plotting</li>
+<li><code>Plotly</code> — Interactive graphs</li>
+<li><code>Seaborn</code> — Statistical visualizations</li>
+<li><code>Bokeh</code> — Interactive dashboards</li>
+</ul>
+
+<div class="tags">
+<span class="tag">Charts</span>
+<span class="tag">Dashboards</span>
+<span class="tag">Analytics</span>
+</div>
+
+</div>
+
+</div>
+
+<!-- EXTRA INFO -->
+
+<div class="info-box">
+
+<h2>Why Python Libraries Are Important?</h2>
+
+<ul>
+<li>Libraries reduce development time and effort.</li>
+<li>They provide pre-written optimized code.</li>
+<li>Python libraries are beginner friendly and highly reusable.</li>
+<li>Most modern AI, automation, and web applications use Python libraries.</li>
+<li>Knowing popular libraries improves interview and job opportunities.</li>
+<li>Libraries help developers build scalable and professional applications faster.</li>
+</ul>
+
+<a href="{% url 'programming' %}" class="btn">
+← Back to Programming Page
+</a>
+
+</div>
 
 </div>
 
 <footer>
-© Interview Prep Platform — Python Module
+© PrepEdge — Python Learning Module
 </footer>
 
 </body>

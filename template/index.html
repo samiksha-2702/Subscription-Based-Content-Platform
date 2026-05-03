@@ -1168,8 +1168,10 @@ a {
 <div class="navbar">
   <div class="brand">PrepEdge</div>
   <div class="nav-links">
-    {% if not subscription %}
-    <a href="{% url 'plans' %}" class="btn upgrade-btn-nav"><i class="fas fa-crown"></i> Upgrade</a>
+    {% if not subscription or subscription.plan == 'free' %}
+     <a href="{% url 'plans' %}" class="btn upgrade-btn-nav">
+      <i class="fas fa-crown"></i> Upgrade
+    </a>
     {% endif %}
 
     {% if user.is_authenticated %}

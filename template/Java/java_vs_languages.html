@@ -3,66 +3,164 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Java vs Python</title>
+<title>Java vs Python | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body{
+
+*{
 margin:0;
-font-family:Segoe UI,Arial;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Segoe UI,Arial,sans-serif;
 background:linear-gradient(135deg,#020617,#0f172a);
 color:#e5e7eb;
 padding:30px;
+line-height:1.7;
 }
 
 .card{
-max-width:950px;
+max-width:1100px;
 margin:auto;
-background:#0b1220;
-padding:32px;
-border-radius:16px;
+background:linear-gradient(145deg,#0b1220,#111827);
+padding:35px;
+border-radius:18px;
 box-shadow:0 15px 40px rgba(0,0,0,.6);
+border:1px solid rgba(255,255,255,.06);
 }
 
 h1{
 color:#93c5fd;
-margin-top:0;
+margin-bottom:12px;
+font-size:36px;
 }
 
 h2{
 color:#60a5fa;
-margin-top:28px;
+margin-top:35px;
+margin-bottom:15px;
+font-size:24px;
+}
+
+p{
+color:#cbd5e1;
+margin-bottom:15px;
 }
 
 .table{
 width:100%;
 border-collapse:collapse;
-margin-top:15px;
+margin-top:18px;
+overflow:hidden;
+border-radius:12px;
 }
 
-.table td,.table th{
-border:1px solid rgba(255,255,255,.15);
-padding:12px;
+.table th,
+.table td{
+border:1px solid rgba(255,255,255,.12);
+padding:14px;
+text-align:left;
 }
 
 .table th{
 background:#1f2937;
+color:#93c5fd;
+font-size:16px;
+}
+
+.table td{
+background:#111827;
 }
 
 .highlight{
 background:#111827;
-padding:15px;
-border-radius:10px;
-margin-top:15px;
+padding:18px;
+border-radius:12px;
+margin-top:18px;
+border-left:4px solid #3b82f6;
+overflow:auto;
+}
+
+pre{
+white-space:pre-wrap;
+color:#e5e7eb;
+font-family:Consolas,monospace;
+}
+
+ul{
+padding-left:22px;
+margin-top:10px;
+}
+
+li{
+margin-bottom:8px;
+color:#cbd5e1;
+}
+
+.section-box{
+background:rgba(255,255,255,.03);
+padding:20px;
+border-radius:14px;
+margin-top:20px;
+}
+
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:30px;
+background:#1e3a8a;
+color:#bfdbfe;
+font-size:13px;
+margin-bottom:10px;
 }
 
 .back{
 display:inline-block;
-margin-top:25px;
-color:#93c5fd;
+margin-top:35px;
+padding:12px 18px;
+border-radius:10px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
 text-decoration:none;
 font-weight:600;
+transition:.3s;
 }
+
+.back:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(37,99,235,.45);
+}
+
+footer{
+text-align:center;
+margin-top:30px;
+opacity:.6;
+font-size:14px;
+}
+
+@media(max-width:768px){
+
+body{
+padding:18px;
+}
+
+.card{
+padding:22px;
+}
+
+h1{
+font-size:28px;
+}
+
+.table{
+font-size:14px;
+}
+
+}
+
 </style>
 </head>
 
@@ -70,102 +168,368 @@ font-weight:600;
 
 <div class="card">
 
+<div class="badge">Programming Comparison</div>
+
 <h1>Java vs Python — Detailed Comparison</h1>
 
 <p>
-Java and Python are two of the most popular programming languages used in
-software development today. Both are powerful but designed with different
-goals and strengths.
+Java and Python are two of the most widely used programming languages in the software industry.
+Both are powerful, object-oriented, and platform-independent languages, but they are designed
+for different purposes and development styles.
 </p>
 
-<h2>Core Difference</h2>
+<h2>Overview</h2>
+
+<div class="section-box">
+
+<p>
+<b>Java</b> is a high-performance, strongly typed programming language mainly used in enterprise
+applications, Android development, banking systems, and large-scale backend applications.
+</p>
+
+<p>
+<b>Python</b> is a simple and beginner-friendly language famous for AI, Machine Learning,
+Data Science, Automation, and rapid development.
+</p>
+
+</div>
+
+<h2>Core Differences</h2>
 
 <table class="table">
+
+<tr>
+<th>Feature</th>
+<th>Java</th>
+<th>Python</th>
+</tr>
+
+<tr>
+<td>Execution</td>
+<td>Compiled + JVM</td>
+<td>Interpreted</td>
+</tr>
+
+<tr>
+<td>Typing</td>
+<td>Statically typed</td>
+<td>Dynamically typed</td>
+</tr>
+
+<tr>
+<td>Syntax</td>
+<td>Verbose</td>
+<td>Simple & short</td>
+</tr>
+
+<tr>
+<td>Performance</td>
+<td>Faster execution</td>
+<td>Slower but productive</td>
+</tr>
+
+<tr>
+<td>Learning</td>
+<td>Moderate difficulty</td>
+<td>Beginner friendly</td>
+</tr>
+
+<tr>
+<td>Main Use</td>
+<td>Enterprise & Android</td>
+<td>AI & Automation</td>
+</tr>
+
+<tr>
+<td>Memory Management</td>
+<td>Automatic Garbage Collection</td>
+<td>Automatic Memory Management</td>
+</tr>
+
+<tr>
+<td>Code Length</td>
+<td>Longer code</td>
+<td>Shorter code</td>
+</tr>
+
+<tr>
+<td>Frameworks</td>
+<td>Spring, Hibernate</td>
+<td>Django, Flask, FastAPI</td>
+</tr>
+
+<tr>
+<td>Community</td>
+<td>Very large</td>
+<td>Very large</td>
+</tr>
+
+</table>
+
+<h2>Syntax Comparison</h2>
+
+<div class="highlight">
+
+<pre>
+Java Example:
+
+public class Hello {
+    public static void main(String[] args){
+        System.out.println("Hello World");
+    }
+}
+</pre>
+
+</div>
+
+<div class="highlight">
+
+<pre>
+Python Example:
+
+print("Hello World")
+</pre>
+
+</div>
+
+<h2>Object-Oriented Programming</h2>
+
+<div class="section-box">
+
+<p>
+Both Java and Python support Object-Oriented Programming concepts:
+</p>
+
+<ul>
+<li>Classes and Objects</li>
+<li>Inheritance</li>
+<li>Polymorphism</li>
+<li>Abstraction</li>
+<li>Encapsulation</li>
+</ul>
+
+<p>
+However, Java is considered more strictly object-oriented than Python.
+</p>
+
+</div>
+
+<h2>Performance Comparison</h2>
+
+<div class="section-box">
+
+<p>
+Java is usually faster because Java programs are compiled into bytecode and run
+on the JVM with optimization techniques like Just-In-Time (JIT) compilation.
+</p>
+
+<p>
+Python is slower because it is interpreted line by line, but it significantly
+improves developer productivity and reduces development time.
+</p>
+
+</div>
+
+<h2>Where Java is Used</h2>
+
+<ul>
+<li>Enterprise Applications</li>
+<li>Banking Systems</li>
+<li>Android App Development</li>
+<li>E-commerce Platforms</li>
+<li>Cloud-based Backend Systems</li>
+<li>Large-scale Distributed Systems</li>
+</ul>
+
+<h2>Where Python is Used</h2>
+
+<ul>
+<li>Artificial Intelligence</li>
+<li>Machine Learning</li>
+<li>Data Science</li>
+<li>Automation & Scripting</li>
+<li>Cybersecurity Tools</li>
+<li>Web Development</li>
+<li>Data Analytics</li>
+</ul>
+
+<h2>Libraries & Frameworks</h2>
+
+<table class="table">
+
+<tr>
+<th>Category</th>
+<th>Java</th>
+<th>Python</th>
+</tr>
+
+<tr>
+<td>Web Development</td>
+<td>Spring Boot</td>
+<td>Django / Flask</td>
+</tr>
+
+<tr>
+<td>Database</td>
+<td>Hibernate</td>
+<td>SQLAlchemy</td>
+</tr>
+
+<tr>
+<td>AI / ML</td>
+<td>DL4J</td>
+<td>TensorFlow / PyTorch</td>
+</tr>
+
+<tr>
+<td>Testing</td>
+<td>JUnit</td>
+<td>PyTest</td>
+</tr>
+
+<tr>
+<td>Automation</td>
+<td>Selenium</td>
+<td>Selenium / PyAutoGUI</td>
+</tr>
+
+</table>
+
+<h2>Advantages of Java</h2>
+
+<div class="section-box">
+
+<ul>
+<li>High performance</li>
+<li>Strong security</li>
+<li>Excellent for large systems</li>
+<li>Cross-platform support</li>
+<li>Strong multithreading support</li>
+<li>Huge enterprise demand</li>
+</ul>
+
+</div>
+
+<h2>Advantages of Python</h2>
+
+<div class="section-box">
+
+<ul>
+<li>Easy to learn</li>
+<li>Simple syntax</li>
+<li>Rapid development</li>
+<li>Massive AI ecosystem</li>
+<li>Less code writing</li>
+<li>Great for beginners</li>
+</ul>
+
+</div>
+
+<h2>Disadvantages</h2>
+
+<table class="table">
+
 <tr>
 <th>Java</th>
 <th>Python</th>
 </tr>
 
 <tr>
-<td>Compiled + runs on JVM</td>
-<td>Interpreted language</td>
+<td>More boilerplate code</td>
+<td>Slower execution speed</td>
 </tr>
 
 <tr>
-<td>Strongly typed</td>
-<td>Dynamically typed</td>
+<td>Longer syntax</td>
+<td>Higher memory usage</td>
 </tr>
 
 <tr>
-<td>More verbose syntax</td>
-<td>Simple and short syntax</td>
+<td>Can feel complex for beginners</td>
+<td>Weak mobile app support</td>
 </tr>
 
-<tr>
-<td>Faster execution</td>
-<td>Faster development</td>
-</tr>
-
-<tr>
-<td>Enterprise & Android apps</td>
-<td>AI, Data Science, Automation</td>
-</tr>
 </table>
 
-<h2>Syntax Example</h2>
+<h2>Career Opportunities</h2>
 
-<div class="highlight">
-<b>Java</b><br>
-public class Hello {<br>
-&nbsp;&nbsp;public static void main(String[] args){<br>
-&nbsp;&nbsp;&nbsp;&nbsp;System.out.println("Hello");<br>
-&nbsp;&nbsp;}<br>
-}
-</div>
+<div class="section-box">
 
-<div class="highlight">
-<b>Python</b><br>
-print("Hello")
-</div>
+<p><b>Java Career Roles:</b></p>
 
-<h2>Performance</h2>
-<p>
-Java is generally faster because it runs on the JVM with optimization.
-Python is slower but extremely productive for rapid development.
-</p>
-
-<h2>Best Use Cases</h2>
-
-<b>Java is best for:</b>
 <ul>
-<li>Enterprise applications</li>
-<li>Banking systems</li>
-<li>Android development</li>
-<li>Large backend systems</li>
+<li>Java Developer</li>
+<li>Backend Developer</li>
+<li>Android Developer</li>
+<li>Enterprise Software Engineer</li>
 </ul>
 
-<b>Python is best for:</b>
+<p><b>Python Career Roles:</b></p>
+
+<ul>
+<li>Python Developer</li>
+<li>AI/ML Engineer</li>
+<li>Data Scientist</li>
+<li>Automation Engineer</li>
+<li>Backend Developer</li>
+</ul>
+
+</div>
+
+<h2>Which Language Should You Learn?</h2>
+
+<div class="highlight">
+
+<p>
+Choose <b>Java</b> if you want:
+</p>
+
+<ul>
+<li>Strong programming fundamentals</li>
+<li>Enterprise software development</li>
+<li>Android development</li>
+<li>High-performance backend systems</li>
+</ul>
+
+<p>
+Choose <b>Python</b> if you want:
+</p>
+
 <ul>
 <li>AI & Machine Learning</li>
-<li>Data Science</li>
-<li>Scripting & automation</li>
-<li>Rapid prototyping</li>
+<li>Automation & scripting</li>
+<li>Fast project development</li>
+<li>Beginner-friendly programming</li>
 </ul>
 
-<h2>Learning Curve</h2>
-<p>
-Python is easier for beginners because of its simple syntax.  
-Java requires more setup but builds strong programming fundamentals.
-</p>
+</div>
 
 <h2>Final Verdict</h2>
 
-<div class="highlight">
-Choose <b>Java</b> if you want strong OOP, enterprise, or Android career path.<br>
-Choose <b>Python</b> if you want AI, data science, or fast development.
+<div class="section-box">
+
+<p>
+Both Java and Python are excellent programming languages with huge industry demand.
+</p>
+
+<p>
+Java is powerful for enterprise-level applications and performance-focused systems,
+while Python is best for rapid development, AI, and automation.
+</p>
+
+<p>
+Learning both languages can significantly improve your programming and career opportunities.
+</p>
+
 </div>
 
-<a href="{% url 'javainfo' %}" class="back">⬅ Back to Java Module</a>
+<a href="{% url 'javainfo' %}" class="back">
+⬅ Back to Java Module
+</a>
+
+<footer>
+© PrepEdge — Java Learning Module
+</footer>
 
 </div>
 

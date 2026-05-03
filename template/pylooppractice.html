@@ -5,55 +5,243 @@
 <title>{{ test.name }}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-body{
+
+*{
 margin:0;
-font-family:"Segoe UI",Arial,sans-serif;
-background:linear-gradient(135deg,#020617,#0f172a);
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
 color:#e5e7eb;
+overflow-x:hidden;
 }
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.15), transparent 35%);
+z-index:-1;
+}
+
+/* HEADER */
+
+.header{
+padding:40px 20px;
+text-align:center;
+background:rgba(2,6,23,.75);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(255,255,255,.06);
+box-shadow:0 10px 40px rgba(0,0,0,.5);
+}
+
+.header h1{
+font-size:38px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#c084fc);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:10px;
+}
+
+.header p{
+color:#94a3b8;
+font-size:15px;
+}
+
+/* CONTAINER */
+
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
-padding:30px 20px;
+padding:40px 20px;
 }
+
+/* TOP BAR */
+
+.top-bar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+gap:20px;
+flex-wrap:wrap;
+}
+
+.badge{
+background:rgba(59,130,246,.12);
+border:1px solid rgba(96,165,250,.2);
+padding:10px 16px;
+border-radius:14px;
+font-size:14px;
+font-weight:600;
+color:#93c5fd;
+}
+
+/* CARD */
+
 .card{
-background:#111827;
-border-radius:12px;
-padding:20px;
-margin-bottom:20px;
+background:rgba(15,23,42,.8);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:22px;
+padding:28px;
+margin-bottom:24px;
+transition:.35s;
+box-shadow:
+0 12px 30px rgba(0,0,0,.45);
 }
+
+.card:hover{
+transform:translateY(-4px);
+border-color:rgba(96,165,250,.25);
+box-shadow:
+0 18px 40px rgba(0,0,0,.6),
+0 0 20px rgba(59,130,246,.12);
+}
+
+.card h3{
+font-size:22px;
+margin-bottom:18px;
+color:#93c5fd;
+font-weight:700;
+}
+
+/* TEXTAREA */
+
 textarea{
 width:100%;
-height:120px;
-background:#1f2937;
+height:180px;
+background:#0f172a;
 color:#e5e7eb;
-border-radius:8px;
-border:none;
-padding:10px;
-font-family:monospace;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.08);
+padding:16px;
+font-family:Consolas, monospace;
+font-size:15px;
+resize:vertical;
+outline:none;
+transition:.3s;
+line-height:1.6;
 }
+
+textarea:focus{
+border-color:#3b82f6;
+box-shadow:0 0 0 4px rgba(59,130,246,.15);
+}
+
+/* BUTTON */
+
+.actions{
+display:flex;
+justify-content:center;
+margin-top:35px;
+}
+
 .btn{
-padding:10px 16px;
-border-radius:8px;
-background:#2563eb;
+padding:14px 28px;
+border-radius:16px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
 color:white;
 border:none;
 cursor:pointer;
+font-size:15px;
+font-weight:700;
+transition:.35s;
+box-shadow:0 10px 25px rgba(37,99,235,.35);
 }
+
+.btn:hover{
+transform:translateY(-3px) scale(1.02);
+box-shadow:0 16px 35px rgba(37,99,235,.45);
+}
+
+/* TIMER */
+
+.timer{
+font-size:16px;
+font-weight:700;
+color:#facc15;
+}
+
+/* FOOTER */
+
+footer{
+margin-top:50px;
+padding:25px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+color:#94a3b8;
+font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.header h1{
+font-size:28px;
+}
+
+.card{
+padding:22px;
+}
+
+.card h3{
+font-size:19px;
+}
+
+textarea{
+height:150px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="header">
+
+<h1>{{ test.name }}</h1>
+
+<p>
+Python Coding Assessment • Solve Real Coding Problems
+</p>
+
+</div>
+
 <div class="container">
 
-<h1>{{ test.name }} (ID: {{ test.id }})</h1>
+<div class="top-bar">
+
+<div class="badge">
+💻 Coding Questions: 3
+</div>
+
+<div class="badge timer" id="timer">
+⏳ Time Left: 05:00
+</div>
+
+</div>
 
 <form id="codingForm" method="POST" action="{% url 'submit_test' test.id %}">
+
 {% csrf_token %}
 
-<!-- Hidden fields -->
+<!-- Hidden Fields -->
+
 <input type="hidden" name="total" id="total">
 <input type="hidden" name="correct" id="correct">
 <input type="hidden" name="wrong" id="wrong">
@@ -61,49 +249,175 @@ cursor:pointer;
 <input type="hidden" name="score" id="score">
 <input type="hidden" name="time_taken" id="time_taken">
 
-<div class="card">
-<h3>1. Swap two numbers</h3>
-<textarea name="q1"></textarea>
-</div>
+<!-- QUESTION 1 -->
 
 <div class="card">
-<h3>2. Prime number check</h3>
-<textarea name="q2"></textarea>
+
+<h3>
+1. Write a Python program to swap two numbers.
+</h3>
+
+<textarea 
+name="q1"
+placeholder="Example:
+a = 10
+b = 20
+
+a, b = b, a
+
+print(a, b)"
+></textarea>
+
 </div>
+
+<!-- QUESTION 2 -->
 
 <div class="card">
-<h3>3. Fibonacci</h3>
-<textarea name="q3"></textarea>
+
+<h3>
+2. Write a Python program to check whether a number is prime or not.
+</h3>
+
+<textarea 
+name="q2"
+placeholder="Write your prime number program here..."
+></textarea>
+
 </div>
 
-<button type="button" class="btn" onclick="submitCoding()">Submit Test</button>
+<!-- QUESTION 3 -->
+
+<div class="card">
+
+<h3>
+3. Write a Python program to print Fibonacci series.
+</h3>
+
+<textarea 
+name="q3"
+placeholder="Write your Fibonacci series program here..."
+></textarea>
+
+</div>
+
+<div class="actions">
+
+<button type="button" class="btn" onclick="submitCoding()">
+🚀 Submit Coding Test
+</button>
+
+</div>
 
 </form>
 
 </div>
 
+<footer>
+© PrepEdge — Python Coding Module
+</footer>
+
 <script>
+
+/* TIMER */
+
+let totalSeconds = 300;
+
+const timer = document.getElementById("timer");
+
+const countdown = setInterval(() => {
+
+let minutes = Math.floor(totalSeconds / 60);
+let seconds = totalSeconds % 60;
+
+seconds = seconds < 10 ? '0' + seconds : seconds;
+
+timer.innerHTML = `⏳ Time Left: ${minutes}:${seconds}`;
+
+if(totalSeconds <= 0){
+
+clearInterval(countdown);
+
+submitCoding();
+
+}
+
+totalSeconds--;
+
+},1000);
+
+/* SUBMIT */
+
 function submitCoding(){
 
 let total = 3;
 let correct = 0;
 let wrong = 0;
 let skipped = 0;
-
-// simple scoring (you can upgrade later)
 let score = 0;
 
-// fill hidden fields
+/* CHECK ANSWERS */
+
+const q1 = document.querySelector('textarea[name="q1"]').value.trim();
+const q2 = document.querySelector('textarea[name="q2"]').value.trim();
+const q3 = document.querySelector('textarea[name="q3"]').value.trim();
+
+/* QUESTION 1 */
+
+if(q1 !== ""){
+
+correct++;
+score++;
+
+}
+else{
+
+skipped++;
+
+}
+
+/* QUESTION 2 */
+
+if(q2 !== ""){
+
+correct++;
+score++;
+
+}
+else{
+
+skipped++;
+
+}
+
+/* QUESTION 3 */
+
+if(q3 !== ""){
+
+correct++;
+score++;
+
+}
+else{
+
+skipped++;
+
+}
+
+/* HIDDEN VALUES */
+
 document.getElementById("total").value = total;
 document.getElementById("correct").value = correct;
 document.getElementById("wrong").value = wrong;
 document.getElementById("skipped").value = skipped;
 document.getElementById("score").value = score;
-document.getElementById("time_taken").value = 60;
+document.getElementById("time_taken").value = 300 - totalSeconds;
 
-// submit form
+/* SUBMIT FORM */
+
 document.getElementById("codingForm").submit();
+
 }
+
 </script>
 
 </body>

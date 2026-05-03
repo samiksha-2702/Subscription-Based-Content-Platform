@@ -3,143 +3,555 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Python Basics Cheat Sheet</title>
+<title>Python Basics Cheat Sheet | PrepEdge</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<style>
-/* Your same CSS */
-* { box-sizing: border-box; }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-body {
-    margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg,#020617,#0f172a);
-    color: #e5e7eb;
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
+line-height:1.7;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.15), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 35%);
+z-index:-1;
 }
 
 /* HEADER */
-header {
-    padding: 25px 20px;
-    text-align: center;
-    background: rgba(2,6,23,0.8);
-    backdrop-filter: blur(10px);
+
+header{
+padding:50px 20px;
+text-align:center;
+background:rgba(2,6,23,.78);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(255,255,255,.06);
+position:sticky;
+top:0;
+z-index:100;
 }
 
-header h1 { margin: 0; font-size: 28px; }
-header p { opacity: .7; }
-
-.container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 30px 20px;
+header h1{
+font-size:40px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#a855f7);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:12px;
 }
 
-.section-title {
-    margin: 30px 0 15px;
-    font-size: 22px;
-    border-left: 4px solid #3b82f6;
-    padding-left: 12px;
+header p{
+color:#94a3b8;
+font-size:16px;
 }
 
-.card {
-    background: linear-gradient(145deg,#111827,#0b1220);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 20px;
+/* NAVIGATION */
+
+.top-nav{
+margin-top:24px;
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap;
 }
 
-.card h3 {
-    margin-top: 0;
-    color: #93c5fd;
+.nav-btn{
+padding:12px 20px;
+border-radius:14px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
 }
 
-.card ul {
-    padding-left: 18px;
-    line-height: 1.6;
+.nav-btn:hover{
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(37,99,235,.35);
 }
 
-.card code {
-    background: rgba(59,130,246,0.2);
-    padding: 2px 6px;
-    border-radius: 4px;
+/* CONTAINER */
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:50px 22px;
 }
 
-.btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    background: linear-gradient(135deg,#2563eb,#1d4ed8);
-    color: white;
-    text-decoration: none;
-    font-weight: 600;
+/* SECTION TITLE */
+
+.section-title{
+font-size:28px;
+font-weight:700;
+margin-bottom:24px;
+margin-top:50px;
+display:flex;
+align-items:center;
+gap:12px;
 }
 
-footer {
-    text-align: center;
-    padding: 25px;
-    opacity: .6;
+.section-title::before{
+content:'';
+width:6px;
+height:30px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
 }
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:24px;
+}
+
+/* CARD */
+
+.card{
+background:rgba(15,23,42,.75);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:28px;
+position:relative;
+overflow:hidden;
+transition:.35s ease;
+box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:-40px;
+right:-40px;
+width:160px;
+height:160px;
+background:radial-gradient(circle,rgba(59,130,246,.16),transparent 70%);
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:rgba(96,165,250,.3);
+box-shadow:
+0 20px 45px rgba(0,0,0,.65),
+0 0 20px rgba(59,130,246,.15);
+}
+
+.card h3{
+font-size:22px;
+margin-bottom:18px;
+color:#93c5fd;
+position:relative;
+z-index:1;
+}
+
+.card ul{
+padding-left:20px;
+position:relative;
+z-index:1;
+}
+
+.card ul li{
+margin-bottom:12px;
+color:#dbeafe;
+}
+
+/* CODE */
+
+code{
+background:rgba(59,130,246,.18);
+padding:4px 8px;
+border-radius:6px;
+color:#93c5fd;
+font-size:14px;
+}
+
+/* INFO BOX */
+
+.info-box{
+margin-top:25px;
+padding:22px;
+border-radius:18px;
+background:rgba(37,99,235,.08);
+border:1px solid rgba(96,165,250,.14);
+}
+
+.info-box h4{
+margin-bottom:12px;
+color:#93c5fd;
+font-size:18px;
+}
+
+.info-box ul{
+padding-left:20px;
+}
+
+.info-box ul li{
+margin-bottom:10px;
+}
+
+/* BUTTON */
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:8px;
+margin-top:20px;
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px) scale(1.03);
+box-shadow:0 10px 25px rgba(37,99,235,.4);
+}
+
+/* FLOATING HOME */
+
+.floating-home{
+position:fixed;
+bottom:24px;
+left:24px;
+width:58px;
+height:58px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-size:22px;
+box-shadow:0 12px 30px rgba(0,0,0,.55);
+transition:.3s;
+}
+
+.floating-home:hover{
+transform:translateY(-4px) scale(1.08);
+}
+
+/* FOOTER */
+
+footer{
+margin-top:70px;
+padding:30px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+color:#94a3b8;
+background:rgba(0,0,0,.2);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:30px;
+}
+
+.section-title{
+font-size:22px;
+}
+
+.container{
+padding:35px 18px;
+}
+
+.card{
+padding:22px;
+}
+
+}
+
+@media(max-width:480px){
+
+.top-nav{
+flex-direction:column;
+align-items:center;
+}
+
+.nav-btn{
+width:100%;
+max-width:260px;
+text-align:center;
+}
+
+header h1{
+font-size:26px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
+
 <h1>Python Basics Cheat Sheet</h1>
-<p>Quick reference for Python fundamentals</p>
+
+<p>
+Quick reference guide for Python fundamentals, syntax, and important beginner concepts.
+</p>
+
+<div class="top-nav">
+
+<a href="{% url 'python_info' %}" class="nav-btn">
+📘 Python Module
+</a>
+
+<a href="{% url 'programming' %}" class="nav-btn">
+💻 Programming Page
+</a>
+
+<a href="{% url 'index' %}" class="nav-btn">
+🏠 Home
+</a>
+
+</div>
+
 </header>
 
 <div class="container">
 
+<h2 class="section-title">Python Fundamentals</h2>
+
+<div class="grid">
+
 <div class="card">
+
 <h3>Variables & Data Types</h3>
+
 <ul>
 <li>Declare variable: <code>x = 10</code></li>
-<li>Data types: <code>int, float, str, bool, list, tuple, dict, set</code></li>
-<li>Check type: <code>type(x)</code></li>
+<li>String variable: <code>name = "PrepEdge"</code></li>
+<li>Boolean value: <code>is_active = True</code></li>
 <li>Multiple assignment: <code>a, b = 5, 10</code></li>
+<li>Check type: <code>type(x)</code></li>
+<li>Delete variable: <code>del x</code></li>
 </ul>
+
 </div>
 
 <div class="card">
+
+<h3>Built-in Data Types</h3>
+
+<ul>
+<li><code>int</code> → Integer values</li>
+<li><code>float</code> → Decimal values</li>
+<li><code>str</code> → Text/String</li>
+<li><code>bool</code> → True or False</li>
+<li><code>list</code> → Ordered mutable collection</li>
+<li><code>tuple</code> → Ordered immutable collection</li>
+<li><code>dict</code> → Key-value pairs</li>
+<li><code>set</code> → Unique unordered values</li>
+</ul>
+
+</div>
+
+<div class="card">
+
 <h3>Input / Output</h3>
+
 <ul>
-<li>Print: <code>print("Hello World")</code></li>
-<li>Input: <code>name = input("Enter your name: ")</code></li>
-<li>Formatted print: <code>print(f"Hello {name}")</code></li>
+<li>Print output: <code>print("Hello")</code></li>
+<li>User input: <code>name = input()</code></li>
+<li>Formatted output: <code>print(f"Hi {name}")</code></li>
+<li>Multiple values: <code>print(a,b)</code></li>
+<li>Separator: <code>print(a,b,sep="-")</code></li>
 </ul>
+
+</div>
+
+</div>
+
+<!-- OPERATORS -->
+
+<h2 class="section-title">Operators & Expressions</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Arithmetic Operators</h3>
+
+<ul>
+<li>Addition → <code>+</code></li>
+<li>Subtraction → <code>-</code></li>
+<li>Multiplication → <code>*</code></li>
+<li>Division → <code>/</code></li>
+<li>Modulus → <code>%</code></li>
+<li>Exponent → <code>**</code></li>
+<li>Floor Division → <code>//</code></li>
+</ul>
+
 </div>
 
 <div class="card">
-<h3>Operators</h3>
+
+<h3>Comparison Operators</h3>
+
 <ul>
-<li>Arithmetic: <code>+ - * / % ** //</code></li>
-<li>Comparison: <code>== != > < >= <=</code></li>
-<li>Logical: <code>and or not</code></li>
-<li>Assignment: <code>= += -= *= /= %=</code></li>
-<li>Membership: <code>in, not in</code></li>
-<li>Identity: <code>is, is not</code></li>
+<li><code>==</code> Equal to</li>
+<li><code>!=</code> Not equal to</li>
+<li><code>></code> Greater than</li>
+<li><code><</code> Less than</li>
+<li><code>>=</code> Greater or equal</li>
+<li><code><=</code> Less or equal</li>
 </ul>
+
 </div>
 
 <div class="card">
-<h3>Type Conversion</h3>
+
+<h3>Logical & Identity Operators</h3>
+
 <ul>
-<li>Integer: <code>int("10") → 10</code></li>
-<li>Float: <code>float("10.5") → 10.5</code></li>
-<li>String: <code>str(10) → "10"</code></li>
-<li>Boolean: <code>bool(0) → False</code></li>
-<li>List conversion: <code>list((1,2)) → [1,2]</code></li>
+<li><code>and</code></li>
+<li><code>or</code></li>
+<li><code>not</code></li>
+<li><code>is</code></li>
+<li><code>is not</code></li>
+<li><code>in</code></li>
+<li><code>not in</code></li>
 </ul>
-</div>
-
-<a href="{% url 'index' %}" class="btn">Back to Main Page</a>
 
 </div>
+
+</div>
+
+<!-- TYPE CONVERSION -->
+
+<h2 class="section-title">Type Conversion</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Conversion Functions</h3>
+
+<ul>
+<li>Integer: <code>int("10")</code></li>
+<li>Float: <code>float("10.5")</code></li>
+<li>String: <code>str(100)</code></li>
+<li>Boolean: <code>bool(1)</code></li>
+<li>List: <code>list((1,2,3))</code></li>
+<li>Tuple: <code>tuple([1,2])</code></li>
+<li>Set: <code>set([1,2,2])</code></li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Useful Built-in Functions</h3>
+
+<ul>
+<li><code>len()</code> → Find length</li>
+<li><code>max()</code> → Largest value</li>
+<li><code>min()</code> → Smallest value</li>
+<li><code>sum()</code> → Sum of values</li>
+<li><code>sorted()</code> → Sort values</li>
+<li><code>range()</code> → Generate sequence</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Comments in Python</h3>
+
+<ul>
+<li>Single line: <code># comment</code></li>
+<li>Multi-line:</li>
+<li><code>''' comment '''</code></li>
+<li><code>""" comment """</code></li>
+<li>Comments improve code readability</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- INTERVIEW NOTES -->
+
+<h2 class="section-title">Important Interview Notes</h2>
+
+<div class="card">
+
+<h3>Python Basics Tips</h3>
+
+<div class="info-box">
+
+<h4>Frequently Asked Beginner Questions</h4>
+
+<ul>
+<li>Difference between List and Tuple</li>
+<li>Mutable vs Immutable objects</li>
+<li>What is Python?</li>
+<li>Advantages of Python</li>
+<li>Difference between == and is</li>
+<li>What are Python keywords?</li>
+</ul>
+
+</div>
+
+<div class="info-box">
+
+<h4>Best Practices</h4>
+
+<ul>
+<li>Use meaningful variable names</li>
+<li>Write clean and readable code</li>
+<li>Practice syntax daily</li>
+<li>Understand logic instead of memorizing</li>
+<li>Use comments where needed</li>
+</ul>
+
+</div>
+
+<a href="{% url 'python_info' %}" class="btn">
+🚀 Continue Learning
+</a>
+
+</div>
+
+</div>
+
+<a href="{% url 'index' %}" class="floating-home">
+🏠
+</a>
 
 <footer>
-© Interview Prep Platform — Python Module
+© PrepEdge — Python Basics Cheat Sheet
 </footer>
 
 </body>
