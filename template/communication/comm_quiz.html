@@ -3,71 +3,368 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Communication Quiz | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-body{
-    margin:0;
-    font-family:Segoe UI, Arial, sans-serif;
-    background:linear-gradient(135deg,#0f172a,#020617);
-    color:white;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-header{
-    text-align:center;
-    padding:30px;
-    background:#020617;
-}
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 25% 20%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
 
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:25px;
-}
+  /* Header */
+  header {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+  }
 
-.question{
-    background:#111827;
-    padding:18px;
-    border-radius:10px;
-    margin-bottom:18px;
-}
+  header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #60a5fa, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
 
-button{
-    padding:12px 25px;
-    background:#3b82f6;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    cursor:pointer;
-}
+  header h1 i {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #3b82f6;
+  }
 
-button:hover{
-    background:#2563eb;
-}
+  header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
 
-.result{
-    margin-top:25px;
-    font-size:20px;
-    color:#22c55e;
-}
+  /* Container */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 2.5rem;
+  }
 
-.correct{ color:#22c55e; }
-.wrong{ color:#ef4444; }
+  /* Timer Section */
+  .timer-section {
+    background: rgba(17, 24, 39, 0.6);
+    border-radius: 1rem;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+  }
+
+  .timer-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #0f172a;
+    padding: 0.5rem 1.2rem;
+    border-radius: 50px;
+    font-family: monospace;
+    font-size: 1.4rem;
+    font-weight: 700;
+  }
+
+  .timer-display i {
+    font-size: 1.2rem;
+    color: #3b82f6;
+  }
+
+  .timer-display.warning {
+    color: #ef4444;
+    animation: pulse 1s infinite;
+  }
+
+  .timer-display.warning i {
+    color: #ef4444;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  .progress-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-badge {
+    background: #1e293b;
+    border-radius: 50px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #60a5fa;
+    border: 1px solid #334155;
+  }
+
+  .stat-badge i {
+    margin-right: 5px;
+  }
+
+  /* Progress Bar */
+  .progress-container {
+    background: #1e293b;
+    border-radius: 30px;
+    height: 6px;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+    width: 0%;
+    height: 100%;
+    border-radius: 30px;
+    transition: width 0.3s ease;
+  }
+
+  /* Questions */
+  .question {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 1rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+  }
+
+  .question:hover {
+    border-color: rgba(59, 130, 246, 0.4);
+  }
+
+  .question-text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e2e8f0;
+    margin-bottom: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .q-num {
+    background: #3b82f6;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .options {
+    padding-left: 2rem;
+  }
+
+  .options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    padding: 0.3rem 0;
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+
+  .options label:hover {
+    background: rgba(59, 130, 246, 0.08);
+  }
+
+  input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #3b82f6;
+    cursor: pointer;
+  }
+
+  .answer-feedback {
+    margin-top: 0.7rem;
+    padding-top: 0.5rem;
+    font-size: 0.8rem;
+    border-top: 1px dashed #334155;
+  }
+
+  .correct {
+    color: #4ade80;
+  }
+
+  .wrong {
+    color: #f87171;
+  }
+
+  /* Submit Button */
+  .submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 0.9rem;
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border: none;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: white;
+    cursor: pointer;
+    transition: all 0.25s;
+    margin: 1.5rem 0 1rem;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -8px #3b82f6;
+  }
+
+  .submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Result Card */
+  .result-card {
+    background: linear-gradient(135deg, #0f172a, #0b1120);
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+    text-align: center;
+    border: 1px solid #2d3e6e;
+  }
+
+  .result-score {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .result-message {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: #cbd5e6;
+  }
+
+  .result-stats {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+  }
+
+  .reset-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.2);
+    border: 1px solid #3b82f6;
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    font-weight: 500;
+    color: #bfdbfe;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .reset-btn:hover {
+    background: #3b82f6;
+    color: white;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    .container {
+      padding: 1rem;
+    }
+    .question {
+      padding: 1rem;
+    }
+    .options {
+      padding-left: 0.8rem;
+    }
+    .timer-section {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .timer-display {
+      justify-content: center;
+    }
+    .progress-stats {
+      justify-content: center;
+    }
+  }
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Communication Skills Quiz</h1>
-<p>Test your knowledge</p>
+  <h1><i class="fas fa-question-circle"></i> Communication Skills Quiz</h1>
+  <p>Test your knowledge · 20 Questions · 10 Minutes</p>
 </header>
 
 <div class="container">
 
-<form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
+  <!-- Timer & Stats Section -->
+  <div class="timer-section">
+    <div class="timer-display" id="timerDisplay">
+      <i class="fas fa-hourglass-half"></i>
+      <span id="timerText">10:00</span>
+    </div>
+    <div class="progress-stats">
+      <span class="stat-badge"><i class="fas fa-list"></i> <span id="totalCount">0</span> Total</span>
+      <span class="stat-badge"><i class="fas fa-check-circle"></i> <span id="answeredCount">0</span> Answered</span>
+      <span class="stat-badge"><i class="fas fa-hourglass-start"></i> <span id="remainingCount">0</span> Left</span>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-container">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+
+  <!-- Quiz Form -->
+  <form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
     {% csrf_token %}
 
     <!-- Hidden Fields -->
@@ -77,106 +374,267 @@ button:hover{
     <input type="hidden" name="skipped" id="skipped">
     <input type="hidden" name="score" id="score">
     <input type="hidden" name="time_taken" id="time_taken">
-</form>
+  </form>
 
-<button type="button" onclick="submitQuiz()">Submit Quiz</button>
-<div id="result" class="result"></div>
+  <button type="button" class="submit-btn" id="submitBtn" onclick="submitQuiz()">
+    <i class="fas fa-paper-plane"></i> Submit Quiz
+  </button>
+
+  <div id="result" class="result-card hidden"></div>
 
 </div>
 
 <script>
-
-// Questions Data
+// Questions Data (same as original)
 const questions = [
-["Effective communication requires:",["Only speaking","Only listening","Both speaking and listening","None"],2],
-["Eye contact shows:",["Confidence","Fear","Anger","Confusion"],0],
-["Active listening means:",["Ignoring speaker","Full attention","Interrupting","Multitasking"],1],
-["Body language is part of:",["Verbal","Non-verbal","Written","Formal"],1],
-["Filler words should be:",["Used more","Avoided","Encouraged","Required"],1],
-["Good communication improves:",["Misunderstanding","Conflicts","Relationships","Confusion"],2],
-["Tone of voice shows:",["Emotion","Height","Weight","Dress"],0],
-["Interrupting speaker is:",["Good habit","Bad habit","Required","Professional"],1],
-["Posture reflects:",["Confidence","Weakness","Nothing","Noise"],0],
-["Listening carefully helps:",["Understanding","Confusion","Delay","Noise"],0],
-["Gestures are part of:",["Non-verbal","Written","Formal","Email"],0],
-["Clear speech means:",["Mumbling","Confidence","Clarity","Silence"],2],
-["Communication in interview must be:",["Rude","Clear","Loud","Fast"],1],
-["Personal space is called:",["Proxemics","Kinesics","Chronemics","Semantics"],0],
-["Smiling during talk shows:",["Confidence","Anger","Fear","Confusion"],0],
-["Good listener should:",["Interrupt","Focus","Ignore","Sleep"],1],
-["Verbal communication uses:",["Words","Gestures","Silence","Space"],0],
-["Crossed arms show:",["Openness","Defensiveness","Confidence","Joy"],1],
-["Professional communication should be:",["Clear","Rude","Confusing","Harsh"],0],
-["Feedback in communication is:",["Response","Silence","Noise","Barrier"],0]
+  ["Effective communication requires:", ["Only speaking", "Only listening", "Both speaking and listening", "None"], 2],
+  ["Eye contact shows:", ["Confidence", "Fear", "Anger", "Confusion"], 0],
+  ["Active listening means:", ["Ignoring speaker", "Full attention", "Interrupting", "Multitasking"], 1],
+  ["Body language is part of:", ["Verbal", "Non-verbal", "Written", "Formal"], 1],
+  ["Filler words should be:", ["Used more", "Avoided", "Encouraged", "Required"], 1],
+  ["Good communication improves:", ["Misunderstanding", "Conflicts", "Relationships", "Confusion"], 2],
+  ["Tone of voice shows:", ["Emotion", "Height", "Weight", "Dress"], 0],
+  ["Interrupting speaker is:", ["Good habit", "Bad habit", "Required", "Professional"], 1],
+  ["Posture reflects:", ["Confidence", "Weakness", "Nothing", "Noise"], 0],
+  ["Listening carefully helps:", ["Understanding", "Confusion", "Delay", "Noise"], 0],
+  ["Gestures are part of:", ["Non-verbal", "Written", "Formal", "Email"], 0],
+  ["Clear speech means:", ["Mumbling", "Confidence", "Clarity", "Silence"], 2],
+  ["Communication in interview must be:", ["Rude", "Clear", "Loud", "Fast"], 1],
+  ["Personal space is called:", ["Proxemics", "Kinesics", "Chronemics", "Semantics"], 0],
+  ["Smiling during talk shows:", ["Confidence", "Anger", "Fear", "Confusion"], 0],
+  ["Good listener should:", ["Interrupt", "Focus", "Ignore", "Sleep"], 1],
+  ["Verbal communication uses:", ["Words", "Gestures", "Silence", "Space"], 0],
+  ["Crossed arms show:", ["Openness", "Defensiveness", "Confidence", "Joy"], 1],
+  ["Professional communication should be:", ["Clear", "Rude", "Confusing", "Harsh"], 0],
+  ["Feedback in communication is:", ["Response", "Silence", "Noise", "Barrier"], 0]
 ];
 
-// Load Questions
-document.addEventListener("DOMContentLoaded", function(){
-    let form=document.getElementById("quizForm");
+const totalQuestions = questions.length;
+let userAnswers = new Array(totalQuestions).fill(null);
+let quizSubmitted = false;
 
-    questions.forEach((q,i)=>{
-        let div=document.createElement("div");
-        div.className="question";
+// ============ TIMER (10 minutes = 600 seconds) ============
+let timeLeft = 600;
+let timerInterval = null;
 
-        let html="<b>Q"+(i+1)+". "+q[0]+"</b><br>";
-
-        q[1].forEach((opt,j)=>{
-            html+=`
-            <label>
-                <input type="radio" name="q${i}" value="${j}">
-                ${opt}
-            </label><br>`;
-        });
-
-        html+=`<div id="ans${i}"></div>`;
-        div.innerHTML=html;
-        form.appendChild(div);
-    });
-});
-
-// Submit Quiz
-function submitQuiz(){
-    let correct = 0;
-    let wrong = 0;
-    let skipped = 0;
-
-    questions.forEach((q,i)=>{
-        let selected = document.querySelector(`input[name="q${i}"]:checked`);
-        let ansDiv = document.getElementById("ans"+i);
-
-        if(selected){
-            if(parseInt(selected.value) === q[2]){
-                correct++;
-                ansDiv.innerHTML = "<span class='correct'>✔ Correct</span>";
-            }else{
-                wrong++;
-                ansDiv.innerHTML = "<span class='wrong'>✖ Wrong | Correct: "+q[1][q[2]]+"</span>";
-            }
-        }else{
-            skipped++;
-            ansDiv.innerHTML = "<span class='wrong'>Not attempted | Correct: "+q[1][q[2]]+"</span>";
-        }
-    });
-
-    let total = questions.length;
-    let score = Math.round((correct / total) * 100);
-
-    // Show result
-    document.getElementById("result").innerHTML =
-        "🎯 Your Score: " + score + "%";
-
-    // Fill hidden inputs
-    document.getElementById("total").value = total;
-    document.getElementById("correct").value = correct;
-    document.getElementById("wrong").value = wrong;
-    document.getElementById("skipped").value = skipped;
-    document.getElementById("score").value = score;
-    document.getElementById("time_taken").value = 60;
-
-    // Submit to Django
-    document.getElementById("quizForm").submit();
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
 }
 
+function updateTimerDisplay() {
+  const timerText = document.getElementById('timerText');
+  const timerDisplay = document.getElementById('timerDisplay');
+  
+  timerText.textContent = formatTime(timeLeft);
+  
+  if (timeLeft <= 60) {
+    timerDisplay.classList.add('warning');
+  } else {
+    timerDisplay.classList.remove('warning');
+  }
+}
+
+function startTimer() {
+  if (timerInterval) clearInterval(timerInterval);
+  
+  timerInterval = setInterval(() => {
+    if (quizSubmitted) return;
+    
+    if (timeLeft <= 1) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      document.getElementById('timerText').innerHTML = '00:00 ⏰';
+      submitQuiz(); // Auto-submit when time runs out
+    } else {
+      timeLeft--;
+      updateTimerDisplay();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+
+// ============ PROGRESS TRACKING ============
+function updateProgress() {
+  const answered = userAnswers.filter(a => a !== null).length;
+  document.getElementById('totalCount').innerText = totalQuestions;
+  document.getElementById('answeredCount').innerText = answered;
+  document.getElementById('remainingCount').innerText = totalQuestions - answered;
+  
+  const progressPercent = (answered / totalQuestions) * 100;
+  document.getElementById('progressBar').style.width = progressPercent + '%';
+}
+
+// ============ LOAD QUESTIONS ============
+document.addEventListener("DOMContentLoaded", function() {
+  const form = document.getElementById("quizForm");
+  
+  questions.forEach((q, i) => {
+    const div = document.createElement("div");
+    div.className = "question";
+    
+    let html = `
+      <div class="question-text">
+        <span class="q-num">${i + 1}</span>
+        <span>${q[0]}</span>
+      </div>
+      <div class="options">
+    `;
+    
+    q[1].forEach((opt, j) => {
+      html += `
+        <label>
+          <input type="radio" name="q${i}" value="${j}" onchange="selectAnswer(${i}, ${j})">
+          ${opt}
+        </label>
+      `;
+    });
+    
+    html += `</div><div class="answer-feedback" id="ans${i}"></div>`;
+    div.innerHTML = html;
+    form.appendChild(div);
+  });
+  
+  updateProgress();
+  startTimer(); // Start the 10-minute timer
+});
+
+// ============ HANDLE ANSWER SELECTION ============
+function selectAnswer(questionIndex, answerValue) {
+  if (quizSubmitted) return;
+  
+  userAnswers[questionIndex] = answerValue;
+  updateProgress();
+  
+  const feedbackDiv = document.getElementById(`ans${questionIndex}`);
+  if (feedbackDiv) {
+    feedbackDiv.innerHTML = '';
+  }
+}
+
+// ============ SUBMIT QUIZ ============
+function submitQuiz() {
+  if (quizSubmitted) return;
+  quizSubmitted = true;
+  
+  stopTimer();
+  
+  let correct = 0;
+  let wrong = 0;
+  let skipped = 0;
+  
+  questions.forEach((q, i) => {
+    const selected = userAnswers[i];
+    const ansDiv = document.getElementById("ans" + i);
+    const correctAnswerText = q[1][q[2]];
+    
+    if (selected !== null) {
+      if (selected === q[2]) {
+        correct++;
+        ansDiv.innerHTML = "<span class='correct'><i class='fas fa-check-circle'></i> Correct</span>";
+      } else {
+        wrong++;
+        ansDiv.innerHTML = `<span class='wrong'><i class='fas fa-times-circle'></i> Wrong | Correct: ${correctAnswerText}</span>`;
+      }
+    } else {
+      skipped++;
+      ansDiv.innerHTML = `<span class='wrong'><i class='fas fa-minus-circle'></i> Not attempted | Correct: ${correctAnswerText}</span>`;
+    }
+  });
+  
+  const total = questions.length;
+  const score = Math.round((correct / total) * 100);
+  
+  // Calculate time taken
+  const timeTakenSeconds = 600 - timeLeft;
+  
+  // Determine result message
+  let message = '';
+  let icon = '';
+  if (score >= 90) {
+    message = 'Excellent! You have mastered communication skills!';
+    icon = '🏆';
+  } else if (score >= 75) {
+    message = 'Good job! You have strong knowledge. Keep practicing!';
+    icon = '👍';
+  } else if (score >= 55) {
+    message = 'Not bad! Review the topics and try again.';
+    icon = '📖';
+  } else {
+    message = 'Needs improvement. Go through the modules and retake the quiz.';
+    icon = '📘';
+  }
+  
+  // Display result
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = `
+    <div class="result-score">${score}%</div>
+    <div class="result-message">${icon} ${message}</div>
+    <div class="result-stats">
+      <span class="stat-badge"><i class="fas fa-check-circle correct"></i> Correct: ${correct}</span>
+      <span class="stat-badge"><i class="fas fa-times-circle wrong"></i> Wrong: ${wrong}</span>
+      <span class="stat-badge"><i class="fas fa-question-circle"></i> Skipped: ${skipped}</span>
+    </div>
+    <button type="button" class="reset-btn" onclick="resetQuiz()">
+      <i class="fas fa-redo-alt"></i> Try Again
+    </button>
+  `;
+  resultDiv.classList.remove("hidden");
+  
+  // Disable submit button
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = true;
+  submitBtn.style.opacity = '0.6';
+  submitBtn.style.cursor = 'not-allowed';
+  
+  // Fill hidden inputs for Django submission
+  document.getElementById("total").value = total;
+  document.getElementById("correct").value = correct;
+  document.getElementById("wrong").value = wrong;
+  document.getElementById("skipped").value = skipped;
+  document.getElementById("score").value = score;
+  document.getElementById("time_taken").value = timeTakenSeconds;
+  
+  // Submit to Django (original action preserved)
+  document.getElementById("quizForm").submit();
+}
+
+// ============ RESET QUIZ ============
+function resetQuiz() {
+  stopTimer();
+  timeLeft = 600;
+  quizSubmitted = false;
+  updateTimerDisplay();
+  
+  userAnswers.fill(null);
+  
+  for (let i = 0; i < totalQuestions; i++) {
+    const radios = document.querySelectorAll(`input[name="q${i}"]`);
+    radios.forEach(radio => radio.checked = false);
+    
+    const feedbackDiv = document.getElementById(`ans${i}`);
+    if (feedbackDiv) feedbackDiv.innerHTML = '';
+  }
+  
+  document.getElementById("result").classList.add("hidden");
+  
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = false;
+  submitBtn.style.opacity = '1';
+  submitBtn.style.cursor = 'pointer';
+  
+  updateProgress();
+  startTimer();
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 </script>
 
 </body>
