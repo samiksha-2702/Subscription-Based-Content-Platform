@@ -3,124 +3,436 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Time Management | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-body{
-    margin:0;
-    font-family:"Segoe UI", Arial;
-    background:linear-gradient(135deg,#0f172a,#020617);
-    color:white;
-}
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:40px 20px;
-}
-.card{
-    background:linear-gradient(145deg,#111827,#0b1220);
-    padding:30px;
-    border-radius:16px;
-    line-height:1.8;
-}
-h1{text-align:center;}
-h2{color:#60a5fa;}
-ul{line-height:1.9;}
-a{color:#60a5fa;text-decoration:none;}
-.tip{
-    background:#020617;
-    padding:15px;
-    border-left:4px solid #3b82f6;
-    margin:15px 0;
-    border-radius:8px;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-/* Button */
-.back-btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:10px 20px;
-    background:#3b82f6;
-    border-radius:8px;
-    color:white;
-}
-.back-btn:hover{
-    background:#2563eb;
-}
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  /* header */
+  .page-header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #ffffff, #a5f3fc, #60a5fa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .page-header h1 i {
+    background: none;
+    color: #60a5fa;
+    font-size: 2.5rem;
+    background-clip: unset;
+    -webkit-background-clip: unset;
+    color: #60a5fa;
+  }
+
+  .subhead {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    border-top: 1px solid #1e293b;
+    display: inline-block;
+    padding-top: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  /* main content grid — two column layout for richness */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.8rem;
+  }
+
+  /* cards */
+  .info-card {
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(3px);
+    border-radius: 1.75rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.6rem 1.8rem;
+    transition: all 0.2s;
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .info-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: #93c5fd;
+    border-left: 4px solid #3b82f6;
+    padding-left: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .info-card h2 i {
+    font-size: 1.4rem;
+    color: #60a5fa;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1.2rem 0 0.6rem 0;
+    color: #7aa9f5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-card h3 i {
+    color: #3b82f6;
+  }
+
+  .info-card p {
+    color: #cbd5e6;
+    margin-bottom: 0.75rem;
+  }
+
+  /* lists */
+  .custom-list {
+    list-style: none;
+    margin: 0.8rem 0;
+  }
+
+  .custom-list li {
+    margin-bottom: 0.7rem;
+    padding-left: 1.6rem;
+    position: relative;
+    color: #e2e8f0;
+    font-weight: 450;
+  }
+
+  .custom-list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  /* grid for eisenhower */
+  .matrix-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .matrix-item {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.9rem 1rem;
+    border-left: 3px solid;
+    transition: 0.1s linear;
+  }
+
+  .matrix-item strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+  }
+
+  .matrix-item span {
+    font-size: 0.85rem;
+    color: #b9c8f0;
+  }
+
+  .urgent-important { border-left-color: #ef4444; }
+  .important-noturgent { border-left-color: #3b82f6; }
+  .urgent-notimportant { border-left-color: #f97316; }
+  .neither { border-left-color: #475569; }
+
+  /* pomodoro visual */
+  .pomo-steps {
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+  }
+
+  .pomo-step {
+    background: #0a0f1c;
+    border-radius: 1.2rem;
+    padding: 0.7rem 1rem;
+    text-align: center;
+    flex: 1;
+    font-weight: 500;
+    border: 1px solid #334155;
+    color: #cbd5f0;
+  }
+
+  .pomo-step i {
+    font-size: 1.3rem;
+    color: #3b82f6;
+    margin-right: 6px;
+  }
+
+  /* stat highlights */
+  .stats-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.2rem 0;
+  }
+
+  .stat-badge {
+    background: #111827;
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #a5d8ff;
+    border: 1px solid #2d3e5e;
+  }
+
+  .info-tip {
+    background: linear-gradient(105deg, #0f172a, #0b1120);
+    border-radius: 1.2rem;
+    padding: 1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #2d3e6e;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .info-tip i {
+    font-size: 1.8rem;
+    color: #3b82f6;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid #3b82f6;
+    padding: 0.7rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 600;
+    color: #bfdbfe;
+    transition: all 0.2s;
+    text-decoration: none;
+    margin-top: 1rem;
+  }
+
+  .back-btn i {
+    font-size: 1rem;
+  }
+
+  .back-btn:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px -6px #3b82f6;
+  }
+
+  hr {
+    margin: 1rem 0;
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #334155, transparent);
+  }
+
+  @media (max-width: 850px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .full-width {
+      grid-column: span 1;
+    }
+    .container {
+      padding: 1.2rem;
+    }
+    .matrix-grid {
+      grid-template-columns: 1fr;
+    }
+    .page-header h1 {
+      font-size: 2.3rem;
+    }
+  }
 </style>
 </head>
-
 <body>
 <div class="container">
-<h1>Time Management</h1>
+  <div class="page-header">
+    <h1>
+      <i class="fas fa-hourglass-half"></i> 
+      Time Management
+    </h1>
+    <div class="subhead">
+      <i class="fas fa-chart-simple"></i> Master productivity · Reduce stress · Achieve more
+    </div>
+  </div>
 
-<div class="card">
+  <div class="content-grid">
+    
+    <!-- LEFT COLUMN: Intro + objectives + techniques intro -->
+    <div class="info-card">
+      <h2><i class="fas fa-compass"></i> Introduction</h2>
+      <p>Time management is the strategic process of planning and consciously controlling time spent on specific tasks. It's the bridge between your goals and accomplishments — helping you work smarter, not harder.</p>
+      
+      <h2 style="margin-top: 1.8rem;"><i class="fas fa-flag-checkered"></i> Core Objectives</h2>
+      <ul class="custom-list">
+        <li>Boost productivity & efficiency</li>
+        <li>Meet every deadline with confidence</li>
+        <li>Lower academic & workplace anxiety</li>
+        <li>Preserve work-life harmony</li>
+        <li>Crush short-term & long-term goals</li>
+      </ul>
+      
+      <h3><i class="fas fa-brain"></i> Why it matters</h3>
+      <p>Good time management reduces wasted time, improves decision making, and builds discipline. Students who master it see up to 40% less last-minute panic.</p>
+    </div>
 
-<h2>Introduction</h2>
-<p>
-Time management is the systematic process of planning and organizing how time is allocated to specific activities. 
-Effective time management enables students and professionals to increase productivity, reduce stress, and achieve goals efficiently.
-</p>
+    <!-- RIGHT COLUMN: Eisenhower Matrix + extra tips -->
+    <div class="info-card">
+      <h2><i class="fas fa-th-large"></i> Eisenhower Matrix</h2>
+      <div class="matrix-grid">
+        <div class="matrix-item urgent-important"><strong>🔥 Urgent & Important</strong><span>Do it NOW — crises, deadlines</span></div>
+        <div class="matrix-item important-noturgent"><strong>📅 Important, Not Urgent</strong><span>Schedule — planning, learning</span></div>
+        <div class="matrix-item urgent-notimportant"><strong>⚡ Urgent, Not Important</strong><span>Delegate — interruptions, some emails</span></div>
+        <div class="matrix-item neither"><strong>🗑️ Neither</strong><span>Eliminate — time-wasters, doomscrolling</span></div>
+      </div>
+      
+      <h3><i class="fas fa-chart-pie"></i> 80/20 Rule (Pareto)</h3>
+      <p>80% of your results come from 20% of your efforts. Identify high-impact tasks and prioritize them ruthlessly.</p>
+      
+      <div class="info-tip">
+        <i class="fas fa-lightbulb"></i>
+        <p><strong>Pro tip:</strong> Start each day by identifying your "MIT" — Most Important Task. Complete it before checking social media or emails.</p>
+      </div>
+    </div>
 
-<h2>Objectives of Time Management</h2>
-<ul>
-<li>Improve productivity and efficiency</li>
-<li>Meet deadlines consistently</li>
-<li>Reduce academic and workplace stress</li>
-<li>Maintain work-life balance</li>
-<li>Achieve short-term and long-term goals</li>
-</ul>
+    <!-- Pomodoro + Time blocking row: full width -->
+    <div class="info-card full-width">
+      <h2><i class="fas fa-stopwatch"></i> Powerful Techniques</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: space-between;">
+        <div style="flex: 1; min-width: 200px;">
+          <h3><i class="fas fa-tomato"></i> Pomodoro Technique</h3>
+          <div class="pomo-steps">
+            <div class="pomo-step"><i class="fas fa-play"></i> 25 min focus</div>
+            <div class="pomo-step"><i class="fas fa-coffee"></i> 5 min break</div>
+            <div class="pomo-step"><i class="fas fa-hourglass-end"></i> After 4 → long break</div>
+          </div>
+          <p>Prevents burnout, sharpens concentration, and makes large tasks less intimidating.</p>
+        </div>
+        <div style="flex: 1; min-width: 200px;">
+          <h3><i class="fas fa-calendar-alt"></i> Time Blocking</h3>
+          <p>Reserve specific chunks of your calendar for deep work, meetings, and rest. Reduces multitasking and context switching by up to 40%.</p>
+          <div class="stats-row">
+            <span class="stat-badge"><i class="fas-regular fa-clock"></i> 2h deep work block</span>
+            <span class="stat-badge"><i class="fas fa-envelope"></i> 30min email batch</span>
+          </div>
+        </div>
+        <div style="flex: 1; min-width: 180px;">
+          <h3><i class="fas fa-tasks"></i> 1-3-5 Rule</h3>
+          <p>Each day: aim for <strong>1 big task, 3 medium tasks, 5 small tasks</strong>. Keeps goals realistic and progress visible.</p>
+        </div>
+      </div>
+    </div>
 
-<h2>Key Techniques</h2>
+    <!-- Time wasters + benefits (split into two columns) -->
+    <div class="info-card">
+      <h2><i class="fas fa-hourglass-start"></i> Common Time Wasters</h2>
+      <ul class="custom-list">
+        <li>Procrastination & perfectionism loops</li>
+        <li>Social media & notifications</li>
+        <li>Lack of daily priorities</li>
+        <li>Unnecessary meetings & over-communication</li>
+        <li>Multitasking (costs up to 40% productivity)</li>
+      </ul>
+      <h3><i class="fas fa-chart-line"></i> Hidden culprit</h3>
+      <p>"Decision fatigue" — too many small choices drain energy. Batch decisions (what to wear, eat) to save mental bandwidth.</p>
+    </div>
 
-<h3>Prioritization (Eisenhower Matrix)</h3>
-<ul>
-<li>Urgent and Important – Do immediately</li>
-<li>Important but Not Urgent – Schedule</li>
-<li>Urgent but Not Important – Delegate</li>
-<li>Neither Urgent nor Important – Eliminate</li>
-</ul>
+    <div class="info-card">
+      <h2><i class="fas fa-user-graduate"></i> Student Benefits</h2>
+      <ul class="custom-list">
+        <li>✅ Higher exam scores & retention</li>
+        <li>✅ On-time assignment submission</li>
+        <li>✅ Lower cortisol & academic stress</li>
+        <li>✅ More time for hobbies & rest</li>
+        <li>✅ Improved GPA & learning depth</li>
+      </ul>
+      <div class="info-tip" style="margin-top: 1rem;">
+        <i class="fas fa-chalkboard-user"></i>
+        <p><strong>Research says:</strong> Students who plan weekly see 32% higher performance and report better sleep quality.</p>
+      </div>
+    </div>
 
-<h3>Pomodoro Technique</h3>
-<ul>
-<li>Work for 25 minutes</li>
-<li>Take a 5-minute break</li>
-<li>After four cycles, take a longer break</li>
-</ul>
+    <!-- Extra tools & methods section -->
+    <div class="info-card full-width">
+      <h2><i class="fas fa-cogs"></i> Advanced Methods & Insights</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1.2rem;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-dragon"></i> Eat the Frog</h3>
+          <p>Tackle your biggest, most dreaded task first thing in the morning — everything else becomes easier.</p>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-boxes"></i> Batching</h3>
+          <p>Group similar tasks (replying to emails, studying one subject) to reduce mental switching costs.</p>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-ban"></i> Two-Minute Rule</h3>
+          <p>If a task takes less than 2 minutes, do it immediately. This prevents small tasks from piling up.</p>
+        </div>
+      </div>
+      <hr>
+      <div class="stats-row" style="justify-content: center;">
+        <span class="stat-badge"><i class="fas-regular fa-moon"></i> Plan tomorrow tonight</span>
+        <span class="stat-badge"><i class="fas fa-mobile-alt"></i> Digital wellbeing tools</span>
+        <span class="stat-badge"><i class="fas fa-hourglass-start"></i> 90-min ultradian cycles</span>
+      </div>
+    </div>
 
-<h3>Time Blocking</h3>
-<p>
-Time blocking involves assigning fixed time slots to tasks in advance. This reduces multitasking and improves focus.
-</p>
+    <!-- Back button row -->
+    <div class="full-width" style="margin-top: 0.5rem;">
+      <a href="{% url 'comm' %}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Module
+      </a>
+    </div>
 
-<h2>Common Time Wasters</h2>
-<ul>
-<li>Procrastination</li>
-<li>Excessive social media usage</li>
-<li>Poor planning</li>
-<li>Unnecessary meetings</li>
-<li>Frequent interruptions</li>
-</ul>
-
-<div class="tip">
-💡 Plan your next day before sleeping to improve morning productivity.
-</div>
-
-<h2>Benefits for Students</h2>
-<ul>
-<li>Better exam preparation</li>
-<li>Timely assignment submission</li>
-<li>Reduced anxiety</li>
-<li>Improved academic performance</li>
-</ul>
-
-<!-- Back Button -->
-<a href="{% url 'comm' %}" class="back-btn">
-← Back to Module
-</a>
-
-</div>
+  </div>
 </div>
 </body>
 </html>

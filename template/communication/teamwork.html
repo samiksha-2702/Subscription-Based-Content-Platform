@@ -3,109 +3,374 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Teamwork | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-body{
-    margin:0;
-    font-family:"Segoe UI";
-    background:linear-gradient(135deg,#0f172a,#020617);
-    color:white;
-}
-.container{
-    max-width:1000px;
-    margin:auto;
-    padding:40px 20px;
-}
-.card{
-    background:linear-gradient(145deg,#111827,#0b1220);
-    padding:30px;
-    border-radius:16px;
-    line-height:1.8;
-}
-h1{text-align:center;}
-h2{color:#60a5fa;}
-ul{line-height:1.9;}
-a{color:#60a5fa;text-decoration:none;}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-/* Back Button */
-.back-btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:10px 20px;
-    background:#3b82f6;
-    border-radius:8px;
-    color:white;
-}
-.back-btn:hover{
-    background:#2563eb;
-}
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+  }
+
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
+
+  /* header */
+  .page-header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+  }
+
+  .page-header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(to right, #ffffff, #a5f3fc, #60a5fa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .page-header h1 i {
+    background: none;
+    color: #60a5fa;
+    font-size: 2.5rem;
+    background-clip: unset;
+    -webkit-background-clip: unset;
+    color: #60a5fa;
+  }
+
+  .subhead {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    border-top: 1px solid #1e293b;
+    display: inline-block;
+    padding-top: 0.6rem;
+    margin-top: 0.5rem;
+  }
+
+  /* main content grid */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.8rem;
+  }
+
+  /* cards */
+  .info-card {
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(3px);
+    border-radius: 1.75rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.6rem 1.8rem;
+    transition: all 0.2s;
+    box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .info-card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: #93c5fd;
+    border-left: 4px solid #3b82f6;
+    padding-left: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .info-card h2 i {
+    font-size: 1.4rem;
+    color: #60a5fa;
+  }
+
+  .info-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1.2rem 0 0.6rem 0;
+    color: #7aa9f5;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .info-card h3 i {
+    color: #3b82f6;
+  }
+
+  .info-card p {
+    color: #cbd5e6;
+    margin-bottom: 0.75rem;
+  }
+
+  /* lists */
+  .custom-list {
+    list-style: none;
+    margin: 0.8rem 0;
+  }
+
+  .custom-list li {
+    margin-bottom: 0.7rem;
+    padding-left: 1.6rem;
+    position: relative;
+    color: #e2e8f0;
+    font-weight: 450;
+  }
+
+  .custom-list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  /* badge / stat styles */
+  .stats-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 1.2rem 0;
+  }
+
+  .stat-badge {
+    background: #111827;
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #a5d8ff;
+    border: 1px solid #2d3e5e;
+  }
+
+  .info-tip {
+    background: linear-gradient(105deg, #0f172a, #0b1120);
+    border-radius: 1.2rem;
+    padding: 1rem 1.4rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #2d3e6e;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .info-tip i {
+    font-size: 1.8rem;
+    color: #3b82f6;
+  }
+
+  .model-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .model-card {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.9rem 1.2rem;
+    flex: 1;
+    min-width: 150px;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .model-card strong {
+    display: block;
+    color: #93c5fd;
+    margin-bottom: 0.3rem;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid #3b82f6;
+    padding: 0.7rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 600;
+    color: #bfdbfe;
+    transition: all 0.2s;
+    text-decoration: none;
+    margin-top: 1rem;
+  }
+
+  .back-btn i {
+    font-size: 1rem;
+  }
+
+  .back-btn:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px -6px #3b82f6;
+  }
+
+  hr {
+    margin: 1rem 0;
+    border: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #334155, transparent);
+  }
+
+  @media (max-width: 850px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .full-width {
+      grid-column: span 1;
+    }
+    .container {
+      padding: 1.2rem;
+    }
+    .page-header h1 {
+      font-size: 2.3rem;
+    }
+  }
 </style>
 </head>
 
 <body>
 <div class="container">
-<h1>Teamwork Skills</h1>
+  <div class="page-header">
+    <h1>
+      <i class="fas fa-users"></i> 
+      Teamwork Skills
+    </h1>
+    <div class="subhead">
+      <i class="fas fa-handshake"></i> Collaborate · Communicate · Succeed together
+    </div>
+  </div>
 
-<div class="card">
+  <div class="content-grid">
+    
+    <!-- LEFT COLUMN: Introduction + Characteristics -->
+    <div class="info-card">
+      <h2><i class="fas fa-compass"></i> Introduction</h2>
+      <p>Teamwork is the coordinated effort of individuals working together to achieve a common goal. In modern organizations and IT projects, teamwork is essential for successful project completion, innovation, and growth.</p>
+      
+      <h2 style="margin-top: 1.8rem;"><i class="fas fa-chart-line"></i> Characteristics of Effective Teams</h2>
+      <ul class="custom-list">
+        <li>Clear goals and defined roles</li>
+        <li>Open and transparent communication</li>
+        <li>Mutual trust and respect</li>
+        <li>Shared responsibility</li>
+        <li>Strong leadership</li>
+      </ul>
+      
+      <div class="info-tip">
+        <i class="fas fa-lightbulb"></i>
+        <p><strong>Key Insight:</strong> High-performing teams spend 30% more time on collaborative communication than average teams.</p>
+      </div>
+    </div>
 
-<h2>Introduction</h2>
-<p>
-Teamwork is the coordinated effort of individuals working together to achieve a common goal. 
-In modern organizations and IT projects, teamwork is essential for successful project completion.
-</p>
+    <!-- RIGHT COLUMN: Core Skills + Advantages -->
+    <div class="info-card">
+      <h2><i class="fas fa-tools"></i> Important Teamwork Skills</h2>
+      <ul class="custom-list">
+        <li>Communication — active listening & clarity</li>
+        <li>Collaboration — working across boundaries</li>
+        <li>Conflict resolution — turning tension into growth</li>
+        <li>Adaptability — embracing change quickly</li>
+        <li>Accountability — owning your commitments</li>
+        <li>Emotional intelligence — understanding team dynamics</li>
+      </ul>
+      
+      <h3><i class="fas fa-chart-simple"></i> Advantages of Teamwork</h3>
+      <ul class="custom-list">
+        <li>Faster problem solving</li>
+        <li>Improved creativity and innovation</li>
+        <li>Knowledge sharing across domains</li>
+        <li>Higher productivity & output quality</li>
+        <li>Better workplace relationships & morale</li>
+      </ul>
+    </div>
 
-<h2>Characteristics of Effective Teams</h2>
-<ul>
-<li>Clear goals and defined roles</li>
-<li>Open and transparent communication</li>
-<li>Mutual trust and respect</li>
-<li>Shared responsibility</li>
-<li>Strong leadership</li>
-</ul>
+    <!-- Challenges + Solutions (split row) -->
+    <div class="info-card">
+      <h2><i class="fas fa-exclamation-triangle"></i> Common Challenges</h2>
+      <ul class="custom-list">
+        <li>Lack of communication or misalignment</li>
+        <li>Unequal participation (social loafing)</li>
+        <li>Personality conflicts & tension</li>
+        <li>Poor leadership or unclear direction</li>
+        <li>Remote collaboration friction</li>
+      </ul>
+      <div class="stats-row">
+        <span class="stat-badge"><i class="fas fa-chart-simple"></i> 86% cite lack of collaboration</span>
+        <span class="stat-badge"><i class="fas fa-clock"></i> Poor meetings waste hours</span>
+      </div>
+    </div>
 
-<h2>Important Teamwork Skills</h2>
-<ul>
-<li>Communication</li>
-<li>Collaboration</li>
-<li>Conflict resolution</li>
-<li>Adaptability</li>
-<li>Accountability</li>
-</ul>
+    <div class="info-card">
+      <h2><i class="fas fa-rocket"></i> Ways to Improve Teamwork</h2>
+      <ul class="custom-list">
+        <li>Encourage open & honest communication</li>
+        <li>Respect diverse opinions and backgrounds</li>
+        <li>Define clear roles & responsibilities early</li>
+        <li>Build trust through consistency & follow-through</li>
+        <li>Provide constructive feedback regularly</li>
+        <li>Celebrate wins together as a team</li>
+      </ul>
+      <div class="info-tip" style="margin-top: 0.8rem;">
+        <i class="fas fa-comments"></i>
+        <p><strong>Action step:</strong> Hold a 10-minute daily standup to align priorities and remove blockers.</p>
+      </div>
+    </div>
 
-<h2>Advantages of Teamwork</h2>
-<ul>
-<li>Faster problem solving</li>
-<li>Improved creativity and innovation</li>
-<li>Knowledge sharing</li>
-<li>Higher productivity</li>
-<li>Better workplace relationships</li>
-</ul>
+    <!-- Famous Teamwork Models + Extra insights (full width) -->
+    <div class="info-card full-width">
+      <h2><i class="fas fa-cubes"></i> Proven Frameworks & Models</h2>
+      <div class="model-grid">
+        <div class="model-card"><strong>Tuckman's Stages</strong><span>Forming → Storming → Norming → Performing → Adjourning</span></div>
+        <div class="model-card"><strong>GRPI Model</strong><span>Goals, Roles, Processes, Interpersonal relationships</span></div>
+        <div class="model-card"><strong>Lencioni's 5 Dysfunctions</strong><span>Absence of trust → fear of conflict → lack of commitment → avoidance of accountability → inattention to results</span></div>
+      </div>
+      
+      <h3><i class="fas fa-chart-line"></i> The Psychology of Great Teams</h3>
+      <p>Google's Project Aristotle found that psychological safety — the belief that you won't be punished for making a mistake — is the #1 predictor of team success. Teams where members feel safe to speak up outperform others by over 25%.</p>
+      
+      <hr>
 
-<h2>Challenges in Teamwork</h2>
-<ul>
-<li>Lack of communication</li>
-<li>Unequal participation</li>
-<li>Personality conflicts</li>
-<li>Poor leadership</li>
-</ul>
+      <div class="stats-row" style="justify-content: center;">
+        <span class="stat-badge"><i class="fas fa-people-arrows"></i> Cross-functional synergy</span>
+        <span class="stat-badge"><i class="fas fa-brain"></i> Collective intelligence</span>
+        <span class="stat-badge"><i class="fas fa-clock"></i> Regular retrospectives</span>
+      </div>
+    </div>
 
-<h2>Ways to Improve Teamwork</h2>
-<ul>
-<li>Encourage open communication</li>
-<li>Respect diverse opinions</li>
-<li>Define clear responsibilities</li>
-<li>Build trust among members</li>
-<li>Provide constructive feedback</li>
-</ul>
+    <!-- Back button -->
+    <div class="full-width" style="margin-top: 0.5rem;">
+      <a href="{% url 'comm' %}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Module
+      </a>
+    </div>
 
-<!-- Back Button -->
-<a href="{% url 'comm' %}" class="back-btn">
-← Back to Module
-</a>
-
-</div>
+  </div>
 </div>
 </body>
 </html>

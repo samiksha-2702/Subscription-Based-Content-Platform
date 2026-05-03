@@ -3,124 +3,464 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Active Listening | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-body{
-    margin:0;
-    font-family:Segoe UI, Arial, sans-serif;
-    background:linear-gradient(135deg,#0f172a,#020617);
-    color:white;
-}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-header{
-    text-align:center;
-    padding:30px;
-    background:#020617;
-}
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 25% 20%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
 
-.container{
-    max-width:1100px;
-    margin:auto;
-    padding:30px 20px;
-}
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 2rem 4rem;
+  }
 
-.section{
-    background:#111827;
-    padding:25px;
-    border-radius:12px;
-    margin-bottom:25px;
-    line-height:1.6;
-}
+  /* Header Section */
+  .hero {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 1rem 0;
+  }
 
-h2{
-    color:#3b82f6;
-    margin-top:0;
-}
+  .hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #a5f3fc, #60a5fa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    letter-spacing: -0.02em;
+  }
 
-ul{
-    padding-left:20px;
-}
+  .hero h1 i {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #60a5fa;
+  }
 
-/* Button */
-.btn{
-    display:inline-block;
-    padding:10px 18px;
-    background:#3b82f6;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
-    margin-top:15px;
-}
+  .hero p {
+    color: #94a3b8;
+    font-size: 1.05rem;
+    border-top: 1px solid #1e293b;
+    display: inline-block;
+    padding-top: 0.6rem;
+    margin-top: 0.5rem;
+  }
 
-.btn:hover{
-    background:#2563eb;
-}
+  /* Grid Layout */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.8rem;
+  }
+
+  /* Cards */
+  .card {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(3px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.6rem 1.8rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.3);
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 24px 36px -14px rgba(0, 0, 0, 0.4);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #93c5fd;
+    border-left: 4px solid #3b82f6;
+    padding-left: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .card h2 i {
+    font-size: 1.3rem;
+    color: #60a5fa;
+  }
+
+  .card h3 {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: #a5c9ff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p {
+    color: #cbd5e6;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Custom Lists */
+  .list {
+    list-style: none;
+    margin: 0.8rem 0;
+  }
+
+  .list li {
+    margin-bottom: 0.65rem;
+    padding-left: 1.6rem;
+    position: relative;
+    color: #e2e8f0;
+    font-weight: 450;
+  }
+
+  .list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #60a5fa;
+    font-weight: 600;
+  }
+
+  /* Stats & Badges */
+  .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .badge {
+    background: #111827;
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #a5d8ff;
+    border: 1px solid #2d3e5e;
+  }
+
+  /* Tip Box */
+  .tip {
+    background: linear-gradient(105deg, #0f172a, #0a0f1c);
+    border-radius: 1rem;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid #2d3e6e;
+    margin: 1rem 0 0.5rem;
+  }
+
+  .tip i {
+    font-size: 1.6rem;
+    color: #3b82f6;
+  }
+
+  /* Level indicators */
+  .level-badge {
+    display: inline-block;
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 0.2rem 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #60a5fa;
+    margin-left: 0.5rem;
+  }
+
+  /* Back Button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid #3b82f6;
+    padding: 0.7rem 1.8rem;
+    border-radius: 40px;
+    font-weight: 600;
+    color: #bfdbfe;
+    transition: all 0.25s;
+    text-decoration: none;
+    margin-top: 1rem;
+  }
+
+  .back-btn i {
+    font-size: 0.9rem;
+    transition: transform 0.2s;
+  }
+
+  .back-btn:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px -8px #3b82f6;
+  }
+
+  .back-btn:hover i {
+    transform: translateX(-4px);
+  }
+
+  hr {
+    margin: 1rem 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #334155, transparent);
+  }
+
+  .quote {
+    font-style: italic;
+    color: #a5c9ff;
+    border-left: 3px solid #3b82f6;
+    padding-left: 1rem;
+    margin: 1rem 0;
+  }
+
+  .compare-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .compare-item {
+    flex: 1;
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.8rem;
+  }
+  .compare-item h4 {
+    color: #60a5fa;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (max-width: 850px) {
+    .container {
+      padding: 1.2rem;
+    }
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+    }
+    .full-width {
+      grid-column: span 1;
+    }
+    .hero h1 {
+      font-size: 2rem;
+    }
+  }
 </style>
 </head>
 
 <body>
-
-<header>
-    <h1>Active Listening</h1>
-    <p>Develop strong listening skills for effective communication</p>
-</header>
-
 <div class="container">
+  <div class="hero">
+    <h1>
+      <i class="fas fa-ear-listen"></i> 
+      Active Listening
+    </h1>
+    <p><i class="fas fa-comment-dots"></i> Listen to understand · Not just to respond · Build deeper connections</p>
+  </div>
 
-    <div class="section">
-        <h2>Overview</h2>
-        <p>
-        Active listening is the process of fully concentrating, understanding,
-        responding, and remembering what the speaker is saying. It goes beyond
-        simply hearing words and involves complete engagement with the speaker.
-        Active listening is essential in interviews, teamwork, leadership, and
-        professional communication.
-        </p>
+  <div class="grid">
+    
+    <!-- Overview Card -->
+    <div class="card">
+      <h2><i class="fas fa-info-circle"></i> Overview</h2>
+      <p>Active listening is the process of fully concentrating, understanding, responding, and remembering what the speaker is saying. It goes beyond simply hearing words and involves complete engagement with the speaker. Active listening is essential in interviews, teamwork, leadership, and professional communication.</p>
+      <div class="tip">
+        <i class="fas fa-chart-line"></i>
+        <p><strong>Did you know?</strong> People remember only <strong>25-50%</strong> of what they hear. Active listening can improve retention to over <strong>75%</strong>!</p>
+      </div>
     </div>
 
-    <div class="section">
-        <h2>Key Features of Active Listening</h2>
-        <ul>
-            <li>Paying full attention to the speaker</li>
-            <li>Maintaining eye contact</li>
-            <li>Providing verbal and non-verbal feedback</li>
-            <li>Avoiding interruptions</li>
-            <li>Asking relevant questions</li>
-            <li>Summarizing what the speaker said</li>
-        </ul>
+    <!-- Key Features Card -->
+    <div class="card">
+      <h2><i class="fas fa-list-check"></i> Key Features</h2>
+      <ul class="list">
+        <li>Paying full attention to the speaker</li>
+        <li>Maintaining steady eye contact</li>
+        <li>Providing verbal & non-verbal feedback</li>
+        <li>Avoiding interruptions completely</li>
+        <li>Asking relevant, thoughtful questions</li>
+        <li>Summarizing & paraphrasing what was said</li>
+        <li>Withholding judgment until speaker finishes</li>
+        <li>Showing empathy and understanding</li>
+      </ul>
     </div>
 
-    <div class="section">
-        <h2>Importance</h2>
-        <ul>
-            <li>Improves understanding</li>
-            <li>Builds strong relationships</li>
-            <li>Reduces misunderstandings</li>
-            <li>Enhances teamwork</li>
-            <li>Creates positive impression in interviews</li>
-        </ul>
+    <!-- The Ladder of Listening Card -->
+    <div class="card">
+      <h2><i class="fas fa-chart-simple"></i> The Ladder of Listening</h2>
+      <ul class="list">
+        <li><strong>Level 1:</strong> Ignoring – Not listening at all <span class="level-badge">Poor</span></li>
+        <li><strong>Level 2:</strong> Pretend listening – "Yeah, uh-huh" <span class="level-badge">Weak</span></li>
+        <li><strong>Level 3:</strong> Selective listening – Hearing only parts <span class="level-badge">Average</span></li>
+        <li><strong>Level 4:</strong> Attentive listening – Focusing on words <span class="level-badge">Good</span></li>
+        <li><strong>Level 5:</strong> Empathic listening – Understanding emotions & meaning <span class="level-badge">Excellent</span></li>
+      </ul>
+      <div class="tip">
+        <i class="fas fa-bullseye"></i>
+        <p><strong>Goal:</strong> Reach Level 5 – Empathic listening. Understand not just words, but feelings and intent.</p>
+      </div>
     </div>
 
-    <div class="section">
-        <h2>Tips to Improve Active Listening</h2>
-        <ul>
-            <li>Remove distractions while listening</li>
-            <li>Focus on the speaker's message</li>
-            <li>Do not plan your reply while listening</li>
-            <li>Use nodding and short verbal responses</li>
-            <li>Ask clarifying questions</li>
-            <li>Practice patience</li>
-        </ul>
-
-        <!-- Back Button -->
-        <a href="{% url 'comm' %}" class="btn">
-            ← Back to Module
-        </a>
+    <!-- Importance Card -->
+    <div class="card">
+      <h2><i class="fas fa-star-of-life"></i> Importance</h2>
+      <ul class="list">
+        <li>Improves understanding & reduces errors</li>
+        <li>Builds strong relationships & trust</li>
+        <li>Reduces misunderstandings & conflicts</li>
+        <li>Enhances teamwork & collaboration</li>
+        <li>Creates positive impression in interviews</li>
+        <li>Increases leadership effectiveness</li>
+        <li>Helps in conflict resolution</li>
+      </ul>
+      <div class="badge-container">
+        <span class="badge"><i class="fas fa-building"></i> 96% of leaders say listening is critical</span>
+        <span class="badge"><i class="fas fa-chart-simple"></i> Poor listening costs companies $50B+ annually</span>
+      </div>
     </div>
 
+    <!-- Tips to Improve Card -->
+    <div class="card">
+      <h2><i class="fas fa-graduation-cap"></i> Tips to Improve</h2>
+      <ul class="list">
+        <li>Remove all distractions (phone, laptop, notifications)</li>
+        <li>Focus completely on the speaker's message</li>
+        <li><strong>Do not plan your reply</strong> while listening</li>
+        <li>Use nodding and short verbal responses ("I see", "Okay")</li>
+        <li>Ask clarifying questions when needed</li>
+        <li>Practice patience – let them finish completely</li>
+        <li>Paraphrase back: "So what you're saying is..."</li>
+        <li>Pay attention to non-verbal cues too</li>
+      </ul>
+    </div>
+
+    <!-- Barriers to Active Listening Card -->
+    <div class="card">
+      <h2><i class="fas fa-shield-alt"></i> Common Barriers</h2>
+      <ul class="list">
+        <li><strong>Internal distractions</strong> – Daydreaming, rehearsing response</li>
+        <li><strong>External distractions</strong> – Noise, phone notifications</li>
+        <li><strong>Emotional state</strong> – Anger, anxiety, stress</li>
+        <li><strong>Judgment bias</strong> – Forming opinions too early</li>
+        <li><strong>Listener fatigue</strong> – Tiredness reducing focus</li>
+        <li><strong>Cultural differences</strong> – Different communication styles</li>
+      </ul>
+      <div class="tip">
+        <i class="fas fa-lightbulb"></i>
+        <p><strong>Solution:</strong> The 5-second rule – after speaker finishes, wait 5 seconds before responding. It ensures you fully processed the message.</p>
+      </div>
+    </div>
+
+    <!-- Active vs Passive Listening (Full Width) -->
+    <div class="card full-width">
+      <h2><i class="fas fa-arrows-spin"></i> Active Listening vs Passive Listening</h2>
+      <div class="compare-grid">
+        <div class="compare-item">
+          <h4><i class="fas fa-check-circle" style="color:#4ade80;"></i> Active Listening</h4>
+          <ul class="list">
+            <li>Full attention & engagement</li>
+            <li>Asks clarifying questions</li>
+            <li>Provides feedback & paraphrases</li>
+            <li>Remembers key information</li>
+            <li>Shows empathy & understanding</li>
+            <li>Builds trust & rapport</li>
+          </ul>
+        </div>
+        <div class="compare-item">
+          <h4><i class="fas fa-times-circle" style="color:#f87171;"></i> Passive Listening</h4>
+          <ul class="list">
+            <li>Hears but doesn't process deeply</li>
+            <li>No feedback or questions</li>
+            <li>Easily distracted</li>
+            <li>Forgets most of the message</li>
+            <li>Minimal emotional connection</li>
+            <li>Often misinterprets meaning</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Key Phrases for Active Listening -->
+    <div class="card">
+      <h2><i class="fas fa-comments"></i> Key Phrases to Use</h2>
+      <ul class="list">
+        <li>"So what I'm hearing is..."</li>
+        <li>"Let me make sure I understand..."</li>
+        <li>"Tell me more about that."</li>
+        <li>"How did that make you feel?"</li>
+        <li>"I see your point of view."</li>
+        <li>"Thank you for sharing that with me."</li>
+        <li>"Just to clarify, you meant...?"</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2><i class="fas fa-calendar-week"></i> 7-Day Active Listening Challenge</h2>
+      <ul class="list">
+        <li><strong>Day 1:</strong> No interrupting – let everyone finish completely</li>
+        <li><strong>Day 2:</strong> Put phone away in every conversation</li>
+        <li><strong>Day 3:</strong> Use paraphrasing ("So you're saying...")</li>
+        <li><strong>Day 4:</strong> Ask 3 clarifying questions per conversation</li>
+        <li><strong>Day 5:</strong> Focus only on non-verbal cues</li>
+        <li><strong>Day 6:</strong> Summarize each conversation at the end</li>
+        <li><strong>Day 7:</strong> Combine all skills – full active listening day</li>
+      </ul>
+      <div class="badge-container">
+        <span class="badge"><i class="fas fa-trophy"></i> 7 days = noticeable improvement</span>
+        <span class="badge"><i class="fas fa-heart"></i> 30 days = permanent habit</span>
+      </div>
+    </div>
+
+    <!-- Quote Card - Full Width -->
+    <div class="card full-width">
+      <div class="quote">
+        <i class="fas fa-quote-left"></i> Most people do not listen with the intent to understand; they listen with the intent to reply. 
+        <strong style="color:#93c5fd;">– Stephen R. Covey</strong>
+      </div>
+      <div class="quote" style="margin-top: 0.5rem;">
+        <i class="fas fa-quote-left"></i> Listening is an attitude of the heart, a genuine desire to be with another. 
+        <strong style="color:#93c5fd;">– J. Isham</strong>
+      </div>
+    </div>
+
+    <!-- Back Button (Full Width) -->
+    <div class="full-width" style="margin-top: 0.5rem; text-align: left;">
+      <a href="{% url 'comm' %}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Module
+      </a>
+    </div>
+
+  </div>
 </div>
-
 </body>
 </html>

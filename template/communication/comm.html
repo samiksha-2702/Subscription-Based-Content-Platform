@@ -4,214 +4,383 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Communication & Soft Skills | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-* { box-sizing:border-box; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body{
-margin:0;
-font-family:"Segoe UI",Arial;
-background:linear-gradient(135deg,#0f172a,#020617);
-color:white;
-}
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
 
-/* Header */
+  /* Header */
+  header {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+  }
 
-header{
-text-align:center;
-padding:40px 20px;
-background:rgba(15,23,42,0.7);
-backdrop-filter:blur(8px);
-}
+  header h1 {
+    font-size: 2.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #a5f3fc, #60a5fa);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+  }
 
-.container{
-padding:40px 20px;
-max-width:1200px;
-margin:auto;
-}
+  header p {
+    color: #94a3b8;
+    font-size: 1.1rem;
+  }
 
-h2{
-margin-bottom:20px;
-font-size:24px;
-text-align:center;
-}
+  /* Container */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 4rem;
+  }
 
-/* Tabs */
+  /* Tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+  }
 
-.tabs{
-display:flex;
-justify-content:center;
-margin-bottom:30px;
-}
+  .tab {
+    padding: 0.75rem 2rem;
+    border-radius: 60px;
+    cursor: pointer;
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.25s ease;
+    color: #cbd5e6;
+  }
 
-.tab{
-margin:0 10px;
-padding:10px 20px;
-border-radius:12px;
-cursor:pointer;
-background:rgba(15,23,42,0.7);
-}
+  .tab i {
+    margin-right: 8px;
+    font-size: 0.95rem;
+  }
 
-.tab.active{
-background:#3b82f6;
-}
+  .tab:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+  }
 
-/* Grid */
+  .tab.active {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-color: #60a5fa;
+    color: white;
+    box-shadow: 0 8px 20px -8px #3b82f6;
+  }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:28px;
-}
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.8rem;
+  }
 
-/* Cards */
+  /* Cards */
+  .card {
+    background: linear-gradient(145deg, rgba(17, 24, 39, 0.8), rgba(11, 18, 32, 0.8));
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
+    padding: 1.8rem 1.5rem;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    display: block;
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    border: 1px solid rgba(51, 65, 85, 0.4);
+    position: relative;
+    overflow: hidden;
+  }
 
-.card{
-background:linear-gradient(145deg,#111827,#0b1220);
-border-radius:16px;
-padding:25px 20px;
-text-align:center;
-text-decoration:none;
-color:white;
-display:block;
-}
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
 
-.card:hover{
-transform:translateY(-8px) scale(1.03);
-}
+  .card:hover::before {
+    transform: translateX(0);
+  }
 
-.card img{
-width:180px;
-height:90px;
-object-fit:contain;
-margin-bottom:12px;
-}
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 25px 35px -15px rgba(0, 0, 0, 0.5);
+  }
 
-.card h3{
-margin:10px 0 0;
-font-size:18px;
-}
+  .icon-wrapper {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 1rem;
+    background: rgba(59, 130, 246, 0.15);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
 
-.card p{
-font-size:14px;
-margin-top:8px;
-color:#a0a0a0;
-}
+  .card:hover .icon-wrapper {
+    background: rgba(59, 130, 246, 0.25);
+    transform: scale(1.05);
+  }
 
-footer{
-text-align:center;
-padding:20px;
-margin-top:40px;
-background:#020617;
-opacity:0.7;
-}
+  .icon-wrapper i {
+    font-size: 2.2rem;
+    color: #60a5fa;
+  }
+
+  .card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0.75rem 0 0.5rem;
+    color: #f1f5f9;
+  }
+
+  .card p {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: 0.25rem;
+    line-height: 1.4;
+  }
+
+  /* Badge for quiz */
+  .quiz-badge {
+    display: inline-block;
+    background: #facc15;
+    color: #0f172a;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.6rem;
+    border-radius: 30px;
+    margin-top: 0.5rem;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    background: rgba(2, 6, 23, 0.8);
+    border-top: 1px solid rgba(51, 65, 85, 0.3);
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  /* Section visibility */
+  .section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .section.active-section {
+    display: grid;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    header h1 {
+      font-size: 1.8rem;
+    }
+    .container {
+      padding: 1.5rem;
+    }
+    .tab {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.85rem;
+    }
+    .grid {
+      gap: 1rem;
+    }
+    .card {
+      padding: 1.2rem;
+    }
+    .icon-wrapper {
+      width: 55px;
+      height: 55px;
+    }
+    .icon-wrapper i {
+      font-size: 1.6rem;
+    }
+  }
 </style>
 
 <script>
+  function showSection(sectionId, tabElement) {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(sec => {
+      sec.classList.remove('active-section');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Show selected section
+    const selectedSection = document.getElementById(sectionId);
+    if (selectedSection) {
+      selectedSection.classList.add('active-section');
+    }
+    
+    // Add active class to clicked tab
+    if (tabElement) {
+      tabElement.classList.add('active');
+    }
+  }
 
-function showSection(sectionId,tabElement){
-
-document.querySelectorAll('.section').forEach(
-sec=>sec.style.display='none'
-);
-
-document.querySelectorAll('.tab').forEach(
-tab=>tab.classList.remove('active')
-);
-
-document.getElementById(sectionId).style.display='grid';
-tabElement.classList.add('active');
-
-}
-
-window.onload=function(){
-showSection('softskills',document.querySelector('.tab'));
-};
-
+  // Initialize on page load
+  window.onload = function() {
+    // Default show Soft Skills section
+    const defaultTab = document.querySelector('.tab');
+    if (defaultTab) {
+      showSection('softskills', defaultTab);
+    }
+  };
 </script>
-
 </head>
 
 <body>
 
 <header>
-<h1>Communication & Soft Skills</h1>
-<p>Build professional skills for placement success</p>
+  <h1><i class="fas fa-comments"></i> Communication & Soft Skills</h1>
+  <p>Build professional skills for placement success</p>
 </header>
 
 <div class="container">
 
-<div class="tabs">
-<div class="tab active" onclick="showSection('softskills',this)">Soft Skills</div>
-<div class="tab" onclick="showSection('communication',this)">Communication</div>
-</div>
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('softskills', this)">
+      <i class="fas fa-user-check"></i> Soft Skills
+    </div>
+    <div class="tab" onclick="showSection('communication', this)">
+      <i class="fas fa-microphone-alt"></i> Communication
+    </div>
+  </div>
 
-<!-- Soft Skills -->
+  <!-- Soft Skills Section -->
+  <div id="softskills" class="grid section active-section">
+    
+    <a href="{% url 'time_management' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-hourglass-half"></i>
+      </div>
+      <h3>Time Management</h3>
+      <p>Plan and organize tasks efficiently. Master prioritization and beat deadlines.</p>
+    </a>
 
-<div id="softskills" class="grid section">
+    <a href="{% url 'teamwork' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-users"></i>
+      </div>
+      <h3>Teamwork</h3>
+      <p>Work effectively in a collaborative environment. Build trust and synergy.</p>
+    </a>
 
-<a href="{% url 'time_management' %}" class="card">
-<img src="{% static 'image/time-management.png' %}">
-<h3>Time Management</h3>
-<p>Plan and organize tasks efficiently.</p>
-</a>
+    <a href="{% url 'interviewskills' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-handshake"></i>
+      </div>
+      <h3>Interview Skills</h3>
+      <p>Prepare confidently for HR and technical interviews. Ace your next opportunity.</p>
+    </a>
 
-<a href="{% url 'teamwork' %}" class="card">
-<img src="{% static 'image/teamwork.jpg' %}">
-<h3>Teamwork</h3>
-<p>Work effectively in a collaborative environment.</p>
-</a>
+    <a href="{% url 'personality' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-chart-line"></i>
+      </div>
+      <h3>Personality Development</h3>
+      <p>Improve confidence, communication, and professional behavior.</p>
+    </a>
+  </div>
 
-<a href="{% url 'interviewskills' %}" class="card">
-<img src="{% static 'image/interviewing-skills.jpg' %}">
-<h3>Interview Skills</h3>
-<p>Prepare confidently for HR interviews.</p>
-</a>
+  <!-- Communication Section -->
+  <div id="communication" class="grid section">
+    
+    <a href="{% url 'verbal' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-comment-dots"></i>
+      </div>
+      <h3>Verbal Communication</h3>
+      <p>Speak clearly and confidently. Master words, tone, and expression.</p>
+    </a>
 
-<a href="{% url 'personality' %}" class="card">
-<img src="{% static 'image/personality.png' %}">
-<h3>Personality Development</h3>
-<p>Improve confidence and professional behavior.</p>
-</a>
+    <a href="{% url 'non_verbal' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-people-arrows"></i>
+      </div>
+      <h3>Non-Verbal Communication</h3>
+      <p>Understand body language, gestures, and silent cues.</p>
+    </a>
 
-</div>
+    <a href="{% url 'listening' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-ear-listen"></i>
+      </div>
+      <h3>Active Listening</h3>
+      <p>Develop strong listening habits. Hear to understand, not just reply.</p>
+    </a>
 
-<!-- Communication -->
-
-<div id="communication" class="grid section" style="display:none;">
-
-<a href="{% url 'verbal' %}" class="card">
-<img src="{% static 'image/verbal.jpg' %}">
-<h3>Verbal Communication</h3>
-<p>Speak clearly and confidently.</p>
-</a>
-
-<a href="{% url 'non_verbal' %}" class="card">
-<img src="{% static 'image/nonverbal.jpg' %}">
-<h3>Non-Verbal Communication</h3>
-<p>Understand body language and gestures.</p>
-</a>
-
-<a href="{% url 'listening' %}" class="card">
-<img src="{% static 'image/active-listening.png' %}">
-<h3>Active Listening</h3>
-<p>Develop strong listening habits.</p>
-</a>
-
-<a href="{% url 'comm_quiz' %}" class="card">
-<img src="{% static 'image/quiz.jpg' %}">
-<h3>Communication Quiz</h3>
-<p>Test your communication knowledge.</p>
-</a>
-
-</div>
+    <a href="{% url 'comm_quiz' %}" class="card">
+      <div class="icon-wrapper">
+        <i class="fas fa-question-circle"></i>
+      </div>
+      <h3>Communication Quiz</h3>
+      <p>Test your communication knowledge. Track your progress.</p>
+      <span class="quiz-badge"><i class="fas fa-trophy"></i> 20 Questions</span>
+    </a>
+  </div>
 
 </div>
 
 <footer>
-© PrepEdge - Interview Preparation Platform
+  <i class="fas fa-graduation-cap"></i> PrepEdge - Interview Preparation Platform
 </footer>
 
 </body>
