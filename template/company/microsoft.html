@@ -1,201 +1,547 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Microsoft | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-*{box-sizing:border-box;}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body{
-margin:0;
-font-family:"Segoe UI",Arial,sans-serif;
-background:linear-gradient(135deg,#0f172a,#020617);
-color:white;
-}
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
 
-header{
-text-align:center;
-padding:30px 20px;
-background:rgba(15,23,42,0.8);
-backdrop-filter:blur(8px);
-box-shadow:0 4px 20px rgba(0,0,0,0.6);
-}
+  /* Header */
+  header {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9));
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
 
-header h1{margin-bottom:5px;}
-header p{color:#a0a0a0;}
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+  }
 
-.container{
-padding:30px 20px;
-max-width:1000px;
-margin:auto;
-}
+  header h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #60a5fa, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-h2{
-margin-top:40px;
-margin-bottom:15px;
-color:#3b82f6;
-}
+  header h1 i {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #3b82f6;
+  }
 
-section{
-margin-bottom:30px;
-background:rgba(15,23,42,0.7);
-padding:20px;
-border-radius:12px;
-box-shadow:0 10px 20px rgba(0,0,0,0.6);
-}
+  header p {
+    color: #94a3b8;
+    font-size: 1.05rem;
+  }
 
-section ul{
-padding-left:20px;
-}
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
 
-a{
-color:#3b82f6;
-text-decoration:none;
-}
+  /* Back Button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid #3b82f6;
+    padding: 0.6rem 1.4rem;
+    border-radius: 40px;
+    font-weight: 600;
+    color: #bfdbfe;
+    transition: all 0.25s;
+    text-decoration: none;
+    margin-bottom: 1.8rem;
+  }
 
-a:hover{
-text-decoration:underline;
-}
+  .back-btn i {
+    font-size: 0.85rem;
+    transition: transform 0.2s;
+  }
 
-.back{
-display:inline-block;
-margin-bottom:20px;
-padding:8px 14px;
-background:#3b82f6;
-border-radius:8px;
-color:white;
-}
+  .back-btn:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateX(-4px);
+    box-shadow: 0 6px 14px -6px #3b82f6;
+  }
 
-footer{
-text-align:center;
-padding:20px;
-margin-top:40px;
-background:#020617;
-opacity:.8;
-}
+  .back-btn:hover i {
+    transform: translateX(-4px);
+  }
+
+  /* Grid Layout for Sections */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Cards */
+  .card {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.5rem 1.8rem;
+    transition: all 0.25s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #60a5fa;
+    border-left: 4px solid #3b82f6;
+    padding-left: 0.9rem;
+  }
+
+  .card h2 i {
+    font-size: 1.3rem;
+    color: #3b82f6;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: #93c5fd;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p {
+    color: #cbd5e6;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  /* Lists */
+  .list {
+    list-style: none;
+    margin: 0.8rem 0;
+  }
+
+  .list li {
+    margin-bottom: 0.6rem;
+    padding-left: 1.6rem;
+    position: relative;
+    color: #e2e8f0;
+    font-weight: 450;
+  }
+
+  .list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+    font-weight: 600;
+  }
+
+  /* Badge Container */
+  .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .badge {
+    background: #1e293b;
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #60a5fa;
+    border: 1px solid #334155;
+  }
+
+  /* Info Box */
+  .info-box {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .info-box strong {
+    color: #60a5fa;
+  }
+
+  .quote {
+    font-style: italic;
+    color: #a5c9ff;
+    border-left: 3px solid #3b82f6;
+    padding-left: 1rem;
+    margin: 1rem 0;
+  }
+
+  .stat-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .stat {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.6rem 1rem;
+    flex: 1;
+    text-align: center;
+    min-width: 100px;
+  }
+
+  .stat i {
+    font-size: 1.3rem;
+    color: #3b82f6;
+    margin-bottom: 0.3rem;
+    display: block;
+  }
+
+  .stat span {
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+
+  .value-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .value {
+    background: #0f172a;
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
+    color: #60a5fa;
+    border: 1px solid #334155;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .resource-link:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background: rgba(2, 6, 23, 0.8);
+    border-top: 1px solid rgba(51, 65, 85, 0.3);
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  @media (max-width: 850px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .full-width {
+      grid-column: span 1;
+    }
+    .container {
+      padding: 1.2rem;
+    }
+    header h1 {
+      font-size: 2rem;
+    }
+    .card {
+      padding: 1.2rem;
+    }
+  }
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Microsoft</h1>
-<p>Explore Microsoft’s work culture, technologies, and interview preparation tips</p>
+  <h1>
+    <i class="fab fa-microsoft"></i> 
+    Microsoft
+  </h1>
+  <p>Explore Microsoft's work culture, technologies, and interview preparation tips</p>
 </header>
 
 <div class="container">
 
-<a href="{% url 'company' %}" class="back">⬅ Back</a>
+  <a href="{% url 'company' %}" class="back-btn">
+    <i class="fas fa-arrow-left"></i> Back to Companies
+  </a>
 
-<!-- Company Overview -->
-<section>
-<h2>Company Overview</h2>
+  <div class="grid">
 
-<p>
-Microsoft Corporation is a global technology company known for
-software, cloud computing, and hardware innovations.
-</p>
+    <!-- Company Overview -->
+    <div class="card full-width">
+      <h2><i class="fas fa-building"></i> Company Overview</h2>
+      <p>Microsoft Corporation is a global technology company known for software, cloud computing, and hardware innovations. Under CEO Satya Nadella, Microsoft has transformed into a cloud-first, AI-driven company with a "growth mindset" culture.</p>
+      <div class="stat-row">
+        <div class="stat"><i class="fas fa-calendar-alt"></i> Founded<br><span>1975</span></div>
+        <div class="stat"><i class="fas fa-map-marker-alt"></i> HQ<br><span>Redmond, Washington</span></div>
+        <div class="stat"><i class="fas fa-user-ceo"></i> CEO<br><span>Satya Nadella</span></div>
+        <div class="stat"><i class="fas fa-globe"></i> Employees<br><span>220,000+</span></div>
+      </div>
+      <div class="quote">
+        <i class="fas fa-quote-left"></i> "Empower every person and every organization on the planet to achieve more."
+      </div>
+    </div>
 
-<ul>
-<li><strong>Founded:</strong> 1975</li>
-<li><strong>Headquarters:</strong> Redmond, Washington, USA</li>
-<li><strong>CEO:</strong> Satya Nadella</li>
-<li><strong>Mission:</strong> Empower every person and every organization on the planet to achieve more.</li>
-</ul>
+    <!-- Job Opportunities -->
+    <div class="card">
+      <h2><i class="fas fa-briefcase"></i> Job & Internship Opportunities</h2>
+      <p>Microsoft hires across engineering, product, cloud, AI, and business functions globally.</p>
+      <ul class="list">
+        <li>Software Engineer Internships (Explore Microsoft)</li>
+        <li>Cloud Solution Architect Internships</li>
+        <li>AI / ML Research Internships</li>
+        <li>Product Manager & Program Manager Internships</li>
+        <li>Roles across Azure, Office, Xbox, LinkedIn, GitHub, Bing</li>
+        <li>MBA & Leadership Development Programs</li>
+      </ul>
+      <div class="badge-container">
+        <span class="badge"><i class="fas fa-external-link-alt"></i> careers.microsoft.com</span>
+        <span class="badge"><i class="fas fa-calendar"></i> Applications open July-Sept</span>
+      </div>
+    </div>
 
-</section>
+    <!-- Technologies -->
+    <div class="card">
+      <h2><i class="fas fa-microchip"></i> Technologies & Tools</h2>
+      <ul class="list">
+        <li><strong>Languages:</strong> C#, C++, TypeScript, Python, Java, Rust</li>
+        <li><strong>Frameworks:</strong> .NET, ASP.NET Core, Blazor, React</li>
+        <li><strong>Cloud Platform:</strong> Microsoft Azure (Compute, AI, Functions)</li>
+        <li><strong>AI & ML:</strong> Azure AI, Cognitive Services, OpenAI Services</li>
+        <li><strong>Data & Analytics:</strong> Power BI, SQL Server, Fabric</li>
+        <li><strong>DevOps:</strong> GitHub Actions, Azure DevOps, VS Code</li>
+      </ul>
+    </div>
 
-<!-- Jobs -->
-<section>
+    <!-- Interview Process -->
+    <div class="card full-width">
+      <h2><i class="fas fa-clipboard-list"></i> Interview & Selection Process</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-laptop-code"></i> Interview Rounds</h3>
+          <ul class="list">
+            <li>Online coding assessment (1-2 problems)</li>
+            <li>Technical Phone Screen (45 min)</li>
+            <li>On-site/Virtual Loop (4-5 interviews)</li>
+            <li>Coding + DSA interviews (2-3 rounds)</li>
+            <li>System Design (for experienced roles)</li>
+            <li>Behavioral "Growth Mindset" interview</li>
+            <li>Hiring Committee review (Asha)</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-lightbulb"></i> Preparation Focus</h3>
+          <ul class="list">
+            <li>Data Structures & Algorithms (LeetCode Medium)</li>
+            <li>System Design fundamentals</li>
+            <li>Growth Mindset & collaboration</li>
+            <li>Communication and explanation skills</li>
+            <li>.NET/C# knowledge (for certain teams)</li>
+            <li>Azure fundamentals (for cloud roles)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="info-box">
+        <i class="fas fa-star" style="color: #3b82f6;"></i>
+        <strong style="color: #60a5fa;">Prep Tip:</strong> Microsoft values "Growth Mindset" - show willingness to learn from failures. Be ready for "Tell me about a time you failed" questions. Practice coding out loud.
+      </div>
+    </div>
 
-<h2>Job & Internship Opportunities</h2>
+    <!-- Growth Mindset Culture -->
+    <div class="card">
+      <h2><i class="fas fa-seedling"></i> Growth Mindset Culture</h2>
+      <p>Satya Nadella transformed Microsoft's culture from "know-it-alls" to "learn-it-alls".</p>
+      <div class="value-list">
+        <span class="value">Learn-it-all</span>
+        <span class="value">Customer Obsessed</span>
+        <span class="value">Diverse & Inclusive</span>
+        <span class="value">One Microsoft</span>
+        <span class="value">Make a Difference</span>
+      </div>
+      <div class="info-box" style="margin-top: 1rem;">
+        <strong><i class="fas fa-quote-right"></i> "Don't be a know-it-all; be a learn-it-all."</strong> — Satya Nadella
+      </div>
+    </div>
 
-<ul>
-<li>Software Engineer Internships</li>
-<li>Cloud Solution Architect Internships</li>
-<li>AI / ML Research Internships</li>
-<li>Roles across Azure, Office, Xbox, LinkedIn, GitHub</li>
-<li>
-Official Careers Page:
-<a href="https://careers.microsoft.com/" target="_blank">
-careers.microsoft.com
-</a>
-</li>
-</ul>
+    <!-- Salary & Benefits -->
+    <div class="card">
+      <h2><i class="fas fa-dollar-sign"></i> Salary & Benefits</h2>
+      <ul class="list">
+        <li><strong>59 (New Grad):</strong> $140k - $165k total comp</li>
+        <li><strong>60 (SDE II):</strong> $180k - $220k total comp</li>
+        <li><strong>61-62 (Senior):</strong> $230k - $300k total comp</li>
+        <li>Base salary + bonus (0-20%) + RSUs (stocks)</li>
+        <li>Comprehensive health insurance</li>
+        <li>401(k) matching (up to 50%)</li>
+        <li>Tuition reimbursement ($10k/year)</li>
+        <li>Parental leave (20 weeks paid)</li>
+        <li>Home office stipend for remote workers</li>
+        <li>Free LinkedIn Learning & certifications</li>
+      </ul>
+    </div>
 
-</section>
+    <!-- Employee Insights -->
+    <div class="card">
+      <h2><i class="fas fa-users"></i> Employee Insights</h2>
+      <ul class="list">
+        <li>Inclusive and innovative work culture</li>
+        <li>Hybrid work environment (3 days in office)</li>
+        <li>Glassdoor rating: ~4.4 / 5</li>
+        <li>Strong learning and career growth programs</li>
+        <li>"One Microsoft" collaborative culture</li>
+        <li>High job security and work-life balance</li>
+        <li>Internal mobility across divisions</li>
+        <li>Employee Resource Groups (ERGs)</li>
+      </ul>
+      <div class="badge-container">
+        <span class="badge"><i class="fas fa-trophy"></i> #2 Best Place to Work (Forbes)</span>
+        <span class="badge"><i class="fas fa-heart"></i> 92% would recommend to a friend</span>
+      </div>
+    </div>
 
-<!-- Technologies -->
-<section>
+    <!-- Products & Divisions -->
+    <div class="card full-width">
+      <h2><i class="fas fa-cube"></i> Major Products & Divisions</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-cloud"></i> Cloud & Enterprise</h3>
+          <ul class="list">
+            <li>Microsoft Azure</li>
+            <li>Microsoft 365 / Office</li>
+            <li>Dynamics 365</li>
+            <li>SQL Server / Fabric</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fab fa-windows"></i> Consumer Products</h3>
+          <ul class="list">
+            <li>Windows OS</li>
+            <li>Surface hardware</li>
+            <li>Xbox & Game Pass</li>
+            <li>Bing & Copilot</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fab fa-linkedin"></i> Acquisitions</h3>
+          <ul class="list">
+            <li>LinkedIn</li>
+            <li>GitHub</li>
+            <li>Activision Blizzard</li>
+            <li>Nuance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<h2>Technologies & Tools</h2>
+    <!-- Resources -->
+    <div class="card full-width">
+      <h2><i class="fas fa-book-open"></i> Resources & Preparation</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-link"></i> External Resources</h3>
+          <ul class="list">
+            <li><a href="https://leetcode.com/company/microsoft/" target="_blank" style="color:#60a5fa;">LeetCode Microsoft Questions</a></li>
+            <li><a href="https://careers.microsoft.com/" target="_blank" style="color:#60a5fa;">Official Careers Page</a></li>
+            <li><a href="https://github.com/microsoft" target="_blank" style="color:#60a5fa;">Microsoft Open Source</a></li>
+            <li><a href="https://learn.microsoft.com/" target="_blank" style="color:#60a5fa;">Microsoft Learn (Free Training)</a></li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-chalkboard"></i> PrepEdge Resources</h3>
+          <div class="badge-container">
+            <a href="{% url 'interview-tips' %}" class="resource-link"><i class="fas fa-lightbulb"></i> Interview Tips</a>
+            <a href="{% url 'resume-guide' %}" class="resource-link"><i class="fas fa-file-alt"></i> Resume Guide</a>
+            <a href="{% url 'tech-trends' %}" class="resource-link"><i class="fas fa-chart-line"></i> Tech Trends</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<ul>
-<li>Languages: C#, Python, JavaScript, Java</li>
-<li>Frameworks: .NET, ASP.NET, React</li>
-<li>Cloud Platform: Microsoft Azure</li>
-<li>AI & ML: Azure AI, Cognitive Services</li>
-<li>Data & Analytics: Power BI, SQL Server</li>
-</ul>
-
-</section>
-
-<!-- Interview -->
-<section>
-
-<h2>Interview & Selection Process</h2>
-
-<ul>
-<li>Online coding assessment</li>
-<li>Technical interviews (DSA + System Design)</li>
-<li>Behavioral / HR interviews</li>
-<li>Focus on communication and growth mindset</li>
-</ul>
-
-<p>
-Prep Tip: Practice coding on LeetCode and HackerRank
-and review Microsoft interview experiences.
-</p>
-
-</section>
-
-<!-- Employee Insights -->
-<section>
-
-<h2>Employee Insights</h2>
-
-<ul>
-<li>Inclusive and innovative work culture</li>
-<li>Hybrid work environment</li>
-<li>Glassdoor rating: ~4.4 / 5</li>
-<li>Strong learning and career growth programs</li>
-</ul>
-
-</section>
-
-<!-- Blogs -->
-<section>
-
-<h2>Resources & Related Blogs</h2>
-
-<ul>
-<li><a href="{% url 'interview-tips' %}">Top Interview Tips</a></li>
-<li><a href="{% url 'resume-guide' %}">Resume Writing Guide</a></li>
-<li><a href="{% url 'tech-trends' %}">Tech Industry Trends</a></li>
-</ul>
-
-</section>
-
+  </div>
 </div>
 
 <footer>
-© PrepEdge - Interview Preparation Platform
+  <i class="fas fa-graduation-cap"></i> PrepEdge - Interview Preparation Platform
 </footer>
 
 </body>
 </html>
-```
