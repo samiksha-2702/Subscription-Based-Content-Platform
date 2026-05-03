@@ -7,52 +7,77 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
+
+/* RESET */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
 body{
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Segoe UI', sans-serif;
     background: radial-gradient(circle at top, #0b1220, #050814);
-    color: #e5e7eb;
-    padding: 25px;
+    color:#e5e7eb;
+    padding:25px;
+    min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* BACKGROUND GLOW */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 40%);
+    z-index:-1;
 }
 
 /* HEADER */
 .header{
     background: rgba(17, 24, 39, 0.85);
-    backdrop-filter: blur(12px);
-    padding: 20px;
-    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    padding: 22px;
+    border-radius: 16px;
     margin-bottom: 20px;
     border: 1px solid rgba(255,255,255,0.05);
+    box-shadow:0 10px 30px rgba(0,0,0,.4);
 }
 
 .header h2{
     margin:0;
-    font-size: 22px;
+    font-size: 24px;
     color: #93c5fd;
+    font-weight:800;
 }
 
 .timer{
     margin-top: 8px;
     font-size: 18px;
     color: #fb7185;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 /* BUTTONS */
-button{
+button, .btn{
     padding: 10px 14px;
     border: none;
     border-radius: 10px;
-    background: #2563eb;
+    background: linear-gradient(135deg,#2563eb,#1d4ed8);
     color: white;
     font-weight: 600;
     cursor: pointer;
     margin-right: 8px;
     transition: 0.3s;
+    text-decoration:none;
+    display:inline-block;
 }
 
-button:hover{
-    background: #1d4ed8;
+button:hover, .btn:hover{
     transform: translateY(-2px);
+    box-shadow:0 10px 25px rgba(37,99,235,.3);
 }
 
 /* QUESTION CARD */
@@ -61,12 +86,30 @@ button:hover{
     border: 1px solid rgba(255,255,255,0.05);
     padding: 18px;
     margin-bottom: 14px;
-    border-radius: 12px;
+    border-radius: 14px;
     transition: 0.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.question::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(96,165,250,0.08),transparent);
+    transition:0.7s;
+}
+
+.question:hover::before{
+    left:100%;
 }
 
 .question:hover{
-    border-color: #3b82f6;
+    border-color:#3b82f6;
+    transform:translateY(-3px);
 }
 
 .question b{
@@ -78,13 +121,20 @@ label{
     margin:6px 0;
     cursor:pointer;
     color:#cbd5e1;
+    padding:8px;
+    border-radius:8px;
+    transition:0.2s;
+}
+
+label:hover{
+    background:rgba(59,130,246,0.12);
 }
 
 input[type="radio"]{
     margin-right: 8px;
 }
 
-/* RESULT BOX */
+/* RESULT */
 .result{
     background:#111827;
     padding:20px;
@@ -93,6 +143,58 @@ input[type="radio"]{
     display:none;
     border:1px solid rgba(255,255,255,0.05);
 }
+
+/* TOP BUTTON ROW */
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+/* FLOATING HOME */
+.floating-home{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:22px;
+    text-decoration:none;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+
+/* FLOATING INFO */
+.floating-info{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#8b5cf6,#6366f1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:20px;
+    text-decoration:none;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+
+/* MOBILE */
+@media(max-width:768px){
+    body{ padding:16px; }
+}
+
 </style>
 </head>
 
@@ -103,10 +205,15 @@ input[type="radio"]{
     <div class="timer">Time Left: <span id="time">15:00</span></div>
 </div>
 
-<button type="button" onclick="history.back()">Back</button>
-<a href="{% url 'index' %}">
-    <button type="button">Home</button>
-</a>
+<div class="topbar">
+
+    <div>
+        <button type="button" onclick="history.back()">← Back</button>
+        <a href="{% url 'index' %}" class="btn">Home</a>
+        <a href="{% url 'cppinfo' %}" class="btn">📘 C++ Info</a>
+    </div>
+
+</div>
 
 <!-- FORM -->
 <form id="quizForm" method="POST" action="{% url 'submit_test' test.id %}">
@@ -119,7 +226,7 @@ input[type="radio"]{
     <input type="hidden" name="time_taken" id="timeTakenField">
     <input type="hidden" name="score" id="scoreField">
 
-    <!-- QUESTIONS -->
+    <!-- QUESTIONS (UNCHANGED) -->
     <div class="question">
         <b>Question 1</b><br>
         Who developed C++?
@@ -165,7 +272,13 @@ input[type="radio"]{
 
 <div id="result" class="result"></div>
 
+<!-- FLOATING BUTTONS -->
+<a href="{% url 'index' %}" class="floating-home">🏠</a>
+<a href="{% url 'cppinfo' %}" class="floating-info">📘</a>
+
 <script>
+
+/* SAME JS (UNCHANGED) */
 
 const answers = {
     q1:"b",
@@ -186,13 +299,9 @@ function submitQuiz(){
     for(let q in answers){
         let selected = document.querySelector(`input[name="${q}"]:checked`);
 
-        if(!selected){
-            skipped++;
-        } else if(selected.value === answers[q]){
-            correct++;
-        } else {
-            wrong++;
-        }
+        if(!selected) skipped++;
+        else if(selected.value === answers[q]) correct++;
+        else wrong++;
     }
 
     let total = Object.keys(answers).length;

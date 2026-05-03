@@ -5,257 +5,313 @@
     <title>C++ Control Flow & STL — PrepEdge</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body{
-            background: linear-gradient(135deg,#020617,#0f172a);
-            color:#e5e7eb;
-            font-family:Segoe UI, Arial;
-            margin:0;
-            padding:30px;
-            line-height:1.7;
-        }
+<style>
 
-        .container{
-            max-width:1000px;
-            margin:auto;
-        }
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        .topbar{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:25px;
-        }
+body{
+font-family:Segoe UI, Arial, sans-serif;
+background:radial-gradient(circle at top,#0a0f1e,#02040c);
+color:#e5e7eb;
+line-height:1.7;
+overflow-x:hidden;
+}
 
-        button{
-            padding:10px 14px;
-            border-radius:10px;
-            border:none;
-            background:#2563eb;
-            color:white;
-            cursor:pointer;
-            transition:0.3s;
-        }
+/* BACKGROUND GLOW */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 40%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.14), transparent 40%);
+z-index:-1;
+}
 
-        button:hover{
-            background:#1d4ed8;
-            transform:translateY(-2px);
-        }
+/* CONTAINER */
+.container{
+max-width:1050px;
+margin:auto;
+padding:30px 20px;
+}
 
-        .card{
-            background:rgba(17,24,39,0.9);
-            border:1px solid rgba(59,130,246,0.15);
-            padding:22px;
-            border-radius:16px;
-            margin-bottom:18px;
-            transition:0.3s;
-        }
+/* HEADER */
+header{
+text-align:center;
+padding:60px 20px 40px;
+background:rgba(2,6,23,.65);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(59,130,246,0.15);
+border-radius:0 0 18px 18px;
+}
 
-        .card:hover{
-            transform:translateY(-5px);
-            border-color:#3b82f6;
-        }
+header h1{
+font-size:2.6rem;
+font-weight:800;
+background:linear-gradient(135deg,#ffffff,#60a5fa,#a78bfa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
-        h1{
-            font-size:26px;
-        }
+header p{
+margin-top:10px;
+color:#94a3b8;
+}
 
-        h2{
-            color:#60a5fa;
-            margin-bottom:10px;
-            font-size:20px;
-        }
+/* HEADER ACTIONS */
+.actions{
+margin-top:20px;
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
+}
 
-        p{
-            color:#cbd5e1;
-        }
+.btn{
+padding:10px 16px;
+border-radius:12px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
 
-        ul{
-            padding-left:20px;
-            color:#cbd5e1;
-        }
+.btn-primary{
+background:linear-gradient(135deg,#3b82f6,#2563eb);
+color:white;
+}
 
-        pre{
-            background:#020617;
-            padding:15px;
-            border-radius:10px;
-            color:#93c5fd;
-            overflow-x:auto;
-        }
+.btn-primary:hover{
+transform:translateY(-3px);
+box-shadow:0 12px 25px rgba(59,130,246,0.3);
+}
 
-        .badge{
-            display:inline-block;
-            padding:5px 10px;
-            border-radius:20px;
-            font-size:12px;
-            background:#1e293b;
-            color:#60a5fa;
-            margin-bottom:10px;
-        }
-    </style>
+.btn-outline{
+border:1px solid rgba(59,130,246,0.3);
+background:rgba(255,255,255,0.05);
+color:#e5e7eb;
+}
+
+.btn-outline:hover{
+background:#2563eb;
+transform:translateY(-3px);
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(59,130,246,0.15);
+backdrop-filter:blur(14px);
+padding:24px;
+border-radius:18px;
+margin-bottom:20px;
+transition:.3s;
+position:relative;
+overflow:hidden;
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:#60a5fa;
+box-shadow:0 18px 40px rgba(59,130,246,0.12);
+}
+
+/* BADGE */
+.badge{
+display:inline-block;
+padding:5px 10px;
+border-radius:999px;
+font-size:12px;
+background:rgba(59,130,246,0.15);
+border:1px solid rgba(59,130,246,0.25);
+color:#93c5fd;
+margin-bottom:10px;
+}
+
+/* TITLES */
+h2{
+color:#60a5fa;
+margin-bottom:10px;
+font-size:20px;
+}
+
+h3{
+color:#93c5fd;
+margin-top:10px;
+}
+
+/* TEXT */
+p, ul{
+color:#cbd5e1;
+}
+
+ul{
+padding-left:18px;
+}
+
+pre{
+background:#020617;
+padding:15px;
+border-radius:12px;
+color:#93c5fd;
+overflow-x:auto;
+border:1px solid rgba(59,130,246,0.2);
+margin-top:10px;
+}
+
+/* FLOATING HOME */
+.floating-home{
+position:fixed;
+bottom:20px;
+right:20px;
+width:56px;
+height:56px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:linear-gradient(135deg,#3b82f6,#2563eb);
+color:white;
+text-decoration:none;
+font-size:22px;
+box-shadow:0 12px 30px rgba(0,0,0,0.5);
+transition:.3s;
+}
+
+.floating-home:hover{
+transform:translateY(-4px) scale(1.08);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+header h1{font-size:2rem;}
+}
+
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<header>
 
-    <!-- TOP -->
-    <div class="topbar">
-        <div>
-            <h1>C++ Control Flow & STL</h1>
-            <p>Decision making, loops, arrays and standard template library</p>
-        </div>
+<h1>C++ Control Flow & STL</h1>
+<p>Decision making, loops, arrays and Standard Template Library</p>
 
-        <button onclick="history.back()">Back</button>
-    </div>
+<div class="actions">
 
-    <!-- IF-ELSE -->
-    <div class="card">
-        <span class="badge">Control Statements</span>
-        <h2>Decision Making (if-else)</h2>
+<a href="{% url 'cppinfo' %}" class="btn btn-outline">
+📘 C++ Info
+</a>
 
-        <p>Used to execute code based on conditions.</p>
-
-        <pre>
-if (x > 10) {
-    cout << "Large number";
-} else {
-    cout << "Small number";
-}
-        </pre>
-
-        <p>Nested conditions improve decision complexity in programs.</p>
-    </div>
-
-    <!-- SWITCH -->
-    <div class="card">
-        <span class="badge">Branching</span>
-        <h2>Switch Case</h2>
-
-        <p>Used when multiple fixed choices are available.</p>
-
-        <pre>
-switch(n){
-    case 1:
-        cout << "One";
-        break;
-
-    case 2:
-        cout << "Two";
-        break;
-
-    default:
-        cout << "Other";
-}
-        </pre>
-
-        <p>Break prevents fall-through execution.</p>
-    </div>
-
-    <!-- LOOPS -->
-    <div class="card">
-        <span class="badge">Iteration</span>
-        <h2>Loops in C++</h2>
-
-        <p>Loops are used to execute code repeatedly.</p>
-
-        <h3>For Loop</h3>
-        <pre>
-for(int i = 0; i < 5; i++){
-    cout << i;
-}
-        </pre>
-
-        <h3>While Loop</h3>
-        <pre>
-while(x > 0){
-    x--;
-}
-        </pre>
-
-        <h3>Do-While Loop</h3>
-        <pre>
-do {
-    cout << x;
-    x--;
-} while(x > 0);
-        </pre>
-
-        <p>Loops are heavily used in competitive programming and interview coding questions.</p>
-    </div>
-
-    <!-- ARRAYS -->
-    <div class="card">
-        <span class="badge">Data Structure</span>
-        <h2>Arrays</h2>
-
-        <p>Arrays store multiple values in contiguous memory locations.</p>
-
-        <pre>
-int a[5] = {1, 2, 3, 4, 5};
-
-cout << a[0];   // first element
-        </pre>
-
-        <p>Important concept: indexing starts from 0.</p>
-    </div>
-
-    <!-- STL -->
-    <div class="card">
-        <span class="badge">Advanced Concept</span>
-        <h2>STL (Standard Template Library)</h2>
-
-        <p>STL provides ready-made data structures and algorithms.</p>
-
-        <h3>Important Containers</h3>
-        <ul>
-            <li>Vector → dynamic array</li>
-            <li>Set → unique sorted elements</li>
-            <li>Map → key-value pairs</li>
-            <li>Stack → LIFO structure</li>
-            <li>Queue → FIFO structure</li>
-        </ul>
-
-        <h3>Vector Example</h3>
-        <pre>
-#include <vector>
-
-vector<int> v;
-
-v.push_back(10);
-v.push_back(20);
-v.push_back(30);
-        </pre>
-
-        <h3>Sorting Example</h3>
-        <pre>
-#include <algorithm>
-
-sort(v.begin(), v.end());
-        </pre>
-
-        <h3>Key Interview Point</h3>
-        <p>
-            STL reduces coding complexity and is widely used in technical interviews,
-            especially in DSA-based rounds.
-        </p>
-    </div>
-
-    <!-- SUMMARY -->
-    <div class="card">
-        <span class="badge">Revision</span>
-        <h2>Key Takeaways</h2>
-
-        <ul>
-            <li>if-else is used for conditions</li>
-            <li>switch is used for multiple choices</li>
-            <li>loops are used for repetition</li>
-            <li>arrays store fixed-size data</li>
-            <li>STL provides powerful pre-built data structures</li>
-        </ul>
-    </div>
+<a href="{% url 'cpp_basics' %}" class="btn btn-primary">
+🚀 Start Basics
+</a>
 
 </div>
+
+</header>
+
+<div class="container">
+
+<!-- IF ELSE -->
+<div class="card">
+<span class="badge">Control Statements</span>
+<h2>If - Else</h2>
+<p>Used for decision making in programs.</p>
+
+<pre>
+if(x > 10){
+    cout << "Large";
+}else{
+    cout << "Small";
+}
+</pre>
+</div>
+
+<!-- SWITCH -->
+<div class="card">
+<span class="badge">Branching</span>
+<h2>Switch Case</h2>
+
+<pre>
+switch(n){
+case 1: cout<<"One"; break;
+case 2: cout<<"Two"; break;
+default: cout<<"Other";
+}
+</pre>
+</div>
+
+<!-- LOOPS -->
+<div class="card">
+<span class="badge">Iteration</span>
+<h2>Loops</h2>
+
+<h3>For Loop</h3>
+<pre>
+for(int i=0;i<5;i++){
+ cout<<i;
+}
+</pre>
+
+<h3>While Loop</h3>
+<pre>
+while(x>0){
+ x--;
+}
+</pre>
+</div>
+
+<!-- ARRAYS -->
+<div class="card">
+<span class="badge">Data Structure</span>
+<h2>Arrays</h2>
+
+<pre>
+int a[5]={1,2,3,4,5};
+cout<<a[0];
+</pre>
+
+<p>Indexing starts from 0.</p>
+</div>
+
+<!-- STL -->
+<div class="card">
+<span class="badge">Advanced</span>
+<h2>STL (Standard Template Library)</h2>
+
+<p>STL provides ready-made data structures and algorithms.</p>
+
+<h3>Containers</h3>
+<ul>
+<li>Vector</li>
+<li>Set</li>
+<li>Map</li>
+<li>Stack</li>
+<li>Queue</li>
+</ul>
+
+<h3>Vector Example</h3>
+<pre>
+vector<int> v;
+v.push_back(10);
+</pre>
+
+<h3>Sorting</h3>
+<pre>
+sort(v.begin(), v.end());
+</pre>
+
+</div>
+
+</div>
+
+<!-- FLOATING HOME -->
+<a href="{% url 'index' %}" class="floating-home">🏠</a>
 
 </body>
 </html>

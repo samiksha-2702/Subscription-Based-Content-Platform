@@ -5,126 +5,228 @@
     <title>C++ OOP — PrepEdge Learning Hub</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body{
-            background: linear-gradient(135deg,#020617,#0f172a);
-            color:#e5e7eb;
-            font-family:Segoe UI, Arial;
-            margin:0;
-            padding:30px;
-            line-height:1.7;
-        }
+<style>
 
-        .container{
-            max-width:1000px;
-            margin:auto;
-        }
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        .topbar{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:25px;
-        }
+body{
+font-family:Segoe UI, Arial, sans-serif;
+background:radial-gradient(circle at top,#0a0f1e,#02040c);
+color:#e5e7eb;
+line-height:1.7;
+overflow-x:hidden;
+}
 
-        button{
-            padding:10px 14px;
-            border-radius:10px;
-            border:none;
-            background:#2563eb;
-            color:white;
-            cursor:pointer;
-            transition:0.3s;
-        }
+/* BACKGROUND GLOW */
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 40%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.14), transparent 40%);
+z-index:-1;
+}
 
-        button:hover{
-            background:#1d4ed8;
-            transform:translateY(-2px);
-        }
+/* HEADER */
+header{
+text-align:center;
+padding:60px 20px 40px;
+background:rgba(2,6,23,.65);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(59,130,246,0.15);
+}
 
-        .card{
-            background:rgba(17,24,39,0.9);
-            border:1px solid rgba(59,130,246,0.15);
-            padding:22px;
-            border-radius:16px;
-            margin-bottom:18px;
-            transition:0.3s;
-        }
+header h1{
+font-size:2.6rem;
+font-weight:800;
+background:linear-gradient(135deg,#ffffff,#60a5fa,#a78bfa);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
 
-        .card:hover{
-            transform:translateY(-5px);
-            border-color:#3b82f6;
-        }
+header p{
+margin-top:10px;
+color:#94a3b8;
+}
 
-        h1{
-            font-size:26px;
-        }
+/* HEADER ACTIONS */
+.actions{
+margin-top:20px;
+display:flex;
+gap:12px;
+justify-content:center;
+flex-wrap:wrap;
+}
 
-        h2{
-            color:#60a5fa;
-            margin-bottom:10px;
-            font-size:20px;
-        }
+.btn{
+padding:10px 16px;
+border-radius:12px;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
 
-        p{
-            color:#cbd5e1;
-        }
+.btn-primary{
+background:linear-gradient(135deg,#3b82f6,#2563eb);
+color:white;
+}
 
-        pre{
-            background:#020617;
-            padding:15px;
-            border-radius:10px;
-            color:#93c5fd;
-            overflow-x:auto;
-        }
+.btn-primary:hover{
+transform:translateY(-3px);
+box-shadow:0 12px 25px rgba(59,130,246,0.3);
+}
 
-        ul{
-            padding-left:20px;
-            color:#cbd5e1;
-        }
+.btn-outline{
+border:1px solid rgba(59,130,246,0.3);
+background:rgba(255,255,255,0.05);
+color:#e5e7eb;
+}
 
-        .badge{
-            display:inline-block;
-            padding:5px 10px;
-            border-radius:20px;
-            font-size:12px;
-            background:#1e293b;
-            color:#60a5fa;
-            margin-bottom:10px;
-        }
-    </style>
+.btn-outline:hover{
+background:#2563eb;
+transform:translateY(-3px);
+}
+
+/* CONTAINER */
+.container{
+max-width:1050px;
+margin:auto;
+padding:30px 20px;
+}
+
+/* CARD */
+.card{
+background:rgba(255,255,255,0.03);
+border:1px solid rgba(59,130,246,0.15);
+backdrop-filter:blur(14px);
+padding:24px;
+border-radius:18px;
+margin-bottom:20px;
+transition:.3s;
+position:relative;
+overflow:hidden;
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:#60a5fa;
+box-shadow:0 18px 40px rgba(59,130,246,0.12);
+}
+
+/* BADGE */
+.badge{
+display:inline-block;
+padding:5px 10px;
+border-radius:999px;
+font-size:12px;
+background:rgba(59,130,246,0.15);
+border:1px solid rgba(59,130,246,0.25);
+color:#93c5fd;
+margin-bottom:10px;
+}
+
+/* TEXT */
+h2{
+color:#60a5fa;
+margin-bottom:10px;
+font-size:20px;
+}
+
+h3{
+color:#93c5fd;
+margin-top:10px;
+}
+
+p, ul{
+color:#cbd5e1;
+}
+
+ul{
+padding-left:18px;
+}
+
+pre{
+background:#020617;
+padding:15px;
+border-radius:12px;
+color:#93c5fd;
+overflow-x:auto;
+border:1px solid rgba(59,130,246,0.2);
+margin-top:10px;
+}
+
+/* FLOATING HOME */
+.floating-home{
+position:fixed;
+bottom:20px;
+right:20px;
+width:56px;
+height:56px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:linear-gradient(135deg,#3b82f6,#2563eb);
+color:white;
+text-decoration:none;
+font-size:22px;
+box-shadow:0 12px 30px rgba(0,0,0,0.5);
+transition:.3s;
+}
+
+.floating-home:hover{
+transform:translateY(-4px) scale(1.08);
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+header h1{font-size:2rem;}
+}
+
+</style>
 </head>
 
 <body>
 
+<header>
+
+<h1>C++ Object-Oriented Programming</h1>
+<p>Core OOP concepts used in interviews and system design</p>
+
+<div class="actions">
+
+<a href="{% url 'cppinfo' %}" class="btn btn-outline">
+📘 C++ Info
+</a>
+
+<a href="{% url 'programming' %}" class="btn btn-primary">
+💻 Programming
+</a>
+
+</div>
+
+</header>
+
 <div class="container">
 
-    <!-- TOP -->
-    <div class="topbar">
-        <div>
-            <h1>C++ Object-Oriented Programming</h1>
-            <p>Core OOP concepts used in interviews and system design</p>
-        </div>
+<!-- CLASS -->
+<div class="card">
+<span class="badge">Foundation</span>
+<h2>Class & Object</h2>
 
-        <button onclick="history.back()">Back</button>
-    </div>
+<p>Class is a blueprint, object is an instance.</p>
 
-    <!-- CLASS OBJECT -->
-    <div class="card">
-        <span class="badge">Foundation</span>
-        <h2>Class and Object</h2>
-
-        <p>
-            A class is a blueprint, and an object is an instance of that class.
-            It allows grouping data and functions together.
-        </p>
-
-        <pre>
+<pre>
 class Student {
 public:
     string name;
-
-    void show() {
+    void show(){
         cout << name;
     }
 };
@@ -132,155 +234,111 @@ public:
 Student s;
 s.name = "Amit";
 s.show();
-        </pre>
+</pre>
 
-        <ul>
-            <li>Class defines structure</li>
-            <li>Object holds actual data</li>
-            <li>Encapsulates data + behavior</li>
-        </ul>
-    </div>
+</div>
 
-    <!-- CONSTRUCTOR -->
-    <div class="card">
-        <span class="badge">Initialization</span>
-        <h2>Constructor</h2>
+<!-- CONSTRUCTOR -->
+<div class="card">
+<span class="badge">Initialization</span>
+<h2>Constructor</h2>
 
-        <p>
-            A constructor is a special function that is automatically called when an object is created.
-        </p>
-
-        <pre>
-class A {
+<pre>
+class A{
 public:
-    A() {
-        cout << "Object Created";
+    A(){
+        cout<<"Object Created";
     }
 };
-        </pre>
+</pre>
 
-        <ul>
-            <li>Same name as class</li>
-            <li>No return type</li>
-            <li>Used for initialization</li>
-        </ul>
-    </div>
+<p>Automatically called when object is created.</p>
+</div>
 
-    <!-- INHERITANCE -->
-    <div class="card">
-        <span class="badge">Reusability</span>
-        <h2>Inheritance</h2>
+<!-- INHERITANCE -->
+<div class="card">
+<span class="badge">Reusability</span>
+<h2>Inheritance</h2>
 
-        <p>
-            Inheritance allows one class to acquire properties of another class.
-            It supports code reusability.
-        </p>
-
-        <pre>
-class A {
+<pre>
+class A{
 public:
-    void showA() {}
+    void showA(){}
 };
 
-class B : public A {
+class B: public A{
 public:
-    void showB() {}
+    void showB(){}
 };
-        </pre>
+</pre>
 
-        <ul>
-            <li>Base class → Parent class</li>
-            <li>Derived class → Child class</li>
-            <li>Supports reuse of code</li>
-        </ul>
-    </div>
+</div>
 
-    <!-- POLYMORPHISM -->
-    <div class="card">
-        <span class="badge">Flexibility</span>
-        <h2>Polymorphism</h2>
+<!-- POLYMORPHISM -->
+<div class="card">
+<span class="badge">Flexibility</span>
+<h2>Polymorphism</h2>
 
-        <p>
-            Polymorphism means “many forms”.
-            It allows the same function name to behave differently.
-        </p>
-
-        <h3>Runtime Polymorphism (Function Overriding)</h3>
-
-        <pre>
-class Base {
+<pre>
+class Base{
 public:
-    virtual void show() {
-        cout << "Base Class";
+    virtual void show(){
+        cout<<"Base";
     }
 };
 
-class Derived : public Base {
+class Derived: public Base{
 public:
-    void show() override {
-        cout << "Derived Class";
+    void show() override{
+        cout<<"Derived";
     }
 };
-        </pre>
+</pre>
 
-        <ul>
-            <li>Achieved using virtual functions</li>
-            <li>Supports dynamic behavior</li>
-        </ul>
-    </div>
+</div>
 
-    <!-- ENCAPSULATION -->
-    <div class="card">
-        <span class="badge">Security</span>
-        <h2>Encapsulation</h2>
+<!-- ENCAPSULATION -->
+<div class="card">
+<span class="badge">Security</span>
+<h2>Encapsulation</h2>
 
-        <p>
-            Encapsulation means wrapping data and methods together and restricting direct access.
-        </p>
-
-        <pre>
-class Bank {
+<pre>
+class Bank{
 private:
     int balance;
 
 public:
-    void setBalance(int b) {
-        balance = b;
+    void setBalance(int b){
+        balance=b;
     }
 
-    int getBalance() {
+    int getBalance(){
         return balance;
     }
 };
-        </pre>
-
-        <ul>
-            <li>Data hiding using private variables</li>
-            <li>Access via public methods</li>
-            <li>Improves security and control</li>
-        </ul>
-    </div>
-
-    <!-- SUMMARY -->
-    <div class="card">
-        <span class="badge">Revision</span>
-        <h2>Key OOP Concepts Summary</h2>
-
-        <ul>
-            <li>Class → blueprint of object</li>
-            <li>Object → instance of class</li>
-            <li>Constructor → initializes object</li>
-            <li>Inheritance → reusability of code</li>
-            <li>Polymorphism → multiple forms of behavior</li>
-            <li>Encapsulation → data protection</li>
-        </ul>
-
-        <p>
-            These concepts are heavily asked in technical interviews and form the foundation of object-oriented design.
-        </p>
-    </div>
+</pre>
 
 </div>
+
+<!-- SUMMARY -->
+<div class="card">
+<span class="badge">Revision</span>
+<h2>Key OOP Concepts</h2>
+
+<ul>
+<li>Class & Object</li>
+<li>Constructor</li>
+<li>Inheritance</li>
+<li>Polymorphism</li>
+<li>Encapsulation</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- FLOATING HOME -->
+<a href="{% url 'index' %}" class="floating-home">🏠</a>
 
 </body>
 </html>

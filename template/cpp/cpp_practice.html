@@ -22,6 +22,18 @@ body{
     padding:25px;
     line-height:1.6;
     min-height:100vh;
+    overflow-x:hidden;
+}
+
+/* FLOATING BACKGROUND GLOW */
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:
+    radial-gradient(circle at top left, rgba(59,130,246,.18), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 40%);
+    z-index:-1;
 }
 
 /* CONTAINER */
@@ -42,7 +54,7 @@ body{
     margin-bottom:25px;
 }
 
-/* BUTTONS */
+/* BUTTON GROUP */
 
 .btn-group{
     display:flex;
@@ -50,21 +62,26 @@ body{
     flex-wrap:wrap;
 }
 
-button{
+/* BUTTON */
+
+button, .btn{
     padding:11px 16px;
     border:none;
     border-radius:12px;
-    background:#2563eb;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
     color:white;
     font-weight:600;
     cursor:pointer;
     transition:0.3s ease;
     font-size:15px;
+    text-decoration:none;
+    display:inline-block;
 }
 
-button:hover{
-    background:#1d4ed8;
+button:hover, .btn:hover{
+    background:linear-gradient(135deg,#1d4ed8,#2563eb);
     transform:translateY(-2px);
+    box-shadow:0 10px 25px rgba(37,99,235,.3);
 }
 
 /* TIMER */
@@ -74,9 +91,10 @@ button:hover{
     border:1px solid rgba(59,130,246,0.25);
     padding:12px 18px;
     border-radius:14px;
-    font-size:20px;
-    font-weight:700;
+    font-size:18px;
+    font-weight:800;
     color:#f87171;
+    box-shadow:0 0 18px rgba(248,113,113,.15);
 }
 
 /* CARD */
@@ -89,18 +107,38 @@ button:hover{
     margin-bottom:18px;
     transition:0.3s ease;
     box-shadow:0 8px 25px rgba(0,0,0,0.25);
+    position:relative;
+    overflow:hidden;
+}
+
+/* CARD HOVER GLOW */
+
+.card::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(120deg,transparent,rgba(96,165,250,0.08),transparent);
+    transition:0.7s;
+}
+
+.card:hover::before{
+    left:100%;
 }
 
 .card:hover{
-    transform:translateY(-3px);
+    transform:translateY(-5px);
     border-color:#3b82f6;
+    box-shadow:0 15px 40px rgba(59,130,246,0.2);
 }
 
 /* QUESTION */
 
 .question{
     font-size:18px;
-    font-weight:700;
+    font-weight:800;
     margin-bottom:14px;
     color:white;
 }
@@ -126,7 +164,7 @@ input[type="radio"]{
     transform:scale(1.1);
 }
 
-/* SUBMIT BUTTON */
+/* SUBMIT */
 
 .submit-btn{
     width:100%;
@@ -145,12 +183,14 @@ input[type="radio"]{
     border:1px solid #3b82f6;
     border-radius:16px;
     padding:22px;
+    box-shadow:0 0 25px rgba(59,130,246,.15);
 }
 
 .result-title{
-    font-size:24px;
-    font-weight:700;
+    font-size:22px;
+    font-weight:800;
     margin-bottom:15px;
+    color:#60a5fa;
 }
 
 .result-item{
@@ -158,16 +198,32 @@ input[type="radio"]{
     font-size:16px;
 }
 
-.correct{
-    color:#4ade80;
+.correct{ color:#4ade80; }
+.wrong{ color:#f87171; }
+.skipped{ color:#facc15; }
+
+/* FLOATING HOME BUTTON */
+
+.floating-home{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:22px;
+    text-decoration:none;
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    transition:0.3s;
 }
 
-.wrong{
-    color:#f87171;
-}
-
-.skipped{
-    color:#facc15;
+.floating-home:hover{
+    transform:translateY(-4px) scale(1.08);
 }
 
 /* MOBILE */
@@ -183,18 +239,19 @@ input[type="radio"]{
         align-items:flex-start;
     }
 
-    .timer{
+    button, .btn{
         width:100%;
         text-align:center;
-    }
-
-    button{
-        width:100%;
     }
 
     .btn-group{
         width:100%;
         flex-direction:column;
+    }
+
+    .timer{
+        width:100%;
+        text-align:center;
     }
 }
 
@@ -215,10 +272,13 @@ input[type="radio"]{
                 ← Back
             </button>
 
-            <a href="{% url 'index' %}">
-                <button type="button">
-                    Module Home
-                </button>
+            <a href="{% url 'index' %}" class="btn">
+                Module Home
+            </a>
+
+            <!-- ✅ NEW BUTTON ADDED -->
+            <a href="{% url 'cppinfo' %}" class="btn">
+                📘 C++ Info
             </a>
 
         </div>
@@ -238,8 +298,6 @@ input[type="radio"]{
 
         {% csrf_token %}
 
-        <!-- HIDDEN FIELDS -->
-
         <input type="hidden" name="score" id="scoreField">
         <input type="hidden" name="total" id="totalField">
         <input type="hidden" name="correct" id="correctField">
@@ -247,178 +305,68 @@ input[type="radio"]{
         <input type="hidden" name="skipped" id="skippedField">
         <input type="hidden" name="time_taken" id="timeTakenField">
 
-        <!-- QUESTION 1 -->
+        <!-- QUESTIONS (UNCHANGED) -->
 
         <div class="card">
-
-            <div class="question">
-                1. Who developed C++?
-            </div>
-
-            <label>
-                <input type="radio" name="q1" value="a">
-                Dennis Ritchie
-            </label>
-
-            <label>
-                <input type="radio" name="q1" value="b">
-                Bjarne Stroustrup
-            </label>
-
-            <label>
-                <input type="radio" name="q1" value="c">
-                James Gosling
-            </label>
-
+            <div class="question">1. Who developed C++?</div>
+            <label><input type="radio" name="q1" value="a"> Dennis Ritchie</label>
+            <label><input type="radio" name="q1" value="b"> Bjarne Stroustrup</label>
+            <label><input type="radio" name="q1" value="c"> James Gosling</label>
         </div>
-
-        <!-- QUESTION 2 -->
 
         <div class="card">
-
-            <div class="question">
-                2. Which symbol is used for input in C++?
-            </div>
-
-            <label>
-                <input type="radio" name="q2" value="a">
-                >>
-            </label>
-
-            <label>
-                <input type="radio" name="q2" value="b">
-                <<
-            </label>
-
-            <label>
-                <input type="radio" name="q2" value="c">
-                ::
-            </label>
-
+            <div class="question">2. Which symbol is used for input in C++?</div>
+            <label><input type="radio" name="q2" value="a"> >></label>
+            <label><input type="radio" name="q2" value="b"> <<</label>
+            <label><input type="radio" name="q2" value="c"> ::</label>
         </div>
-
-        <!-- QUESTION 3 -->
 
         <div class="card">
-
-            <div class="question">
-                3. Which is dynamic array container?
-            </div>
-
-            <label>
-                <input type="radio" name="q3" value="a">
-                vector
-            </label>
-
-            <label>
-                <input type="radio" name="q3" value="b">
-                array
-            </label>
-
-            <label>
-                <input type="radio" name="q3" value="c">
-                pointer
-            </label>
-
+            <div class="question">3. Which is dynamic array container?</div>
+            <label><input type="radio" name="q3" value="a"> vector</label>
+            <label><input type="radio" name="q3" value="b"> array</label>
+            <label><input type="radio" name="q3" value="c"> pointer</label>
         </div>
-
-        <!-- QUESTION 4 -->
 
         <div class="card">
-
-            <div class="question">
-                4. OOP stands for?
-            </div>
-
-            <label>
-                <input type="radio" name="q4" value="a">
-                Object Oriented Programming
-            </label>
-
-            <label>
-                <input type="radio" name="q4" value="b">
-                Object Only Program
-            </label>
-
-            <label>
-                <input type="radio" name="q4" value="c">
-                Order Of Program
-            </label>
-
+            <div class="question">4. OOP stands for?</div>
+            <label><input type="radio" name="q4" value="a"> Object Oriented Programming</label>
+            <label><input type="radio" name="q4" value="b"> Object Only Program</label>
+            <label><input type="radio" name="q4" value="c"> Order Of Program</label>
         </div>
-
-        <!-- QUESTION 5 -->
 
         <div class="card">
-
-            <div class="question">
-                5. Which keyword is used for inheritance?
-            </div>
-
-            <label>
-                <input type="radio" name="q5" value="a">
-                extends
-            </label>
-
-            <label>
-                <input type="radio" name="q5" value="b">
-                inherits
-            </label>
-
-            <label>
-                <input type="radio" name="q5" value="c">
-                :
-            </label>
-
+            <div class="question">5. Which keyword is used for inheritance?</div>
+            <label><input type="radio" name="q5" value="a"> extends</label>
+            <label><input type="radio" name="q5" value="b"> inherits</label>
+            <label><input type="radio" name="q5" value="c"> :</label>
         </div>
 
-        <!-- SUBMIT BUTTON -->
-
-        <button type="button"
-                class="submit-btn"
-                onclick="submitQuiz()">
-
+        <button type="button" class="submit-btn" onclick="submitQuiz()">
             Submit Test
-
         </button>
 
     </form>
 
-    <!-- RESULT -->
+    <!-- RESULT (UNCHANGED) -->
 
     <div id="result">
+        <div class="result-title">Test Submitted Successfully 🎉</div>
 
-        <div class="result-title">
-            Test Submitted Successfully 🎉
-        </div>
-
-        <div class="result-item correct">
-            Correct Answers:
-            <span id="correctResult"></span>
-        </div>
-
-        <div class="result-item wrong">
-            Wrong Answers:
-            <span id="wrongResult"></span>
-        </div>
-
-        <div class="result-item skipped">
-            Skipped Questions:
-            <span id="skippedResult"></span>
-        </div>
-
-        <div class="result-item">
-            Score:
-            <span id="scoreResult"></span>%
-        </div>
-
+        <div class="result-item correct">Correct: <span id="correctResult"></span></div>
+        <div class="result-item wrong">Wrong: <span id="wrongResult"></span></div>
+        <div class="result-item skipped">Skipped: <span id="skippedResult"></span></div>
+        <div class="result-item">Score: <span id="scoreResult"></span>%</div>
     </div>
 
 </div>
 
+<!-- FLOATING HOME BUTTON -->
+<a href="{% url 'index' %}" class="floating-home">🏠</a>
+
 <script>
 
-/* ANSWERS */
+/* (UNCHANGED JS LOGIC) */
 
 const answers = {
     q1:"b",
@@ -428,12 +376,8 @@ const answers = {
     q5:"c"
 };
 
-/* TIMER */
-
 let totalTime = 15 * 60;
 let startTime = Date.now();
-
-/* SUBMIT QUIZ */
 
 function submitQuiz(){
 
@@ -448,36 +392,15 @@ function submitQuiz(){
         let selected =
             document.querySelector(`input[name="${q}"]:checked`);
 
-        if(!selected){
-
-            skipped++;
-
-        }
-
-        else if(selected.value === answers[q]){
-
-            correct++;
-
-        }
-
-        else{
-
-            wrong++;
-
-        }
+        if(!selected) skipped++;
+        else if(selected.value === answers[q]) correct++;
+        else wrong++;
     }
 
-    /* SCORE */
-
-    let score =
-        ((correct / total) * 100).toFixed(2);
-
-    /* TIME */
+    let score = ((correct / total) * 100).toFixed(2);
 
     let timeTaken =
         Math.floor((Date.now() - startTime) / 1000);
-
-    /* SET VALUES */
 
     document.getElementById("scoreField").value = score;
     document.getElementById("totalField").value = total;
@@ -486,8 +409,6 @@ function submitQuiz(){
     document.getElementById("skippedField").value = skipped;
     document.getElementById("timeTakenField").value = timeTaken;
 
-    /* SHOW RESULT */
-
     document.getElementById("result").style.display = "block";
 
     document.getElementById("correctResult").innerText = correct;
@@ -495,14 +416,10 @@ function submitQuiz(){
     document.getElementById("skippedResult").innerText = skipped;
     document.getElementById("scoreResult").innerText = score;
 
-    /* SUBMIT AFTER SHORT DELAY */
-
     setTimeout(() => {
         document.getElementById("quizForm").submit();
     }, 1500);
 }
-
-/* TIMER FUNCTION */
 
 function updateTimer(){
 
@@ -513,15 +430,12 @@ function updateTimer(){
         `${min}:${sec.toString().padStart(2,"0")}`;
 
     if(totalTime <= 0){
-
         submitQuiz();
         return;
     }
 
     totalTime--;
 }
-
-/* START TIMER */
 
 setInterval(updateTimer, 1000);
 

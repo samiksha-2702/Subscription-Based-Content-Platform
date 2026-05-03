@@ -1,224 +1,724 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>C++ Basics — PrepEdge Learning Hub</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>C++ Basics | PrepEdge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <style>
-        body{
-            background: linear-gradient(135deg,#020617,#0f172a);
-            color:#e5e7eb;
-            font-family:Segoe UI, Arial;
-            margin:0;
-            padding:30px;
-            line-height:1.7;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        .topbar{
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            margin-bottom:25px;
-        }
+<style>
 
-        button{
-            padding:10px 14px;
-            border-radius:10px;
-            border:none;
-            background:#2563eb;
-            color:white;
-            cursor:pointer;
-            transition:0.3s;
-        }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        button:hover{
-            background:#1d4ed8;
-            transform:translateY(-2px);
-        }
+body{
+font-family:'Inter',sans-serif;
+background:#020617;
+color:#e5e7eb;
+overflow-x:hidden;
+line-height:1.7;
+}
 
-        .container{
-            max-width:1000px;
-            margin:auto;
-        }
+/* BACKGROUND */
 
-        .card{
-            background:rgba(17,24,39,0.9);
-            border:1px solid rgba(59,130,246,0.15);
-            padding:22px;
-            border-radius:16px;
-            margin-bottom:18px;
-            transition:0.3s;
-        }
+body::before{
+content:'';
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at top left, rgba(59,130,246,.15), transparent 35%),
+radial-gradient(circle at bottom right, rgba(168,85,247,.12), transparent 35%);
+z-index:-1;
+}
 
-        .card:hover{
-            transform:translateY(-5px);
-            border-color:#3b82f6;
-        }
+/* HEADER */
 
-        h1{
-            font-size:28px;
-            margin-bottom:5px;
-        }
+header{
+padding:50px 20px;
+text-align:center;
+background:rgba(2,6,23,.78);
+backdrop-filter:blur(16px);
+border-bottom:1px solid rgba(255,255,255,.06);
+position:sticky;
+top:0;
+z-index:100;
+}
 
-        h2{
-            color:#60a5fa;
-            margin-bottom:10px;
-            font-size:20px;
-        }
+header h1{
+font-size:40px;
+font-weight:800;
+background:linear-gradient(135deg,#60a5fa,#a855f7);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:12px;
+}
 
-        p{
-            color:#cbd5e1;
-        }
+header p{
+color:#94a3b8;
+font-size:16px;
+}
 
-        ul{
-            padding-left:20px;
-            color:#cbd5e1;
-        }
+/* NAVIGATION */
 
-        pre{
-            background:#020617;
-            padding:15px;
-            border-radius:10px;
-            color:#93c5fd;
-            overflow-x:auto;
-        }
+.top-nav{
+margin-top:24px;
+display:flex;
+justify-content:center;
+gap:14px;
+flex-wrap:wrap;
+}
 
-        .badge{
-            display:inline-block;
-            padding:5px 10px;
-            border-radius:20px;
-            font-size:12px;
-            background:#1e293b;
-            color:#60a5fa;
-            margin-bottom:10px;
-        }
-    </style>
+.nav-btn{
+padding:12px 20px;
+border-radius:14px;
+background:rgba(255,255,255,.05);
+border:1px solid rgba(255,255,255,.08);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.nav-btn:hover{
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
+
+/* CONTAINER */
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:50px 22px;
+}
+
+/* SECTION TITLE */
+
+.section-title{
+font-size:28px;
+font-weight:700;
+margin-bottom:24px;
+margin-top:50px;
+display:flex;
+align-items:center;
+gap:12px;
+}
+
+.section-title::before{
+content:'';
+width:6px;
+height:30px;
+border-radius:20px;
+background:linear-gradient(to bottom,#3b82f6,#8b5cf6);
+}
+
+/* GRID */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:24px;
+}
+
+/* CARD */
+
+.card{
+background:rgba(15,23,42,.75);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.06);
+border-radius:24px;
+padding:28px;
+position:relative;
+overflow:hidden;
+transition:.35s ease;
+box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+.card::before{
+content:'';
+position:absolute;
+top:-40px;
+right:-40px;
+width:160px;
+height:160px;
+background:radial-gradient(circle,rgba(59,130,246,.16),transparent 70%);
+}
+
+.card:hover{
+transform:translateY(-8px);
+border-color:rgba(96,165,250,.3);
+box-shadow:
+0 20px 45px rgba(0,0,0,.65),
+0 0 20px rgba(59,130,246,.15);
+}
+
+.card h3{
+font-size:22px;
+margin-bottom:18px;
+color:#93c5fd;
+position:relative;
+z-index:1;
+}
+
+.card ul{
+padding-left:20px;
+position:relative;
+z-index:1;
+}
+
+.card ul li{
+margin-bottom:12px;
+color:#dbeafe;
+}
+
+/* CODE */
+
+code{
+background:rgba(59,130,246,.18);
+padding:4px 8px;
+border-radius:6px;
+color:#93c5fd;
+font-size:14px;
+}
+
+/* PRE */
+
+pre{
+margin-top:18px;
+background:#020617;
+padding:18px;
+border-radius:16px;
+overflow-x:auto;
+border:1px solid rgba(96,165,250,.12);
+color:#93c5fd;
+font-size:14px;
+line-height:1.8;
+}
+
+/* INFO BOX */
+
+.info-box{
+margin-top:25px;
+padding:22px;
+border-radius:18px;
+background:rgba(37,99,235,.08);
+border:1px solid rgba(96,165,250,.14);
+}
+
+.info-box h4{
+margin-bottom:12px;
+color:#93c5fd;
+font-size:18px;
+}
+
+.info-box ul{
+padding-left:20px;
+}
+
+.info-box ul li{
+margin-bottom:10px;
+}
+
+/* BUTTON */
+
+.btn{
+display:inline-flex;
+align-items:center;
+gap:8px;
+margin-top:20px;
+padding:12px 18px;
+border-radius:14px;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-weight:600;
+transition:.3s;
+}
+
+.btn:hover{
+transform:translateY(-2px) scale(1.03);
+box-shadow:0 10px 25px rgba(37,99,235,.4);
+}
+
+/* FLOATING HOME */
+
+.floating-home{
+position:fixed;
+bottom:24px;
+left:24px;
+width:58px;
+height:58px;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:50%;
+background:linear-gradient(135deg,#2563eb,#1d4ed8);
+color:white;
+text-decoration:none;
+font-size:22px;
+box-shadow:0 12px 30px rgba(0,0,0,.55);
+transition:.3s;
+}
+
+.floating-home:hover{
+transform:translateY(-4px) scale(1.08);
+}
+
+/* FOOTER */
+
+footer{
+margin-top:70px;
+padding:30px;
+text-align:center;
+border-top:1px solid rgba(255,255,255,.06);
+color:#94a3b8;
+background:rgba(0,0,0,.2);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+header h1{
+font-size:30px;
+}
+
+.section-title{
+font-size:22px;
+}
+
+.container{
+padding:35px 18px;
+}
+
+.card{
+padding:22px;
+}
+
+}
+
+@media(max-width:480px){
+
+.top-nav{
+flex-direction:column;
+align-items:center;
+}
+
+.nav-btn{
+width:100%;
+max-width:260px;
+text-align:center;
+}
+
+header h1{
+font-size:26px;
+}
+
+}
+
+</style>
 </head>
 
 <body>
 
+<header>
+
+<h1>C++ Basics</h1>
+
+<p>
+Quick reference guide for C++ fundamentals, syntax, object-oriented programming, and beginner concepts.
+</p>
+
+<div class="top-nav">
+
+<a href="{% url 'cppinfo' %}" class="nav-btn">
+📘 C++ Module
+</a>
+
+<a href="{% url 'programming' %}" class="nav-btn">
+💻 Programming Page
+</a>
+
+<a href="{% url 'index' %}" class="nav-btn">
+🏠 Home
+</a>
+
+</div>
+
+</header>
+
 <div class="container">
 
-    <!-- TOP -->
-    <div class="topbar">
-        <div>
-            <h1>C++ Basics</h1>
-            <p>Structured learning module for beginners</p>
-        </div>
-        <button onclick="history.back()">Back</button>
-    </div>
+<!-- FUNDAMENTALS -->
 
-    <!-- INTRO -->
-    <div class="card">
-        <span class="badge">Overview</span>
-        <h2>What is C++?</h2>
-        <p>
-            C++ is a powerful general-purpose programming language created by Bjarne Stroustrup.
-            It supports procedural, object-oriented, and generic programming.
-            It is widely used in system development, game engines, competitive programming,
-            operating systems, and high-performance applications.
-        </p>
-    </div>
+<h2 class="section-title">C++ Fundamentals</h2>
 
-    <!-- STRUCTURE -->
-    <div class="card">
-        <span class="badge">Fundamentals</span>
-        <h2>Basic Structure of a C++ Program</h2>
+<div class="grid">
 
-        <pre>
+<div class="card">
+
+<h3>What is C++?</h3>
+
+<ul>
+<li>C++ is a powerful general-purpose language</li>
+<li>Developed by Bjarne Stroustrup</li>
+<li>Supports procedural and object-oriented programming</li>
+<li>Used in game engines, OS, and software development</li>
+<li>Fast and performance-oriented language</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Basic Program Structure</h3>
+
+<pre>
 #include &lt;iostream&gt;
 using namespace std;
 
-int main() {
+int main(){
+
     cout &lt;&lt; "Hello World";
+
     return 0;
 }
-        </pre>
+</pre>
 
-        <ul>
-            <li>include iostream → standard input/output library</li>
-            <li>using namespace std → avoids writing std:: repeatedly</li>
-            <li>main() → program execution starts here</li>
-            <li>cout → output statement</li>
-            <li>return 0 → successful execution</li>
-        </ul>
-    </div>
+<ul>
+<li><code>iostream</code> → Input Output library</li>
+<li><code>main()</code> → Starting point</li>
+<li><code>cout</code> → Output statement</li>
+<li><code>return 0</code> → Successful execution</li>
+</ul>
 
-    <!-- DATA TYPES -->
-    <div class="card">
-        <span class="badge">Core Concepts</span>
-        <h2>Variables and Data Types</h2>
+</div>
 
-        <p>C++ provides multiple data types to store different kinds of values.</p>
+<div class="card">
 
-        <ul>
-            <li>int → integer values (10, 20)</li>
-            <li>float → decimal values (10.5)</li>
-            <li>double → higher precision decimals</li>
-            <li>char → single character ('A')</li>
-            <li>bool → true or false</li>
-            <li>string → text values</li>
-        </ul>
+<h3>Variables & Data Types</h3>
 
-        <pre>
+<ul>
+<li><code>int</code> → Integer values</li>
+<li><code>float</code> → Decimal values</li>
+<li><code>double</code> → High precision decimal</li>
+<li><code>char</code> → Single character</li>
+<li><code>bool</code> → True or False</li>
+<li><code>string</code> → Text values</li>
+</ul>
+
+<pre>
 int age = 20;
 float marks = 88.5;
 char grade = 'A';
-string name = "Ravi";
-bool isPass = true;
-        </pre>
-    </div>
-
-    <!-- INPUT OUTPUT -->
-    <div class="card">
-        <span class="badge">IO System</span>
-        <h2>Input and Output</h2>
-
-        <p>cin is used for input and cout is used for output.</p>
-
-        <pre>
-int x;
-cin &gt;&gt; x;
-cout &lt;&lt; x;
-        </pre>
-
-        <p>Multiple input example:</p>
-
-        <pre>
-int a, b;
-cin &gt;&gt; a &gt;&gt; b;
-cout &lt;&lt; a + b;
-        </pre>
-    </div>
-
-    <!-- OPERATORS -->
-    <div class="card">
-        <span class="badge">Logic Building</span>
-        <h2>Operators in C++</h2>
-
-        <ul>
-            <li>Arithmetic → +, -, *, /, %</li>
-            <li>Relational → ==, !=, &gt;, &lt;, &gt;=, &lt;=</li>
-            <li>Logical → &&, ||, !</li>
-            <li>Assignment → =, +=, -=, *=</li>
-        </ul>
-    </div>
-
-    <!-- SUMMARY -->
-    <div class="card">
-        <span class="badge">Revision</span>
-        <h2>Key Takeaways</h2>
-        <ul>
-            <li>C++ is fast, powerful, and widely used in system-level programming</li>
-            <li>Every program starts from main()</li>
-            <li>Data types define memory and value type</li>
-            <li>cin and cout handle input/output</li>
-            <li>Operators are used for logic and calculations</li>
-        </ul>
-    </div>
+</pre>
 
 </div>
+
+</div>
+
+<!-- INPUT OUTPUT -->
+
+<h2 class="section-title">Input & Output</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Using cin and cout</h3>
+
+<pre>
+int x;
+
+cin >> x;
+
+cout << x;
+</pre>
+
+<ul>
+<li><code>cin</code> → Accepts input</li>
+<li><code>cout</code> → Displays output</li>
+<li>Uses stream operators</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Multiple Inputs</h3>
+
+<pre>
+int a, b;
+
+cin >> a >> b;
+
+cout << a + b;
+</pre>
+
+<ul>
+<li>Accept multiple values together</li>
+<li>Useful in competitive programming</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Escape Sequences</h3>
+
+<ul>
+<li><code>\n</code> → New line</li>
+<li><code>\t</code> → Tab space</li>
+<li><code>\"</code> → Double quote</li>
+<li><code>\\</code> → Backslash</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- OPERATORS -->
+
+<h2 class="section-title">Operators & Logic</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Arithmetic Operators</h3>
+
+<ul>
+<li>Addition → <code>+</code></li>
+<li>Subtraction → <code>-</code></li>
+<li>Multiplication → <code>*</code></li>
+<li>Division → <code>/</code></li>
+<li>Modulus → <code>%</code></li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Relational Operators</h3>
+
+<ul>
+<li><code>==</code> Equal to</li>
+<li><code>!=</code> Not equal to</li>
+<li><code>></code> Greater than</li>
+<li><code><</code> Less than</li>
+<li><code>>=</code> Greater or equal</li>
+<li><code><=</code> Less or equal</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Logical Operators</h3>
+
+<ul>
+<li><code>&&</code> → AND</li>
+<li><code>||</code> → OR</li>
+<li><code>!</code> → NOT</li>
+<li>Used in conditions and loops</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- CONTROL -->
+
+<h2 class="section-title">Control Statements</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>If Else</h3>
+
+<pre>
+int age = 18;
+
+if(age >= 18){
+
+    cout << "Adult";
+
+}
+else{
+
+    cout << "Minor";
+
+}
+</pre>
+
+</div>
+
+<div class="card">
+
+<h3>For Loop</h3>
+
+<pre>
+for(int i=1; i<=5; i++){
+
+    cout << i;
+
+}
+</pre>
+
+<ul>
+<li>Repeats code multiple times</li>
+<li>Useful for iteration</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>While Loop</h3>
+
+<pre>
+int i = 1;
+
+while(i <= 5){
+
+    cout << i;
+
+    i++;
+}
+</pre>
+
+</div>
+
+</div>
+
+<!-- FUNCTIONS -->
+
+<h2 class="section-title">Functions & OOP</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Functions</h3>
+
+<pre>
+int add(int a, int b){
+
+    return a + b;
+
+}
+</pre>
+
+<ul>
+<li>Reusable blocks of code</li>
+<li>Improves readability</li>
+<li>Reduces repetition</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>Class & Object</h3>
+
+<pre>
+class Student{
+
+public:
+
+    string name;
+
+    void show(){
+
+        cout << name;
+
+    }
+
+};
+</pre>
+
+<ul>
+<li>Class → Blueprint</li>
+<li>Object → Instance of class</li>
+<li>Supports OOP concepts</li>
+</ul>
+
+</div>
+
+<div class="card">
+
+<h3>OOP Features</h3>
+
+<ul>
+<li>Encapsulation</li>
+<li>Inheritance</li>
+<li>Polymorphism</li>
+<li>Abstraction</li>
+</ul>
+
+</div>
+
+</div>
+
+<!-- INTERVIEW -->
+
+<h2 class="section-title">Important Notes</h2>
+
+<div class="card">
+
+<h3>C++ Beginner Tips</h3>
+
+<div class="info-box">
+
+<h4>Frequently Asked Questions</h4>
+
+<ul>
+<li>Difference between C and C++</li>
+<li>What is OOP?</li>
+<li>Difference between class and object</li>
+<li>What is inheritance?</li>
+<li>Why use functions?</li>
+<li>What are loops?</li>
+</ul>
+
+</div>
+
+<div class="info-box">
+
+<h4>Best Practices</h4>
+
+<ul>
+<li>Write clean and readable code</li>
+<li>Practice syntax regularly</li>
+<li>Understand logic clearly</li>
+<li>Use proper indentation</li>
+<li>Debug errors patiently</li>
+</ul>
+
+</div>
+
+<a href="{% url 'cppinfo' %}" class="btn">
+🚀 Continue Learning
+</a>
+
+</div>
+
+</div>
+
+<a href="{% url 'index' %}" class="floating-home">
+🏠
+</a>
+
+<footer>
+© PrepEdge — C++ Basics Cheat Sheet
+</footer>
 
 </body>
 </html>
