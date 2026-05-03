@@ -3,133 +3,506 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resume Writing Guide | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-* { box-sizing: border-box; }
-body {
+  * {
     margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #020617);
-    color: white;
-}
-header {
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  header {
     text-align: center;
-    padding: 30px 20px;
-    background: rgba(15,23,42,0.8);
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-}
-header h1 { margin-bottom: 5px; }
-header p { color: #a0a0a0; }
+    padding: 3rem 1.5rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9));
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
 
-.container {
-    padding: 30px 20px;
-    max-width: 1000px;
-    margin: auto;
-}
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+  }
 
-h2 {
-    margin-top: 40px;
-    margin-bottom: 15px;
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #60a5fa, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.02em;
+  }
+
+  header h1 i {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
     color: #3b82f6;
-}
+  }
 
-section {
-    margin-bottom: 30px;
-    background: rgba(15,23,42,0.7);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
-}
+  header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
 
-section ul {
-    padding-left: 20px;
-}
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
 
-section ul li {
-    margin-bottom: 10px;
-}
+  /* Grid Layout */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
 
-a {
+  /* Cards */
+  .card {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.5rem 1.8rem;
+    transition: all 0.25s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #60a5fa;
+    border-left: 4px solid #3b82f6;
+    padding-left: 0.9rem;
+  }
+
+  .card h2 i {
+    font-size: 1.3rem;
     color: #3b82f6;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: #93c5fd;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p {
+    color: #cbd5e6;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  /* Lists */
+  .list {
+    list-style: none;
+    margin: 0.8rem 0;
+  }
+
+  .list li {
+    margin-bottom: 0.7rem;
+    padding-left: 1.6rem;
+    position: relative;
+    color: #e2e8f0;
+    font-weight: 450;
+  }
+
+  .list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+    font-weight: 600;
+  }
+
+  /* Badge Container */
+  .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .badge {
+    background: #1e293b;
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #60a5fa;
+    border: 1px solid #334155;
+  }
+
+  /* Info Box */
+  .info-box {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .info-box strong {
+    color: #60a5fa;
+  }
+
+  /* Tip Card */
+  .tip-card {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .tip-card strong {
+    color: #60a5fa;
+  }
+
+  /* Action Verbs Grid */
+  .verb-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .verb {
+    background: #1e293b;
+    border-radius: 20px;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
+    color: #60a5fa;
+    border: 1px solid #334155;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    color: #60a5fa;
     text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
 
-footer {
+  .resource-link:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .checklist {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+  }
+
+  .checklist-item i {
+    color: #4ade80;
+    font-size: 0.9rem;
+  }
+
+  .example-box {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 0.8rem 0;
+    font-size: 0.85rem;
+  }
+
+  .bad-example {
+    color: #f87171;
+  }
+
+  .good-example {
+    color: #4ade80;
+  }
+
+  footer {
     text-align: center;
-    padding: 20px;
-    margin-top: 40px;
-    background: #020617;
-    opacity: 0.8;
-}
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background: rgba(2, 6, 23, 0.8);
+    border-top: 1px solid rgba(51, 65, 85, 0.3);
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  footer i {
+    margin-right: 6px;
+  }
+
+  @media (max-width: 850px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .full-width {
+      grid-column: span 1;
+    }
+    .container {
+      padding: 1.2rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+    }
+    .card {
+      padding: 1.2rem;
+    }
+  }
 </style>
 </head>
 <body>
 
 <header>
-    <h1>{{ title }}</h1>
-    <p>Create a professional resume that stands out to recruiters</p>
+  <h1><i class="fas fa-file-alt"></i> {{ title }}</h1>
+  <p>Create a professional resume that stands out to recruiters</p>
 </header>
 
 <div class="container">
 
-<section>
-<h2>Introduction</h2>
-<p>A well-crafted resume is your first step toward landing your dream job.</p>
-</section>
+  <div class="grid">
 
-<section>
-<h2>Resume Structure</h2>
-<ul>
-<li><strong>Header:</strong> Full name, contact information, LinkedIn/GitHub links.</li>
-<li><strong>Professional Summary:</strong> 2-3 lines summarizing your skills.</li>
-<li><strong>Education:</strong> Degrees and universities.</li>
-<li><strong>Skills:</strong> Technical and soft skills.</li>
-<li><strong>Experience:</strong> Jobs, internships or projects.</li>
-<li><strong>Certifications:</strong> Certificates and awards.</li>
-</ul>
-</section>
+    <!-- Introduction -->
+    <div class="card full-width">
+      <h2><i class="fas fa-info-circle"></i> Introduction</h2>
+      <p>A well-crafted resume is your first step toward landing your dream job. It's your personal marketing document that tells recruiters who you are, what you've accomplished, and why they should hire you. In today's competitive job market, a strong resume can be the difference between getting an interview or being overlooked.</p>
+      <div class="badge-container">
+        <span class="badge"><i class="fas fa-clock"></i> Recruiters spend 6-7 seconds on average</span>
+        <span class="badge"><i class="fas fa-robot"></i> 75% of resumes rejected by ATS</span>
+      </div>
+    </div>
 
-<section>
-<h2>Resume Writing Tips</h2>
-<ul>
-<li>Keep resume 1 page for students.</li>
-<li>Use action verbs.</li>
-<li>Quantify achievements.</li>
-<li>Use clean formatting.</li>
-<li>Tailor resume to job description.</li>
-<li>Use ATS keywords.</li>
-</ul>
-</section>
+    <!-- Resume Structure -->
+    <div class="card">
+      <h2><i class="fas fa-sitemap"></i> Resume Structure</h2>
+      <ul class="list">
+        <li><strong>Header:</strong> Full name, phone, email, LinkedIn/GitHub links</li>
+        <li><strong>Professional Summary:</strong> 2-3 lines summarizing your key strengths</li>
+        <li><strong>Education:</strong> Degrees, universities, GPA (if 3.5+), relevant coursework</li>
+        <li><strong>Skills:</strong> Technical skills, programming languages, tools, soft skills</li>
+        <li><strong>Experience:</strong> Jobs, internships with bullet points and metrics</li>
+        <li><strong>Projects:</strong> Personal, academic, or open-source projects</li>
+        <li><strong>Certifications & Awards:</strong> Relevant certificates and achievements</li>
+      </ul>
+      
+      <div class="info-box">
+        <strong><i class="fas fa-star"></i> Pro Tip:</strong> For students, keep resume to 1 page. For experienced professionals, 2 pages maximum.
+      </div>
+    </div>
 
-<section>
-<h2>Common Mistakes</h2>
-<ul>
-<li>Long paragraphs.</li>
-<li>Irrelevant skills.</li>
-<li>Generic descriptions.</li>
-<li>Poor formatting.</li>
-</ul>
-</section>
+    <!-- Action Verbs -->
+    <div class="card">
+      <h2><i class="fas fa-bolt"></i> Powerful Action Verbs</h2>
+      <p>Start each bullet point with a strong action verb to make your achievements stand out.</p>
+      <div class="verb-grid">
+        <span class="verb">Developed</span>
+        <span class="verb">Designed</span>
+        <span class="verb">Implemented</span>
+        <span class="verb">Led</span>
+        <span class="verb">Managed</span>
+        <span class="verb">Created</span>
+        <span class="verb">Optimized</span>
+        <span class="verb">Improved</span>
+        <span class="verb">Increased</span>
+        <span class="verb">Reduced</span>
+        <span class="verb">Launched</span>
+        <span class="verb">Built</span>
+        <span class="verb">Automated</span>
+        <span class="verb">Collaborated</span>
+        <span class="verb">Achieved</span>
+        <span class="verb">Delivered</span>
+      </div>
+    </div>
 
-<section>
-<h2>Resources</h2>
-<ul>
-<li><a href="https://www.canva.com/resumes/templates/" target="_blank">Resume Templates</a></li>
-<li><a href="https://novoresume.com/resume-builder" target="_blank">Resume Builder</a></li>
-<li><a href="{% url 'interview-tips' %}">Top Interview Tips</a></li>
-</ul>
-</section>
+    <!-- Resume Writing Tips -->
+    <div class="card">
+      <h2><i class="fas fa-lightbulb"></i> Resume Writing Tips</h2>
+      <ul class="list">
+        <li>Keep resume to 1 page for students and new grads</li>
+        <li>Use strong action verbs to start each bullet point</li>
+        <li><strong>Quantify achievements</strong> with numbers and metrics</li>
+        <li>Use clean, consistent formatting with adequate white space</li>
+        <li><strong>Tailor resume</strong> to each job description</li>
+        <li>Include ATS-friendly keywords from job posting</li>
+        <li>Save as PDF to preserve formatting</li>
+        <li>Proofread twice - typos get resumes rejected</li>
+      </ul>
+      
+      <div class="tip-card">
+        <strong><i class="fas fa-chart-line"></i> Quantification Examples:</strong>
+        <p style="margin-top: 0.3rem;">❌ "Improved app performance"<br>✅ "Reduced load time by 40% affecting 100K+ users"</p>
+      </div>
+    </div>
 
+    <!-- Before vs After Examples -->
+    <div class="card full-width">
+      <h2><i class="fas fa-arrows-spin"></i> Before vs After: Resume Bullet Points</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-times-circle" style="color: #f87171;"></i> Weak/Bad Examples</h3>
+          <div class="example-box bad-example">
+            <i class="fas fa-quote-left"></i> "Responsible for writing code"<br>
+            <i class="fas fa-quote-left"></i> "Worked on a team project"<br>
+            <i class="fas fa-quote-left"></i> "Helped fix bugs"
+          </div>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-check-circle" style="color: #4ade80;"></i> Strong/Good Examples</h3>
+          <div class="example-box good-example">
+            <i class="fas fa-quote-left"></i> "Developed 5+ microservices handling 10K requests/sec"<br>
+            <i class="fas fa-quote-left"></i> "Led a team of 4 to deliver project 2 weeks ahead of schedule"<br>
+            <i class="fas fa-quote-left"></i> "Identified and resolved 50+ critical bugs, reducing downtime by 30%"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Common Mistakes -->
+    <div class="card">
+      <h2><i class="fas fa-exclamation-triangle"></i> Common Mistakes to Avoid</h2>
+      <ul class="list">
+        <li>Long paragraphs instead of bullet points</li>
+        <li>Including irrelevant skills or outdated technologies</li>
+        <li>Generic descriptions without specific achievements</li>
+        <li>Poor formatting or inconsistent font usage</li>
+        <li>Spelling and grammar errors</li>
+        <li>Using first-person pronouns (I, me, my)</li>
+        <li>Including a photo or personal details (age, marital status)</li>
+        <li>Lying or exaggerating experience</li>
+      </ul>
+    </div>
+
+    <!-- ATS Optimization -->
+    <div class="card">
+      <h2><i class="fas fa-robot"></i> ATS Optimization Tips</h2>
+      <ul class="list">
+        <li>Use standard section headings (Experience, Education, Skills)</li>
+        <li>Include keywords from the job description</li>
+        <li>Avoid tables, columns, graphics, and images</li>
+        <li>Use a simple, clean font (Arial, Calibri, Inter)</li>
+        <li>Save as .docx or .pdf (check company preference)</li>
+        <li>Spell out acronyms (e.g., JavaScript instead of JS)</li>
+        <li>Submit as a single-column layout</li>
+      </ul>
+      
+      <div class="info-box">
+        <strong><i class="fas fa-chart-line"></i> ATS Fact:</strong> Over 75% of resumes are rejected by Applicant Tracking Systems before a human ever sees them. Optimize yours!
+      </div>
+    </div>
+
+    <!-- Pre-Submission Checklist -->
+    <div class="card full-width">
+      <h2><i class="fas fa-clipboard-list"></i> Resume Pre-Submission Checklist</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <div class="checklist">
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> Resume length appropriate (1-2 pages)</div>
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> Contact info correct and up to date</div>
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> Action verbs start each bullet point</div>
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> Achievements quantified with numbers</div>
+          </div>
+        </div>
+        <div style="flex: 1;">
+          <div class="checklist">
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> No spelling or grammar errors</div>
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> Tailored to specific job description</div>
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> ATS-friendly format and keywords</div>
+            <div class="checklist-item"><i class="fas fa-check-circle"></i> Saved as PDF (unless Word requested)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resources -->
+    <div class="card full-width">
+      <h2><i class="fas fa-book-open"></i> Resources & Tools</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-link"></i> Resume Builders & Templates</h3>
+          <ul class="list">
+            <li><a href="https://www.canva.com/resumes/templates/" target="_blank" style="color:#60a5fa;">Canva Resume Templates</a> – Free templates</li>
+            <li><a href="https://novoresume.com/resume-builder" target="_blank" style="color:#60a5fa;">Novoresume</a> – Professional builder</li>
+            <li><a href="https://www.overleaf.com/" target="_blank" style="color:#60a5fa;">Overleaf</a> – LaTeX resume templates</li>
+            <li><a href="https://flowcv.com/" target="_blank" style="color:#60a5fa;">FlowCV</a> – Modern resume builder</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-chalkboard"></i> PrepEdge Resources</h3>
+          <div class="badge-container">
+            <a href="{% url 'interview-tips' %}" class="resource-link"><i class="fas fa-lightbulb"></i> Interview Tips</a>
+            <a href="{% url 'tech-trends' %}" class="resource-link"><i class="fas fa-chart-line"></i> Tech Trends</a>
+            <a href="{% url 'experience-stories' %}" class="resource-link"><i class="fas fa-users"></i> Experiences</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <footer>
-© PrepEdge - Interview Preparation Platform
+  <i class="fas fa-graduation-cap"></i> PrepEdge - Interview Preparation Platform
 </footer>
 
 </body>

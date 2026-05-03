@@ -1,315 +1,569 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Companies & Blogs | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-*{
-box-sizing:border-box;
-}
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.5;
+    min-height: 100vh;
+  }
 
-body{
-margin:0;
-font-family:"Segoe UI", Arial, sans-serif;
-background:linear-gradient(135deg,#0f172a,#020617);
-color:white;
-}
+  /* Header */
+  header {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
 
-/* HEADER */
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+  }
 
-header{
-text-align:center;
-padding:40px 20px;
-background:rgba(15,23,42,.7);
-backdrop-filter:blur(8px);
-box-shadow:0 4px 30px rgba(0,0,0,.6);
-}
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #60a5fa, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.02em;
+  }
 
-.container{
-padding:40px 20px;
-max-width:1200px;
-margin:auto;
-}
+  header h1 i {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #3b82f6;
+  }
 
-h2{
-margin-bottom:20px;
-font-size:24px;
-text-align:center;
-}
+  header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
 
-/* SEARCH */
+  /* Container */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
 
-.search{
-width:100%;
-padding:12px;
-border-radius:10px;
-border:1px solid #1f2937;
-background:#020617;
-color:white;
-margin-bottom:30px;
-}
+  /* Search Bar */
+  .search-wrapper {
+    position: relative;
+    margin-bottom: 2rem;
+  }
 
-/* TABS */
+  .search-wrapper i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b;
+    font-size: 1rem;
+  }
 
-.tabs{
-display:flex;
-justify-content:center;
-margin-bottom:30px;
-}
+  .search {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 2.8rem;
+    border-radius: 60px;
+    border: 1px solid #334155;
+    background: rgba(2, 6, 23, 0.8);
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.25s;
+    font-family: inherit;
+  }
 
-.tab{
-margin:0 10px;
-padding:10px 20px;
-border-radius:12px;
-cursor:pointer;
-background:rgba(15,23,42,.7);
-transition:.3s;
-}
+  .search:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
 
-.tab.active{
-background:#3b82f6;
-}
+  .search::placeholder {
+    color: #64748b;
+  }
 
-/* GRID */
+  /* Tabs */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:28px;
-}
+  .tab {
+    padding: 0.6rem 1.8rem;
+    border-radius: 60px;
+    cursor: pointer;
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.25s;
+    color: #cbd5e6;
+  }
 
-/* CARD */
+  .tab i {
+    margin-right: 8px;
+    font-size: 0.85rem;
+  }
 
-.card-link{
-text-decoration:none;
-color:white;
-}
+  .tab:hover {
+    border-color: #3b82f6;
+    background: rgba(59, 130, 246, 0.1);
+    transform: translateY(-2px);
+  }
 
-.card{
-background:linear-gradient(145deg,#111827,#0b1220);
-border-radius:16px;
-padding:25px 20px;
-text-align:center;
-position:relative;
-box-shadow:
-0 10px 25px rgba(0,0,0,.6),
-inset 0 0 0 1px rgba(255,255,255,.05);
-transition:.35s;
-}
+  .tab.active {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    border-color: #60a5fa;
+    color: white;
+    box-shadow: 0 6px 14px -6px #3b82f6;
+  }
 
-.card:hover{
-transform:translateY(-10px) scale(1.05);
-box-shadow:
-0 25px 50px rgba(0,0,0,.9),
-0 0 25px rgba(59,130,246,.4);
-}
+  /* Grid */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.8rem;
+  }
 
-.card img{
-width:110px;
-height:110px;
-object-fit:contain;
-margin-bottom:14px;
-transition:.4s;
-filter:drop-shadow(0 6px 12px rgba(0,0,0,.6));
-}
+  /* Cards */
+  .card-link {
+    text-decoration: none;
+    color: white;
+    display: block;
+  }
 
-.card:hover img{
-transform:scale(1.12) rotate(3deg);
-}
+  .card {
+    background: linear-gradient(145deg, rgba(17, 24, 39, 0.8), rgba(11, 18, 32, 0.8));
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
+    padding: 1.8rem 1.2rem;
+    text-align: center;
+    position: relative;
+    border: 1px solid rgba(51, 65, 85, 0.4);
+    transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    overflow: hidden;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-.card h3{
-margin:10px 0 0;
-font-size:18px;
-}
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+    transform: translateX(-100%);
+    transition: transform 0.4s ease;
+  }
 
-.card p{
-font-size:14px;
-margin-top:8px;
-color:#a0a0a0;
-}
+  .card:hover::before {
+    transform: translateX(0);
+  }
 
-/* BLOG BUTTON */
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 25px 35px -15px rgba(0, 0, 0, 0.5);
+  }
 
-.read{
-display:block;
-margin-top:8px;
-font-size:13px;
-color:#60a5fa;
-}
+  .icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1rem;
+    background: rgba(59, 130, 246, 0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+  }
 
-/* FADE ANIMATION */
+  .card:hover .icon-wrapper {
+    background: rgba(59, 130, 246, 0.25);
+    transform: scale(1.05);
+  }
 
-.section{
-animation:fade .4s ease;
-}
+  .icon-wrapper i {
+    font-size: 2.5rem;
+    color: #60a5fa;
+  }
 
-@keyframes fade{
+  .card-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    margin-bottom: 0.8rem;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  }
 
-from{
-opacity:0;
-transform:translateY(10px);
-}
+  .card h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0.6rem 0 0.4rem;
+    color: #f1f5f9;
+  }
 
-to{
-opacity:1;
-transform:translateY(0);
-}
+  .card p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    line-height: 1.4;
+    padding: 0 0.5rem;
+  }
 
-}
+  .read {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    color: #60a5fa;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
 
-/* FOOTER */
+  .card:hover .read {
+    color: #3b82f6;
+    transform: translateX(4px);
+  }
 
-footer{
-text-align:center;
-padding:20px;
-margin-top:40px;
-background:#020617;
-opacity:.7;
-}
+  /* No Results */
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    grid-column: 1 / -1;
+    color: #94a3b8;
+  }
 
+  .no-results i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: #475569;
+  }
+
+  /* Section visibility */
+  .section {
+    display: none;
+    animation: fadeIn 0.4s ease;
+  }
+
+  .section.active-section {
+    display: grid;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background: rgba(2, 6, 23, 0.8);
+    border-top: 1px solid rgba(51, 65, 85, 0.3);
+    font-size: 0.8rem;
+    color: #64748b;
+  }
+
+  footer i {
+    margin-right: 6px;
+  }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    header h1 {
+      font-size: 1.8rem;
+    }
+    .container {
+      padding: 1.2rem;
+    }
+    .tab {
+      padding: 0.5rem 1.2rem;
+      font-size: 0.8rem;
+    }
+    .grid {
+      gap: 1rem;
+    }
+    .card {
+      padding: 1.2rem;
+      min-height: 190px;
+    }
+    .icon-wrapper {
+      width: 60px;
+      height: 60px;
+    }
+    .icon-wrapper i {
+      font-size: 1.8rem;
+    }
+  }
 </style>
 
 <script>
+  // Show section function
+  function showSection(sectionId, tabElement) {
+    // Hide all sections
+    document.querySelectorAll('.section').forEach(sec => {
+      sec.classList.remove('active-section');
+    });
+    
+    // Remove active class from all tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.classList.remove('active');
+    });
+    
+    // Show selected section
+    const selectedSection = document.getElementById(sectionId);
+    if (selectedSection) {
+      selectedSection.classList.add('active-section');
+    }
+    
+    // Add active class to clicked tab
+    if (tabElement) {
+      tabElement.classList.add('active');
+    }
+    
+    // Clear search when switching tabs
+    const searchInput = document.querySelector('.search');
+    if (searchInput) {
+      searchInput.value = '';
+      filterCards();
+    }
+  }
 
-function showSection(id,tab){
+  // Search/filter function
+  function filterCards() {
+    const searchTerm = document.querySelector('.search').value.toLowerCase().trim();
+    const activeSection = document.querySelector('.section.active-section');
+    
+    if (!activeSection) return;
+    
+    const cards = activeSection.querySelectorAll('.card-link');
+    let hasVisible = false;
+    
+    cards.forEach(card => {
+      const title = card.querySelector('h3')?.innerText.toLowerCase() || '';
+      const desc = card.querySelector('p')?.innerText.toLowerCase() || '';
+      const matches = searchTerm === '' || title.includes(searchTerm) || desc.includes(searchTerm);
+      
+      if (matches) {
+        card.style.display = 'block';
+        hasVisible = true;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+    
+    // Show/hide no results message
+    let noResultsDiv = activeSection.querySelector('.no-results');
+    if (!hasVisible && cards.length > 0) {
+      if (!noResultsDiv) {
+        noResultsDiv = document.createElement('div');
+        noResultsDiv.className = 'no-results';
+        noResultsDiv.innerHTML = '<i class="fas fa-search"></i><p>No results found. Try a different search term.</p>';
+        activeSection.appendChild(noResultsDiv);
+      }
+      noResultsDiv.style.display = 'block';
+    } else if (noResultsDiv) {
+      noResultsDiv.style.display = 'none';
+    }
+  }
 
-document.querySelectorAll(".section").forEach(s=>{
-s.style.display="none"
-})
+  // Debounce function for search
+  let debounceTimer;
+  function debouncedFilter() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(filterCards, 300);
+  }
 
-document.querySelectorAll(".tab").forEach(t=>{
-t.classList.remove("active")
-})
-
-document.getElementById(id).style.display="grid"
-tab.classList.add("active")
-
-}
-
-document.addEventListener("DOMContentLoaded",()=>{
-document.querySelector(".tab").click()
-})
-
+  // Initialize on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    // Default show Companies section
+    const defaultTab = document.querySelector('.tab');
+    if (defaultTab) {
+      defaultTab.click();
+    }
+    
+    // Add search event listener
+    const searchInput = document.querySelector('.search');
+    if (searchInput) {
+      searchInput.addEventListener('keyup', debouncedFilter);
+    }
+  });
 </script>
-
 </head>
 
 <body>
 
 <header>
-<h1>Companies & Blogs</h1>
-<p>Explore company insights and read informative blogs</p>
+  <h1><i class="fas fa-building"></i> Companies & Blogs</h1>
+  <p>Explore company insights and read informative blogs</p>
 </header>
 
 <div class="container">
 
-<input type="text" placeholder="Search companies or blogs..." class="search">
+  <!-- Search Bar -->
+  <div class="search-wrapper">
+    <i class="fas fa-search"></i>
+    <input type="text" placeholder="Search companies or blogs..." class="search">
+  </div>
 
-<!-- TABS -->
+  <!-- Tabs -->
+  <div class="tabs">
+    <div class="tab active" onclick="showSection('companies', this)">
+      <i class="fas fa-building"></i> Companies
+    </div>
+    <div class="tab" onclick="showSection('blogs', this)">
+      <i class="fas fa-blog"></i> Blogs
+    </div>
+  </div>
 
-<div class="tabs">
+  <!-- Companies Section -->
+  <div id="companies" class="grid section active-section">
+    
+    <a href="{% url 'google' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fab fa-google"></i>
+        </div>
+        <h3>Google</h3>
+        <p>Tech giant known for search, cloud, and AI innovations.</p>
+      </div>
+    </a>
 
-<div class="tab" onclick="showSection('companies',this)">
-Companies
-</div>
+    <a href="{% url 'amazon' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fab fa-amazon"></i>
+        </div>
+        <h3>Amazon</h3>
+        <p>Global e-commerce and cloud computing leader.</p>
+      </div>
+    </a>
 
-<div class="tab" onclick="showSection('blogs',this)">
-Blogs
-</div>
+    <a href="{% url 'microsoft' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fab fa-microsoft"></i>
+        </div>
+        <h3>Microsoft</h3>
+        <p>Leading software and cloud solutions provider.</p>
+      </div>
+    </a>
 
-</div>
+    <a href="{% url 'meta' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fas fa-meta"></i>
+        </div>
+        <h3>Meta</h3>
+        <p>Social media and VR technology innovator.</p>
+      </div>
+    </a>
 
-<!-- COMPANIES -->
+  </div>
 
-<div id="companies" class="grid section">
+  <!-- Blogs Section -->
+  <div id="blogs" class="grid section">
+    
+    <a href="{% url 'interview-tips' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <h3>Top Interview Tips</h3>
+        <p>Learn how to crack coding and HR rounds effectively.</p>
+        <span class="read">Read Article →</span>
+      </div>
+    </a>
 
-<a href="{% url 'google' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/google.webp' %}" alt="Google">
-<h3>Google</h3>
-<p>Tech giant known for search, cloud, and AI innovations.</p>
-</div>
-</a>
+    <a href="{% url 'resume-guide' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fas fa-file-alt"></i>
+        </div>
+        <h3>Resume Writing Guide</h3>
+        <p>Build a professional resume that grabs recruiters' attention.</p>
+        <span class="read">Read Article →</span>
+      </div>
+    </a>
 
-<a href="{% url 'amazon' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/amazon.png' %}" alt="Amazon">
-<h3>Amazon</h3>
-<p>Global e-commerce and cloud computing leader.</p>
-</div>
-</a>
+    <a href="{% url 'tech-trends' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Tech Industry Trends</h3>
+        <p>Stay updated with emerging technologies and job trends.</p>
+        <span class="read">Read Article →</span>
+      </div>
+    </a>
 
-<a href="{% url 'microsoft' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/microsoft.avif' %}" alt="Microsoft">
-<h3>Microsoft</h3>
-<p>Leading software and cloud solutions provider.</p>
-</div>
-</a>
+    <a href="{% url 'experience-stories' %}" class="card-link">
+      <div class="card">
+        <div class="icon-wrapper">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Candidate Experiences</h3>
+        <p>Learn from real-life experiences of professionals and students.</p>
+        <span class="read">Read Article →</span>
+      </div>
+    </a>
 
-<a href="{% url 'meta' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/meta-logo.png' %}" alt="Meta">
-<h3>Meta</h3>
-<p>Social media and VR technology innovator.</p>
-</div>
-</a>
-
-</div>
-
-<!-- BLOGS -->
-
-<div id="blogs" class="grid section" style="display:none">
-
-<a href="{% url 'interview-tips' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/interview-tips.jpg' %}" alt="">
-<h3>Top Interview Tips</h3>
-<p>Learn how to crack coding and HR rounds effectively.</p>
-<span class="read">Read Article →</span>
-</div>
-</a>
-
-<a href="{% url 'resume-guide' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/resume.jpg' %}" alt="">
-<h3>Resume Writing Guide</h3>
-<p>Build a professional resume that grabs recruiters’ attention.</p>
-<span class="read">Read Article →</span>
-</div>
-</a>
-
-<a href="{% url 'tech-trends' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/tech-trends.jpg' %}" alt="">
-<h3>Tech Industry Trends</h3>
-<p>Stay updated with emerging technologies and job trends.</p>
-<span class="read">Read Article →</span>
-</div>
-</a>
-
-<a href="{% url 'experience-stories' %}" class="card-link">
-<div class="card">
-<img src="{% static 'image/story.jpg' %}" alt="">
-<h3>Candidate Experiences</h3>
-<p>Learn from real-life experiences of professionals and students.</p>
-<span class="read">Read Article →</span>
-</div>
-</a>
-
-</div>
+  </div>
 
 </div>
 
 <footer>
-© PrepEdge - Interview Preparation Platform
+  <i class="fas fa-graduation-cap"></i> PrepEdge - Interview Preparation Platform
 </footer>
 
 </body>
 </html>
-```

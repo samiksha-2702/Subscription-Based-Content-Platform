@@ -1,208 +1,522 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Top Interview Tips | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
-*{box-sizing:border-box;}
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-body{
-margin:0;
-font-family:"Segoe UI",Arial,sans-serif;
-background:linear-gradient(135deg,#0f172a,#020617);
-color:white;
-}
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
 
-header{
-text-align:center;
-padding:30px 20px;
-background:rgba(15,23,42,0.8);
-backdrop-filter:blur(8px);
-box-shadow:0 4px 20px rgba(0,0,0,0.6);
-}
+  /* Header */
+  header {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9));
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
 
-header h1{margin-bottom:5px;}
-header p{color:#a0a0a0;}
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+  }
 
-.container{
-padding:30px 20px;
-max-width:1000px;
-margin:auto;
-}
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #60a5fa, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.02em;
+  }
 
-h2{
-margin-top:40px;
-margin-bottom:15px;
-color:#3b82f6;
-}
+  header h1 i {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #3b82f6;
+  }
 
-section{
-margin-bottom:30px;
-background:rgba(15,23,42,0.7);
-padding:20px;
-border-radius:12px;
-box-shadow:0 10px 20px rgba(0,0,0,0.6);
-}
+  header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
 
-section ul{
-padding-left:20px;
-}
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
 
-section ul li{
-margin-bottom:10px;
-}
+  /* Back Button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid #3b82f6;
+    padding: 0.6rem 1.4rem;
+    border-radius: 40px;
+    font-weight: 600;
+    color: #bfdbfe;
+    transition: all 0.25s;
+    text-decoration: none;
+    margin-bottom: 1.8rem;
+  }
 
-a{
-color:#3b82f6;
-text-decoration:none;
-}
+  .back-btn i {
+    font-size: 0.85rem;
+    transition: transform 0.2s;
+  }
 
-a:hover{
-text-decoration:underline;
-}
+  .back-btn:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateX(-4px);
+    box-shadow: 0 6px 14px -6px #3b82f6;
+  }
 
-.back{
-display:inline-block;
-margin-bottom:20px;
-padding:8px 14px;
-background:#3b82f6;
-border-radius:8px;
-color:white;
-}
+  .back-btn:hover i {
+    transform: translateX(-4px);
+  }
 
-footer{
-text-align:center;
-padding:20px;
-margin-top:40px;
-background:#020617;
-opacity:.8;
-}
+  /* Grid Layout */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  /* Cards */
+  .card {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.5rem 1.8rem;
+    transition: all 0.25s;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #60a5fa;
+    border-left: 4px solid #3b82f6;
+    padding-left: 0.9rem;
+  }
+
+  .card h2 i {
+    font-size: 1.3rem;
+    color: #3b82f6;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: #93c5fd;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p {
+    color: #cbd5e6;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  /* Lists */
+  .list {
+    list-style: none;
+    margin: 0.8rem 0;
+  }
+
+  .list li {
+    margin-bottom: 0.7rem;
+    padding-left: 1.6rem;
+    position: relative;
+    color: #e2e8f0;
+    font-weight: 450;
+  }
+
+  .list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+    font-weight: 600;
+  }
+
+  /* Badge Container */
+  .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .badge {
+    background: #1e293b;
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #60a5fa;
+    border: 1px solid #334155;
+  }
+
+  /* Info Box */
+  .info-box {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .info-box strong {
+    color: #60a5fa;
+  }
+
+  /* Tip Card */
+  .tip-card {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0.8rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .tip-card strong {
+    color: #60a5fa;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .resource-link:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  .checklist {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 0.5rem;
+  }
+
+  .checklist-item i {
+    color: #4ade80;
+    font-size: 0.9rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background: rgba(2, 6, 23, 0.8);
+    border-top: 1px solid rgba(51, 65, 85, 0.3);
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  footer i {
+    margin-right: 6px;
+  }
+
+  @media (max-width: 850px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .full-width {
+      grid-column: span 1;
+    }
+    .container {
+      padding: 1.2rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+    }
+    .card {
+      padding: 1.2rem;
+    }
+  }
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Top Interview Tips</h1>
-<p>Prepare effectively for coding, technical, and HR interviews</p>
+  <h1><i class="fas fa-lightbulb"></i> Top Interview Tips</h1>
+  <p>Prepare effectively for coding, technical, and HR interviews</p>
 </header>
 
 <div class="container">
 
-<a href="{% url 'company' %}" class="back">⬅ Back</a>
+  <a href="{% url 'company' %}" class="back-btn">
+    <i class="fas fa-arrow-left"></i> Back to Companies
+  </a>
 
-<!-- Introduction -->
-<section>
-<h2>Introduction</h2>
-<p>
-Cracking interviews at top tech companies requires strong technical skills,
-problem-solving ability, and effective communication.
-</p>
-</section>
+  <div class="grid">
 
-<!-- Coding -->
-<section>
-<h2>Coding Interview Tips</h2>
+    <!-- Introduction -->
+    <div class="card full-width">
+      <h2><i class="fas fa-info-circle"></i> Introduction</h2>
+      <p>Cracking interviews at top tech companies requires strong technical skills, problem-solving ability, and effective communication. This guide compiles the best tips from successful candidates and industry experts to help you ace your next interview.</p>
+      <div class="badge-container">
+        <span class="badge"><i class="fas fa-chart-line"></i> 50+ tips curated</span>
+        <span class="badge"><i class="fas fa-trophy"></i> Used by 10,000+ candidates</span>
+      </div>
+    </div>
 
-<ul>
-<li>Practice problems on <a href="https://leetcode.com" target="_blank">LeetCode</a>, <a href="https://www.hackerrank.com" target="_blank">HackerRank</a>, and <a href="https://www.codeforces.com" target="_blank">Codeforces</a>.</li>
-<li>Focus on data structures like arrays, linked lists, trees, graphs, and hash tables.</li>
-<li>Master algorithms such as recursion, dynamic programming, BFS/DFS, greedy, and divide & conquer.</li>
-<li>Clarify the problem before coding and consider edge cases.</li>
-<li>Write clean code with clear variable names.</li>
-<li>Explain your thought process during interviews.</li>
-</ul>
+    <!-- Coding Interview Tips -->
+    <div class="card">
+      <h2><i class="fas fa-code"></i> Coding Interview Tips</h2>
+      <ul class="list">
+        <li>Practice problems on <a href="https://leetcode.com" target="_blank" style="color:#60a5fa;">LeetCode</a>, <a href="https://www.hackerrank.com" target="_blank" style="color:#60a5fa;">HackerRank</a>, and <a href="https://www.codeforces.com" target="_blank" style="color:#60a5fa;">Codeforces</a></li>
+        <li>Focus on data structures: arrays, linked lists, trees, graphs, hash tables</li>
+        <li>Master algorithms: recursion, DP, BFS/DFS, greedy, divide & conquer</li>
+        <li>Clarify the problem before coding and consider edge cases</li>
+        <li>Write clean, readable code with meaningful variable names</li>
+        <li>Explain your thought process out loud during interviews</li>
+        <li>Analyze time & space complexity before coding</li>
+        <li>Practice with a timer to simulate real conditions</li>
+      </ul>
+      
+      <div class="info-box">
+        <strong><i class="fas fa-star"></i> Pro Tip:</strong> Aim to solve LeetCode Medium problems in under 20 minutes. Quality > Quantity - understand patterns, not memorize solutions.
+      </div>
+    </div>
 
-</section>
+    <!-- System Design Interview Tips -->
+    <div class="card">
+      <h2><i class="fas fa-cloud"></i> System Design Tips</h2>
+      <ul class="list">
+        <li>Learn scalability: horizontal vs vertical scaling</li>
+        <li>Understand load balancing, caching (Redis, CDN)</li>
+        <li>Database concepts: SQL vs NoSQL, sharding, replication</li>
+        <li>Practice designing: URL shortener, chat app, social media feed</li>
+        <li>Use diagrams to explain architecture clearly</li>
+        <li>Discuss trade-offs (performance vs consistency vs cost)</li>
+        <li>Start simple, then add complexity</li>
+        <li>Know CAP theorem and when to apply</li>
+      </ul>
+      
+      <div class="tip-card">
+        <strong><i class="fas fa-lightbulb"></i> Common System Design Questions:</strong>
+        <p style="margin-top: 0.3rem;">Design Twitter/X, Uber, YouTube, Dropbox, Web Crawler, Rate Limiter</p>
+      </div>
+    </div>
 
-<!-- System Design -->
-<section>
-<h2>System Design Interview Tips</h2>
+    <!-- Behavioral / HR Interview Tips -->
+    <div class="card">
+      <h2><i class="fas fa-users"></i> Behavioral Interview Tips</h2>
+      <ul class="list">
+        <li>Use the <strong>STAR method</strong> (Situation, Task, Action, Result)</li>
+        <li>Prepare 5-7 strong stories covering different scenarios</li>
+        <li>Practice common questions: "Tell me about yourself", "Why this company?"</li>
+        <li>Show teamwork, leadership, and conflict resolution examples</li>
+        <li>Maintain confident body language and clear communication</li>
+        <li>Be honest - don't exaggerate accomplishments</li>
+        <li>Research company values and align your answers</li>
+        <li>Prepare questions to ask the interviewer</li>
+      </ul>
+      
+      <div class="checklist">
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Tell me about yourself (2-min pitch)</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Why do you want to work here?</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Describe a challenge you overcame</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> How do you handle conflict?</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Where do you see yourself in 5 years?</div>
+      </div>
+    </div>
 
-<ul>
-<li>Learn scalability, load balancing, caching, and database concepts.</li>
-<li>Practice designing systems like URL shorteners, chat apps, and social media feeds.</li>
-<li>Use diagrams to explain architecture clearly.</li>
-<li>Discuss trade-offs between performance and reliability.</li>
-</ul>
+    <!-- STAR Method Deep Dive -->
+    <div class="card">
+      <h2><i class="fas fa-chart-simple"></i> STAR Method Deep Dive</h2>
+      <ul class="list">
+        <li><strong>S - Situation:</strong> Set the context (1-2 sentences)</li>
+        <li><strong>T - Task:</strong> What was your responsibility?</li>
+        <li><strong>A - Action:</strong> What specific steps did you take?</li>
+        <li><strong>R - Result:</strong> What was the outcome? Include metrics!</li>
+      </ul>
+      
+      <div class="tip-card">
+        <strong><i class="fas fa-quote-right"></i> Example STAR Answer:</strong>
+        <p style="margin-top: 0.3rem; font-size: 0.85rem;">"<strong>S:</strong> Our team missed a deadline... <strong>T:</strong> I needed to fix the bug... <strong>A:</strong> I debugged, collaborated with X, implemented fix... <strong>R:</strong> Delivered 2 days early, saved $10K."</p>
+      </div>
+    </div>
 
-</section>
+    <!-- Mock Interviews & Practice -->
+    <div class="card full-width">
+      <h2><i class="fas fa-microphone-alt"></i> Mock Interviews & Practice Resources</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <ul class="list">
+            <li>Take mock interviews with peers or mentors weekly</li>
+            <li>Use <a href="https://interviewing.io" target="_blank" style="color:#60a5fa;">interviewing.io</a> for anonymous practice</li>
+            <li>Review experiences on <a href="https://www.glassdoor.com" target="_blank" style="color:#60a5fa;">Glassdoor</a> and <a href="https://www.teamblind.com" target="_blank" style="color:#60a5fa;">Blind</a></li>
+            <li>Track progress and revisit weak areas systematically</li>
+            <li>Record yourself to analyze body language and speech</li>
+            <li>Join Discord/Telegram groups for peer feedback</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <div class="badge-container">
+            <span class="badge"><i class="fas fa-calendar"></i> Mock weekly</span>
+            <span class="badge"><i class="fas fa-video"></i> Record & review</span>
+            <span class="badge"><i class="fas fa-users"></i> Peer feedback</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<!-- HR -->
-<section>
-<h2>Behavioral / HR Interview Tips</h2>
+    <!-- Daily Preparation Plan -->
+    <div class="card">
+      <h2><i class="fas fa-calendar-day"></i> Daily Preparation Plan</h2>
+      <ul class="list">
+        <li><strong>Morning (1-2 hours):</strong> Solve coding problems (2-3 LeetCode)</li>
+        <li><strong>Afternoon (30 mins):</strong> Revise system design concepts</li>
+        <li><strong>Evening (30 mins):</strong> Behavioral practice + STAR stories</li>
+        <li><strong>Weekend (2 hours):</strong> Full mock interview + review mistakes</li>
+        <li><strong>Daily (10 mins):</strong> Review yesterday's weak areas</li>
+      </ul>
+      
+      <div class="info-box">
+        <strong><i class="fas fa-chart-line"></i> Recommended Schedule (60 days before interview):</strong>
+        <p style="margin-top: 0.3rem;">Month 1: Build fundamentals + easy problems<br>Month 2: Medium/Hard problems + mocks + system design</p>
+      </div>
+    </div>
 
-<ul>
-<li>Use the STAR method (Situation, Task, Action, Result).</li>
-<li>Prepare answers for questions like "Tell me about yourself".</li>
-<li>Show teamwork and leadership experiences.</li>
-<li>Maintain confident body language and clear communication.</li>
-</ul>
+    <!-- Common Mistakes to Avoid -->
+    <div class="card">
+      <h2><i class="fas fa-exclamation-triangle"></i> Common Mistakes</h2>
+      <ul class="list">
+        <li>❌ Not practicing consistently (last-minute cramming)</li>
+        <li>❌ Ignoring time complexity analysis</li>
+        <li>❌ Rushing into coding without planning</li>
+        <li>❌ Giving vague or unprepared HR answers</li>
+        <li>❌ Not researching the company before interview</li>
+        <li>❌ Failing to ask questions at the end</li>
+        <li>❌ Poor communication during problem solving</li>
+        <li>❌ Not following up with thank-you email</li>
+      </ul>
+    </div>
 
-</section>
+    <!-- Pre-Interview Checklist -->
+    <div class="card">
+      <h2><i class="fas fa-clipboard-list"></i> Pre-Interview Checklist</h2>
+      <div class="checklist">
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Research company & interviewers</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Prepare "Tell me about yourself" pitch</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Have 3-5 questions ready to ask</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Test equipment (for virtual interviews)</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Choose professional attire</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Get good sleep (8 hours)</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Arrive 10 minutes early</div>
+        <div class="checklist-item"><i class="fas fa-check-circle"></i> Prepare water and notebook</div>
+      </div>
+    </div>
 
-<!-- Practice -->
-<section>
-<h2>Mock Interviews & Practice</h2>
+    <!-- Resources & Related Blogs -->
+    <div class="card full-width">
+      <h2><i class="fas fa-book-open"></i> Resources & Related Blogs</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-link"></i> Recommended Platforms</h3>
+          <ul class="list">
+            <li><a href="https://leetcode.com" target="_blank" style="color:#60a5fa;">LeetCode</a> – Coding problems by company</li>
+            <li><a href="https://www.hackerrank.com" target="_blank" style="color:#60a5fa;">HackerRank</a> – Skill-based challenges</li>
+            <li><a href="https://www.codeforces.com" target="_blank" style="color:#60a5fa;">Codeforces</a> – Competitive programming</li>
+            <li><a href="https://interviewing.io" target="_blank" style="color:#60a5fa;">interviewing.io</a> – Anonymous mock interviews</li>
+            <li><a href="https://www.glassdoor.com" target="_blank" style="color:#60a5fa;">Glassdoor</a> – Company interview experiences</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-chalkboard"></i> PrepEdge Resources</h3>
+          <div class="badge-container">
+            <a href="{% url 'resume-guide' %}" class="resource-link"><i class="fas fa-file-alt"></i> Resume Guide</a>
+            <a href="{% url 'tech-trends' %}" class="resource-link"><i class="fas fa-chart-line"></i> Tech Trends</a>
+            <a href="{% url 'experience-stories' %}" class="resource-link"><i class="fas fa-users"></i> Experiences</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<ul>
-<li>Take mock interviews with peers or mentors.</li>
-<li>Use <a href="https://interviewing.io" target="_blank">interviewing.io</a> for practice.</li>
-<li>Review experiences on <a href="https://www.glassdoor.com" target="_blank">Glassdoor</a>.</li>
-<li>Track progress and revisit weak areas.</li>
-</ul>
-
-</section>
-
-<!-- Daily Plan -->
-<section>
-<h2>Suggested Daily Preparation Plan</h2>
-
-<ul>
-<li>1–2 hours solving coding problems.</li>
-<li>30 minutes revising system design concepts.</li>
-<li>30 minutes behavioral practice.</li>
-<li>Weekly mock interview.</li>
-</ul>
-
-</section>
-
-<!-- Mistakes -->
-<section>
-<h2>Common Mistakes to Avoid</h2>
-
-<ul>
-<li>Not practicing consistently.</li>
-<li>Ignoring time complexity.</li>
-<li>Rushing into coding without planning.</li>
-<li>Giving vague HR answers.</li>
-<li>Not researching the company.</li>
-</ul>
-
-</section>
-
-<!-- Related Blogs -->
-<section>
-<h2>Related Blogs</h2>
-
-<ul>
-<li><a href="{% url 'resume-guide' %}">Resume Writing Guide</a></li>
-<li><a href="{% url 'tech-trends' %}">Tech Industry Trends</a></li>
-<li><a href="{% url 'experience-stories' %}">Candidate Experiences</a></li>
-</ul>
-
-</section>
-
+  </div>
 </div>
 
 <footer>
-© PrepEdge - Interview Preparation Platform
+  <i class="fas fa-graduation-cap"></i> PrepEdge - Interview Preparation Platform
 </footer>
 
 </body>
 </html>
-```

@@ -1,212 +1,556 @@
-
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Candidate Experiences | PrepEdge</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-*{box-sizing:border-box;}
+  body {
+    font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+    background: radial-gradient(ellipse at 20% 30%, #0f172a, #020617);
+    color: #eef2ff;
+    line-height: 1.55;
+    min-height: 100vh;
+  }
 
-body{
-margin:0;
-font-family:"Segoe UI",Arial,sans-serif;
-background:linear-gradient(135deg,#0f172a,#020617);
-color:white;
-}
+  /* Header */
+  header {
+    text-align: center;
+    padding: 3rem 1.5rem;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(2, 6, 23, 0.9));
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
 
-header{
-text-align:center;
-padding:30px 20px;
-background:rgba(15,23,42,0.8);
-backdrop-filter:blur(8px);
-box-shadow:0 4px 20px rgba(0,0,0,0.6);
-}
+  header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #60a5fa, #3b82f6);
+  }
 
-header h1{margin-bottom:5px;}
-header p{color:#a0a0a0;}
+  header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ffffff, #60a5fa, #3b82f6);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    letter-spacing: -0.02em;
+  }
 
-.container{
-padding:30px 20px;
-max-width:1000px;
-margin:auto;
-}
+  header h1 i {
+    background: none;
+    -webkit-background-clip: unset;
+    background-clip: unset;
+    color: #3b82f6;
+  }
 
-h2{
-margin-top:40px;
-margin-bottom:15px;
-color:#3b82f6;
-}
+  header p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
 
-section{
-margin-bottom:30px;
-background:rgba(15,23,42,0.7);
-padding:20px;
-border-radius:12px;
-box-shadow:0 10px 20px rgba(0,0,0,0.6);
-}
+  /* Container */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
 
-section ul{
-padding-left:20px;
-}
+  /* Back Button */
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid #3b82f6;
+    padding: 0.6rem 1.4rem;
+    border-radius: 40px;
+    font-weight: 600;
+    color: #bfdbfe;
+    transition: all 0.25s;
+    text-decoration: none;
+    margin-bottom: 1.8rem;
+  }
 
-section ul li{
-margin-bottom:10px;
-}
+  .back-btn i {
+    font-size: 0.85rem;
+    transition: transform 0.2s;
+  }
 
-a{
-color:#3b82f6;
-text-decoration:none;
-}
+  .back-btn:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateX(-4px);
+    box-shadow: 0 6px 14px -6px #3b82f6;
+  }
 
-a:hover{
-text-decoration:underline;
-}
+  .back-btn:hover i {
+    transform: translateX(-4px);
+  }
 
-.back{
-display:inline-block;
-margin-bottom:20px;
-padding:8px 14px;
-background:#3b82f6;
-border-radius:8px;
-color:white;
-}
+  /* Grid Layout */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
 
-footer{
-text-align:center;
-padding:20px;
-margin-top:40px;
-background:#020617;
-opacity:.8;
-}
+  /* Cards */
+  .card {
+    background: rgba(17, 24, 39, 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(51, 65, 85, 0.5);
+    padding: 1.5rem 1.8rem;
+    transition: all 0.25s;
+  }
 
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
+  }
+
+  .full-width {
+    grid-column: span 2;
+  }
+
+  .card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #60a5fa;
+    border-left: 4px solid #3b82f6;
+    padding-left: 0.9rem;
+  }
+
+  .card h2 i {
+    font-size: 1.3rem;
+    color: #3b82f6;
+  }
+
+  .card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    color: #93c5fd;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card p {
+    color: #cbd5e6;
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+
+  /* Lists */
+  .list {
+    list-style: none;
+    margin: 0.8rem 0;
+  }
+
+  .list li {
+    margin-bottom: 0.7rem;
+    padding-left: 1.6rem;
+    position: relative;
+    color: #e2e8f0;
+    font-weight: 450;
+  }
+
+  .list li::before {
+    content: "▹";
+    position: absolute;
+    left: 0;
+    color: #3b82f6;
+    font-weight: 600;
+  }
+
+  /* Experience Cards */
+  .exp-card {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .exp-card strong {
+    color: #60a5fa;
+    font-size: 1rem;
+  }
+
+  .exp-card .company {
+    color: #3b82f6;
+    font-size: 0.8rem;
+    margin-top: 0.3rem;
+  }
+
+  .quote-icon {
+    color: #3b82f6;
+    font-size: 1rem;
+    margin-right: 6px;
+    opacity: 0.7;
+  }
+
+  /* Badge Container */
+  .badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .badge {
+    background: #1e293b;
+    border-radius: 50px;
+    padding: 0.3rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #60a5fa;
+    border: 1px solid #334155;
+  }
+
+  /* Info Box */
+  .info-box {
+    background: #0f172a;
+    border-radius: 1rem;
+    padding: 0.8rem 1rem;
+    margin-top: 0.8rem;
+    border-left: 3px solid #3b82f6;
+  }
+
+  .info-box strong {
+    color: #60a5fa;
+  }
+
+  .resource-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    padding: 0.5rem 1.2rem;
+    border-radius: 40px;
+    color: #60a5fa;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .resource-link:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-2px);
+  }
+
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    background: rgba(2, 6, 23, 0.8);
+    border-top: 1px solid rgba(51, 65, 85, 0.3);
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  footer i {
+    margin-right: 6px;
+  }
+
+  @media (max-width: 850px) {
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .full-width {
+      grid-column: span 1;
+    }
+    .container {
+      padding: 1.2rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+    }
+    .card {
+      padding: 1.2rem;
+    }
+  }
 </style>
 </head>
 
 <body>
 
 <header>
-<h1>Candidate Experiences</h1>
-<p>Learn from real-life experiences of professionals and students</p>
+  <h1><i class="fas fa-users"></i> Candidate Experiences</h1>
+  <p>Learn from real-life experiences of professionals and students</p>
 </header>
 
 <div class="container">
 
-<a href="{% url 'company' %}" class="back">⬅ Back</a>
+  <a href="{% url 'company' %}" class="back-btn">
+    <i class="fas fa-arrow-left"></i> Back to Companies
+  </a>
 
-<!-- Introduction -->
-<section>
+  <div class="grid">
 
-<h2>Introduction</h2>
+    <!-- Introduction -->
+    <div class="card full-width">
+      <h2><i class="fas fa-info-circle"></i> Introduction</h2>
+      <p>Understanding real candidate experiences helps you prepare better and avoid common pitfalls during interviews. Learning from those who have successfully navigated the interview process gives you insights that no textbook can provide.</p>
+      <div class="badge-container">
+        <span class="badge"><i class="fas fa-chart-line"></i> 5000+ candidate stories analyzed</span>
+        <span class="badge"><i class="fas fa-star"></i> Real interview experiences</span>
+      </div>
+    </div>
 
-<p>
-Understanding real candidate experiences helps you prepare better
-and avoid common pitfalls during interviews.
-</p>
+    <!-- Success Stories -->
+    <div class="card">
+      <h2><i class="fas fa-trophy"></i> Success Stories</h2>
+      
+      <div class="exp-card">
+        <strong><i class="fas fa-quote-left quote-icon"></i> Google Intern → Full-Time</strong>
+        <p>"Practiced LeetCode problems daily for 3 months and participated in mock interviews with friends. The key was consistency - 2 problems every single day without fail."</p>
+        <div class="company"><i class="fas fa-building"></i> Google | Software Engineer</div>
+      </div>
 
-</section>
+      <div class="exp-card">
+        <strong><i class="fas fa-quote-left quote-icon"></i> Amazon SDE Success</strong>
+        <p>"Focused on system design preparation and built a strong project-based resume. The Leadership Principles were crucial - prepared 2-3 STAR stories for each principle."</p>
+        <div class="company"><i class="fas fa-building"></i> Amazon | SDE II</div>
+      </div>
 
-<!-- Success Stories -->
-<section>
+      <div class="exp-card">
+        <strong><i class="fas fa-quote-left quote-icon"></i> Microsoft Full-Time</strong>
+        <p>"Used STAR method to answer behavioral questions effectively. Also practiced system design for 2 months before the interview. Growth mindset questions caught me off guard initially."</p>
+        <div class="company"><i class="fas fa-building"></i> Microsoft | Software Engineer</div>
+      </div>
 
-<h2>Success Stories</h2>
+      <div class="exp-card">
+        <strong><i class="fas fa-quote-left quote-icon"></i> Meta (Facebook) Offer</strong>
+        <p>"Focused on speed - solved 100+ LeetCode medium problems under 20 mins each. System design for E4 level was intense but worth it."</p>
+        <div class="company"><i class="fas fa-building"></i> Meta | E4 Software Engineer</div>
+      </div>
+    </div>
 
-<ul>
-<li><strong>Google Intern:</strong> Practiced LeetCode problems daily for 3 months and participated in mock interviews.</li>
+    <!-- Challenges & Lessons -->
+    <div class="card">
+      <h2><i class="fas fa-exclamation-triangle"></i> Common Challenges</h2>
+      <ul class="list">
+        <li>Time management during coding rounds - running out of time</li>
+        <li>Behavioral interview preparation - not having enough stories</li>
+        <li>System design understanding for senior roles</li>
+        <li>Nervousness and anxiety affecting performance</li>
+        <li>Communicating thought process clearly</li>
+        <li>Handling rejection and staying motivated</li>
+      </ul>
+      
+      <h3><i class="fas fa-graduation-cap"></i> Key Lessons Learned</h3>
+      <ul class="list">
+        <li>Start preparation at least 3-6 months in advance</li>
+        <li>Mock interviews are as important as coding practice</li>
+        <li>Learn from peer experiences and mistakes</li>
+        <li>Don't ignore behavioral rounds - they matter 50%</li>
+        <li>Quality over quantity in problem solving</li>
+      </ul>
+    </div>
 
-<li><strong>Amazon SDE:</strong> Focused on system design preparation and strong project-based resume.</li>
+    <!-- Detailed Experience - Google -->
+    <div class="card full-width">
+      <h2><i class="fab fa-google"></i> Google Interview Experience (Detailed)</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-timeline"></i> Timeline</h3>
+          <ul class="list">
+            <li>Applied online → Referral</li>
+            <li>OA received within 1 week</li>
+            <li>Phone screen after 2 weeks</li>
+            <li>On-site (4 rounds) scheduled within 1 month</li>
+            <li>Team matching + Offer after 2 weeks</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-code"></i> Interview Rounds</h3>
+          <ul class="list">
+            <li>Round 1: Coding (Graph + DFS)</li>
+            <li>Round 2: Coding (DP - medium)</li>
+            <li>Round 3: System Design (URL shortener)</li>
+            <li>Round 4: Googleyness + Leadership</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-lightbulb"></i> Advice from Candidate</h3>
+          <ul class="list">
+            <li>Practice LeetCode Medium + Hard</li>
+            <li>Focus on optimization & edge cases</li>
+            <li>Communicate clearly while coding</li>
+            <li>Show intellectual humility</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<li><strong>Microsoft Full-Time:</strong> Used STAR method to answer behavioral questions effectively.</li>
-</ul>
+    <!-- Detailed Experience - Amazon -->
+    <div class="card full-width">
+      <h2><i class="fab fa-amazon"></i> Amazon Interview Experience (Detailed)</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-timeline"></i> Timeline</h3>
+          <ul class="list">
+            <li>OA (2 coding + work simulation)</li>
+            <li>Phone screen after 1 week</li>
+            <li>On-site loop (5 rounds) same day</li>
+            <li>Bar raiser round included</li>
+            <li>Offer within 1 week</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-star"></i> Leadership Principles Focus</h3>
+          <ul class="list">
+            <li>Customer Obsession - 2 stories</li>
+            <li>Ownership - 2 stories</li>
+            <li>Deliver Results - 2 stories</li>
+            <li>Learn & Be Curious - 1 story</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-lightbulb"></i> Advice from Candidate</h3>
+          <ul class="list">
+            <li>Prepare 30+ STAR stories</li>
+            <li>Practice Amazon LeetCode tagged</li>
+            <li>Know LPs by heart</li>
+            <li>Data-driven answers with metrics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-</section>
+    <!-- Detailed Experience - Microsoft -->
+    <div class="card full-width">
+      <h2><i class="fab fa-microsoft"></i> Microsoft Interview Experience (Detailed)</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-timeline"></i> Timeline</h3>
+          <ul class="list">
+            <li>Applied via careers portal</li>
+            <li>OA received in 2 weeks</li>
+            <li>Phone screen after 1 week</li>
+            <li>On-site (4 rounds) virtual</li>
+            <li>Offer after Asha review (2 weeks)</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-brain"></i> Growth Mindset Focus</h3>
+          <ul class="list">
+            <li>"Tell me about a time you failed"</li>
+            <li>"How do you handle feedback"</li>
+            <li>"What did you learn from a mistake"</li>
+            <li>"How do you approach new technologies"</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-lightbulb"></i> Advice from Candidate</h3>
+          <ul class="list">
+            <li>Show willingness to learn</li>
+            <li>Practice coding out loud</li>
+            <li>Research Microsoft culture</li>
+            <li>Be collaborative, not aggressive</li>
+          </ul>
+        </div>
+      </div>
+    </div>
 
-<!-- Challenges -->
-<section>
+    <!-- Tips from Candidates -->
+    <div class="card">
+      <h2><i class="fas fa-lightbulb"></i> Top Tips from Successful Candidates</h2>
+      <ul class="list">
+        <li>Start preparation early (6 months before target)</li>
+        <li>Focus on problem-solving, not just memorization</li>
+        <li>Take mock interviews seriously - use interviewing.io</li>
+        <li>Analyze mistakes regularly and maintain an error log</li>
+        <li>Research company culture and values deeply</li>
+        <li>Network with employees for referrals and insights</li>
+        <li>Practice explaining solutions out loud</li>
+        <li>Don't ignore behavioral - prepare STAR stories</li>
+      </ul>
+    </div>
 
-<h2>Challenges & Lessons</h2>
+    <!-- Common Mistakes -->
+    <div class="card">
+      <h2><i class="fas fa-times-circle"></i> Common Mistakes to Avoid</h2>
+      <ul class="list">
+        <li>Not practicing with a timer</li>
+        <li>Jumping into coding without clarifying requirements</li>
+        <li>Not testing edge cases</li>
+        <li>Poor communication during problem solving</li>
+        <li>Not asking clarifying questions</li>
+        <li>Giving up too easily on hard problems</li>
+        <li>Neglecting system design for experienced roles</li>
+        <li>Not following up after interview</li>
+      </ul>
+      <div class="info-box">
+        <strong><i class="fas fa-quote-right"></i> Insider Note:</strong> Most rejections happen not because of coding mistakes, but because of poor communication or not fitting company culture.
+      </div>
+    </div>
 
-<ul>
-<li>Time management during coding rounds</li>
-<li>Behavioral interview preparation</li>
-<li>System design understanding</li>
-<li>Learning from peer experiences</li>
-</ul>
+    <!-- Resources -->
+    <div class="card full-width">
+      <h2><i class="fas fa-book-open"></i> Resources & References</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between;">
+        <div style="flex: 1;">
+          <h3><i class="fas fa-link"></i> Practice Platforms</h3>
+          <ul class="list">
+            <li><a href="https://leetcode.com/" target="_blank" style="color:#60a5fa;">LeetCode</a> – Coding practice platform</li>
+            <li><a href="https://www.hackerrank.com/" target="_blank" style="color:#60a5fa;">HackerRank</a> – Skill-based challenges</li>
+            <li><a href="https://interviewing.io" target="_blank" style="color:#60a5fa;">interviewing.io</a> – Anonymous mock interviews</li>
+            <li><a href="https://www.glassdoor.com/" target="_blank" style="color:#60a5fa;">Glassdoor</a> – Company reviews & interview Qs</li>
+          </ul>
+        </div>
+        <div style="flex: 1;">
+          <h3><i class="fas fa-chalkboard"></i> PrepEdge Resources</h3>
+          <div class="badge-container">
+            <a href="{% url 'interview-tips' %}" class="resource-link"><i class="fas fa-lightbulb"></i> Interview Tips</a>
+            <a href="{% url 'resume-guide' %}" class="resource-link"><i class="fas fa-file-alt"></i> Resume Guide</a>
+            <a href="{% url 'tech-trends' %}" class="resource-link"><i class="fas fa-chart-line"></i> Tech Trends</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
-</section>
-
-<!-- Tips -->
-<section>
-
-<h2>Tips from Candidates</h2>
-
-<ul>
-<li>Start preparation early</li>
-<li>Focus on problem-solving</li>
-<li>Take mock interviews seriously</li>
-<li>Analyze mistakes regularly</li>
-<li>Research company culture</li>
-</ul>
-
-</section>
-
-<!-- Resources -->
-<section>
-
-<h2>Resources & References</h2>
-
-<ul>
-
-<li>
-<a href="https://leetcode.com/" target="_blank">
-LeetCode
-</a> – Coding practice platform
-</li>
-
-<li>
-<a href="https://www.hackerrank.com/" target="_blank">
-HackerRank
-</a>
-</li>
-
-<li>
-<a href="https://interviewing.io" target="_blank">
-interviewing.io
-</a>
-</li>
-
-<li>
-<a href="https://www.glassdoor.com/" target="_blank">
-Glassdoor
-</a>
-</li>
-
-</ul>
-
-</section>
-
-<!-- Related Blogs -->
-<section>
-
-<h2>Related Blogs</h2>
-
-<ul>
-<li><a href="{% url 'interview-tips' %}">Top Interview Tips</a></li>
-<li><a href="{% url 'resume-guide' %}">Resume Writing Guide</a></li>
-<li><a href="{% url 'tech-trends' %}">Tech Industry Trends</a></li>
-</ul>
-
-</section>
-
+  </div>
 </div>
 
 <footer>
-© PrepEdge - Interview Preparation Platform
+  <i class="fas fa-graduation-cap"></i> PrepEdge - Interview Preparation Platform
 </footer>
 
 </body>
 </html>
-```
