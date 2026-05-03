@@ -1186,10 +1186,10 @@ def payment(request):
 client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
 
 @login_required
+@login_required
 def payment_verify(request):
     try:
         data = json.loads(request.body)
-        print("🔥 VERIFY CALLED:", data)
 
         txn_id = data.get('razorpay_payment_id')
         order_id = data.get('razorpay_order_id')
@@ -1212,22 +1212,43 @@ def payment_verify(request):
 
         plan_data = PLANS[plan]
         duration = plan_data["days"]
+        amount = plan_data["price"]
 
         sub, _ = Subscription.objects.get_or_create(user=request.user)
 
-        sub.plan = 'premium'
-        # sub.plan_type = plan   # add new field if possible
+        sub.plan = plan
         sub.status = 'active'
         sub.expires_at = timezone.now() + timedelta(days=duration)
         sub.save()
 
-        print("✅ UPDATED:", sub.plan)
+        # SAVE PAYMENT RECORD
+        PaymentRecord.objects.create(
+            user=request.user,
+            amount=amount,
+            currency='INR',
+            plan=plan,
+            method='Razorpay',
+            status='success',
+            transaction_id=txn_id
+        )
 
         return JsonResponse({'status': 'success'})
 
     except Exception as e:
         print("❌ ERROR:", str(e))
-        return JsonResponse({'status': 'error'})    
+
+        PaymentRecord.objects.create(
+            user=request.user,
+            amount=0,
+            currency='INR',
+            plan=plan if 'plan' in locals() else 'unknown',
+            method='Razorpay',
+            status='failed',
+            transaction_id=txn_id if 'txn_id' in locals() else ''
+        )
+
+        return JsonResponse({'status': 'error'})
+
 @login_required
 def create_order(request):
     try:
