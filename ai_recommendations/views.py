@@ -127,22 +127,19 @@ def _refresh_weak_areas(user):
 
     with transaction.atomic():
 
-        # reset
         UserWeakArea.objects.filter(user=user).delete()
 
         for row in attempts:
             topic_id = row['topic']
             avg_score = row['avg_score'] or 0
 
-            # ✅ ONLY weak areas stored
-            if avg_score <= 20:
-                UserWeakArea.objects.create(
-                    user=user,
-                    topic_id=topic_id,
-                    reason=f"Weak performance ({avg_score:.1f}%) — needs revision",
-                )
-    # ❗ No need to manually delete old topics — handled by full reset
-    
+            UserWeakArea.objects.create(
+                user=user,
+                topic_id=topic_id,
+                weakness_score=round(100 - avg_score, 2),
+                reason=f"Average Score: {avg_score:.1f}%"
+            )
+                
 def _generate_recommendations(user) -> None:
     """
     Rebuild UserRecommendation rows for a user based on their weak areas.
@@ -274,6 +271,7 @@ def ai_dashboard(request):
     user = request.user
 
     _refresh_weak_areas(user)
+    _generate_recommendations(user)
 
     attempts = UserQuizAttempt.objects.filter(user=user)
 
@@ -341,8 +339,8 @@ def ai_dashboard(request):
 
     recommendations = [
     {
-        "title": getattr(rec.topic, "name", "General Recommendation"),
-        "description": getattr(rec, "message", "") or "Keep practicing to improve your performance."
+    "title": rec.title,
+    "description": rec.description,
     }
     for rec in recommendations_qs
 
